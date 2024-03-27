@@ -10,7 +10,7 @@ export default {
                 ad.style.cssText =
                     "position: fixed; width: 100vw; height: 80vh;";
             },
-            teardown: (wrapper: IAdvantageWrapper, ad: HTMLElement) => {
+            reset: (wrapper: IAdvantageWrapper, ad: HTMLElement) => {
                 ad.style.cssText = "";
                 wrapper.resetCSS();
             }

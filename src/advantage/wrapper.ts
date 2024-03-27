@@ -73,17 +73,19 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         });
     }
 
+    // Getter for the content nodes
     get contentNodes() {
         return this.#slotAdvantageContent.assignedNodes() ?? [];
     }
 
+    // Private method to check if the child ad is already registered
     #childAdIsAlreadyRegistered(source: MessageEventSource | null) {
         if (!source) {
             return false;
         }
         return this.#childAd && this.#childAd.eventSource === source;
     }
-
+    // Private method to morph the wrapper into a specific format
     #morphIntoFormat = (format: string) => {
         this.currentFormat = format;
         const formatConfig = this.#advantage.formats.get(format);
@@ -92,7 +94,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
         formatConfig.setup(this, this.#childAd?.ad!);
     };
-
+    // Publich method that runs any provided integrations for the format
     runIntegration() {
         if (!this.currentFormat) {
             return;
@@ -104,14 +106,14 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             integration.setup(this, this.#childAd?.ad!);
         }
     }
-
+    // Public method to reset the format
     reset() {
         if (!this.currentFormat) {
             return;
         }
         const formatConfig = this.#advantage.formats.get(this.currentFormat);
         if (formatConfig) {
-            formatConfig.teardown(this, this.#childAd?.ad!);
+            formatConfig.reset(this, this.#childAd?.ad!);
         }
         const integration = this.#advantage.formatIntegrations.get(
             this.currentFormat
@@ -120,7 +122,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             integration.onReset(this, this.#childAd?.ad!);
         }
     }
-
+    // Public method to close the format
     close() {
         if (!this.currentFormat) {
             return;
@@ -138,7 +140,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             integration.onClose(this, this.#childAd?.ad!);
         }
     }
-
+    // Public helper method to apply styles to all child elements
     applyStylesToAllChildElements(styles: string) {
         this.contentNodes.forEach((node) =>
             traverseNodes(node, (node) => {
@@ -151,18 +153,18 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             })
         );
     }
-
+    // Public method to insert CSS into the shadow root
     insertCSS(CSS: string) {
         this.#styleElem.textContent = CSS;
     }
-
+    // Public method to reset the CSS in the shadow root
     resetCSS() {
         this.#styleElem.textContent = "";
     }
-
+    // Private method to handle messages
     #handleMessage = (event: MessageEvent<AdvantageMessage>) => {
         const message = event.data;
-
+        // The message is a request to start a session
         if (message.action === AdvantageMessageAction.START_SESSION) {
             this.#messagePort = event.ports[0];
             event.ports[0].postMessage({
@@ -172,9 +174,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             });
             event.ports[0].onmessage = this.#handleMessage.bind(this);
         }
+        // The message is a request a format
         if (message.action === AdvantageMessageAction.REQUEST_FORMAT) {
             logger.info(`Received a request for the format ${message.format}.`);
             this.#morphIntoFormat(message.format!);
+            // TODO: Check if the format is valid and confirm only if so
             this.#messagePort?.postMessage({
                 type: ADVANTAGE,
                 action: AdvantageMessageAction.CONFIRM_FORMAT,
@@ -183,7 +187,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             });
         }
     };
-
+    // Private method to listen for messages
     #listenForMessages = (event: MessageEvent) => {
         if (event.data.type !== ADVANTAGE || !event.source) {
             return;
@@ -245,7 +249,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
         }
     };
-
+    // Lifecycle method
     connectedCallback() {
         window.addEventListener("message", this.#listenForMessages.bind(this));
     }

@@ -11,7 +11,6 @@ export class AdvantageUILayer extends HTMLElement {
         this.#root.append(this.#styleElem);
         this.#container = document.createElement("div");
         this.#container.id = "container";
-        // Create the first slot, this is for advantage-content
         this.#slotUIContent = document.createElement("slot");
         this.#slotUIContent.name = "advantage-ui-content";
         this.#container.appendChild(this.#slotUIContent);

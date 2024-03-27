@@ -51,7 +51,7 @@ export interface AdvantageFormat {
     name: AdvantageFormatName | string;
     description: string;
     setup: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
-    teardown: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
+    reset: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
     close?: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
 }
 

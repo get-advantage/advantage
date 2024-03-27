@@ -28,7 +28,7 @@ export const topscroll: AdvantageFormat = {
             wrapper.close();
         });
     },
-    teardown: (wrapper, ad) => {
+    reset: (wrapper, ad) => {
         ad.style.cssText = "";
         wrapper.resetCSS();
     },

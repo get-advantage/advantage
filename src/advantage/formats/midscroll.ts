@@ -25,7 +25,7 @@ export const midscroll: AdvantageFormat = {
 
         wrapper.runIntegration();
     },
-    teardown: (wrapper, ad) => {
+    reset: (wrapper, ad) => {
         ad.style.cssText = "";
         wrapper.resetCSS();
     },
