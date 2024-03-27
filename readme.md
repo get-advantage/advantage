@@ -1,15 +1,15 @@
 # Advantage
 
-At it's core, Advantage is simply a custom web component: `<advantage-wrapper></advantage-wrapper>`.
+At its essence, AdVantage is a bespoke web component: `<advantage-wrapper></advantage-wrapper>`.
 
-Wrap your ad placements/slots in the Advantage component like this:
+To leverage AdVantage, enclose your ad placements or slots within the AdVantage wrapper as follows:
 
 ```
  <advantage-wrapper>
     <div slot="advantage-content">
-        // Your ad placement here
+        <!-- Insert your ad placement here -->
     </div>
 </advantage-wrapper>
 ```
 
-Voilà! You're website can now offer multiple attractive high impact formats.
+With this simple integration, your website is now primed to support a variety of engaging, high-impact ad formats.
