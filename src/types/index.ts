@@ -57,7 +57,7 @@ export interface AdvantageFormat {
 
 export interface AdvantageFormatIntegration {
     name: AdvantageFormatName | string;
-    setup: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
+    setup: (wrapper: IAdvantageWrapper, ad: HTMLElement) => Promise<void>;
     teardown?: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
     onClose?: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
     onReset?: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;

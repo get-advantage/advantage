@@ -86,8 +86,8 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         return this.#childAd && this.#childAd.eventSource === source;
     }
     // Private method to morph the wrapper into a specific format
-    #morphIntoFormat = (format: string) => {
-        return new Promise<void>((resolve, reject) => {
+    #morphIntoFormat = async (format: string) => {
+        return new Promise<void>(async (resolve, reject) => {
             const forbiddenFormats = this.getAttribute("exclude-formats")
                 ?.split(",")
                 .map((format) => format.trim());
@@ -108,30 +108,27 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
             this.currentFormat = format;
             const formatConfig = this.#advantage.formats.get(format);
+
             if (!formatConfig) {
                 reject(
-                    `The format ${format} is not supported. No configuration was found for it.`
+                    `The format ${format} is not supported. No configuration was found.`
                 );
                 return;
             }
-            formatConfig.setup(this, this.#childAd?.ad!).then(() => {
-                this.#runIntegration();
+            try {
+                await formatConfig.setup(this, this.#childAd?.ad!);
+                await this.#advantage.formatIntegrations
+                    .get(format)
+                    ?.setup(this, this.#childAd?.ad!);
+
                 resolve();
-            });
+            } catch (error) {
+                this.reset();
+                reject(error);
+            }
         });
     };
-    // Private method that runs any provided integrations for the format
-    #runIntegration() {
-        if (!this.currentFormat) {
-            return;
-        }
-        const integration = this.#advantage.formatIntegrations.get(
-            this.currentFormat
-        );
-        if (integration) {
-            integration.setup(this, this.#childAd?.ad!);
-        }
-    }
+
     // Public method to reset the format
     reset() {
         if (!this.currentFormat) {
@@ -147,6 +144,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         if (integration && integration.onReset) {
             integration.onReset(this, this.#childAd?.ad!);
         }
+        this.uiLayer.changeContent("");
     }
     // Public method to close the format
     close() {
