@@ -30,7 +30,7 @@
 <body>
     <advantage-wrapper>
         <div slot="advantage-content">
-            <iframe src="/src/dev/topscroll.html" title="advantage-ad" width="300" height="250" style="border: 0;"
+            <iframe src="/src/dev/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0;"
                 scrolling="no"></iframe>
         </div>
     </advantage-wrapper>
@@ -129,10 +129,16 @@
             </article>
         </section>
     </div>
+    <advantage-wrapper exclude-formats="topscroll">
+        <div slot="advantage-content">
+            <iframe src="/src/dev/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0;"
+                scrolling="no"></iframe>
+        </div>
+    </advantage-wrapper>
 
     <advantage-wrapper>
         <div slot="advantage-content">
-            <iframe src="/src/dev/midscroll.html" title="advantage-ad" width="300" height="250" style="border: 0;"
+            <iframe src="/src/dev/midscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0;"
                 scrolling="no"></iframe>
         </div>
     </advantage-wrapper>

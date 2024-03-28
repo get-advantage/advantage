@@ -87,15 +87,41 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     }
     // Private method to morph the wrapper into a specific format
     #morphIntoFormat = (format: string) => {
-        this.currentFormat = format;
-        const formatConfig = this.#advantage.formats.get(format);
-        if (!formatConfig) {
-            return;
-        }
-        formatConfig.setup(this, this.#childAd?.ad!);
+        return new Promise<void>((resolve, reject) => {
+            const forbiddenFormats = this.getAttribute("exclude-formats")
+                ?.split(",")
+                .map((format) => format.trim());
+            if (forbiddenFormats) {
+                logger.info(
+                    `This wrapper does not support the formats ${forbiddenFormats}.`
+                );
+            }
+            if (forbiddenFormats && forbiddenFormats.includes(format)) {
+                logger.info(
+                    `This wrapper does not support the formats ${forbiddenFormats}.`
+                );
+                logger.info(
+                    `The format ${format} is forbidden for this wrapper.`
+                );
+                reject(`The format ${format} is forbidden for this wrapper.`);
+                return;
+            }
+            this.currentFormat = format;
+            const formatConfig = this.#advantage.formats.get(format);
+            if (!formatConfig) {
+                reject(
+                    `The format ${format} is not supported. No configuration was found for it.`
+                );
+                return;
+            }
+            formatConfig.setup(this, this.#childAd?.ad!).then(() => {
+                this.#runIntegration();
+                resolve();
+            });
+        });
     };
-    // Publich method that runs any provided integrations for the format
-    runIntegration() {
+    // Private method that runs any provided integrations for the format
+    #runIntegration() {
         if (!this.currentFormat) {
             return;
         }
@@ -177,14 +203,24 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         // The message is a request a format
         if (message.action === AdvantageMessageAction.REQUEST_FORMAT) {
             logger.info(`Received a request for the format ${message.format}.`);
-            this.#morphIntoFormat(message.format!);
-            // TODO: Check if the format is valid and confirm only if so
-            this.#messagePort?.postMessage({
-                type: ADVANTAGE,
-                action: AdvantageMessageAction.CONFIRM_FORMAT,
-                format: message.format,
-                sessionID: message.sessionID
-            });
+            this.#morphIntoFormat(message.format!)
+                .then(() => {
+                    this.#messagePort?.postMessage({
+                        type: ADVANTAGE,
+                        action: AdvantageMessageAction.FORMAT_CONFIRMED,
+                        format: message.format,
+                        sessionID: message.sessionID
+                    });
+                })
+                .catch((error) => {
+                    logger.warn(error);
+                    this.#messagePort?.postMessage({
+                        type: ADVANTAGE,
+                        action: AdvantageMessageAction.FORMAT_REJECTED,
+                        format: message.format,
+                        sessionID: message.sessionID
+                    });
+                });
         }
     };
     // Private method to listen for messages

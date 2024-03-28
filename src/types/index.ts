@@ -4,13 +4,14 @@ export enum AdvantageMessageAction {
     START_SESSION = "START_SESSION",
     CONFIRM_SESSION = "CONFIRM_SESSION",
     REQUEST_FORMAT = "REQUEST_FORMAT",
-    CONFIRM_FORMAT = "CONFIRM_FORMAT"
+    FORMAT_CONFIRMED = "FORMAT_CONFIRMED",
+    FORMAT_REJECTED = "FORMAT_REJECTED"
 }
 
 export enum AdvantageFormatName {
-    TopScroll = "TopScroll",
-    DoubleMidscroll = "DoubleMidscroll",
-    Midscroll = "Midscroll"
+    TopScroll = "topscroll",
+    DoubleMidscroll = "doublemidscroll",
+    Midscroll = "midscroll"
 }
 
 export interface AdvantageChildAd {
@@ -31,7 +32,6 @@ export interface IAdvantageWrapper extends HTMLElement {
     content: HTMLElement;
     currentFormat: AdvantageFormatName | string | null;
     uiLayer: IAdvantageUILayer;
-    runIntegration: () => void;
     applyStylesToAllChildElements: (styles: string) => void;
     insertCSS: (CSS: string) => void;
     resetCSS: () => void;
@@ -50,7 +50,7 @@ export interface IAdvantageUILayer extends HTMLElement {
 export interface AdvantageFormat {
     name: AdvantageFormatName | string;
     description: string;
-    setup: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
+    setup: (wrapper: IAdvantageWrapper, ad: HTMLElement) => Promise<void>;
     reset: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
     close?: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
 }

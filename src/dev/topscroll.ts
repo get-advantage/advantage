@@ -3,7 +3,7 @@ import { AdvantageMessageAction, AdvantageFormatName } from "../types";
 
 async function main() {
     const advantageProtocol = new AdvantageProtocol();
-    const sessionStarted = await advantageProtocol.startSession();
+    const session = await advantageProtocol.startSession();
 
     /*
     advantageProtocol.startSession().then((confirmed) => {
@@ -25,12 +25,18 @@ async function main() {
         console.log("received a message: ", message);
     });
 
-    if (sessionStarted) {
+    if (session) {
         const response = await advantageProtocol.sendMessage({
             action: AdvantageMessageAction.REQUEST_FORMAT,
             format: AdvantageFormatName.TopScroll
         });
-        console.log("response: ", response);
+        if (response?.action === AdvantageMessageAction.FORMAT_CONFIRMED) {
+            console.log("Top scroll format is ready");
+            document.body.style.opacity = "1";
+        }
+        if (response?.action === AdvantageMessageAction.FORMAT_REJECTED) {
+            console.log("Top scroll format was rejected");
+        }
     }
 
     document.querySelector("#ad")?.addEventListener("click", () => {
