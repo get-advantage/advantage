@@ -1,5 +1,6 @@
 import { AdvantageProtocol } from "../advantage-ad/advantage-protocol";
 import { AdvantageMessageAction, AdvantageFormatName } from "../types";
+import { logger } from "../utils/logging";
 
 async function main() {
     const advantageProtocol = new AdvantageProtocol();
@@ -22,7 +23,7 @@ async function main() {
     */
 
     advantageProtocol.onMessage((message) => {
-        console.log("received a message: ", message);
+        //console.log("received a message: ", message);
     });
 
     if (session) {
@@ -31,16 +32,12 @@ async function main() {
             format: AdvantageFormatName.TopScroll
         });
         if (response?.action === AdvantageMessageAction.FORMAT_CONFIRMED) {
-            console.log("Top scroll format is ready");
+            logger.info("Top scroll format is confirmed, starting ad");
             document.body.style.opacity = "1";
         }
         if (response?.action === AdvantageMessageAction.FORMAT_REJECTED) {
-            console.log("Top scroll format was rejected");
+            logger.warn("Top scroll format was rejected");
         }
     }
-
-    document.querySelector("#ad")?.addEventListener("click", () => {
-        console.log("ad clicked");
-    });
 }
 main();

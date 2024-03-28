@@ -51,16 +51,16 @@ export interface AdvantageFormat {
     name: AdvantageFormatName | string;
     description: string;
     setup: (wrapper: IAdvantageWrapper, ad: HTMLElement) => Promise<void>;
-    reset: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
-    close?: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
+    reset: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
+    close?: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
 }
 
 export interface AdvantageFormatIntegration {
     name: AdvantageFormatName | string;
     setup: (wrapper: IAdvantageWrapper, ad: HTMLElement) => Promise<void>;
-    teardown?: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
-    onClose?: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
-    onReset?: (wrapper: IAdvantageWrapper, ad: HTMLElement) => void;
+    teardown?: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
+    onClose?: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
+    onReset?: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
 }
 
 export interface AdvantageMessage {

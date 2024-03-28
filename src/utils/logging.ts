@@ -16,7 +16,7 @@ export function infoLog(...messages: any[]) {
 
 export function warnLog(...messages: string[]) {
     if (isDebugMode) {
-        console.warn("⚠️ ADVANTAGE WARNING:", ...messages);
+        console.warn("‼️ ADVANTAGE WARNING:", ...messages);
     }
 }
 

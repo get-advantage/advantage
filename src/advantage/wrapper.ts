@@ -17,6 +17,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     #slotAdvantageContent: HTMLSlotElement;
     #childAd: AdvantageChildAd | null = null;
     #messagePort: MessagePort | null = null;
+    #slotChangeRegistered = false;
     // Public fields
     container: HTMLDivElement;
     content: HTMLDivElement;
@@ -68,10 +69,28 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         this.#advantage.registerWrapper(this);
 
         this.#slotAdvantageContent.addEventListener("slotchange", () => {
-            //console.log("A new ad has been added to the slot?");
-            // A new ad has probably been added to the slot
+            if (!this.#slotChangeRegistered) {
+                //logger.info("First slot change");
+                this.#slotChangeRegistered = true;
+                return;
+            }
+            logger.error("The advantage-content slot should not be changed");
         });
+        this.#detectDOMChanges();
     }
+
+    #detectDOMChanges = () => {
+        const observer = new MutationObserver(() => {
+            logger.info(
+                "DOM changes detected. This probably means that a new ad was loaded. Time to reset the wrapper."
+            );
+            this.reset();
+        });
+        observer.observe(this, {
+            childList: true,
+            subtree: true
+        });
+    };
 
     // Getter for the content nodes
     get contentNodes() {
@@ -91,19 +110,15 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             const forbiddenFormats = this.getAttribute("exclude-formats")
                 ?.split(",")
                 .map((format) => format.trim());
-            if (forbiddenFormats) {
-                logger.info(
-                    `This wrapper does not support the formats ${forbiddenFormats}.`
-                );
-            }
             if (forbiddenFormats && forbiddenFormats.includes(format)) {
                 logger.info(
-                    `This wrapper does not support the formats ${forbiddenFormats}.`
+                    `This wrapper does not support the format(s): \"${forbiddenFormats.join(
+                        ", "
+                    )}\".`
                 );
-                logger.info(
-                    `The format ${format} is forbidden for this wrapper.`
+                reject(
+                    `The format ${format} is forbidden for this wrapper. 🛑`
                 );
-                reject(`The format ${format} is forbidden for this wrapper.`);
                 return;
             }
             this.currentFormat = format;
@@ -111,7 +126,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
             if (!formatConfig) {
                 reject(
-                    `The format ${format} is not supported. No configuration was found.`
+                    `😱 The format ${format} is not supported. No configuration was found.`
                 );
                 return;
             }
@@ -136,15 +151,16 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
         const formatConfig = this.#advantage.formats.get(this.currentFormat);
         if (formatConfig) {
-            formatConfig.reset(this, this.#childAd?.ad!);
+            formatConfig.reset(this, this.#childAd?.ad);
         }
         const integration = this.#advantage.formatIntegrations.get(
             this.currentFormat
         );
         if (integration && integration.onReset) {
-            integration.onReset(this, this.#childAd?.ad!);
+            integration.onReset(this, this.#childAd?.ad);
         }
         this.uiLayer.changeContent("");
+        this.currentFormat = null;
     }
     // Public method to close the format
     close() {
@@ -163,6 +179,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         if (integration && integration.onClose) {
             integration.onClose(this, this.#childAd?.ad!);
         }
+        this.currentFormat = null;
     }
     // Public helper method to apply styles to all child elements
     applyStylesToAllChildElements(styles: string) {
@@ -228,7 +245,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
         if (this.#childAdIsAlreadyRegistered(event.source)) {
             logger.info(
-                "A message was received from a child of the component.",
+                "A message was received from a child of the component. 👍",
                 event
             );
             this.#handleMessage(event as MessageEvent<AdvantageMessage>);
@@ -263,7 +280,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             iframes.forEach((iframe) => {
                 if (iframe.contentWindow === event.source) {
                     logger.info(
-                        "The message is from a child of the component."
+                        "The message is from a child of the component. 👍"
                     );
                     isConfirmedChildAd = true;
                     this.#childAd = {
@@ -277,9 +294,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 }
             });
             if (!isConfirmedChildAd) {
+                /*
                 logger.info(
                     "The message was rejected because it could not be confirmed as coming from a child of the component."
                 );
+                */
             }
         }
     };

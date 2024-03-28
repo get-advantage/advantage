@@ -28,8 +28,10 @@ export const midscroll: AdvantageFormat = {
             resolve();
         });
     },
-    reset: (wrapper, ad) => {
-        ad.style.cssText = "";
+    reset: (wrapper, ad?) => {
+        if (ad) {
+            ad.style.cssText = "";
+        }
         wrapper.resetCSS();
     },
     close: (wrapper) => {

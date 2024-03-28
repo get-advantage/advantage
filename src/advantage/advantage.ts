@@ -53,12 +53,14 @@ export class Advantage {
     public registerComponents() {
         customElements.define("advantage-wrapper", AdvantageWrapper);
         customElements.define("advantage-ui-layer", AdvantageUILayer);
-        logger.info("Components registered");
+        logger.info(
+            "Components registered: <advantage-wrapper>, <advantage-ui-layer> ✅"
+        );
     }
 
     // Private method to load the configuration from a remote file.
     private loadConfig(configUrl: string) {
-        logger.info(`Loading config from ${configUrl}`);
+        logger.info(`⬇ Loading config from remote URL: ${configUrl}`);
         import(/* @vite-ignore */ configUrl)
             .then((module) => {
                 this.applyConfig(module.default);
@@ -73,14 +75,14 @@ export class Advantage {
         this.config = config;
         if (config.formats) {
             this.mergeUniqueFormats(this.#defaultFormats, config.formats);
-            logger.info("Formats registered", this.formats);
+            logger.info("Format configurations applied ✅", this.formats);
         }
         if (config.formatIntegrations) {
             for (const integration of config.formatIntegrations) {
                 this.formatIntegrations.set(integration.name, integration);
             }
             logger.info(
-                "Format integrations registered",
+                "Format integrations applied ✅",
                 this.formatIntegrations
             );
         }

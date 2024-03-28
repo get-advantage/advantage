@@ -30,8 +30,10 @@ export const topscroll: AdvantageFormat = {
             resolve();
         });
     },
-    reset: (wrapper, ad) => {
-        ad.style.display = "none";
+    reset: (wrapper, ad?) => {
+        if (ad) {
+            ad.style.display = "none";
+        }
         wrapper.resetCSS();
     },
     close: (wrapper) => {

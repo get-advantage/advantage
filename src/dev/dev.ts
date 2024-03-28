@@ -14,3 +14,9 @@ advantage.configure({
     /* Or use a local configuration */
     ...localConfig
 });
+/*
+setTimeout(() => {
+    const midscroll = document.querySelector("#midscroll");
+    midscroll?.parentElement?.removeChild(midscroll);
+}, 5000);
+*/
