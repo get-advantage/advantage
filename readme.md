@@ -6,7 +6,7 @@ To leverage AdVantage, enclose your ad placements or slots within the AdVantage 
 
 ```
  <advantage-wrapper>
-    <div slot="advantage-content">
+    <div slot="advantage-ad-slot">
         <!-- Insert your ad placement here -->
     </div>
 </advantage-wrapper>

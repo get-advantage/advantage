@@ -37,12 +37,12 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
         // Create the content div
         this.content = document.createElement("div");
-        this.content.id = "content";
-        this.content.className = "advantage-content";
+        this.content.id = "ad-slot";
+        this.content.className = "advantage-ad-slot";
 
         // Create the first slot, this is for advantage-content
         this.#slotAdvantageContent = document.createElement("slot");
-        this.#slotAdvantageContent.name = "advantage-content";
+        this.#slotAdvantageContent.name = "advantage-ad-slot";
 
         // Create the second slot, this is for the ui layer
         const slotOverlay = document.createElement("slot");

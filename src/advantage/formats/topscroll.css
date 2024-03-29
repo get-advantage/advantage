@@ -12,7 +12,7 @@
     height: 80vh;
     clip: rect(0, auto, auto, 0);
 }
-#content {
+#ad-slot {
     position: fixed;
     top: 0;
     width: 100vw;
