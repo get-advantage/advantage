@@ -1,7 +1,9 @@
 import { AdvantageProtocol } from "../advantage-ad/advantage-protocol";
 import { AdvantageMessageAction, AdvantageFormatName } from "../types";
 import { logger } from "../utils/logging";
-
+/* 
+This is an example of a topscroll creative ad implementation.
+*/
 async function main() {
     const advantageProtocol = new AdvantageProtocol();
     const session = await advantageProtocol.startSession();
@@ -23,7 +25,7 @@ async function main() {
     */
 
     advantageProtocol.onMessage((message) => {
-        //console.log("received a message: ", message);
+        console.log("A topscroll ad received a message: ", message);
     });
 
     if (session) {

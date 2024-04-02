@@ -1,6 +1,12 @@
 import { Advantage } from "../advantage";
 import localConfig from "./config";
 
+/* 
+
+This is the code that the publisher should include in their website.
+
+*/
+
 const advantage = Advantage.getInstance();
 
 advantage.configure({

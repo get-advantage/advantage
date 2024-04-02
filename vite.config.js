@@ -12,7 +12,22 @@ export default defineConfig({
             ],
             formats: ["es", "cjs"],
             // the proper extensions will be added
-            fileName: (format, entryName) => `${entryName}.${format}.js`
+            fileName: (format, entryName) => {
+                if (entryName === "index" && format === "es") {
+                    return "advantage.js";
+                }
+                if (entryName === "advantage-protocol" && format === "es") {
+                    return "advantage-creative.js";
+                }
+                if (entryName === "index" && format === "cjs") {
+                    return "advantage.cjs.js";
+                }
+                if (entryName === "advantage-protocol" && format === "cjs") {
+                    return "advantage-creative.cjs.js";
+                }
+
+                return `${entryName}.${format}.js`;
+            }
         }
     }
 });

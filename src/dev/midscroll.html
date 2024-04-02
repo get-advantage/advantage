@@ -5,24 +5,33 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Advantage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100vh;
             width: 100vw;
+            background-color: grey;
         }
-        #ad {
+        .midscroll #ad {
             height: 100%;
             width: 100%;
             position: absolute;
             background-image: url('midscroll.jpg');
             background-size: cover;
         }
+        .midscroll button {
+          display: none;
+        }
     </style>
   </head>
-  <body style="opacity: 0; transition: opacity 1s ease-in;">
-    <div id="ad"></div>
+  <body style="opacity: 1; transition: opacity 1s ease-in;">
+    <div id="ad">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded absolute bottom-5 right-5">
+        Take advantage
+      </button>
+    </div>
     <script type="module" src="/src/dev/midscroll.ts"></script>
   </body>
 </html>

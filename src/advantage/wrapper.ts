@@ -131,11 +131,10 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 return;
             }
             try {
-                await formatConfig.setup(this, this.#childAd?.ad!);
                 await this.#advantage.formatIntegrations
                     .get(format)
                     ?.setup(this, this.#childAd?.ad!);
-
+                await formatConfig.setup(this, this.#childAd?.ad!);
                 resolve();
             } catch (error) {
                 this.reset();
