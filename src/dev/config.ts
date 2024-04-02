@@ -26,7 +26,7 @@ export default {
     ],
     formatIntegrations: [
         {
-            name: AdvantageFormatName.TopScroll,
+            format: AdvantageFormatName.TopScroll,
             setup: () => {
                 return new Promise<void>((resolve, reject) => {
                     const queryParams = new URLSearchParams(

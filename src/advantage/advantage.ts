@@ -79,7 +79,7 @@ export class Advantage {
         }
         if (config.formatIntegrations) {
             for (const integration of config.formatIntegrations) {
-                this.formatIntegrations.set(integration.name, integration);
+                this.formatIntegrations.set(integration.format, integration);
             }
             logger.info(
                 "Format integrations applied ✅",
