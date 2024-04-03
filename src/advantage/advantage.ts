@@ -13,7 +13,7 @@ import { defaultFormats } from "./formats";
 export class Advantage {
     private static instance: Advantage;
     config: AdvantageConfig | null = null;
-    #defaultFormats: AdvantageFormat[] = defaultFormats;
+    defaultFormats: AdvantageFormat[] = defaultFormats;
     #wrappers: IAdvantageWrapper[] = [];
     formats: Map<string, AdvantageFormat> = new Map();
     formatIntegrations: Map<string, AdvantageFormatIntegration> = new Map();
@@ -74,7 +74,7 @@ export class Advantage {
     private applyConfig(config: AdvantageConfig) {
         this.config = config;
         if (config.formats) {
-            this.mergeUniqueFormats(this.#defaultFormats, config.formats);
+            this.mergeUniqueFormats(this.defaultFormats, config.formats);
             logger.info("Format configurations applied ✅", this.formats);
         }
         if (config.formatIntegrations) {

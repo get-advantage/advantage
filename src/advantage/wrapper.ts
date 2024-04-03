@@ -122,13 +122,19 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 return;
             }
             this.currentFormat = format;
-            const formatConfig = this.#advantage.formats.get(format);
+            let formatConfig = this.#advantage.formats.get(format);
 
             if (!formatConfig) {
-                reject(
-                    `😱 The format ${format} is not supported. No configuration was found.`
+                formatConfig = this.#advantage.defaultFormats.find(
+                    (f) => f.name === format
                 );
-                return;
+                if (!formatConfig) {
+                    reject(
+                        `😱 The format ${format} is not supported. No configuration was found.`
+                    );
+                    this.currentFormat = null;
+                    return;
+                }
             }
             try {
                 await this.#advantage.formatIntegrations
