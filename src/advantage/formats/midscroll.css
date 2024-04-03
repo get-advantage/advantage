@@ -11,7 +11,7 @@
     top: 0;
     width: 100vw;
     height: 100vh;
-    clip: rect(0, auto, auto, 0);
+    clip-path: inset(0px 0px 0px 0px);
 }
 #ad-slot {
     top: 0;

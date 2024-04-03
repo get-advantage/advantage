@@ -10,7 +10,7 @@
     top: 0;
     width: 100vw;
     height: 80vh;
-    clip: rect(0, auto, auto, 0);
+    clip-path: inset(0px 0px 0px 0px);
 }
 #ad-slot {
     position: fixed;
