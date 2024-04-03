@@ -4,7 +4,7 @@
     width: 32px;
     height: 32px;
     top: 16px;
-    right: 16px;
+    right: 32px;
     background-image: url("data:image/svg+xml,%3Csvg id='Layer_1' data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M21.989,3.187,18.813.01,11,7.824,3.174,0,0,3.174,7.824,11,.01,18.813l3.177,3.176L11,14.176,18.826,22,22,18.826,14.176,11Z' fill='%23fff'/%3E%3C/svg%3E");
     background-size: 34% auto;
     background-color: rgba(0, 0, 0, 0.4);

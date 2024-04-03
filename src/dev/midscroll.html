@@ -1,37 +1,59 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Advantage</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            width: 100vw;
-            background-color: grey;
-        }
-        .midscroll #ad {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            background-image: url('midscroll.jpg');
-            background-size: cover;
-        }
-        .midscroll button {
-          display: none;
-        }
-    </style>
-  </head>
-  <body style="opacity: 1; transition: opacity 1s ease-in;">
-    <div id="ad">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded absolute bottom-5 right-5">
-        Take advantage
-      </button>
-    </div>
-    <script type="module" src="/src/dev/midscroll.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advantage</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: grey;
+    }
+
+    #ad {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      background-image: url('midscroll.jpg');
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    .midscroll button {
+      display: none;
+    }
+  </style>
+</head>
+
+<body style="opacity: 1; transition: opacity 1s ease-in;">
+  <div id="ad">
+    <!--
+    <ins class="mdtn-tag" style="display:inline-block;width:100vw;height:100vh;" data-pid="clujj2d31001613korglrau5g"
+    data-did="trdsk" data-click-tag="%%TTD_CLK_ESC%%" data-correlator="" data-gdpr-applies="${GDPR}"
+    data-gdpr-consent="${GDPR_CONSENT_486}">
+    <script type="module"
+      src="https://d36sok35gyahmq.cloudfront.net/adsbymadington.js?pid=clujj2d31001613korglrau5g"></script>
+    </ins>
+    -->
+    <ins class="mdtn-tag" style="display:inline-block;width:100vw;height:100vh;" data-pid="clujj9qrk002413ko2eow61ns"
+      data-did="trdsk" data-click-tag="%%TTD_CLK_ESC%%" data-correlator="" data-gdpr-applies="${GDPR}"
+      data-gdpr-consent="${GDPR_CONSENT_486}">
+      <script type="module"
+        src="https://d36sok35gyahmq.cloudfront.net/adsbymadington.js?pid=clujj9qrk002413ko2eow61ns"></script>
+    </ins>
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded absolute bottom-5 right-5">
+      Take advantage
+    </button>
+  </div>
+  <script type="module" src="/src/dev/midscroll.ts"></script>
+</body>
+
 </html>
