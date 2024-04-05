@@ -4,7 +4,7 @@ export const ADVANTAGE = "ADVANTAGE" as ADVANTAGE_MESSAGE;
 
 export function sendMessageAndOpenChannel(
     message: Partial<AdvantageMessage>,
-    intervalTime: number = 1000,
+    retryInterval: number = 100,
     maxAttempts: number = 25
 ): Promise<{ reply: AdvantageMessage; messageChannel: MessageChannel }> {
     let attempts = 0;
@@ -41,17 +41,17 @@ export function sendMessageAndOpenChannel(
         sendMessage();
 
         // Set up the retry interval
-        const retryInterval = setInterval(() => {
+        const retryIntervalRef = setInterval(() => {
             if (attempts < maxAttempts && !replyReceived) {
                 sendMessage();
             } else {
                 // Clean up and reject promise
-                clearInterval(retryInterval);
+                clearInterval(retryIntervalRef);
                 if (!replyReceived) {
                     reject(new Error("Max attempts reached without response"));
                 }
             }
-        }, intervalTime);
+        }, retryInterval);
     });
 }
 
