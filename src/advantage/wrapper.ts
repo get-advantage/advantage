@@ -1,13 +1,9 @@
 import { Advantage } from "./advantage";
-import {
-    IAdvantageUILayer,
-    IAdvantageWrapper,
-    AdvantageChildAd,
-    AdvantageMessage,
-    AdvantageMessageAction
-} from "../types";
+import { IAdvantageUILayer, IAdvantageWrapper } from "../types";
 
-import { logger, collectIframes, ADVANTAGE, traverseNodes } from "../utils";
+import { logger, traverseNodes } from "../utils";
+
+import { AdvantageMessageHandler } from "../advantage-protocol/publisher";
 
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     // Private fields
@@ -15,14 +11,13 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     #root: ShadowRoot;
     #advantage: Advantage;
     #slotAdvantageContent: HTMLSlotElement;
-    #childAd: AdvantageChildAd | null = null;
-    #messagePort: MessagePort | null = null;
     #slotChangeRegistered = false;
     // Public fields
     container: HTMLDivElement;
     content: HTMLDivElement;
     uiLayer: IAdvantageUILayer;
     currentFormat: string | null = null;
+    messageHandler: AdvantageMessageHandler;
 
     constructor() {
         super();
@@ -77,14 +72,21 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             logger.error("The advantage-content slot should not be changed");
         });
         this.#detectDOMChanges();
+        this.messageHandler = new AdvantageMessageHandler({
+            parentElement: this,
+            messageValidator: this.#advantage.config?.messageValidator
+        });
     }
 
     #detectDOMChanges = () => {
         const observer = new MutationObserver(() => {
-            logger.info(
-                "DOM changes detected. This probably means that a new ad was loaded. Time to reset the wrapper."
-            );
-            this.reset();
+            if (this.currentFormat) {
+                logger.info(
+                    "DOM changes detected. This probably means that a new ad was loaded. Time to reset the wrapper."
+                );
+
+                this.reset();
+            }
         });
         observer.observe(this, {
             childList: true,
@@ -97,15 +99,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         return this.#slotAdvantageContent.assignedNodes() ?? [];
     }
 
-    // Private method to check if the child ad is already registered
-    #childAdIsAlreadyRegistered(source: MessageEventSource | null) {
-        if (!source) {
-            return false;
-        }
-        return this.#childAd && this.#childAd.eventSource === source;
-    }
     // Private method to morph the wrapper into a specific format
-    #morphIntoFormat = async (format: string) => {
+    morphIntoFormat = async (format: string) => {
+        console.log("MORPH INTO FORMAT");
         return new Promise<void>(async (resolve, reject) => {
             const forbiddenFormats = this.getAttribute("exclude-formats")
                 ?.split(",")
@@ -139,8 +135,8 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             try {
                 await this.#advantage.formatIntegrations
                     .get(format)
-                    ?.setup(this, this.#childAd?.ad!);
-                await formatConfig.setup(this, this.#childAd?.ad!);
+                    ?.setup(this, this.messageHandler.ad?.iframe);
+                await formatConfig.setup(this, this.messageHandler.ad?.iframe);
                 resolve();
             } catch (error) {
                 this.reset();
@@ -156,13 +152,13 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
         const formatConfig = this.#advantage.formats.get(this.currentFormat);
         if (formatConfig) {
-            formatConfig.reset(this, this.#childAd?.ad);
+            formatConfig.reset(this, this.messageHandler?.ad?.iframe);
         }
         const integration = this.#advantage.formatIntegrations.get(
             this.currentFormat
         );
         if (integration && integration.onReset) {
-            integration.onReset(this, this.#childAd?.ad);
+            integration.onReset(this, this.messageHandler?.ad?.iframe);
         }
         this.uiLayer.changeContent("");
         this.currentFormat = null;
@@ -175,14 +171,14 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         const formatConfig = this.#advantage.formats.get(this.currentFormat);
         if (formatConfig) {
             formatConfig.close
-                ? formatConfig.close(this, this.#childAd?.ad!)
+                ? formatConfig.close(this, this.messageHandler?.ad?.iframe)
                 : undefined;
         }
         const integration = this.#advantage.formatIntegrations.get(
             this.currentFormat
         );
         if (integration && integration.onClose) {
-            integration.onClose(this, this.#childAd?.ad!);
+            integration.onClose(this, this.messageHandler?.ad?.iframe);
         }
         this.currentFormat = null;
     }
@@ -207,108 +203,6 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     resetCSS() {
         this.#styleElem.textContent = "";
     }
-    // Private method to handle messages
-    #handleMessage = (event: MessageEvent<AdvantageMessage>) => {
-        const message = event.data;
-        // The message is a request to start a session
-        if (message.action === AdvantageMessageAction.START_SESSION) {
-            this.#messagePort = event.ports[0];
-            event.ports[0].postMessage({
-                type: ADVANTAGE,
-                action: AdvantageMessageAction.CONFIRM_SESSION,
-                sessionID: message.sessionID
-            });
-            event.ports[0].onmessage = this.#handleMessage.bind(this);
-        }
-        // The message is a request a format
-        if (message.action === AdvantageMessageAction.REQUEST_FORMAT) {
-            logger.info(`Received a request for the format ${message.format}.`);
-            this.#morphIntoFormat(message.format!)
-                .then(() => {
-                    this.#messagePort?.postMessage({
-                        type: ADVANTAGE,
-                        action: AdvantageMessageAction.FORMAT_CONFIRMED,
-                        format: message.format,
-                        sessionID: message.sessionID
-                    });
-                })
-                .catch((error) => {
-                    logger.warn(error);
-                    this.#messagePort?.postMessage({
-                        type: ADVANTAGE,
-                        action: AdvantageMessageAction.FORMAT_REJECTED,
-                        format: message.format,
-                        sessionID: message.sessionID
-                    });
-                });
-        }
-    };
-    // Private method to listen for messages
-    #listenForMessages = (event: MessageEvent) => {
-        if (event.data.type !== ADVANTAGE || !event.source) {
-            return;
-        }
-        if (this.#childAdIsAlreadyRegistered(event.source)) {
-            logger.info(
-                "A message was received from a child of the component. 👍",
-                event
-            );
-            this.#handleMessage(event as MessageEvent<AdvantageMessage>);
-            return;
-        }
-
-        if (this.#advantage.config?.messageValidator) {
-            logger.info(
-                "Let the provided messageValidator decide if the message is valid and from a child of the component."
-            );
-            if (this.#advantage.config.messageValidator(event)) {
-                this.#childAd = {
-                    eventSource: event.source!,
-                    port: event.ports[0]
-                };
-                this.#handleMessage(event);
-                return;
-            } else {
-                logger.info(
-                    "The message was not validated by the messageValidator."
-                );
-                return;
-            }
-        } else {
-            const iframes = this.contentNodes.flatMap((node) =>
-                collectIframes(node)
-            );
-            if (iframes.length === 0) {
-                return;
-            }
-            let isConfirmedChildAd = false;
-            iframes.forEach((iframe) => {
-                if (iframe.contentWindow === event.source) {
-                    logger.info(
-                        "The message is from a child of the component. 👍"
-                    );
-                    isConfirmedChildAd = true;
-                    this.#childAd = {
-                        ad: iframe,
-                        eventSource: event.source!,
-                        port: event.ports[0]
-                    };
-                    this.#handleMessage(
-                        event as MessageEvent<AdvantageMessage>
-                    );
-                }
-            });
-            if (!isConfirmedChildAd) {
-                /*
-                logger.info(
-                    "The message was rejected because it could not be confirmed as coming from a child of the component."
-                );
-                */
-            }
-        }
-    };
     // Lifecycle method
-    connectedCallback() {
-        window.addEventListener("message", this.#listenForMessages.bind(this));
-    }
+    connectedCallback() {}
 }

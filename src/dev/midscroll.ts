@@ -1,4 +1,4 @@
-import { AdvantageProtocol } from "../advantage-ad/advantage-protocol";
+import { AdvantageProtocol } from "../advantage-protocol/creative";
 import { AdvantageMessageAction, AdvantageFormatName } from "../types";
 import { logger } from "../utils/logging";
 

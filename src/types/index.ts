@@ -14,17 +14,20 @@ export enum AdvantageFormatName {
     Midscroll = "midscroll"
 }
 
-export interface AdvantageChildAd {
+export interface AdvantageAd {
     eventSource: MessageEventSource;
     port: MessagePort;
-    ad?: HTMLElement;
+    iframe?: HTMLElement;
 }
 
 export interface AdvantageConfig {
     configUrlResolver?: () => string;
     formats?: AdvantageFormat[];
     formatIntegrations?: AdvantageFormatIntegration[];
-    messageValidator?: (message: MessageEvent) => boolean;
+    messageValidator?: (
+        parentElement: HTMLElement | IAdvantageWrapper,
+        message: MessageEvent<any>
+    ) => boolean;
 }
 
 export interface IAdvantageWrapper extends HTMLElement {
@@ -32,6 +35,8 @@ export interface IAdvantageWrapper extends HTMLElement {
     content: HTMLElement;
     currentFormat: AdvantageFormatName | string | null;
     uiLayer: IAdvantageUILayer;
+    contentNodes: Node[];
+    morphIntoFormat: (format: AdvantageFormatName | string) => Promise<void>;
     applyStylesToAllChildElements: (styles: string) => void;
     insertCSS: (CSS: string) => void;
     resetCSS: () => void;
@@ -50,17 +55,23 @@ export interface IAdvantageUILayer extends HTMLElement {
 export interface AdvantageFormat {
     name: AdvantageFormatName | string;
     description: string;
-    setup: (wrapper: IAdvantageWrapper, ad: HTMLElement) => Promise<void>;
-    reset: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
-    close?: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
+    setup: (
+        wrapper: IAdvantageWrapper,
+        adIframe?: HTMLElement
+    ) => Promise<void>;
+    reset: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    close?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
 }
 
 export interface AdvantageFormatIntegration {
     format: AdvantageFormatName | string;
-    setup: (wrapper: IAdvantageWrapper, ad: HTMLElement) => Promise<void>;
-    teardown?: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
-    onClose?: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
-    onReset?: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => void;
+    setup: (
+        wrapper: IAdvantageWrapper,
+        adIframe?: HTMLElement
+    ) => Promise<void>;
+    teardown?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    onClose?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    onReset?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
 }
 
 export interface AdvantageMessage {
