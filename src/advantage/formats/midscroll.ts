@@ -9,7 +9,10 @@ export const midscroll: AdvantageFormat = {
     setup: (wrapper, ad) => {
         return new Promise((resolve) => {
             wrapper.insertCSS(styles);
-            ad.style.cssText = `display: block; width: 100vw; height: 100vh;`;
+
+            if (ad) {
+                ad.style.cssText = `display: block; width: 100vw; height: 100vh;`;
+            }
 
             const uiContainer = document.createElement("div");
             uiContainer.id = "ui-container";

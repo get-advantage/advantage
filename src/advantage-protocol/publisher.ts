@@ -6,11 +6,11 @@ import {
 } from "../types";
 import { collectIframes, logger, ADVANTAGE } from "../utils";
 
-export class AdvantageMessageHandler {
+export class AdvantageAdSlotResponder {
     #element: HTMLElement | IAdvantageWrapper;
     #messageValidator:
         | ((
-              parentElement: HTMLElement | IAdvantageWrapper,
+              adSlotElement: HTMLElement | IAdvantageWrapper,
               message: MessageEvent<any>
           ) => boolean)
         | undefined = undefined;
@@ -21,7 +21,7 @@ export class AdvantageMessageHandler {
         | undefined = undefined;
     ad: AdvantageAd | null = null;
     constructor(config: {
-        parentElement: HTMLElement;
+        adSlotElement: HTMLElement;
         formatRequestHandler?: (
             format: string,
             parentElement: HTMLElement
@@ -31,10 +31,10 @@ export class AdvantageMessageHandler {
             message: MessageEvent<any>
         ) => boolean;
     }) {
-        this.#element = config.parentElement;
+        this.#element = config.adSlotElement;
         this.#formatRequestHandler = config.formatRequestHandler;
         this.#messageValidator = config.messageValidator;
-        this.#isWrapper = this.#isAdvantageWrapper(config.parentElement);
+        this.#isWrapper = this.#isAdvantageWrapper(config.adSlotElement);
         // Bind the listenForMessages function to ensure 'this' context
         this.#listenForMessages = this.#listenForMessages.bind(this);
         window.addEventListener("message", this.#listenForMessages);

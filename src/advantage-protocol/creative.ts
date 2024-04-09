@@ -4,7 +4,7 @@ import {
 } from "../utils/messaging";
 import { AdvantageMessage, AdvantageMessageAction } from "../types";
 
-export class AdvantageProtocol {
+export class AdvantageCreativeMessenger {
     #messageChannel: MessageChannel | null = null;
     #sessionID: string;
     #validSession = false;

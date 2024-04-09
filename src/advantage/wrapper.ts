@@ -3,7 +3,7 @@ import { IAdvantageUILayer, IAdvantageWrapper } from "../types";
 
 import { logger, traverseNodes } from "../utils";
 
-import { AdvantageMessageHandler } from "../advantage-protocol/publisher";
+import { AdvantageAdSlotResponder } from "../advantage-protocol/publisher";
 
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     // Private fields
@@ -17,7 +17,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     content: HTMLDivElement;
     uiLayer: IAdvantageUILayer;
     currentFormat: string | null = null;
-    messageHandler: AdvantageMessageHandler;
+    messageHandler: AdvantageAdSlotResponder;
 
     constructor() {
         super();
@@ -72,8 +72,8 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             logger.error("The advantage-content slot should not be changed");
         });
         this.#detectDOMChanges();
-        this.messageHandler = new AdvantageMessageHandler({
-            parentElement: this,
+        this.messageHandler = new AdvantageAdSlotResponder({
+            adSlotElement: this,
             messageValidator: this.#advantage.config?.messageValidator
         });
     }

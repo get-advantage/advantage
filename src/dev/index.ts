@@ -1,5 +1,5 @@
 import { Advantage } from "../advantage";
-import { AdvantageMessageHandler } from "../advantage-protocol/publisher";
+import { AdvantageAdSlotResponder } from "../advantage-protocol/publisher";
 import localConfig from "./config";
 
 /* 
@@ -23,13 +23,12 @@ advantage.configure({
 });
 
 // Advantage Publisher API
-new AdvantageMessageHandler({
-    parentElement: document.querySelector("#custom")!,
+new AdvantageAdSlotResponder({
+    adSlotElement: document.querySelector("#custom")!,
     formatRequestHandler: (format, elem) => {
         console.log("Requesting format", format, elem);
     }
 });
-
 /*
 setTimeout(() => {
     const midscroll = document.querySelector("#midscroll");
