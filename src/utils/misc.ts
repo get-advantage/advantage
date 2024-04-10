@@ -1,3 +1,8 @@
+/**
+ * Collects all the iframes within a given node and its children.
+ * @param node - The node to start collecting iframes from.
+ * @returns An array of HTMLIFrameElement objects representing the iframes found.
+ */
 export const collectIframes = (node: Node): HTMLIFrameElement[] => {
     let iframes: HTMLIFrameElement[] = [];
 
@@ -19,6 +24,11 @@ export const collectIframes = (node: Node): HTMLIFrameElement[] => {
     return iframes;
 };
 
+/**
+ * Traverses the DOM tree starting from a given node and applies a function to each element node.
+ * @param node - The starting node for traversal.
+ * @param func - The function to be applied to each element node.
+ */
 export const traverseNodes = (
     node: Node,
     func: (node: HTMLElement) => void

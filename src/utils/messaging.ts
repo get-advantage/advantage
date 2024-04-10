@@ -2,6 +2,13 @@ import { AdvantageMessage, ADVANTAGE_MESSAGE } from "../types";
 
 export const ADVANTAGE = "ADVANTAGE" as ADVANTAGE_MESSAGE;
 
+/**
+ * Sends a message and opens a message channel to receive the reply.
+ * @param message - The message to send.
+ * @param retryInterval - The interval (in milliseconds) between retry attempts. Default is 100ms.
+ * @param maxAttempts - The maximum number of retry attempts. Default is 25.
+ * @returns A promise that resolves with the reply and the message channel.
+ */
 export function sendMessageAndOpenChannel(
     message: Partial<AdvantageMessage>,
     retryInterval: number = 100,
@@ -55,6 +62,14 @@ export function sendMessageAndOpenChannel(
     });
 }
 
+/**
+ * Sends a message and awaits a response.
+ *
+ * @param message - The message to send.
+ * @param messageChannel - The message channel to use for communication.
+ * @param timeout - The timeout in milliseconds.
+ * @returns A promise that resolves with the response message.
+ */
 export function sendMessageAndAwaitResponse(
     message: Partial<AdvantageMessage>,
     messageChannel: MessageChannel,

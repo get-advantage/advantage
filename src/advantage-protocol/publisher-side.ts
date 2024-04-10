@@ -6,6 +6,27 @@ import {
 } from "../types";
 import { collectIframes, logger, ADVANTAGE } from "../utils";
 
+/**
+ * AdvantageAdSlotResponder can be used by website owners/publishers if they already have their own custom implementations of high impact ad formats
+ * or if they do not want to use the AdvantageWrapper component for some reason. It takes care of listening for messages from Advantage ads and handling them.
+ * It will handle the creation of a new session, format requests, and format confirmations.
+ * @public
+ * @remarks
+ * This class is internally used by the AdvantageWrapper component to handle messages from Advantage ads. It can also be used by website owners/publishers to handle messages from ads if they have their own custom implementations of high-impact ad formats.
+ *
+ * @example
+ * To handle messages from Advantage ads in a custom implementation, you can create an instance of the AdvantageAdSlotResponder class and pass in the configuration object.
+ * ```typescript
+ * new AdvantageAdSlotResponder({
+ *      adSlotElement: document.querySelector("#the-ad-slot-element")!,
+ *      formatRequestHandler: (format, parentElement) => {
+ *           return new Promise((resolve, reject) => {
+ *              // handle the format request here, e.g. by transforming the parent element into the requested format
+ *              // resolve the promise if the format transformation was succesful or reject it if it failed
+ *          });
+ * });
+ * ```
+ */
 export class AdvantageAdSlotResponder {
     #element: HTMLElement | IAdvantageWrapper;
     #messageValidator:
@@ -17,15 +38,23 @@ export class AdvantageAdSlotResponder {
     #isWrapper: boolean;
     #messagePort: MessagePort | null = null;
     #formatRequestHandler:
-        | ((format: string, parentElement: HTMLElement) => void)
+        | ((format: string, parentElement: HTMLElement) => Promise<void>)
         | undefined = undefined;
     ad: AdvantageAd | null = null;
+    /**
+     * Constructs a new instance of the AdvantageAdSlotResponder, initializing it with the provided configuration.
+     *
+     * @param config - The configuration object for the class instance.
+     * @param config.adSlotElement - The HTML element that is/contains the ad slot where Advantage ads will loaded/displayed.
+     * @param config.formatRequestHandler - An optional function that handles format requests. It takes a format string and a parent element as arguments. This function can be used to customize the handling of different ad formats.
+     * @param config.messageValidator - An optional function that validates incoming messages. It takes a parent element (which can be an `HTMLElement` or an `IAdvantageWrapper`) and the message event as arguments. It should return a boolean indicating whether the message is valid.
+     */
     constructor(config: {
         adSlotElement: HTMLElement;
         formatRequestHandler?: (
             format: string,
             parentElement: HTMLElement
-        ) => void;
+        ) => Promise<void>;
         messageValidator?: (
             parentElement: HTMLElement | IAdvantageWrapper,
             message: MessageEvent<any>
@@ -39,7 +68,10 @@ export class AdvantageAdSlotResponder {
         this.#listenForMessages = this.#listenForMessages.bind(this);
         window.addEventListener("message", this.#listenForMessages);
     }
-
+    /**
+     * This method handles incoming messages from Advantage ads and processes them accordingly.
+     * @internal
+     */
     #handleMessage = async (event: MessageEvent<AdvantageMessage>) => {
         // Handle the message here
         const message = event.data;
@@ -67,21 +99,34 @@ export class AdvantageAdSlotResponder {
                         });
                     });
             } else {
-                console.log(
-                    "NOT A WRAPPER! REQUEST FOR FORMAT",
-                    message.format
-                );
                 if (this.#formatRequestHandler) {
                     console.log(
                         "Sending format request",
                         this.#formatRequestHandler
                     );
-                    this.#formatRequestHandler(message.format!, this.#element);
+                    this.#formatRequestHandler(message.format!, this.#element)
+                        .then(() => {
+                            this.#messagePort?.postMessage({
+                                type: ADVANTAGE,
+                                action: AdvantageMessageAction.FORMAT_CONFIRMED,
+                                sessionID: message.sessionID
+                            });
+                        })
+                        .catch(() => {
+                            this.#messagePort?.postMessage({
+                                type: ADVANTAGE,
+                                action: AdvantageMessageAction.FORMAT_REJECTED,
+                                sessionID: message.sessionID
+                            });
+                        });
                 }
             }
         }
     };
-
+    /**
+     * Checks if the message is from an ad that is already registered
+     * @internal
+     */
     #childAdIsAlreadyRegistered(source: MessageEventSource | null) {
         if (!source) {
             return false;
@@ -89,7 +134,10 @@ export class AdvantageAdSlotResponder {
         return this.ad && this.ad.eventSource === source;
     }
 
-    // Register a window message listener and validate that the message is from a child of #element
+    /**
+     * This method listens for incoming messages from Advantage ads and processes them accordingly.
+     * @internal
+     */
     #listenForMessages = (event: MessageEvent) => {
         if (this.#childAdIsAlreadyRegistered(event.source)) {
             logger.info(
@@ -137,7 +185,10 @@ export class AdvantageAdSlotResponder {
             }
         }
     };
-
+    /**
+     * Checks if the provided element is an instance of IAdvantageWrapper.
+     * @internal
+     */
     #isAdvantageWrapper(
         element: HTMLElement | IAdvantageWrapper
     ): element is IAdvantageWrapper {

@@ -1,4 +1,4 @@
-import { AdvantageCreativeMessenger } from "../advantage-protocol/creative";
+import { AdvantageCreativeMessenger } from "../advantage-protocol/creative-side";
 import { AdvantageMessageAction, AdvantageFormatName } from "../types";
 import { logger } from "../utils/logging";
 
@@ -8,13 +8,15 @@ This is an example of a midscroll creative ad implementation.
 
 async function main() {
     document.querySelector("button")?.addEventListener("click", async () => {
-        const creativeMessenger = new AdvantageCreativeMessenger();
-        const session = await creativeMessenger.startSession();
-        creativeMessenger.onMessage((message) => {
+        const advantageMessenger = new AdvantageCreativeMessenger();
+        const session = await advantageMessenger.startSession();
+
+        advantageMessenger.onMessage((message) => {
             console.log("The midscroll ad received a message: ", message);
         });
+
         if (session) {
-            const response = await creativeMessenger.sendMessage({
+            const response = await advantageMessenger.sendMessage({
                 action: AdvantageMessageAction.REQUEST_FORMAT,
                 format: AdvantageFormatName.Midscroll
             });

@@ -11,7 +11,10 @@ export const topscroll: AdvantageFormat = {
             // Inser the CSS for the top scroll format
             wrapper.insertCSS(topscrollCSS);
             // Set the styles for the ad iframe
-            ad.style.cssText = `display: block; width: 100vw; height: 80vh;`;
+            if (ad) {
+                ad.style.cssText = `display: block; width: 100vw; height: 80vh;`;
+            }
+
             // Change the content of the UI layer
             const uiContainer = document.createElement("div");
             uiContainer.id = "ui-container";

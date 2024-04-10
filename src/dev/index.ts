@@ -1,5 +1,5 @@
 import { Advantage } from "../advantage";
-import { AdvantageAdSlotResponder } from "../advantage-protocol/publisher";
+import { AdvantageAdSlotResponder } from "../advantage-protocol/publisher-side";
 import localConfig from "./config";
 
 /* 
@@ -26,7 +26,10 @@ advantage.configure({
 new AdvantageAdSlotResponder({
     adSlotElement: document.querySelector("#custom")!,
     formatRequestHandler: (format, elem) => {
-        console.log("Requesting format", format, elem);
+        return new Promise((resolve) => {
+            console.log("Received format request: ", format, elem);
+            resolve();
+        });
     }
 });
 /*

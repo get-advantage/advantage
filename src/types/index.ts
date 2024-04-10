@@ -9,9 +9,9 @@ export enum AdvantageMessageAction {
 }
 
 export enum AdvantageFormatName {
-    TopScroll = "topscroll",
-    DoubleMidscroll = "doublemidscroll",
-    Midscroll = "midscroll"
+    TopScroll = "TOPSCROLL",
+    DoubleMidscroll = "DOUBLE_MIDSCROLL",
+    Midscroll = "MIDSCROLL"
 }
 
 export interface AdvantageAd {

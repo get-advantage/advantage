@@ -3,7 +3,7 @@ import { IAdvantageUILayer, IAdvantageWrapper } from "../types";
 
 import { logger, traverseNodes } from "../utils";
 
-import { AdvantageAdSlotResponder } from "../advantage-protocol/publisher";
+import { AdvantageAdSlotResponder } from "../advantage-protocol/publisher-side";
 
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     // Private fields
