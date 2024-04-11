@@ -1,1 +1,1 @@
-# Code of Conduct
+<!--@include: ../../CODE-OF-CONDUCT.md-->

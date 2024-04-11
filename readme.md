@@ -124,3 +124,7 @@ if (session) {
 ```
 
 The communication between the banner creative and Advantage is safe by default and can be done using SafeFrames (cross domain iframes);
+
+## Code of Conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](CODE-OF-CONDUCT.md). By participating in this project you agree to abide by its terms.
