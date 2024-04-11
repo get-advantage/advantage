@@ -10,6 +10,10 @@ import type {
 } from "../types";
 import { defaultFormats } from "./formats";
 
+/**
+ * The main class for the Advantage library. This class is a singleton and is used to configure the library, register wrappers, and register custom elements.
+ * @public
+ */
 export class Advantage {
     private static instance: Advantage;
     config: AdvantageConfig | null = null;

@@ -1,11 +1,10 @@
-// This code moves an element into a wrapper structure
-// and creates a new slot in the wrapper structure.
-// The wrapper structure is inserted into the DOM before the element.
-// The code also adds an attribute to the wrapper structure
-// if the function is passed an array of allowed formats.
-// The element is passed to the function as a selector string.
-// The code is used to wrap ad slots.
-
+/**
+ * Moves an element into a wrapper structure and creates a new slot in the wrapper structure.
+ * The wrapper structure is inserted into the DOM before the element.
+ * If the function is passed an array of formats that should not be allowed for this wrapper, it adds an attribute to the wrapper structure.
+ * @param target - The target element or selector string.
+ * @param excludedFormats - An optional array of excluded formats.
+ */
 export function advantageWrapAdSlotElement(
     target: HTMLElement | string,
     excludedFormats?: string[]

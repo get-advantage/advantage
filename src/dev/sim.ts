@@ -1,4 +1,4 @@
-import { IAdvantageWrapper } from "../types";
+//import { IAdvantageWrapper } from "../types";
 import { Advantage } from "../advantage";
 import localConfig from "./config";
 

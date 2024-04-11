@@ -1,12 +1,16 @@
 /** @type {import('typedoc').TypeDocOptions} */
 export default {
-    plugin: ["typedoc-plugin-markdown"],
+    plugin: ["typedoc-plugin-markdown", "typedoc-plugin-no-inherit"],
     entryPoints: [
         "./src/types/index.ts",
         "./src/utils/misc.ts",
         "./src/utils/messaging.ts",
         "./src/messaging/publisher-side.ts",
-        "./src/messaging/creative-side.ts"
+        "./src/messaging/creative-side.ts",
+        "./src/advantage/advantage.ts",
+        "./src/advantage/wrapper.ts",
+        "./src/advantage/wrapping-helper.ts",
+        "./src/advantage/ui-layer.ts"
     ],
     out: "www/api",
     readme: "none",

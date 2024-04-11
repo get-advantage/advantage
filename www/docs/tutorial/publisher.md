@@ -86,15 +86,38 @@ Your ad slot is now Advantage enabled!
 
 ### Step 5: Configuration
 
-More coming here soon...
-::: code-group
+Advantage comes pre-built with a number of high-impact formats (detailed list and definitions coming soon) and they are included in the `<advantage-wrapper>`. These formats are pre-configured with the necessary styling out-of-the-box. Integration with your site might still be necessary for optimal performance. You can customize the integration through settings passed to Advantage. Pass your custom integrations in the `formatIntegrations` array. When the `<advantage-wrapper>` is about to transform into a format, it will run the provided `setup` function, so that you can make the necessary adjustments.
 
-```ts [local config]
+```ts
+const advantage = Advantage.getInstance();
+
 advantage.configure({
-    // configure Advantage with a local configuration object
-    ...localConfig
+    formatIntegrations: [
+        {
+            format: AdvantageFormatName.TopScroll,
+            /**
+             * This function will be run before a transformation into a high-impact format, allowing you to make adjustments that might be necessary
+             * */
+            setup: (
+                wrapper: IAdvantageWrapper,
+                adIframe: HTMLIFrameElement
+            ) => {
+                return new Promise<void>((resolve, reject) => {
+                    /* Setup your site to accomodate the topscroll format here.
+                    Perhaps you might need to hide a sticky header menu or similar. */
+
+                    // call resolve when done
+                    resolve();
+                });
+            }
+        }
+    ]
 });
 ```
+
+#### Remote or local configuration
+
+If you don't want to bundle your configuration it is possible to make Advantage fetch it from a remote URL. To do so, simply supply the configure function with a `configUrlResolver`:
 
 ```ts [remote config]
 advantage.configure({
@@ -108,7 +131,32 @@ advantage.configure({
 });
 ```
 
-:::
+The remote configuration file should be a javascript file that exports the configuration like so:
+
+```ts
+export default { ...configuration };
+```
+
+#### Custom formats
+
+It is possible to create your own custom ad formats. These should be included into your configuration:
+
+```ts
+advantage.configure({
+    formats: [
+        {
+            name: "MyCustomFormat",
+            description: "A custom format",
+            setup: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
+                return new Promise<void>((resolve) => {
+                    // Style the wrapper and make other adjustments here
+                    resolve();
+                });
+            }
+        }
+    ]
+});
+```
 
 ### Success!
 
@@ -116,7 +164,7 @@ Congratulations! Your website is now Advantage enabled!
 
 ### Step 6: Without the wrapper {#without-wrapper}
 
-If you don't need the Advantage Wrapper but still want your website to be able to accept Advantage ads, you can use the [`AdvantageAdSlotResponder`](../../api/classes/advantage_protocol_publisher_side.AdvantageAdSlotResponder.html) class.
+If you don't need the Advantage Wrapper but still want your website to be able to accept Advantage ads, you can use the [`AdvantageAdSlotResponder`](../../api/classes/messaging_publisher_side.AdvantageAdSlotResponder.html) class.
 
 Create a new instance of the class for each ad slot/placement that you want Advantage-enabled:
 

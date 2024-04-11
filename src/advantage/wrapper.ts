@@ -5,6 +5,11 @@ import { logger, traverseNodes } from "../utils";
 
 import { AdvantageAdSlotResponder } from "../messaging/publisher-side";
 
+/**
+ * Represents the AdvantageWrapper class, which extends the HTMLElement class and implements the IAdvantageWrapper interface.
+ * This class is responsible for creating and managing the wrapper element for Advantage ads.
+ * @noInheritDoc
+ */
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     // Private fields
     #styleElem: HTMLStyleElement;
@@ -20,6 +25,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     messageHandler: AdvantageAdSlotResponder;
     simulating = false;
 
+    /**
+     * Creates an instance of AdvantageWrapper.
+     */
     constructor() {
         super();
         this.#root = this.attachShadow({ mode: "open" });
@@ -79,6 +87,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         });
     }
 
+    /**
+     * Detects DOM changes and resets the wrapper if a new ad is loaded.
+     */
     #detectDOMChanges = () => {
         const observer = new MutationObserver(() => {
             if (this.currentFormat && this.simulating === false) {
@@ -95,11 +106,18 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         });
     };
 
-    // Getter for the content nodes
+    /**
+     * Gets the content nodes assigned to the advantage-ad-slot.
+     * @returns An array of content nodes.
+     */
     get contentNodes() {
         return this.#slotAdvantageContent.assignedNodes() ?? [];
     }
 
+    /**
+     * Simulates a specific ad format.
+     * @param format - The format to simulate.
+     */
     simulateFormat = async (format: string) => {
         if (this.simulating) {
             return;
@@ -112,7 +130,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
     };
 
-    // Private method to morph the wrapper into a specific format
+    /**
+     * Morphs the wrapper into a specific ad format.
+     * @param format - The format to morph into.
+     * @returns A promise that resolves when the morphing is complete.
+     */
     morphIntoFormat = async (format: string) => {
         console.log("MORPH INTO FORMAT");
         return new Promise<void>(async (resolve, reject) => {
@@ -158,6 +180,10 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         });
     };
 
+    /**
+     * Changes the content of the wrapper.
+     * @param content - The new content to be added to the wrapper.
+     */
     changeContent(content: string | HTMLElement) {
         // Access the projected content in the light DOM
         const projectedContent = this.querySelector(
@@ -179,7 +205,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
     }
 
-    // Public method to reset the format
+    /**
+     * Resets the current ad format.
+     */
     reset() {
         if (!this.currentFormat) {
             return;
@@ -197,7 +225,10 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         this.uiLayer.changeContent("");
         this.currentFormat = null;
     }
-    // Public method to close the format
+
+    /**
+     * Closes the current ad format.
+     */
     close() {
         if (!this.currentFormat) {
             return;
@@ -216,7 +247,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
         this.currentFormat = null;
     }
-    // Public helper method to apply styles to all child elements
+
+    /**
+     * Applies styles to all child elements of the wrapper.
+     * @param styles - The CSS styles to apply.
+     */
     applyStylesToAllChildElements(styles: string) {
         this.contentNodes.forEach((node) =>
             traverseNodes(node, (node) => {
@@ -229,14 +264,24 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             })
         );
     }
-    // Public method to insert CSS into the shadow root
+
+    /**
+     * Inserts CSS into the shadow root of the wrapper.
+     * @param CSS - The CSS to insert.
+     */
     insertCSS(CSS: string) {
         this.#styleElem.textContent = CSS;
     }
-    // Public method to reset the CSS in the shadow root
+
+    /**
+     * Resets the CSS in the shadow root of the wrapper.
+     */
     resetCSS() {
         this.#styleElem.textContent = "";
     }
-    // Lifecycle method
+
+    /**
+     * Lifecycle method called when the element is connected to the DOM.
+     */
     connectedCallback() {}
 }

@@ -49,17 +49,17 @@ Constructs a new instance of the AdvantageAdSlotResponder, initializing it with 
 
 #### Defined in
 
-src/messaging/publisher-side.ts:54
+[src/messaging/publisher-side.ts:54](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L54)
 
 ## Properties
 
 ### #advantage
 
-• `Private` **#advantage**: `Advantage`
+• `Private` **#advantage**: [`Advantage`](advantage_advantage.Advantage.md)
 
 #### Defined in
 
-src/messaging/publisher-side.ts:32
+[src/messaging/publisher-side.ts:32](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L32)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-src/messaging/publisher-side.ts:33
+[src/messaging/publisher-side.ts:33](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L33)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-src/messaging/publisher-side.ts:42
+[src/messaging/publisher-side.ts:42](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L42)
 
 ___
 
@@ -89,7 +89,7 @@ ___
 
 #### Defined in
 
-src/messaging/publisher-side.ts:40
+[src/messaging/publisher-side.ts:40](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L40)
 
 ___
 
@@ -99,7 +99,7 @@ ___
 
 #### Defined in
 
-src/messaging/publisher-side.ts:41
+[src/messaging/publisher-side.ts:41](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L41)
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 #### Defined in
 
-src/messaging/publisher-side.ts:34
+[src/messaging/publisher-side.ts:34](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L34)
 
 ___
 
@@ -119,7 +119,7 @@ ___
 
 #### Defined in
 
-src/messaging/publisher-side.ts:45
+[src/messaging/publisher-side.ts:45](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L45)
 
 ## Methods
 
@@ -141,7 +141,7 @@ Checks if the message is from an ad that is already registered
 
 #### Defined in
 
-src/messaging/publisher-side.ts:138
+[src/messaging/publisher-side.ts:138](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L138)
 
 ___
 
@@ -163,7 +163,7 @@ This method handles incoming messages from Advantage ads and processes them acco
 
 #### Defined in
 
-src/messaging/publisher-side.ts:83
+[src/messaging/publisher-side.ts:83](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L83)
 
 ___
 
@@ -185,7 +185,7 @@ element is IAdvantageWrapper
 
 #### Defined in
 
-src/messaging/publisher-side.ts:200
+[src/messaging/publisher-side.ts:200](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L200)
 
 ___
 
@@ -207,4 +207,4 @@ This method listens for incoming messages from Advantage ads and processes them 
 
 #### Defined in
 
-src/messaging/publisher-side.ts:149
+[src/messaging/publisher-side.ts:149](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L149)

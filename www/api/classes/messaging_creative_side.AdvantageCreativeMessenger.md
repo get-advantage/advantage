@@ -60,7 +60,7 @@ advantageMessenger.startSession().then((confirmed) => {
 
 #### Defined in
 
-src/messaging/creative-side.ts:57
+[src/messaging/creative-side.ts:57](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L57)
 
 ## Properties
 
@@ -70,7 +70,7 @@ src/messaging/creative-side.ts:57
 
 #### Defined in
 
-src/messaging/creative-side.ts:53
+[src/messaging/creative-side.ts:53](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L53)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-src/messaging/creative-side.ts:54
+[src/messaging/creative-side.ts:54](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L54)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-src/messaging/creative-side.ts:55
+[src/messaging/creative-side.ts:55](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L55)
 
 ## Methods
 
@@ -110,7 +110,7 @@ src/messaging/creative-side.ts:55
 
 #### Defined in
 
-src/messaging/creative-side.ts:99
+[src/messaging/creative-side.ts:99](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L99)
 
 ___
 
@@ -130,7 +130,7 @@ ___
 
 #### Defined in
 
-src/messaging/creative-side.ts:78
+[src/messaging/creative-side.ts:78](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L78)
 
 ___
 
@@ -144,4 +144,4 @@ ___
 
 #### Defined in
 
-src/messaging/creative-side.ts:61
+[src/messaging/creative-side.ts:61](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L61)

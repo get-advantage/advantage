@@ -1,6 +1,6 @@
 import { Advantage } from "../advantage";
 import { AdvantageAdSlotResponder } from "../messaging/publisher-side";
-import { IAdvantageWrapper } from "../types";
+//import { IAdvantageWrapper } from "../types";
 import localConfig from "./config";
 
 /* 

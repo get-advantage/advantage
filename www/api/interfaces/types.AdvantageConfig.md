@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[src/types/index.ts:24](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L24)
+[src/types/index.ts:24](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L24)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:26](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L26)
+[src/types/index.ts:26](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L26)
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:25](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L25)
+[src/types/index.ts:25](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L25)
 
 ___
 
@@ -65,4 +65,4 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:27](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L27)
+[src/types/index.ts:27](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L27)

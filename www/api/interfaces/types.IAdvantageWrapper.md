@@ -10,6 +10,10 @@
 
   ↳ **`IAdvantageWrapper`**
 
+## Implemented by
+
+- [`AdvantageWrapper`](../classes/advantage_wrapper.AdvantageWrapper.md)
+
 ## Properties
 
 ### ATTRIBUTE\_NODE
@@ -342,7 +346,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:40](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L40)
+[src/types/index.ts:40](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L40)
 
 ___
 
@@ -1046,6 +1050,30 @@ node_modules/typescript/lib/lib.dom.d.ts:16184
 
 ___
 
+### changeContent
+
+• **changeContent**: (`content`: `string` \| `HTMLElement`) => `void`
+
+#### Type declaration
+
+▸ (`content`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `content` | `string` \| `HTMLElement` |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[src/types/index.ts:45](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L45)
+
+___
+
 ### childElementCount
 
 • `Readonly` **childElementCount**: `number`
@@ -1212,7 +1240,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:44](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L44)
+[src/types/index.ts:44](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L44)
 
 ___
 
@@ -1222,7 +1250,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:34](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L34)
+[src/types/index.ts:34](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L34)
 
 ___
 
@@ -1232,7 +1260,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:35](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L35)
+[src/types/index.ts:35](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L35)
 
 ___
 
@@ -1258,7 +1286,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:38](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L38)
+[src/types/index.ts:38](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L38)
 
 ___
 
@@ -1268,7 +1296,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:36](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L36)
+[src/types/index.ts:36](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L36)
 
 ___
 
@@ -1490,7 +1518,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:41](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L41)
+[src/types/index.ts:41](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L41)
 
 ___
 
@@ -1618,7 +1646,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:39](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L39)
+[src/types/index.ts:39](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L39)
 
 ___
 
@@ -3862,7 +3890,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:43](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L43)
+[src/types/index.ts:43](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L43)
 
 ___
 
@@ -3880,7 +3908,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:42](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L42)
+[src/types/index.ts:42](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L42)
 
 ___
 
@@ -3977,6 +4005,30 @@ HTMLElement.shadowRoot
 #### Defined in
 
 node_modules/typescript/lib/lib.dom.d.ts:7711
+
+___
+
+### simulateFormat
+
+• **simulateFormat**: (`format`: `string`) => `Promise`\<`void`\>
+
+#### Type declaration
+
+▸ (`format`): `Promise`\<`void`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `format` | `string` |
+
+##### Returns
+
+`Promise`\<`void`\>
+
+#### Defined in
+
+[src/types/index.ts:46](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L46)
 
 ___
 
@@ -4118,7 +4170,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:37](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L37)
+[src/types/index.ts:37](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L37)
 
 ## Methods
 

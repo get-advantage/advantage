@@ -74,11 +74,11 @@ export default defineConfig({
                     text: "Guide",
                     items: [
                         {
-                            text: "Quickstart - Publisher",
+                            text: "Tutorial - Publisher",
                             link: "/docs/tutorial/publisher.md"
                         },
                         {
-                            text: "Quickstart - Creative",
+                            text: "Tutorial - Creative",
                             link: "/docs/tutorial/creative.md"
                         }
                     ]

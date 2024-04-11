@@ -27,7 +27,7 @@
 
 #### Defined in
 
-[src/types/index.ts:63](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L63)
+[src/types/index.ts:65](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L65)
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:57](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L57)
+[src/types/index.ts:59](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L59)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:56](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L56)
+[src/types/index.ts:58](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L58)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:62](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L62)
+[src/types/index.ts:64](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L64)
 
 ___
 
@@ -97,4 +97,28 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:58](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/types/index.ts#L58)
+[src/types/index.ts:60](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L60)
+
+___
+
+### simulate
+
+• `Optional` **simulate**: (`wrapper`: [`IAdvantageWrapper`](types.IAdvantageWrapper.md)) => `void`
+
+#### Type declaration
+
+▸ (`wrapper`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `wrapper` | [`IAdvantageWrapper`](types.IAdvantageWrapper.md) |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[src/types/index.ts:66](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/types/index.ts#L66)
