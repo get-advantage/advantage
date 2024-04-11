@@ -144,6 +144,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/pattan"><img src="https://avatars.githubusercontent.com/u/1073964?v=4?s=100" width="100px;" alt="Patrik Wilhelmsson"/><br /><sub><b>Patrik Wilhelmsson</b></sub></a><br /><a href="#doc-pattan" title="Documentation">📖</a> <a href="#ideas-pattan" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/pontusarmini"><img src="https://avatars.githubusercontent.com/u/4329077?v=4?s=100" width="100px;" alt="Pontus Armini"/><br /><sub><b>Pontus Armini</b></sub></a><br /><a href="#code-pontusarmini" title="Code">💻</a> <a href="#doc-pontusarmini" title="Documentation">📖</a> <a href="#ideas-pontusarmini" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
