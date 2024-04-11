@@ -1,4 +1,22 @@
 {
-    "projectName": "advantage",
-    "projectOwner": "madington"
+  "projectName": "advantage",
+  "projectOwner": "madington",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "pattan",
+      "name": "Patrik Wilhelmsson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1073964?v=4",
+      "profile": "https://github.com/pattan",
+      "contributions": [
+        "doc",
+        "ideas"
+      ]
+    }
+  ]
 }
