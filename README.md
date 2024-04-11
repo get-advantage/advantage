@@ -4,8 +4,8 @@ At its essence, Advantage is a bespoke web element: `<advantage-wrapper></advant
 
 To leverage Advantage, enclose your ad placements/slots within the Advantage wrapper as follows:
 
-```
- <advantage-wrapper>
+```html
+<advantage-wrapper>
     <div slot="advantage-ad-slot">
         <!-- Insert your ad placement here -->
     </div>
@@ -26,32 +26,34 @@ The `<advantage-wrapper />` has the built-in capabilty to morph into a number of
 
 Import `advantage` and get a reference to the singleton instance:
 
-```
+```ts
 import { Advantage } from "../advantage";
 const advantage = Advantage.getInstance();
-
 ```
 
 Advantage comes pre-built with a number of high impact formats (detailed list coming soon). These formats include pre-configured styling for ease of use, though integration with your site may be necessary for optimal performance. You can customize the integration through settings passed to the singleton:
 
-```
+```ts
 const advantage = Advantage.getInstance();
 
 advantage.configure({
-   formatIntegrations: [
-    {
-        format: AdvantageFormatName.TopScroll,
-        setup: (wrapper: IAdvantageWrapper, adIframe: HTMLIFrameElement) => {
+    formatIntegrations: [
+        {
+            format: AdvantageFormatName.TopScroll,
+            setup: (
+                wrapper: IAdvantageWrapper,
+                adIframe: HTMLIFrameElement
+            ) => {
                 return new Promise<void>((resolve, reject) => {
-                   /* Setup your site to accomodate the topscroll format here.
+                    /* Setup your site to accomodate the topscroll format here.
                     Perhaps you might need to hide a sticky header menu or similar. */
 
                     // call resolve when done
                     resolve();
                 });
             }
-    }
-   ]
+        }
+    ]
 });
 ```
 
@@ -59,31 +61,31 @@ advantage.configure({
 
 If you don't want to bundle your configuration it is possible to make Advantage fetch it from a remote URL. To do so, simply supply the configure function with a `configUrlResolver`:
 
-```
+```ts
 advantage.configure({
- configUrlResolver: () => {
+    configUrlResolver: () => {
         /* You could use hostname or any other logic to determine the config file
         return `https://example.com/configs/${window.location.hostname}.js`;
         */
         // or simple return a static URL
         return "https://example.com/configs/formats.js";
-    },
-})
+    }
+});
 ```
 
 The remote configuration file should be a javascript file that exports the configuration like so:
 
-```
-export default { ...configuration }
+```ts
+export default { ...configuration };
 ```
 
 ### Custom formats
 
 It is possible to create your own custom ad formats. These should be included into your configuration:
 
-```
+```ts
 advantage.configure({
-     formats: [
+    formats: [
         {
             name: "MyCustomFormat",
             description: "A custom format",
@@ -94,15 +96,15 @@ advantage.configure({
                 });
             }
         }
-    ],
-})
+    ]
+});
 ```
 
 ## Creative usage
 
 On the creative side, a banner that is loaded into an `<advantage-wrapper />` can request a specific ad format by sending a message utilizing the Advantage protocol:
 
-```
+```ts
 import { AdvantageProtocol } from "../advantage-ad/advantage-protocol";
 import { AdvantageMessageAction, AdvantageFormatName } from "../types";
 
@@ -115,10 +117,10 @@ if (session) {
         format: AdvantageFormatName.TopScroll
     });
     if (response?.action === AdvantageMessageAction.FORMAT_CONFIRMED) {
-        console.log("Top scroll format is confirmed, starting ad");
+        console.log("Topscroll format is confirmed, starting ad");
     }
     if (response?.action === AdvantageMessageAction.FORMAT_REJECTED) {
-        console.log("Top scroll format was rejected");
+        console.log("Topscroll format was rejected");
     }
 }
 ```
