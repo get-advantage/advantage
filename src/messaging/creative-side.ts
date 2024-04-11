@@ -26,6 +26,8 @@ import { AdvantageMessage, AdvantageMessageAction } from "../types";
  *  if (response?.action === AdvantageMessageAction.FORMAT_CONFIRMED) {
  *      document.body.classList.add("midscroll");
  *  }
+ * } else {
+ *      console.log("Session failed to start");
  * }
  * ```
  * ```javascript
@@ -41,6 +43,8 @@ import { AdvantageMessage, AdvantageMessageAction } from "../types";
  *              document.body.classList.add("midscroll");
  *          }
  *      });
+ *  } else {
+ *     console.log("Session failed to start");
  *  }
  * });
  * ```
@@ -55,15 +59,20 @@ export class AdvantageCreativeMessenger {
     }
 
     async startSession(): Promise<boolean> {
-        const { messageChannel, reply } = await sendMessageAndOpenChannel({
-            type: "ADVANTAGE",
-            action: AdvantageMessageAction.START_SESSION,
-            sessionID: this.#sessionID
-        });
-        this.#messageChannel = messageChannel;
-        this.#validSession =
-            reply.action === AdvantageMessageAction.CONFIRM_SESSION;
-        return this.#validSession;
+        try {
+            const { messageChannel, reply } = await sendMessageAndOpenChannel({
+                type: "ADVANTAGE",
+                action: AdvantageMessageAction.START_SESSION,
+                sessionID: this.#sessionID
+            });
+            this.#messageChannel = messageChannel;
+            this.#validSession =
+                reply.action === AdvantageMessageAction.CONFIRM_SESSION;
+            return this.#validSession;
+        } catch (e) {
+            this.#validSession = false;
+            return false;
+        }
     }
 
     async sendMessage(message: Partial<AdvantageMessage>) {

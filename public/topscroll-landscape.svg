@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920px" height="1080px" viewBox="0 0 1920 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Untitled</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" stroke="#979797" fill="#909090" x="0.5" y="0.5" width="1920" height="1080"></rect>
+        <rect id="Rectangle" stroke="#979797" fill="#D8D8D8" x="260.5" y="230.5" width="1400" height="620"></rect>
+        <text id="TOPSCROLL-SAFE-AREA" font-family="Helvetica" font-size="72" font-weight="normal" fill="#000000">
+            <tspan x="742.576172" y="523">TOPSCROLL</tspan>
+            <tspan x="593.724609" y="609">SAFE AREA 1400x620</tspan>
+        </text>
+    </g>
+</svg>

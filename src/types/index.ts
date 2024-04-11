@@ -42,6 +42,8 @@ export interface IAdvantageWrapper extends HTMLElement {
     resetCSS: () => void;
     reset: () => void;
     close: () => void;
+    changeContent: (content: string | HTMLElement) => void;
+    simulateFormat: (format: AdvantageFormatName | string) => Promise<void>;
 }
 
 export interface IAdvantageUILayer extends HTMLElement {
@@ -61,6 +63,7 @@ export interface AdvantageFormat {
     ) => Promise<void>;
     reset: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
     close?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    simulate?: (wrapper: IAdvantageWrapper) => void;
 }
 
 export interface AdvantageFormatIntegration {

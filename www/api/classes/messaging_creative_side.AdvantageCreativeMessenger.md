@@ -1,8 +1,8 @@
-[advantage](../index.md) / [advantage-protocol/creative-side](../modules/advantage_protocol_creative_side.md) / AdvantageCreativeMessenger
+[advantage](../index.md) / [messaging/creative-side](../modules/messaging_creative_side.md) / AdvantageCreativeMessenger
 
 # Class: AdvantageCreativeMessenger
 
-[advantage-protocol/creative-side](../modules/advantage_protocol_creative_side.md).AdvantageCreativeMessenger
+[messaging/creative-side](../modules/messaging_creative_side.md).AdvantageCreativeMessenger
 
 AdvantageCreativeMessenger is the class that should be used in creative ads to communicate with Advantage on the publisher side. This class is used to request formats and other information from the parent website.
 
@@ -25,6 +25,8 @@ if (session) {
  if (response?.action === AdvantageMessageAction.FORMAT_CONFIRMED) {
      document.body.classList.add("midscroll");
  }
+} else {
+     console.log("Session failed to start");
 }
 ```
 ```javascript
@@ -40,6 +42,8 @@ advantageMessenger.startSession().then((confirmed) => {
              document.body.classList.add("midscroll");
          }
      });
+ } else {
+    console.log("Session failed to start");
  }
 });
 ```
@@ -48,15 +52,15 @@ advantageMessenger.startSession().then((confirmed) => {
 
 ### constructor
 
-• **new AdvantageCreativeMessenger**(): [`AdvantageCreativeMessenger`](advantage_protocol_creative_side.AdvantageCreativeMessenger.md)
+• **new AdvantageCreativeMessenger**(): [`AdvantageCreativeMessenger`](messaging_creative_side.AdvantageCreativeMessenger.md)
 
 #### Returns
 
-[`AdvantageCreativeMessenger`](advantage_protocol_creative_side.AdvantageCreativeMessenger.md)
+[`AdvantageCreativeMessenger`](messaging_creative_side.AdvantageCreativeMessenger.md)
 
 #### Defined in
 
-src/advantage-protocol/creative-side.ts:53
+src/messaging/creative-side.ts:57
 
 ## Properties
 
@@ -66,7 +70,7 @@ src/advantage-protocol/creative-side.ts:53
 
 #### Defined in
 
-src/advantage-protocol/creative-side.ts:49
+src/messaging/creative-side.ts:53
 
 ___
 
@@ -76,7 +80,7 @@ ___
 
 #### Defined in
 
-src/advantage-protocol/creative-side.ts:50
+src/messaging/creative-side.ts:54
 
 ___
 
@@ -86,7 +90,7 @@ ___
 
 #### Defined in
 
-src/advantage-protocol/creative-side.ts:51
+src/messaging/creative-side.ts:55
 
 ## Methods
 
@@ -106,7 +110,7 @@ src/advantage-protocol/creative-side.ts:51
 
 #### Defined in
 
-src/advantage-protocol/creative-side.ts:90
+src/messaging/creative-side.ts:99
 
 ___
 
@@ -126,7 +130,7 @@ ___
 
 #### Defined in
 
-src/advantage-protocol/creative-side.ts:69
+src/messaging/creative-side.ts:78
 
 ___
 
@@ -140,4 +144,4 @@ ___
 
 #### Defined in
 
-src/advantage-protocol/creative-side.ts:57
+src/messaging/creative-side.ts:61

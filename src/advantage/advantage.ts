@@ -14,7 +14,8 @@ export class Advantage {
     private static instance: Advantage;
     config: AdvantageConfig | null = null;
     defaultFormats: AdvantageFormat[] = defaultFormats;
-    #wrappers: IAdvantageWrapper[] = [];
+    wrappers: IAdvantageWrapper[] = [];
+    #customWrappers: HTMLElement[] = [];
     formats: Map<string, AdvantageFormat> = new Map();
     formatIntegrations: Map<string, AdvantageFormatIntegration> = new Map();
 
@@ -36,8 +37,14 @@ export class Advantage {
 
     // Public method to register a wrapper with the library.
     public registerWrapper(wrapper: IAdvantageWrapper) {
-        this.#wrappers.push(wrapper);
+        this.wrappers.push(wrapper);
         logger.info("Wrapper registered", wrapper);
+    }
+
+    // Public method to register a custom wrapper with the library.
+    public registerCustomWrapper(wrapper: HTMLElement) {
+        this.#customWrappers.push(wrapper);
+        logger.info("Custom wrapper registered", wrapper);
     }
 
     // Public method to get a reference to the singleton instance of the library.

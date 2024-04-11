@@ -54,6 +54,8 @@ async function main() {
         if (response?.action === AdvantageMessageAction.FORMAT_REJECTED) {
             // Oh no, the format was rejected. Time to for a backup plan
         }
+    } else {
+        // For some reason, a session was not created. Perhaps the site isn't yet Advantage enabled?
     }
 }
 main();

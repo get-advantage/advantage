@@ -46,3 +46,5 @@ if ((window as any).advantageCmdQueue) {
         console.error("Error executing callback:", error);
     }
 };
+
+(window as any).advantage = Advantage.getInstance();

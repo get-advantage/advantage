@@ -16,12 +16,13 @@
 </head>
 
 <body>
-    <advantage-wrapper>
-        <div slot="advantage-ad-slot">
-            <iframe src="/src/dev/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0;"
-                scrolling="no"></iframe>
-        </div>
-    </advantage-wrapper>
+    <div class="container">
+        <advantage-wrapper>
+            <div slot="advantage-ad-slot">
+            </div>
+        </advantage-wrapper>
+    </div>
+
     <div class="container mx-auto px-4 py-4">
         <section class="grid grid-cols-1 lg:gap-6 lg:grid-cols-2 lg:grid-rows-3">
 
@@ -213,18 +214,6 @@
                 </p>
             </article>
         </section>
-    </div>
-    <advantage-wrapper exclude-formats="TOPSCROLL,MIDSCROLL">
-        <div slot="advantage-ad-slot">
-            <iframe src="/src/dev/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0;"
-                scrolling="no"></iframe>
-        </div>
-    </advantage-wrapper>
-
-    <div id="ad-slot-to-be-wrapped" style="width: 100%;">
-        <iframe id="midscroll" src="/src/dev/midscroll.html" title="advantage-ad"
-            style="display: block; border: 0; width: 320px; height: 320px; margin-left: auto; margin-right: auto;"
-            scrolling="no"></iframe>
     </div>
     <div class="container mx-auto px-4 py-4">
         <section class="grid grid-cols-1 lg:gap-6 lg:grid-cols-2 lg:grid-rows-3">
@@ -418,23 +407,7 @@
             </article>
         </section>
     </div>
-    <div id="custom" style="width: 100%;">
-        <iframe src="/src/dev/custom.html" title="advantage-ad"
-            style="display: block; border: 0; width: 320px; height: 320px; margin-left: auto; margin-right: auto;"
-            scrolling="no"></iframe>
-    </div>
-    <script>
-        // This is a helper function to wrap an ad slot element with an Advantage-wrapper
-        // The advantageCmdQueue will be executed by the Advantage-wrapper script when it is loaded
-        window.advantageCmdQueue = [
-            (advantageWrapAdSlotElement) => {
-                // advantageWrapAdSlotElement is a function that wraps an ad slot element with an Advantage-wrapper. It takes either a selector string or an HTMLElement as an argument.
-                // You can also pass an optional second argument to specify the formats to exclude for the wrapped ad slot.
-                advantageWrapAdSlotElement("#ad-slot-to-be-wrapped", ["topscroll"])
-            }
-        ];
-    </script>
-    <script type="module" src="/src/dev/index.ts"></script>
+    <script type="module" src="/src/dev/sim.ts"></script>
 </body>
 
 </html>

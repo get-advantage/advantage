@@ -4,6 +4,7 @@ import {
     AdvantageMessage,
     AdvantageMessageAction
 } from "../types";
+import { Advantage } from "../advantage";
 import { collectIframes, logger, ADVANTAGE } from "../utils";
 
 /**
@@ -28,6 +29,7 @@ import { collectIframes, logger, ADVANTAGE } from "../utils";
  * ```
  */
 export class AdvantageAdSlotResponder {
+    #advantage: Advantage = Advantage.getInstance();
     #element: HTMLElement | IAdvantageWrapper;
     #messageValidator:
         | ((
@@ -64,6 +66,12 @@ export class AdvantageAdSlotResponder {
         this.#formatRequestHandler = config.formatRequestHandler;
         this.#messageValidator = config.messageValidator;
         this.#isWrapper = this.#isAdvantageWrapper(config.adSlotElement);
+
+        if (!this.#isWrapper) {
+            /* Advantage wrappers will report themselves to the Advantage instance
+            But since this is a custom wrapper, we need to register it manually */
+            this.#advantage.registerCustomWrapper(config.adSlotElement);
+        }
         // Bind the listenForMessages function to ensure 'this' context
         this.#listenForMessages = this.#listenForMessages.bind(this);
         window.addEventListener("message", this.#listenForMessages);

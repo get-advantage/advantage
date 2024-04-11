@@ -3,7 +3,7 @@ import { IAdvantageUILayer, IAdvantageWrapper } from "../types";
 
 import { logger, traverseNodes } from "../utils";
 
-import { AdvantageAdSlotResponder } from "../advantage-protocol/publisher-side";
+import { AdvantageAdSlotResponder } from "../messaging/publisher-side";
 
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     // Private fields
@@ -18,6 +18,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     uiLayer: IAdvantageUILayer;
     currentFormat: string | null = null;
     messageHandler: AdvantageAdSlotResponder;
+    simulating = false;
 
     constructor() {
         super();
@@ -65,11 +66,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
         this.#slotAdvantageContent.addEventListener("slotchange", () => {
             if (!this.#slotChangeRegistered) {
-                //logger.info("First slot change");
+                logger.info("The content slot has been changed");
                 this.#slotChangeRegistered = true;
                 return;
             }
-            logger.error("The advantage-content slot should not be changed");
+            //logger.error("The advantage-content slot should not be changed");
         });
         this.#detectDOMChanges();
         this.messageHandler = new AdvantageAdSlotResponder({
@@ -80,7 +81,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
     #detectDOMChanges = () => {
         const observer = new MutationObserver(() => {
-            if (this.currentFormat) {
+            if (this.currentFormat && this.simulating === false) {
                 logger.info(
                     "DOM changes detected. This probably means that a new ad was loaded. Time to reset the wrapper."
                 );
@@ -98,6 +99,18 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     get contentNodes() {
         return this.#slotAdvantageContent.assignedNodes() ?? [];
     }
+
+    simulateFormat = async (format: string) => {
+        if (this.simulating) {
+            return;
+        }
+        this.simulating = true;
+        const formatConfig = this.#advantage.formats.get(format);
+        if (formatConfig && formatConfig.simulate) {
+            console.log("SIMULATE FORMAT");
+            formatConfig.simulate(this);
+        }
+    };
 
     // Private method to morph the wrapper into a specific format
     morphIntoFormat = async (format: string) => {
@@ -144,6 +157,27 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
         });
     };
+
+    changeContent(content: string | HTMLElement) {
+        // Access the projected content in the light DOM
+        const projectedContent = this.querySelector(
+            '[slot="advantage-ad-slot"]'
+        );
+        projectedContent?.remove();
+        // Check the type of the new content and add it accordingly
+        if (typeof content === "string") {
+            // If the content is a string, create a container for it
+            const container = document.createElement("div");
+            container.innerHTML = content;
+            // Assign the slot attribute so it gets projected correctly
+            container.setAttribute("slot", "advantage-ad-slot");
+            this.appendChild(container); // Add to the light DOM of the custom element
+        } else {
+            // If the content is an HTMLElement, directly set the slot attribute and append
+            content.setAttribute("slot", "advantage-ad-slot");
+            this.appendChild(content); // Add to the light DOM of the custom element
+        }
+    }
 
     // Public method to reset the format
     reset() {

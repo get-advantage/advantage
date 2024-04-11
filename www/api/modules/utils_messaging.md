@@ -10,7 +10,7 @@
 
 #### Defined in
 
-[src/utils/messaging.ts:3](https://github.com/madington/advantage/blob/f77afb014e4b90bd97f523eef94e5426a293c8c5/src/utils/messaging.ts#L3)
+[src/utils/messaging.ts:3](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/utils/messaging.ts#L3)
 
 ## Functions
 
@@ -36,7 +36,7 @@ A promise that resolves with the response message.
 
 #### Defined in
 
-[src/utils/messaging.ts:73](https://github.com/madington/advantage/blob/f77afb014e4b90bd97f523eef94e5426a293c8c5/src/utils/messaging.ts#L73)
+[src/utils/messaging.ts:73](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/utils/messaging.ts#L73)
 
 ___
 
@@ -62,4 +62,4 @@ A promise that resolves with the reply and the message channel.
 
 #### Defined in
 
-[src/utils/messaging.ts:12](https://github.com/madington/advantage/blob/f77afb014e4b90bd97f523eef94e5426a293c8c5/src/utils/messaging.ts#L12)
+[src/utils/messaging.ts:12](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/utils/messaging.ts#L12)

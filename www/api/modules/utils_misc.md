@@ -24,7 +24,7 @@ An array of HTMLIFrameElement objects representing the iframes found.
 
 #### Defined in
 
-[src/utils/misc.ts:6](https://github.com/madington/advantage/blob/f77afb014e4b90bd97f523eef94e5426a293c8c5/src/utils/misc.ts#L6)
+[src/utils/misc.ts:6](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/utils/misc.ts#L6)
 
 ___
 
@@ -47,4 +47,4 @@ Traverses the DOM tree starting from a given node and applies a function to each
 
 #### Defined in
 
-[src/utils/misc.ts:32](https://github.com/madington/advantage/blob/f77afb014e4b90bd97f523eef94e5426a293c8c5/src/utils/misc.ts#L32)
+[src/utils/misc.ts:32](https://github.com/madington/advantage/blob/0de23c3d4016943c5202b426e1e3defca0c31fc7/src/utils/misc.ts#L32)

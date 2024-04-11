@@ -1,4 +1,4 @@
-import { AdvantageCreativeMessenger } from "../advantage-protocol/creative-side";
+import { AdvantageCreativeMessenger } from "../messaging/creative-side";
 import { AdvantageMessageAction, AdvantageFormatName } from "../types";
 import { logger } from "../utils/logging";
 

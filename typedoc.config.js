@@ -5,8 +5,8 @@ export default {
         "./src/types/index.ts",
         "./src/utils/misc.ts",
         "./src/utils/messaging.ts",
-        "./src/advantage-protocol/publisher-side.ts",
-        "./src/advantage-protocol/creative-side.ts"
+        "./src/messaging/publisher-side.ts",
+        "./src/messaging/creative-side.ts"
     ],
     out: "www/api",
     readme: "none",
