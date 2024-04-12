@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080px" height="1080px" viewBox="0 0 1080 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <defs>
+        <linearGradient x1="100%" y1="0%" x2="-18.0463742%" y2="117.86859%" id="linearGradient-1">
+            <stop stop-color="#E6E8EB" offset="0%"></stop>
+            <stop stop-color="#C8CCD3" offset="99.4977679%"></stop>
+        </linearGradient>
+        <linearGradient x1="29.2656487%" y1="126.212599%" x2="65.775464%" y2="-2.77555756e-15%" id="linearGradient-2">
+            <stop stop-color="#3E7C8A" offset="0%"></stop>
+            <stop stop-color="#1D4652" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Topscroll-portrait" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" stroke="#979797" fill="url(#linearGradient-1)" x="0.5" y="0.5" width="1079" height="1079"></rect>
+            <rect id="Rectangle" stroke="#979797" fill="url(#linearGradient-2)" x="276.5" y="70.5" width="527" height="939"></rect>
+            <text id="ADVANTAGE-TOPSCROLL" font-family="Helvetica" font-size="34.4206081" font-weight="normal" fill="#FFFFFF">
+                <tspan x="327.963676" y="532">ADVANTAGE TOPSCROLL</tspan>
+                <tspan x="374.468472" y="574">SAFE AREA 528x940</tspan>
+                <tspan x="540" y="616"></tspan>
+                <tspan x="426.200226" y="658">IMAGE/VIDEO </tspan>
+                <tspan x="454.82244" y="700">1080x1080</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

@@ -35,19 +35,9 @@ HTMLElement.constructor
 
 #### Defined in
 
-[src/advantage/wrapper.ts:31](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L31)
+[src/advantage/wrapper.ts:30](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L30)
 
 ## Properties
-
-### #advantage
-
-• `Private` **#advantage**: [`Advantage`](advantage_advantage.Advantage.md)
-
-#### Defined in
-
-[src/advantage/wrapper.ts:17](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L17)
-
-___
 
 ### #root
 
@@ -55,7 +45,7 @@ ___
 
 #### Defined in
 
-[src/advantage/wrapper.ts:16](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L16)
+[src/advantage/wrapper.ts:16](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L16)
 
 ___
 
@@ -65,7 +55,7 @@ ___
 
 #### Defined in
 
-[src/advantage/wrapper.ts:18](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L18)
+[src/advantage/wrapper.ts:17](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L17)
 
 ___
 
@@ -75,7 +65,7 @@ ___
 
 #### Defined in
 
-[src/advantage/wrapper.ts:19](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L19)
+[src/advantage/wrapper.ts:18](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L18)
 
 ___
 
@@ -85,7 +75,7 @@ ___
 
 #### Defined in
 
-[src/advantage/wrapper.ts:15](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L15)
+[src/advantage/wrapper.ts:15](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L15)
 
 ___
 
@@ -99,7 +89,7 @@ ___
 
 #### Defined in
 
-[src/advantage/wrapper.ts:21](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L21)
+[src/advantage/wrapper.ts:20](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L20)
 
 ___
 
@@ -113,7 +103,7 @@ ___
 
 #### Defined in
 
-[src/advantage/wrapper.ts:22](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L22)
+[src/advantage/wrapper.ts:21](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L21)
 
 ___
 
@@ -127,17 +117,17 @@ ___
 
 #### Defined in
 
-[src/advantage/wrapper.ts:24](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L24)
+[src/advantage/wrapper.ts:23](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L23)
 
 ___
 
 ### messageHandler
 
-• **messageHandler**: [`AdvantageAdSlotResponder`](messaging_publisher_side.AdvantageAdSlotResponder.md)
+• **messageHandler**: [`AdvantageAdSlotResponder`](advantage_messaging_publisher_side.AdvantageAdSlotResponder.md)
 
 #### Defined in
 
-[src/advantage/wrapper.ts:25](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L25)
+[src/advantage/wrapper.ts:24](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L24)
 
 ___
 
@@ -147,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/advantage/wrapper.ts:26](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L26)
+[src/advantage/wrapper.ts:25](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L25)
 
 ___
 
@@ -161,7 +151,7 @@ ___
 
 #### Defined in
 
-[src/advantage/wrapper.ts:23](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L23)
+[src/advantage/wrapper.ts:22](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L22)
 
 ## Accessors
 
@@ -183,7 +173,7 @@ An array of content nodes.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:113](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L113)
+[src/advantage/wrapper.ts:111](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L111)
 
 ## Methods
 
@@ -199,7 +189,25 @@ Detects DOM changes and resets the wrapper if a new ad is loaded.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:93](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L93)
+[src/advantage/wrapper.ts:91](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L91)
+
+___
+
+### animateClose
+
+▸ **animateClose**(): `void`
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[IAdvantageWrapper](../interfaces/types.IAdvantageWrapper.md).[animateClose](../interfaces/types.IAdvantageWrapper.md#animateclose)
+
+#### Defined in
+
+[src/advantage/wrapper.ts:229](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L229)
 
 ___
 
@@ -225,7 +233,7 @@ Applies styles to all child elements of the wrapper.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:255](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L255)
+[src/advantage/wrapper.ts:273](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L273)
 
 ___
 
@@ -251,7 +259,7 @@ Changes the content of the wrapper.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:187](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L187)
+[src/advantage/wrapper.ts:185](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L185)
 
 ___
 
@@ -271,7 +279,7 @@ Closes the current ad format.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:232](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L232)
+[src/advantage/wrapper.ts:240](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L240)
 
 ___
 
@@ -287,7 +295,7 @@ Lifecycle method called when the element is connected to the DOM.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:286](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L286)
+[src/advantage/wrapper.ts:304](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L304)
 
 ___
 
@@ -313,7 +321,7 @@ Inserts CSS into the shadow root of the wrapper.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:272](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L272)
+[src/advantage/wrapper.ts:290](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L290)
 
 ___
 
@@ -341,7 +349,7 @@ A promise that resolves when the morphing is complete.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:138](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L138)
+[src/advantage/wrapper.ts:136](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L136)
 
 ___
 
@@ -361,7 +369,7 @@ Resets the current ad format.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:211](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L211)
+[src/advantage/wrapper.ts:209](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L209)
 
 ___
 
@@ -381,7 +389,7 @@ Resets the CSS in the shadow root of the wrapper.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:279](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L279)
+[src/advantage/wrapper.ts:297](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L297)
 
 ___
 
@@ -407,4 +415,4 @@ Simulates a specific ad format.
 
 #### Defined in
 
-[src/advantage/wrapper.ts:121](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/wrapper.ts#L121)
+[src/advantage/wrapper.ts:119](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/wrapper.ts#L119)

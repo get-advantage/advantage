@@ -1,8 +1,8 @@
-[advantage](../index.md) / [messaging/publisher-side](../modules/messaging_publisher_side.md) / AdvantageAdSlotResponder
+[advantage](../index.md) / [advantage/messaging/publisher-side](../modules/advantage_messaging_publisher_side.md) / AdvantageAdSlotResponder
 
 # Class: AdvantageAdSlotResponder
 
-[messaging/publisher-side](../modules/messaging_publisher_side.md).AdvantageAdSlotResponder
+[advantage/messaging/publisher-side](../modules/advantage_messaging_publisher_side.md).AdvantageAdSlotResponder
 
 AdvantageAdSlotResponder can be used by website owners/publishers if they already have their own custom implementations of high impact ad formats
 or if they do not want to use the AdvantageWrapper component for some reason. It takes care of listening for messages from Advantage ads and handling them.
@@ -30,7 +30,7 @@ new AdvantageAdSlotResponder({
 
 ### constructor
 
-• **new AdvantageAdSlotResponder**(`config`): [`AdvantageAdSlotResponder`](messaging_publisher_side.AdvantageAdSlotResponder.md)
+• **new AdvantageAdSlotResponder**(`config`): [`AdvantageAdSlotResponder`](advantage_messaging_publisher_side.AdvantageAdSlotResponder.md)
 
 Constructs a new instance of the AdvantageAdSlotResponder, initializing it with the provided configuration.
 
@@ -45,23 +45,13 @@ Constructs a new instance of the AdvantageAdSlotResponder, initializing it with 
 
 #### Returns
 
-[`AdvantageAdSlotResponder`](messaging_publisher_side.AdvantageAdSlotResponder.md)
+[`AdvantageAdSlotResponder`](advantage_messaging_publisher_side.AdvantageAdSlotResponder.md)
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:54](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L54)
+src/advantage/messaging/publisher-side.ts:53
 
 ## Properties
-
-### #advantage
-
-• `Private` **#advantage**: [`Advantage`](advantage_advantage.Advantage.md)
-
-#### Defined in
-
-[src/messaging/publisher-side.ts:32](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L32)
-
-___
 
 ### #element
 
@@ -69,7 +59,7 @@ ___
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:33](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L33)
+src/advantage/messaging/publisher-side.ts:32
 
 ___
 
@@ -79,7 +69,7 @@ ___
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:42](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L42)
+src/advantage/messaging/publisher-side.ts:41
 
 ___
 
@@ -89,7 +79,7 @@ ___
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:40](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L40)
+src/advantage/messaging/publisher-side.ts:39
 
 ___
 
@@ -99,7 +89,7 @@ ___
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:41](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L41)
+src/advantage/messaging/publisher-side.ts:40
 
 ___
 
@@ -109,7 +99,7 @@ ___
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:34](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L34)
+src/advantage/messaging/publisher-side.ts:33
 
 ___
 
@@ -119,7 +109,7 @@ ___
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:45](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L45)
+src/advantage/messaging/publisher-side.ts:44
 
 ## Methods
 
@@ -141,7 +131,7 @@ Checks if the message is from an ad that is already registered
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:138](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L138)
+src/advantage/messaging/publisher-side.ts:137
 
 ___
 
@@ -163,7 +153,7 @@ This method handles incoming messages from Advantage ads and processes them acco
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:83](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L83)
+src/advantage/messaging/publisher-side.ts:82
 
 ___
 
@@ -185,7 +175,7 @@ element is IAdvantageWrapper
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:200](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L200)
+src/advantage/messaging/publisher-side.ts:199
 
 ___
 
@@ -207,4 +197,4 @@ This method listens for incoming messages from Advantage ads and processes them 
 
 #### Defined in
 
-[src/messaging/publisher-side.ts:149](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/publisher-side.ts#L149)
+src/advantage/messaging/publisher-side.ts:148

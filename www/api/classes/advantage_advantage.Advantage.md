@@ -18,7 +18,7 @@ The main class for the Advantage library. This class is a singleton and is used 
 
 #### Defined in
 
-[src/advantage/advantage.ts:26](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L26)
+[src/advantage/advantage.ts:25](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L25)
 
 ## Properties
 
@@ -28,7 +28,7 @@ The main class for the Advantage library. This class is a singleton and is used 
 
 #### Defined in
 
-[src/advantage/advantage.ts:22](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L22)
+[src/advantage/advantage.ts:20](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L20)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:19](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L19)
+[src/advantage/advantage.ts:17](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L17)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:20](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L20)
+[src/advantage/advantage.ts:18](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L18)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:24](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L24)
+[src/advantage/advantage.ts:22](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L22)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:23](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L23)
+[src/advantage/advantage.ts:21](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L21)
 
 ___
 
@@ -78,17 +78,27 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:21](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L21)
+[src/advantage/advantage.ts:19](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L19)
+
+___
+
+### id
+
+▪ `Static` **id**: `number` = `0`
+
+#### Defined in
+
+[src/advantage/advantage.ts:23](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L23)
 
 ___
 
 ### instance
 
-▪ `Static` `Private` **instance**: [`Advantage`](advantage_advantage.Advantage.md)
+▪ `Static` `Private` **instance**: ``null`` \| [`Advantage`](advantage_advantage.Advantage.md) = `null`
 
 #### Defined in
 
-[src/advantage/advantage.ts:18](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L18)
+[src/advantage/advantage.ts:16](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L16)
 
 ## Methods
 
@@ -108,7 +118,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:85](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L85)
+[src/advantage/advantage.ts:76](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L76)
 
 ___
 
@@ -128,7 +138,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:30](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L30)
+[src/advantage/advantage.ts:30](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L30)
 
 ___
 
@@ -148,7 +158,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:73](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L73)
+[src/advantage/advantage.ts:64](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L64)
 
 ___
 
@@ -169,21 +179,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:103](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L103)
-
-___
-
-### registerComponents
-
-▸ **registerComponents**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/advantage/advantage.ts:64](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L64)
+[src/advantage/advantage.ts:96](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L96)
 
 ___
 
@@ -203,7 +199,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:49](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L49)
+[src/advantage/advantage.ts:49](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L49)
 
 ___
 
@@ -223,7 +219,7 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:43](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L43)
+[src/advantage/advantage.ts:43](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L43)
 
 ___
 
@@ -237,4 +233,4 @@ ___
 
 #### Defined in
 
-[src/advantage/advantage.ts:55](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/advantage.ts#L55)
+[src/advantage/advantage.ts:55](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/advantage.ts#L55)

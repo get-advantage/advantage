@@ -14,8 +14,12 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/jsdom": "^21.1.6",
+    "cypress": "^13.7.3",
+    "express": "^4.19.2",
+    "http-server": "^14.1.1",
     "jest": "^29.7.0",
     "jsdom": "^24.0.0",
     "ts-jest": "^29.1.2",

@@ -3,7 +3,7 @@ import { IAdvantageUILayer, IAdvantageWrapper } from "../types";
 
 import { logger, traverseNodes } from "../utils";
 
-import { AdvantageAdSlotResponder } from "../messaging/publisher-side";
+import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
 
 /**
  * Represents the AdvantageWrapper class, which extends the HTMLElement class and implements the IAdvantageWrapper interface.
@@ -14,7 +14,6 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     // Private fields
     #styleElem: HTMLStyleElement;
     #root: ShadowRoot;
-    #advantage: Advantage;
     #slotAdvantageContent: HTMLSlotElement;
     #slotChangeRegistered = false;
     // Public fields
@@ -67,10 +66,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
         // Append the container to the shadow root
         this.#root.append(this.container);
-        // Get a reference to the hub singleton
-        this.#advantage = Advantage.getInstance();
+
         // Register the wrapper with the hub, so that it is aware of its existence
-        this.#advantage.registerWrapper(this);
+        Advantage.getInstance().registerWrapper(this);
 
         this.#slotAdvantageContent.addEventListener("slotchange", () => {
             if (!this.#slotChangeRegistered) {
@@ -83,7 +81,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         this.#detectDOMChanges();
         this.messageHandler = new AdvantageAdSlotResponder({
             adSlotElement: this,
-            messageValidator: this.#advantage.config?.messageValidator
+            messageValidator: Advantage.getInstance().config?.messageValidator
         });
     }
 
@@ -123,7 +121,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             return;
         }
         this.simulating = true;
-        const formatConfig = this.#advantage.formats.get(format);
+        const formatConfig = Advantage.getInstance().formats.get(format);
         if (formatConfig && formatConfig.simulate) {
             console.log("SIMULATE FORMAT");
             formatConfig.simulate(this);
@@ -153,10 +151,10 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 return;
             }
             this.currentFormat = format;
-            let formatConfig = this.#advantage.formats.get(format);
+            let formatConfig = Advantage.getInstance().formats.get(format);
 
             if (!formatConfig) {
-                formatConfig = this.#advantage.defaultFormats.find(
+                formatConfig = Advantage.getInstance().defaultFormats.find(
                     (f) => f.name === format
                 );
                 if (!formatConfig) {
@@ -168,8 +166,8 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 }
             }
             try {
-                await this.#advantage.formatIntegrations
-                    .get(format)
+                await Advantage.getInstance()
+                    .formatIntegrations.get(format)
                     ?.setup(this, this.messageHandler.ad?.iframe);
                 await formatConfig.setup(this, this.messageHandler.ad?.iframe);
                 resolve();
@@ -212,11 +210,13 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         if (!this.currentFormat) {
             return;
         }
-        const formatConfig = this.#advantage.formats.get(this.currentFormat);
+        const formatConfig = Advantage.getInstance().formats.get(
+            this.currentFormat
+        );
         if (formatConfig) {
             formatConfig.reset(this, this.messageHandler?.ad?.iframe);
         }
-        const integration = this.#advantage.formatIntegrations.get(
+        const integration = Advantage.getInstance().formatIntegrations.get(
             this.currentFormat
         );
         if (integration && integration.onReset) {
@@ -226,20 +226,38 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         this.currentFormat = null;
     }
 
+    animateClose() {
+        this.classList.add("animate");
+        this.addEventListener("transitionend", () => {
+            this.style.display = "none";
+        });
+        this.style.height = "0px";
+    }
+
     /**
      * Closes the current ad format.
      */
     close() {
         if (!this.currentFormat) {
+            logger.info("No format to close.");
             return;
         }
-        const formatConfig = this.#advantage.formats.get(this.currentFormat);
+        const formatConfig = Advantage.getInstance().formats.get(
+            this.currentFormat
+        );
+        logger.info(
+            "Advantage.getInstance().formats",
+            Advantage.getInstance().formats
+        );
+        logger.info("Advantage.getInstance().id", Advantage.id);
+        logger.info("Closing the current format.", formatConfig);
         if (formatConfig) {
+            logger.info("Closing the current format.", formatConfig);
             formatConfig.close
                 ? formatConfig.close(this, this.messageHandler?.ad?.iframe)
                 : undefined;
         }
-        const integration = this.#advantage.formatIntegrations.get(
+        const integration = Advantage.getInstance().formatIntegrations.get(
             this.currentFormat
         );
         if (integration && integration.onClose) {

@@ -32,7 +32,7 @@ HTMLElement.constructor
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:16](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/ui-layer.ts#L16)
+[src/advantage/ui-layer.ts:16](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/ui-layer.ts#L16)
 
 ## Properties
 
@@ -42,7 +42,7 @@ HTMLElement.constructor
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:9](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/ui-layer.ts#L9)
+[src/advantage/ui-layer.ts:9](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/ui-layer.ts#L9)
 
 ___
 
@@ -52,17 +52,17 @@ ___
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:7](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/ui-layer.ts#L7)
+[src/advantage/ui-layer.ts:7](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/ui-layer.ts#L7)
 
 ___
 
 ### #slotUIContent
 
-• `Private` **#slotUIContent**: `HTMLSlotElement`
+• `Private` **#slotUIContent**: `HTMLDivElement`
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:10](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/ui-layer.ts#L10)
+[src/advantage/ui-layer.ts:10](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/ui-layer.ts#L10)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:8](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/ui-layer.ts#L8)
+[src/advantage/ui-layer.ts:8](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/ui-layer.ts#L8)
 
 ## Methods
 
@@ -94,7 +94,7 @@ Changes the content of the UI layer.
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:33](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/ui-layer.ts#L33)
+[src/advantage/ui-layer.ts:33](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/ui-layer.ts#L33)
 
 ___
 
@@ -116,13 +116,13 @@ Inserts CSS styles into the UI layer.
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:46](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/ui-layer.ts#L46)
+[src/advantage/ui-layer.ts:46](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/ui-layer.ts#L46)
 
 ___
 
 ### querySlottedElements
 
-▸ **querySlottedElements**(`selector`): `Node`[]
+▸ **querySlottedElements**(`selector`): `void`
 
 Queries the slotted elements that match the specified selector.
 
@@ -134,10 +134,10 @@ Queries the slotted elements that match the specified selector.
 
 #### Returns
 
-`Node`[]
+`void`
 
 An array of matching elements.
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:55](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/advantage/ui-layer.ts#L55)
+[src/advantage/ui-layer.ts:55](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/advantage/ui-layer.ts#L55)

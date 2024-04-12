@@ -10,7 +10,7 @@
 
 #### Defined in
 
-[src/utils/messaging.ts:3](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/utils/messaging.ts#L3)
+[src/utils/messaging.ts:3](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/utils/messaging.ts#L3)
 
 ## Functions
 
@@ -36,7 +36,7 @@ A promise that resolves with the response message.
 
 #### Defined in
 
-[src/utils/messaging.ts:73](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/utils/messaging.ts#L73)
+[src/utils/messaging.ts:80](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/utils/messaging.ts#L80)
 
 ___
 
@@ -51,7 +51,7 @@ Sends a message and opens a message channel to receive the reply.
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `message` | `Partial`\<[`AdvantageMessage`](../interfaces/types.AdvantageMessage.md)\> | `undefined` | The message to send. |
-| `retryInterval` | `number` | `100` | The interval (in milliseconds) between retry attempts. Default is 100ms. |
+| `retryInterval` | `number` | `200` | The interval (in milliseconds) between retry attempts. Default is 100ms. |
 | `maxAttempts` | `number` | `25` | The maximum number of retry attempts. Default is 25. |
 
 #### Returns
@@ -62,4 +62,4 @@ A promise that resolves with the reply and the message channel.
 
 #### Defined in
 
-[src/utils/messaging.ts:12](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/utils/messaging.ts#L12)
+[src/utils/messaging.ts:12](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/utils/messaging.ts#L12)

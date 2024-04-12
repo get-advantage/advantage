@@ -6,10 +6,7 @@ export default defineConfig({
     build: {
         lib: {
             // Could also be a dictionary or array of multiple entry points
-            entry: [
-                resolve(__dirname, "src/advantage/index.ts"),
-                resolve(__dirname, "src/advantage-ad/advantage-protocol.ts")
-            ],
+            entry: [resolve(__dirname, "src/advantage/index.ts")],
             formats: ["es", "cjs"],
             // the proper extensions will be added
             fileName: (format, entryName) => {

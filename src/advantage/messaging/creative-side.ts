@@ -1,8 +1,8 @@
 import {
     sendMessageAndOpenChannel,
     sendMessageAndAwaitResponse
-} from "../utils/messaging";
-import { AdvantageMessage, AdvantageMessageAction } from "../types";
+} from "../../utils/messaging";
+import { AdvantageMessage, AdvantageMessageAction } from "../../types";
 
 /**
  * AdvantageCreativeMessenger is the class that should be used in creative ads to communicate with Advantage on the publisher side. This class is used to request formats and other information from the parent website.

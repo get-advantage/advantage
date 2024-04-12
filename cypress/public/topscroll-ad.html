@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            div {
+                width: 100svw;
+                height: 100svh;
+                background-size: cover;
+                background-position: center center;
+            }
+            @media (orientation: portrait) {
+                /* Your styles for portrait orientation go here */
+                div {
+                    background-image: url("http://localhost:8000/tests/images/topscroll-portrait.svg");
+                }
+            }
+            @media (orientation: landscape) {
+                /* Your styles for portrait orientation go here */
+                div {
+                    background-image: url("http://localhost:8000/tests/images/topscroll-landscape.svg");
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div></div>
+        <script type="module">
+            import { AdvantageCreativeMessenger } from "http://localhost:8000/advantage.js";
+            async function main() {
+                const advantageMessenger = new AdvantageCreativeMessenger();
+                const session = await advantageMessenger.startSession();
+                console.log("session", session);
+                const response = await advantageMessenger.sendMessage({
+                    action: "REQUEST_FORMAT",
+                    format: "TOPSCROLL"
+                });
+            }
+            main();
+        </script>
+    </body>
+</html>

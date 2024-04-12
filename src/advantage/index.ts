@@ -1,9 +1,10 @@
-import { Advantage } from "./advantage";
 export { Advantage } from "./advantage";
+import { AdvantageWrapper } from "./wrapper";
+import { AdvantageUILayer } from "./ui-layer";
 import { advantageWrapAdSlotElement as actualAdvantageWrapAdSlotElement } from "./wrapping-helper";
 export { actualAdvantageWrapAdSlotElement as advantageWrapAdSlotElement };
-
-Advantage.getInstance().registerComponents();
+export * from "./messaging";
+export * from "../types";
 
 // Process any queued items
 if ((window as any).advantageWrapQueue) {
@@ -47,4 +48,5 @@ if ((window as any).advantageCmdQueue) {
     }
 };
 
-(window as any).advantage = Advantage.getInstance();
+customElements.define("advantage-wrapper", AdvantageWrapper);
+customElements.define("advantage-ui-layer", AdvantageUILayer);

@@ -11,7 +11,7 @@ export const ADVANTAGE = "ADVANTAGE" as ADVANTAGE_MESSAGE;
  */
 export function sendMessageAndOpenChannel(
     message: Partial<AdvantageMessage>,
-    retryInterval: number = 100,
+    retryInterval: number = 200,
     maxAttempts: number = 25
 ): Promise<{ reply: AdvantageMessage; messageChannel: MessageChannel }> {
     let attempts = 0;
@@ -40,8 +40,15 @@ export function sendMessageAndOpenChannel(
                 }
             };
 
-            // Post the message
-            window.top?.postMessage(message, "*", [channel.port2]);
+            // Send the message up through each parent window until the top is reached
+            let currentWindow: Window & typeof globalThis =
+                window.parent as Window & typeof globalThis;
+            do {
+                console.log("currentWindow", currentWindow);
+                currentWindow.postMessage(message, "*", [channel.port2]);
+                currentWindow = currentWindow.parent as Window &
+                    typeof globalThis;
+            } while (currentWindow !== window.top);
         };
 
         // Send the first message

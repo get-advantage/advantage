@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920px" height="1080px" viewBox="0 0 1920 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Untitled</title>
+    <defs>
+        <linearGradient x1="100%" y1="34.1796875%" x2="-18.0463742%" y2="71.474046%" id="linearGradient-1">
+            <stop stop-color="#E6E8EB" offset="0%"></stop>
+            <stop stop-color="#C8CCD3" offset="99.4977679%"></stop>
+        </linearGradient>
+        <linearGradient x1="98.7493365%" y1="65.8571634%" x2="-30.8533825%" y2="39.9485944%" id="linearGradient-2">
+            <stop stop-color="#9999A4" offset="0%"></stop>
+            <stop stop-color="#60606B" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="-15.7170886%" y1="64.9470016%" x2="100%" y2="40.1938776%" id="linearGradient-3">
+            <stop stop-color="#3E7C8A" offset="0%"></stop>
+            <stop stop-color="#1D4652" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-4" x="260" y="230" width="1400" height="620"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" fill="url(#linearGradient-1)" x="0" y="0" width="1920" height="1080"></rect>
+        <g id="Rectangle">
+            <use fill="#D8D8D8" xlink:href="#path-4"></use>
+            <use fill="url(#linearGradient-2)" xlink:href="#path-4"></use>
+            <rect stroke="#20424A" stroke-width="4" stroke-linejoin="square" fill="url(#linearGradient-3)" x="262" y="232" width="1396" height="616"></rect>
+        </g>
+        <text id="ADVANTAGE-TOPSCROLL" font-family="Helvetica" font-size="72" font-weight="normal" fill="#FFFFFF">
+            <tspan x="516.46875" y="523">ADVANTAGE TOPSCROLL</tspan>
+            <tspan x="593.724609" y="609">SAFE AREA 1400x620</tspan>
+        </text>
+        <text id="1920x1080" font-family="Helvetica" font-size="72" font-weight="normal" fill="#000000">
+            <tspan x="781.828125" y="969">1920x1080</tspan>
+        </text>
+        <path id="Line" d="M961.5,-1.5 L961.5,211.5 L969.5,211.5 L960,230.5 L950.5,211.5 L958.5,211.5 L958.5,-1.5 L961.5,-1.5 Z" fill="#000000" fill-rule="nonzero"></path>
+        <path id="Line" d="M241.5,530.5 L260.5,540 L241.5,549.5 L241.499,541.5 L-1.5,541.5 L-1.5,538.5 L241.499,538.5 L241.5,530.5 Z" fill="#000000" fill-rule="nonzero"></path>
+        <text id="230px" font-family="Helvetica" font-size="48" font-weight="normal" fill="#000000">
+            <tspan x="990.328125" y="133.464844">230px</tspan>
+        </text>
+        <text id="260px" transform="translate(123.6289, 501.3086) rotate(-360) translate(-123.6289, -501.3086)" font-family="Helvetica" font-size="48" font-weight="normal" fill="#000000">
+            <tspan x="58.2382813" y="519.308594">260px</tspan>
+        </text>
+    </g>
+</svg>

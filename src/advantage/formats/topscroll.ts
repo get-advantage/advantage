@@ -28,6 +28,7 @@ export const topscroll: AdvantageFormat = {
             wrapper.uiLayer.changeContent(uiContainer);
 
             closeBtn.addEventListener("click", () => {
+                console.log("Close button clicked");
                 wrapper.close();
             });
             resolve();
@@ -64,9 +65,6 @@ export const topscroll: AdvantageFormat = {
         wrapper.resetCSS();
     },
     close: (wrapper) => {
-        wrapper.addEventListener("transitionend", () => {
-            wrapper.style.display = "none";
-        });
-        wrapper.style.height = "0";
+        wrapper.animateClose();
     }
 };

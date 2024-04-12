@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Topscroll test</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            html {
+                overflow-x: hidden;
+            }
+        </style>
+        <script type="module">
+            import { Advantage } from "http://localhost:8000/advantage.js";
+            const advantage = Advantage.getInstance();
+            advantage.configure({
+                formatIntegrations: [
+                    {
+                        format: "TOPSCROLL",
+                        setup: () => {
+                            return new Promise((resolve, reject) => {
+                                resolve();
+                            });
+                        }
+                    }
+                ]
+            });
+        </script>
+    </head>
+
+    <body>
+        <advantage-wrapper>
+            <div slot="advantage-ad-slot">
+                <iframe
+                    src="http://localhost:8000/tests/topscroll-ad.html"
+                    title="advantage-ad"
+                    style="border: 0; width: 0; height: 0"
+                    scrolling="no"
+                ></iframe>
+            </div>
+        </advantage-wrapper>
+    </body>
+</html>

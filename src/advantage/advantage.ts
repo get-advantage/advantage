@@ -1,6 +1,4 @@
 import { logger } from "../utils";
-import { AdvantageWrapper } from "./wrapper";
-import { AdvantageUILayer } from "./ui-layer";
 
 import type {
     AdvantageConfig,
@@ -15,16 +13,18 @@ import { defaultFormats } from "./formats";
  * @public
  */
 export class Advantage {
-    private static instance: Advantage;
+    private static instance: Advantage | null = null;
     config: AdvantageConfig | null = null;
     defaultFormats: AdvantageFormat[] = defaultFormats;
     wrappers: IAdvantageWrapper[] = [];
     #customWrappers: HTMLElement[] = [];
     formats: Map<string, AdvantageFormat> = new Map();
     formatIntegrations: Map<string, AdvantageFormatIntegration> = new Map();
+    public static id = 0;
 
     private constructor() {
-        logger.info("Advantage constructor");
+        Advantage.id++;
+        logger.info("Advantage constructor", Advantage.id);
     }
     // Entry point for the library. This is where the configuration is loaded and the library is initialized.
     public configure(config: AdvantageConfig) {
@@ -60,15 +60,6 @@ export class Advantage {
         return Advantage.instance;
     }
 
-    // Public method to register the custom elements with the browser.
-    public registerComponents() {
-        customElements.define("advantage-wrapper", AdvantageWrapper);
-        customElements.define("advantage-ui-layer", AdvantageUILayer);
-        logger.info(
-            "Components registered: <advantage-wrapper>, <advantage-ui-layer> ✅"
-        );
-    }
-
     // Private method to load the configuration from a remote file.
     private loadConfig(configUrl: string) {
         logger.info(`⬇ Loading config from remote URL: ${configUrl}`);
@@ -86,8 +77,10 @@ export class Advantage {
         this.config = config;
         if (config.formats) {
             this.mergeUniqueFormats(this.defaultFormats, config.formats);
-            logger.info("Format configurations applied ✅", this.formats);
+        } else {
+            this.formats = new Map(defaultFormats.map((f) => [f.name, f]));
         }
+        logger.info("Format configurations applied ✅", this.formats);
         if (config.formatIntegrations) {
             for (const integration of config.formatIntegrations) {
                 this.formatIntegrations.set(integration.format, integration);

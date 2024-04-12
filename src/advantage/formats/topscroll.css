@@ -4,7 +4,10 @@
     width: 100svw;
     height: 80svh;
     overflow: hidden;
-    transition: height 0.5s ease-out;
+}
+
+:host(.animate) {
+    transition: height 0.5s;
 }
 
 #container {

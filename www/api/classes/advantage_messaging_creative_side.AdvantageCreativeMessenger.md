@@ -1,8 +1,8 @@
-[advantage](../index.md) / [messaging/creative-side](../modules/messaging_creative_side.md) / AdvantageCreativeMessenger
+[advantage](../index.md) / [advantage/messaging/creative-side](../modules/advantage_messaging_creative_side.md) / AdvantageCreativeMessenger
 
 # Class: AdvantageCreativeMessenger
 
-[messaging/creative-side](../modules/messaging_creative_side.md).AdvantageCreativeMessenger
+[advantage/messaging/creative-side](../modules/advantage_messaging_creative_side.md).AdvantageCreativeMessenger
 
 AdvantageCreativeMessenger is the class that should be used in creative ads to communicate with Advantage on the publisher side. This class is used to request formats and other information from the parent website.
 
@@ -52,15 +52,15 @@ advantageMessenger.startSession().then((confirmed) => {
 
 ### constructor
 
-• **new AdvantageCreativeMessenger**(): [`AdvantageCreativeMessenger`](messaging_creative_side.AdvantageCreativeMessenger.md)
+• **new AdvantageCreativeMessenger**(): [`AdvantageCreativeMessenger`](advantage_messaging_creative_side.AdvantageCreativeMessenger.md)
 
 #### Returns
 
-[`AdvantageCreativeMessenger`](messaging_creative_side.AdvantageCreativeMessenger.md)
+[`AdvantageCreativeMessenger`](advantage_messaging_creative_side.AdvantageCreativeMessenger.md)
 
 #### Defined in
 
-[src/messaging/creative-side.ts:57](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L57)
+src/advantage/messaging/creative-side.ts:57
 
 ## Properties
 
@@ -70,7 +70,7 @@ advantageMessenger.startSession().then((confirmed) => {
 
 #### Defined in
 
-[src/messaging/creative-side.ts:53](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L53)
+src/advantage/messaging/creative-side.ts:53
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[src/messaging/creative-side.ts:54](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L54)
+src/advantage/messaging/creative-side.ts:54
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[src/messaging/creative-side.ts:55](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L55)
+src/advantage/messaging/creative-side.ts:55
 
 ## Methods
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[src/messaging/creative-side.ts:99](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L99)
+src/advantage/messaging/creative-side.ts:99
 
 ___
 
@@ -130,7 +130,7 @@ ___
 
 #### Defined in
 
-[src/messaging/creative-side.ts:78](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L78)
+src/advantage/messaging/creative-side.ts:78
 
 ___
 
@@ -144,4 +144,4 @@ ___
 
 #### Defined in
 
-[src/messaging/creative-side.ts:61](https://github.com/madington/advantage/blob/42928a4133e2ee49dd1534bf7e871f2f7429dc80/src/messaging/creative-side.ts#L61)
+src/advantage/messaging/creative-side.ts:61
