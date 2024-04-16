@@ -60,7 +60,7 @@ advantageMessenger.startSession().then((confirmed) => {
 
 #### Defined in
 
-src/advantage/messaging/creative-side.ts:57
+[src/advantage/messaging/creative-side.ts:57](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/messaging/creative-side.ts#L57)
 
 ## Properties
 
@@ -70,7 +70,7 @@ src/advantage/messaging/creative-side.ts:57
 
 #### Defined in
 
-src/advantage/messaging/creative-side.ts:53
+[src/advantage/messaging/creative-side.ts:53](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/messaging/creative-side.ts#L53)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-src/advantage/messaging/creative-side.ts:54
+[src/advantage/messaging/creative-side.ts:54](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/messaging/creative-side.ts#L54)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-src/advantage/messaging/creative-side.ts:55
+[src/advantage/messaging/creative-side.ts:55](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/messaging/creative-side.ts#L55)
 
 ## Methods
 
@@ -110,7 +110,7 @@ src/advantage/messaging/creative-side.ts:55
 
 #### Defined in
 
-src/advantage/messaging/creative-side.ts:99
+[src/advantage/messaging/creative-side.ts:99](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/messaging/creative-side.ts#L99)
 
 ___
 
@@ -130,7 +130,7 @@ ___
 
 #### Defined in
 
-src/advantage/messaging/creative-side.ts:78
+[src/advantage/messaging/creative-side.ts:78](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/messaging/creative-side.ts#L78)
 
 ___
 
@@ -144,4 +144,4 @@ ___
 
 #### Defined in
 
-src/advantage/messaging/creative-side.ts:61
+[src/advantage/messaging/creative-side.ts:61](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/messaging/creative-side.ts#L61)

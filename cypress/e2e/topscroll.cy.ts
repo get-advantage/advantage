@@ -10,6 +10,23 @@ describe("template spec", () => {
         cy.get("advantage-wrapper").should("have.css", "width", "1000px");
         cy.get("advantage-wrapper").should("have.css", "height", "480px");
 
+        cy.get("advantage-wrapper")
+            .shadow()
+            .find("#container")
+            .should("have.css", "width", "1000px");
+        cy.get("advantage-wrapper")
+            .shadow()
+            .find("#container")
+            .should("have.css", "position", "absolute");
+        cy.get("advantage-wrapper")
+            .shadow()
+            .find("#container")
+            .should("have.css", "clip-path", "inset(0px)");
+        cy.get("advantage-wrapper")
+            .shadow()
+            .find("#ad-slot")
+            .should("have.css", "position", "fixed");
+
         // Navigate through shadow roots to reach the close button
         cy.get("advantage-wrapper")
             .shadow()

@@ -1,9 +1,8 @@
-
 #down-arrow {
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     position: absolute;
-    bottom: 20px;
+    bottom: 1rem;
     left: 50%;
     -ms-transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
@@ -13,22 +12,24 @@
     background-size: 44% auto;
     background-position: 50% 52%;
     background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 32px;
+    border-radius: 50%;
     pointer-events: none;
+    opacity: 0.8;
 }
 #close {
     position: absolute;
-    border-radius: 3rem;
-    width: 32px;
-    height: 32px;
-    top: 16px;
-    right: 32px;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    top: 1rem;
+    right: 1rem;
     background-image: url("data:image/svg+xml,%3Csvg id='Layer_1' data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M21.989,3.187,18.813.01,11,7.824,3.174,0,0,3.174,7.824,11,.01,18.813l3.177,3.176L11,14.176,18.826,22,22,18.826,14.176,11Z' fill='%23fff'/%3E%3C/svg%3E");
     background-size: 34% auto;
     background-color: rgba(0, 0, 0, 0.4);
     background-position: 50% 50%;
     background-repeat: no-repeat;
     cursor: pointer;
+    opacity: 0.8;
 }
 
 #close:before {
@@ -39,23 +40,15 @@
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    right: 43px;
+    right: 2.7rem;
     color: #fff;
-    text-shadow: 0.2rem 0.2rem 1.6rem rgba(0, 0, 0, 0.9);
+    text-shadow: 0.2rem 0.2rem 2rem rgba(0, 0, 0, 0.9);
     font-family: "Arial", sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 600;
     pointer-events: none;
 }
 
-#close:after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-}
 
 @media (orientation: portrait) {
     #down-arrow,

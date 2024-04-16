@@ -7,8 +7,8 @@ export class AdvantageUILayer extends HTMLElement {
     #root: ShadowRoot;
     #styleElem: HTMLStyleElement;
     #container: HTMLDivElement;
-    #slotUIContent: HTMLSlotElement;
-
+    #content: HTMLDivElement;
+    slotName = "advantage-ui-content";
     /**
      * Creates an instance of AdvantageUILayer.
      * Attaches a shadow root to the element and initializes the necessary elements.
@@ -20,9 +20,9 @@ export class AdvantageUILayer extends HTMLElement {
         this.#root.append(this.#styleElem);
         this.#container = document.createElement("div");
         this.#container.id = "container";
-        this.#slotUIContent = document.createElement("slot");
-        this.#slotUIContent.name = "advantage-ui-content";
-        this.#container.appendChild(this.#slotUIContent);
+        this.#content = document.createElement("div");
+        this.#content.id = "content";
+        this.#container.appendChild(this.#content);
         this.#root.append(this.#container);
     }
 
@@ -31,12 +31,12 @@ export class AdvantageUILayer extends HTMLElement {
      * @param content - The new content to be displayed. It can be either a string or an HTMLElement.
      */
     changeContent(content: string | HTMLElement) {
-        this.#slotUIContent.innerHTML = "";
         if (typeof content === "string") {
-            this.#slotUIContent.innerHTML = content;
-            return;
+            this.#content.innerHTML = content;
+        } else {
+            this.#content.innerHTML = "";
+            this.#content.appendChild(content);
         }
-        this.#slotUIContent.appendChild(content);
     }
 
     /**
@@ -45,36 +45,5 @@ export class AdvantageUILayer extends HTMLElement {
      */
     insertCSS(CSS: string) {
         this.#styleElem.textContent = CSS;
-    }
-
-    /**
-     * Queries the slotted elements that match the specified selector.
-     * @param selector - The CSS selector to match against the slotted elements.
-     * @returns An array of matching elements.
-     */
-    querySlottedElements(selector: string) {
-        // Get all nodes assigned to the slot
-        const assignedNodes = this.#slotUIContent.assignedNodes({
-            flatten: true
-        });
-        const matchingElements: Node[] = [];
-        // Iterate through each assigned node
-        assignedNodes.forEach((node) => {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-                // If the node itself matches the selector, add it to the results
-                if (
-                    (node as Element).matches &&
-                    (node as Element).matches(selector)
-                ) {
-                    matchingElements.push(node);
-                }
-                // Additionally, search within the node for matching elements
-                matchingElements.push(
-                    ...(node as Element).querySelectorAll(selector)
-                );
-            }
-        });
-
-        return matchingElements;
     }
 }

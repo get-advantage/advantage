@@ -25,4 +25,4 @@
 
 #### Defined in
 
-[src/types/index.ts:1](https://github.com/madington/advantage/blob/1529685a28e94a7188513095bd1e6443524e7e35/src/types/index.ts#L1)
+[src/types/index.ts:1](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/types/index.ts#L1)

@@ -26,6 +26,7 @@ export const topscroll: AdvantageFormat = {
             uiContainer.appendChild(downArrow);
             wrapper.uiLayer.insertCSS(topscrollUICSS);
             wrapper.uiLayer.changeContent(uiContainer);
+            wrapper.uiLayer.style.setProperty("--before-content", "'Close ad'");
 
             closeBtn.addEventListener("click", () => {
                 console.log("Close button clicked");
