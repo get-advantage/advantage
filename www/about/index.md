@@ -11,7 +11,7 @@ We aim to drastically simplify the process of offering high-impact ad formats. B
 **Advantage** provides a toolkit for the easy creation of dynamic, engaging ad creatives. By standardizing the implementation of high-impact formats, we empower advertisers and creative agencies to unleash their creativity without being hamstrung by technical constraints, facilitating the production of advertisements that capture attention and drive engagement.
 
 ### **For Media Agencies** 
-The library simplifies the procurement of high-impact advertising inventory, making it more accessible for media agencies to find and utilize these valuable ad spaces. With **Advantage** , buying and planning high-impact ad campaigns becomes a straightforward, hassle-free process, enabling media agencies to deliver compelling campaigns with ease and efficiency.
+The library simplifies the procurement of high-impact advertising inventory, making it more accessible for media agencies to find and utilize these valuable ad spaces. With **Advantage**, buying and planning high-impact ad campaigns becomes a straightforward, hassle-free process, enabling media agencies to deliver compelling campaigns with ease and efficiency.
 
 ## At its core 
 **Advantage** is about lowering the barriers to high-impact advertising for everyone involved, from the developers who integrate the formats to the creative teams who dream them up, and the media planners who leverage them. In an era where the web competes with numerous channels, Advantage positions high-impact web advertising as a compelling, competitive option, ensuring that the open web remains a vibrant, lucrative space for advertisers, publishers, and audiences alike.
