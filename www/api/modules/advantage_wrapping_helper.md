@@ -25,4 +25,4 @@ If the function is passed an array of formats that should not be allowed for thi
 
 #### Defined in
 
-[src/advantage/wrapping-helper.ts:8](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/wrapping-helper.ts#L8)
+[src/advantage/wrapping-helper.ts:8](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/advantage/wrapping-helper.ts#L8)

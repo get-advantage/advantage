@@ -1,3 +1,9 @@
+---
+pageClass: docs
+---
+
+<p class="text-sm text-slate-500"><code>Docs > Tutorial</code></p>
+
 # Publisher tutorial
 
 This part of the tutorial is aimed at website owners and publishers who want to implement Advantage on their site(s).

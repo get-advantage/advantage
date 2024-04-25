@@ -1,6 +1,14 @@
-## Advantage Docs
+---
+pageClass: docs
+---
 
-**NOTE: Advantage is till in BETA. Big changes might happen in the near future**
+<p class="text-sm text-slate-500"><code>Docs > Get started</code></p>
+
+# Get Started
+
+<div class="tip custom-block" style="padding-top: 8px">
+  ℹ️ Advantage is till in <code>BETA</code>. Big changes might happen in the near future
+</div>
 
 Are you a publisher or website owner? Go to the [Publisher tutorial](./tutorial/publisher.md)
 

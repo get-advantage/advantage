@@ -70,3 +70,7 @@ code.nav {
     font-weight: 700;
     text-transform: uppercase;
 }
+
+.docs .VPDoc {
+    padding-top: 0;
+}

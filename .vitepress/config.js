@@ -9,6 +9,9 @@ export default defineConfig({
     lastUpdated: true,
     base: process.env.NODE_ENV === "production" ? "/advantage/" : "/",
     publicDir: "public",
+    head: [
+        ['script', { src: 'https://cdn.tailwindcss.com' }]
+    ],
     markdown: {
         theme: {
             light: "github-light",
@@ -32,6 +35,10 @@ export default defineConfig({
             {
                 icon: "github",
                 link: "https://github.com/madington/advantage"
+            },
+            {
+                icon: "slack",
+                link: "https://join.slack.com/t/get-advantage/shared_invite/zt-2gy6c4z4m-4~pIuwRfe8eqPM5H7iV9MQ"
             }
         ],
         editLink: {
@@ -105,31 +112,26 @@ export default defineConfig({
                     ]
                 },
                 {
-                    text: "Integration",
+                    text: "Examples",
+
                     items: [
                         {
-                            text: "Examples",
-                            collapsed: true,
-                            items: [
-                                {
-                                    text: `Next.js`,
-                                    link: "/docs/integration/examples/nextjs.md"
-                                },
-                                {
-                                    text: "Nuxt",
-                                    link: "/docs/integration/examples/nuxt.md"
-                                },
-                                {
-                                    text: "Remix",
-                                    link: "/docs/integration/examples/remix.md"
-                                }
-                            ]
+                            text: `Hello World`,
+                            link: "/docs/examples/hello-world.md"
                         },
-                        { text: "React", link: "/docs/integration/react.md" },
-                        { text: "Vue", link: "/docs/integration/vue.md" },
-                        { text: "Svelte", link: "/docs/integration/svelte.md" }
+                        // {
+                        //     text: "Nuxt",
+                        //     link: "/docs/integration/examples/nuxt.md"
+                        // },
+                        // {
+                        //     text: "Remix",
+                        //     link: "/docs/integration/examples/remix.md"
+                        // }
                     ]
-                }
+                },
+                //{ text: "React", link: "/docs/integration/react.md" },
+                //{ text: "Vue", link: "/docs/integration/vue.md" },
+                //{ text: "Svelte", link: "/docs/integration/svelte.md" }
             ]
         }
     }

@@ -1,3 +1,9 @@
+---
+pageClass: docs
+---
+
+<p class="text-sm text-slate-500"><code>Docs > Tutorial</code></p>
+
 # Creative tutorial
 
 This part of the tutorial is aimed at creatives who makes high-impact ads.

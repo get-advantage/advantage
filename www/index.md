@@ -253,11 +253,11 @@ layout: page
         Advantage not only streamlines the process of integrating high-impact advertising formats into webpages but also embodies a broader mission: <i>to democratize high-impact web advertising for all stakeholders in the digital advertising ecosystem. </i>
       </p>
       <div class="hero-actions">
-        <a href="./docs/" class="hero-action secondary">
+        <a href="./about/" class="hero-action secondary">
           <span style="padding-right: 8px">Get started</span>
           <img src="/icons/chevron-right.svg" width="20" height="20" />
         </a>
-        <a href="./docs" class="hero-action primary">
+        <a href="./docs/" class="hero-action primary">
           <span style="padding-right: 8px">Documentation</span>
         </a>
       </div>

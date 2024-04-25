@@ -32,7 +32,7 @@ HTMLElement.constructor
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:16](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/ui-layer.ts#L16)
+[src/advantage/ui-layer.ts:16](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/advantage/ui-layer.ts#L16)
 
 ## Properties
 
@@ -42,7 +42,7 @@ HTMLElement.constructor
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:9](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/ui-layer.ts#L9)
+[src/advantage/ui-layer.ts:9](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/advantage/ui-layer.ts#L9)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:10](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/ui-layer.ts#L10)
+[src/advantage/ui-layer.ts:10](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/advantage/ui-layer.ts#L10)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:7](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/ui-layer.ts#L7)
+[src/advantage/ui-layer.ts:7](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/advantage/ui-layer.ts#L7)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:8](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/ui-layer.ts#L8)
+[src/advantage/ui-layer.ts:8](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/advantage/ui-layer.ts#L8)
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:11](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/ui-layer.ts#L11)
+[src/advantage/ui-layer.ts:11](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/advantage/ui-layer.ts#L11)
 
 ## Methods
 
@@ -104,7 +104,7 @@ Changes the content of the UI layer.
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:33](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/ui-layer.ts#L33)
+[src/advantage/ui-layer.ts:33](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/advantage/ui-layer.ts#L33)
 
 ___
 
@@ -126,4 +126,4 @@ Inserts CSS styles into the UI layer.
 
 #### Defined in
 
-[src/advantage/ui-layer.ts:46](https://github.com/madington/advantage/blob/4b52c8a30c07d3c6d4fb1e069c3b2690cb1ebb9c/src/advantage/ui-layer.ts#L46)
+[src/advantage/ui-layer.ts:46](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/advantage/ui-layer.ts#L46)
