@@ -15,3 +15,7 @@ The library simplifies the procurement of high-impact advertising inventory, mak
 
 ## At its core 
 **Advantage** is about lowering the barriers to high-impact advertising for everyone involved, from the developers who integrate the formats to the creative teams who dream them up, and the media planners who leverage them. In an era where the web competes with numerous channels, Advantage positions high-impact web advertising as a compelling, competitive option, ensuring that the open web remains a vibrant, lucrative space for advertisers, publishers, and audiences alike.
+
+## What is a high-impact ad format?
+Our definition of high-impact is an ad format that is something more than a standard display banner. They are often bigger in size and they often have special features such as parallax effects. The definition is used broadly
+as Advantage aims to support a wide variety of formats.
