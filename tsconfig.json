@@ -20,9 +20,14 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src"],
-    "exclude": [
-        "**/*.test.ts",
-        "node_modules" // Typically, you would also exclude node_modules
-    ]
+    "include": [
+        "src",
+        "playground/config.ts",
+        "playground/custom.ts",
+        "playground/index.ts",
+        "playground/midscroll.ts",
+        "playground/sim.ts",
+        "playground/topscroll.ts"
+    ],
+    "exclude": ["**/*.test.ts", "node_modules"]
 }

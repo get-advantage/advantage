@@ -1,6 +1,6 @@
-import { AdvantageCreativeMessenger } from "../advantage";
-import { AdvantageMessageAction, AdvantageFormatName } from "../types";
-import { logger } from "../utils/logging";
+import { AdvantageCreativeMessenger } from "../src/advantage";
+import { AdvantageMessageAction, AdvantageFormatName } from "../src/types";
+import { logger } from "../src/utils/logging";
 
 /* 
 This is an example of a midscroll creative ad implementation.

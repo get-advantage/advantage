@@ -1,6 +1,6 @@
-import { AdvantageCreativeMessenger } from "../advantage/messaging/creative-side";
-import { AdvantageMessageAction, AdvantageFormatName } from "../types";
-import { logger } from "../utils/logging";
+import { AdvantageCreativeMessenger } from "../src/advantage/messaging/creative-side";
+import { AdvantageMessageAction, AdvantageFormatName } from "../src/types";
+import { logger } from "../src/utils/logging";
 /* 
 This is an example of a topscroll creative ad implementation.
 */

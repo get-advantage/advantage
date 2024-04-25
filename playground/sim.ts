@@ -1,5 +1,5 @@
 //import { IAdvantageWrapper } from "../types";
-import { Advantage } from "../advantage";
+import { Advantage } from "../src/advantage";
 import localConfig from "./config";
 
 const advantage = Advantage.getInstance();
