@@ -250,7 +250,7 @@ layout: page
         <span class="heading-gradient">Reimagined</span>
       </h1>
       <p class="hero-subheading">
-        Advantage not only streamlines the process of integrating high-impact advertising formats into webpages but also embodies a broader mission: <i>to democratize high-impact web advertising for all stakeholders in the digital advertising ecosystem. </i>
+        Designed to <i>simplify</i>, <i>streamline</i> and <i>standardize</i> high-impact display advertising on the web.
       </p>
       <div class="hero-actions">
         <a href="./about/" class="hero-action secondary">
