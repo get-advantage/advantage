@@ -250,7 +250,7 @@ layout: page
         <span class="heading-gradient">Reimagined</span>
       </h1>
       <p class="hero-subheading">
-        Designed to <i>simplify</i>, <i>streamline</i> and <i>standardize</i> high-impact display advertising on the web.
+        Designed to <i>simplify</i>, <i>streamline</i> and <i>standardize</i> <br> <strong>high-impact</strong> display advertising on the web
       </p>
       <div class="hero-actions">
         <a href="./about/" class="hero-action secondary">
