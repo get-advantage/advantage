@@ -74,3 +74,19 @@ code.nav {
 .docs .VPDoc {
     padding-top: 0;
 }
+
+img[alt="light"] {
+    display: block;
+}
+
+img[alt="dark"] {
+    display: none;
+}
+
+html.dark img[alt="light"] {
+    display: none;
+}
+
+html.dark img[alt="dark"] {
+    display: block;
+}

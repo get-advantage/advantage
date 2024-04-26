@@ -78,36 +78,40 @@ export default defineConfig({
             ],
             "/docs": [
                 {
-                    text: "Guide",
+                    text: "Quick Start Guide",
                     items: [
                         {
-                            text: "Tutorial - Publisher",
+                            text: "For Publisher",
                             link: "/docs/tutorial/publisher.md"
                         },
                         {
-                            text: "Tutorial - Creative",
+                            text: "For Creative",
                             link: "/docs/tutorial/creative.md"
                         }
                     ]
                 },
                 {
-                    text: "Formats",
+                    text: "Key Concepts",
                     items: [
                         {
-                            text: "Topscroll",
-                            link: "/docs/formats/topscroll.md"
+                            text: "Formats",
+                            link: "/docs/concepts/formats.md"
                         },
                         {
-                            text: "Midscroll",
-                            link: "/docs/formats/midscroll.md"
+                            text: "Integration",
+                            link: "/docs/concepts/integration.md"
                         },
                         {
-                            text: "Double Midscroll",
-                            link: "/docs/formats/double_midscroll.md"
+                            text: "Wrapper",
+                            link: "/docs/concepts/wrapper.md"
                         },
                         {
-                            text: "Welcome Page",
-                            link: "/docs/formats/welcome_page.md"
+                            text: "UI Layer",
+                            link: "/docs/concepts/ui-layer.md"
+                        },
+                        {
+                            text: "Creative",
+                            link: "/docs/concepts/creative.md"
                         }
                     ]
                 },

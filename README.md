@@ -22,9 +22,9 @@
 <p align="center">
     <a href="" target="blank">View Demo</a>
     ·
-    <a href="./issues/new/choose">Report Bug</a>
+    <a href="https://github.com/madington/advantage/issues/new/choose">Report Bug</a>
     ·
-    <a href="./issues/new/choose">Request Feature</a>
+    <a href="https://github.com/madington/advantage/issues/new/choose">Request Feature</a>
 </p>
 
 `Advantage` revolutionizes the way site owners integrate with high impact formats by providing a flexible, customizable unified API. Unlike traditional integrations that offer a one-size-fits-all solution, AdVantage empowers you to tailor the interaction between you site and high impact formats, ensuring a perfect fit for your specific needs.
