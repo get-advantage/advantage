@@ -16,12 +16,12 @@ You can join as a supporting member for free, supporting membership means your b
 To join our community contact: community@getadvanatge.org 
 
 # Maintainers 
-[Madington](Madington.com) 
+[Madington](https://www.madington.com) 
 
-[TV.no](tv2.no) 
+[TV.no](https://www.tv2.no) 
 
 # Members 
 
-[Leeads AB](leeads.com)
+[Leeads AB](https://www.leeads.com)
 
-[Adprofit AB](adprofit.se)
+[Adprofit AB](https://www.adprofit.se)
