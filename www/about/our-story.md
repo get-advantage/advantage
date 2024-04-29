@@ -1,4 +1,4 @@
-# Who are behind Advantage?
+# Our Story
 
 In the wake of the post-third-party-script era, publishers faced a critical need to control high-impact webpage content for security, performance, and alignment with website code. Recognizing this challenge, [Madington](https://www.madington.com), a tech vendor specializing in high-impact advertising, introduced Advantage—a library designed to streamline and standardize the implementation of high-impact formats.
 
