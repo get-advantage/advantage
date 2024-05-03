@@ -11,7 +11,8 @@ export default defineConfig({
     base: "/",
     publicDir: "public",
     head: [
-        ['script', { src: 'https://cdn.tailwindcss.com' }]
+        ['script', { src: 'https://cdn.tailwindcss.com' }],
+        ['link', { href: 'https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap', rel: 'stylesheet' }]
     ],
     markdown: {
         theme: {
@@ -22,8 +23,8 @@ export default defineConfig({
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         logo: {
-            light: "/logo/ADV.png",
-            dark: "/logo/rsz_3.png"
+            light: "/logo/advantage-logo.svg",
+            dark: "/logo/advantage-logo-light.svg"
         },
         siteTitle: false,
         nav: [

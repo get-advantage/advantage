@@ -7,6 +7,9 @@ layout: page
 ---
 
 <style>
+  .VPNavBar:not(.has-sidebar):not(.home.top) .divider {
+    background-color: transparent !important;
+  }
   .homepage .container {
     max-width: 1280px;
     margin: auto;
@@ -44,18 +47,19 @@ layout: page
   }
 
   .homepage .heading-gradient {
-    background: linear-gradient(120deg, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+    background: linear-gradient(120deg, #9F75FF, #6b04fd, #2C0076);
     color: white;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: 1s gradient forwards;
+    line-height: 1.3
   }
 
   .homepage .hero-subheading {
     margin-top: 25px;
     font-weight: 400;
     font-size: 24px;
-    color: var(--vp-c-text-2);
+    color: var(--vp-c-text-1);
     max-width: 600px;
     text-align: center;
     line-height: 1.5
@@ -83,7 +87,17 @@ layout: page
 
   .homepage .hero-action.secondary {
     background: var(--vp-c-brand);
-    color: white
+    color: white;
+    transition: all 0.2s ease;
+  }
+  .homepage .hero-action.secondary:hover,
+  .homepage .hero-action.secondary:focus,
+  .dark .homepage .hero-action.secondary:hover,
+  .dark .homepage .hero-action.secondary:focus  {
+    background: var(--vp-hover);
+  }
+  .dark .homepage .hero-action.secondary {
+    background: var(--vp-c-brand-dark);
   }
 
   .homepage .try-link-container {
@@ -177,7 +191,7 @@ layout: page
   .homepage .start-link {
     border-radius: 40px;
     padding: 4px;
-    background: linear-gradient(120deg, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+    background: linear-gradient(120deg, #6b04fd, #6b04fd, #4B05AD);
     background-size: 100% 100%;
     background-repeat: repeat-y;
     display: inline-flex;
@@ -262,57 +276,5 @@ layout: page
         </a>
       </div>
     </div>
-  </div>
-  <div style="background: var(--vp-c-bg-alt)">
-    <div class="container">
-      <!-- <span class="section-title">Features</span> -->
-      <div class="features">
-        <div class="feature">
-          <div class="feature-icon">
-            <img src="/icons/html5.svg">
-          </div>
-          <div class="feature-description">
-            <span class="feature-title">Web Components</span>
-            <span class="feature-subtitle">Reusable, encapsulated tags</span>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">
-            <img src="/icons/graphql.svg">
-          </div>
-          <div class="feature-description">
-            <span class="feature-title">Easily customizable</span>
-            <span class="feature-subtitle">Spec-compatible API</span>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">
-            <img src="/icons/react.svg">
-          </div>
-          <div class="feature-description">
-            <span class="feature-title">Framework-ready</span>
-            <span class="feature-subtitle">Interoperable & future-ready</span>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">
-            <img src="/icons/zap.svg">
-          </div>
-          <div class="feature-description">
-            <span class="feature-title">Batteries-included</span>
-            <span class="feature-subtitle">Everything you need</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    <figure class="quote">
-      <blockquote>
-        “This changes everything”
-      </blockquote>
-      <figcaption>— Patrik Wilhelmsson (CTO, Madington)</figcaption>
-    </figure>
-    <p class="footer-text">Made by the Team behind <a href="https://madington.com">Madington</a></p>
   </div>
 </div>

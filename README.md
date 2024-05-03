@@ -2,14 +2,9 @@
 
 <p align="center">
     <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./www/public/intro-dark.png" height="200">
-    <img src="./www/public/intro-light.png" height="200">
+      <img src="./www/public/logo/advantage-logo.svg" height="80">
   </picture>
 </p>
-
-<h1 align="center">
-  Advantage
-</h1>
 
 <p align="center">
   <a href="https://github.com/get-advantage/advantage/actions/workflows/www.yml">
