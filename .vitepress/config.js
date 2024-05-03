@@ -21,7 +21,7 @@ export default defineConfig({
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         logo: {
-            light: "/logo/rsz_5.png",
+            light: "/logo/ADV.png",
             dark: "/logo/rsz_3.png"
         },
         siteTitle: false,
