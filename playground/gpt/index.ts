@@ -1,6 +1,5 @@
-import { Advantage } from "../src/advantage";
-import { AdvantageAdSlotResponder } from "../src/advantage/messaging/publisher-side";
-//import { IAdvantageWrapper } from "../types";
+import { Advantage } from "@src/advantage";
+import { AdvantageAdSlotResponder } from "@src/advantage/messaging/publisher-side";
 import localConfig from "./config";
 
 /* 
@@ -17,7 +16,7 @@ advantage.configure({
         /* You could use hostname or any other logic to determine the config file 
         return `https://example.com/configs/${window.location.hostname}.js`;
         */
-        return "/src/dev/config.ts";
+        return "./config.ts";
     },
     /* Or use a local configuration */
     ...localConfig

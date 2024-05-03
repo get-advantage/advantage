@@ -1,8 +1,14 @@
 {
     "name": "advantage",
-    "private": true,
-    "version": "0.0.0",
+    "private": false,
+    "version": "0.1.0",
     "license": "AGPL-3.0-only",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/get-advantage/advantage.git"
+    },
+    "homepage": "https://get-advantage.org",
+    "author": "get-advantage.org",
     "type": "module",
     "files": [
         "dist"
@@ -44,6 +50,7 @@
         "typescript": "^5.2.2",
         "vite": "^5.2.0",
         "vite-plugin-dts": "^3.9.0",
+        "vite-tsconfig-paths": "^4.3.2",
         "vitepress": "^1.1.0"
     }
 }

@@ -12,8 +12,8 @@
 </h1>
 
 <p align="center">
-  <a href="https://github.com/madington/advantage/actions/workflows/www.yml">
-    <img src="https://github.com/madington/advantage/actions/workflows/www.yml/badge.svg" alt="ci" />
+  <a href="https://github.com/get-advantage/advantage/actions/workflows/www.yml">
+    <img src="https://github.com/get-advantage/advantage/actions/workflows/www.yml/badge.svg" alt="ci" />
   </a>
   <a href="https://join.slack.com/t/get-advantage/shared_invite/zt-2gy6c4z4m-4~pIuwRfe8eqPM5H7iV9MQ">
     <img src="https://img.shields.io/badge/chat-slack-blue?style=flat&logo=slack" alt="Slack chat">
@@ -22,9 +22,9 @@
 <p align="center">
     <a href="" target="blank">View Demo</a>
     ·
-    <a href="https://github.com/madington/advantage/issues/new/choose">Report Bug</a>
+    <a href="https://github.com/get-advantage/advantage/issues/new/choose">Report Bug</a>
     ·
-    <a href="https://github.com/madington/advantage/issues/new/choose">Request Feature</a>
+    <a href="https://github.com/get-advantage/advantage/issues/new/choose">Request Feature</a>
 </p>
 
 `Advantage` revolutionizes the way site owners integrate with high impact formats by providing a flexible, customizable unified API. Unlike traditional integrations that offer a one-size-fits-all solution, AdVantage empowers you to tailor the interaction between you site and high impact formats, ensuring a perfect fit for your specific needs.
@@ -37,7 +37,7 @@
 -   👌 Ease of Use
 -   ⚡️ Efficiency & Effectiveness
 
-Read the [documentation](https://madington.github.io/advantage) for more details!
+Read the [documentation](https://get-advantage.org) for more details!
 
 ## 🤝 Contributing to `Advantage`
 

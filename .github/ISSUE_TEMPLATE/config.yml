@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
-  - name: Ask a question
-    url: https://github.com/madington/advantage/discussions/new/choose
-    about: Ask questions and discuss with other community members
+    - name: Ask a question
+      url: https://github.com/get-advantage/advantage/discussions/new/choose
+      about: Ask questions and discuss with other community members

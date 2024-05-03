@@ -2,7 +2,7 @@
 pageClass: docs
 ---
 
-<p class="text-sm text-slate-500"><code>Docs > Tutorial</code></p>
+<p class="text-sm text-slate-500"><code>Docs > Quick Start Guide</code></p>
 
 # Creative tutorial
 

@@ -6,33 +6,78 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Advantage</title>
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-  <div class="container">
+<body class="flex flex-col items-center justify-center dark:bg-gray-900">
 
-    <div>
-      <h1>
-        Advantage
+  <section class="">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+      <h1
+        class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        Interactive Examples Showcases
       </h1>
-      <a href="/playground/index.html">Development demo</a>
+      <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
+        Explore our collection of interactive showcases with functionality.
+      </p>
     </div>
+  </section>
+  <section class="grid grid-cols-2 gap-4">
+    <a href="./playground/local-dev/index.html"
+      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Local Development
+      </h5>
+      <p class="font-normal text-gray-700 dark:text-gray-400">
+        Development demo
+      </p>
+    </a>
+    <a href="./playground/gpt/index.html"
+      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        GPT
+      </h5>
+      <p class="font-normal text-gray-700 dark:text-gray-400">
+        Showcase how to integrate with Google Publisher Tags.
+      </p>
+    </a>
+    <a href="/playground/gpt/index.html"
+      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Livewrapped
+      </h5>
+      <p class="font-normal text-gray-700 dark:text-gray-400">
+        How to wrap your placements with AdVantage in Livewrapped <span
+          class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Coming
+          soon</span>
+      </p>
+    </a>
 
-  </div>
+    <a href=""
+      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Using the auto wrapper
+      </h5>
+      <p class="font-normal text-gray-700 dark:text-gray-400">
+        Showcase how to use the helper function to wrap existing adslots <span
+          class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Coming
+          soon</span>
+      </p>
+    </a>
+
+    <a href=""
+      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Custom UI
+      </h5>
+      <p class="font-normal text-gray-700 dark:text-gray-400">
+        Showcase how to change the look and feel of a format <span
+          class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Coming
+          soon</span>
+      </p>
+    </a>
+
+  </section>
 
 </body>
 

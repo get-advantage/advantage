@@ -7,7 +7,8 @@ export default defineConfig({
     title: "Advantage",
     description: "Building User-First Ad Formats",
     lastUpdated: true,
-    base: process.env.NODE_ENV === "production" ? "/advantage/" : "/",
+    //base: process.env.NODE_ENV === "production" ? "/advantage/" : "/",
+    base: "/",
     publicDir: "public",
     head: [
         ['script', { src: 'https://cdn.tailwindcss.com' }]
@@ -34,7 +35,7 @@ export default defineConfig({
         socialLinks: [
             {
                 icon: "github",
-                link: "https://github.com/madington/advantage"
+                link: "https://github.com/get-advantage/advantage"
             },
             {
                 icon: "slack",
@@ -43,7 +44,7 @@ export default defineConfig({
         ],
         editLink: {
             pattern:
-                "https://github.com/madington/advantage/edit/main/www/:path",
+                "https://github.com/get-advantage/advantage/edit/main/www/:path",
             text: "Edit this page on GitHub"
         },
         outline: [2, 3],

@@ -7,20 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Advantage</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        html {
-            overflow-x: hidden;
-        }
-    </style>
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    <script>
+        window.googletag = window.googletag || { cmd: [] };
+        googletag.cmd.push(function () {
+            // Define an ad slot for div with id "banner-ad".
+            googletag
+                .defineSlot('/5374/TV2no/marked/test/madington', [10, 10], 'banner-ad')
+                .addService(googletag.pubads());
+            googletag.enableServices();
+        });
+    </script>
 </head>
 
 <body>
+    <!-- Lets wrap a GPT slot in advantage-wrapper element -->
     <advantage-wrapper>
         <div slot="advantage-ad-slot">
-            <iframe src="./topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
-                scrolling="no"></iframe>
+            <!-- START / This is an ordinary GPT slot  -->
+            <div id="banner-ad">
+                <script>
+                    googletag.cmd.push(() => {
+                        // Request and render an ad for the "banner-ad" slot.
+                        googletag.display("banner-ad");
+                    });
+                </script>
+            </div>
+            <!-- / END -->
         </div>
     </advantage-wrapper>
+
     <div class="container mx-auto px-4 py-4">
         <section class="grid grid-cols-1 lg:gap-6 lg:grid-cols-2 lg:grid-rows-3">
             <article class="py-4">
@@ -635,16 +651,6 @@
                 </p>
             </article>
         </section>
-    </div>
-    <div id="custom" style="width: 100%">
-        <iframe src="./custom.html" title="advantage-ad" style="
-                    display: block;
-                    border: 0;
-                    width: 320px;
-                    height: 320px;
-                    margin-left: auto;
-                    margin-right: auto;
-                " scrolling="no"></iframe>
     </div>
     <script>
         // This is a helper function to wrap an ad slot element with an Advantage-wrapper

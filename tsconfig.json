@@ -18,16 +18,12 @@
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "baseUrl": ".",
+        "paths": {
+            "@src/*": ["src/*"]
+        }
     },
-    "include": [
-        "src",
-        "playground/config.ts",
-        "playground/custom.ts",
-        "playground/index.ts",
-        "playground/midscroll.ts",
-        "playground/sim.ts",
-        "playground/topscroll.ts"
-    ],
+    "include": ["src", "playground/**/*.ts"],
     "exclude": ["**/*.test.ts", "node_modules"]
 }

@@ -5,15 +5,16 @@ Getadvantage.org expects its members and contributors to observe technical guide
 getadvantage.org will further be referenced as "Advantage" in the documentation. This code of conduct is a high-level description of the project concepts; details will be referenced in our open-source license.
 
 ## Advantage Mission Statement
+
 Advantage's mission is to simplify and standardize high-impact display advertising on the web and to democratize high-impact web advertising for all stakeholders in the digital advertising ecosystem.
 
 ### Advantage Core Concepts & Scope
 
-- Secure & transparent
-- Standardization for simplified buying and selling of high-impact display advertising
-- Development within the project is to benefit the community as a whole
+-   Secure & transparent
+-   Standardization for simplified buying and selling of high-impact display advertising
+-   Development within the project is to benefit the community as a whole
 
-## Our Pledge to Eachother 
+## Our Pledge to Eachother
 
 We as members, contributors, and leaders pledge to make participation in our
 community a harassment-free experience for everyone, regardless of age, body
@@ -73,7 +74,7 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-abuse@getadvantage.org
+[abuse@get-advantage.org](mailto:abuse@get-advantage.org)
 
 All complaints will be reviewed and investigated promptly and fairly.
 

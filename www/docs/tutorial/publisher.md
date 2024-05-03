@@ -2,7 +2,7 @@
 pageClass: docs
 ---
 
-<p class="text-sm text-slate-500"><code>Docs > Tutorial</code></p>
+<p class="text-sm text-slate-500"><code>Docs > Quick Start Guide</code></p>
 
 # Publisher tutorial
 
@@ -89,6 +89,10 @@ The above code will take an ad slot like this...
 ```
 
 Your ad slot is now Advantage enabled!
+
+<div class="tip custom-block" style="padding-top: 8px">
+  ℹ️ Remember: It is the serving creative that advertise its intended format. In case you'r ad slot can serve both standard size ads and hight impact ads from the same ad slot. Nothing will happend if a none Advantage ad is served.     
+</div>
 
 ### Step 5: Configuration
 
