@@ -62,8 +62,8 @@ export default defineConfig({
                             link: "/about/how.md"
                         },
                         {
-                            text: "The team",
-                            link: "/about/who.md"
+                            text: "Community",
+                            link: "/about/community.md"
                         },
                         {
                             text: "Contributions",
