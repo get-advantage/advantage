@@ -13,7 +13,10 @@ As a open-source project we invite contributions from the industry, controbution
 
 You can join as a supporting member for free, supporting membership means your brand endorses our efforts to standardize high-impact creative buying and delivery or has implemented the advanatge technology. 
 
-To join our community contact: community@getadvanatge.org 
+To learn more about how to become a maintainer, contribute or become a supporting member, see contact information below. 
+
+### Contact: 
+community@getadvanatge.org 
 
 # Maintainers 
 [Madington](https://www.madington.com) 
