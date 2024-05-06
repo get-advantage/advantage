@@ -1,6 +1,6 @@
 <br>
 
-<p align="center">
+<p align="center" style="margin-bottom: 15px;">
     <picture>
       <img src="./www/public/logo/advantage-logo.svg" height="80">
   </picture>
@@ -15,7 +15,7 @@
   </a>
 </p>
 <p align="center">
-    <a href="" target="blank">View Demo</a>
+    <a href="https://stackblitz.com/github/get-advantage/advantage/tree/main?file=playground%2Fgpt%2Findex.html" target="blank">View Demo</a>
     ·
     <a href="https://github.com/get-advantage/advantage/issues/new/choose">Report Bug</a>
     ·
