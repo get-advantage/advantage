@@ -1,4 +1,4 @@
-import { AdvantageFormatName, IAdvantageWrapper } from "@src/types";
+import { AdvantageFormatName } from "@src/types";
 
 export default {
     formatIntegrations: [

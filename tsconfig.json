@@ -24,6 +24,6 @@
             "@src/*": ["src/*"]
         }
     },
-    "include": ["src", "playground/**/*.ts"],
-    "exclude": ["**/*.test.ts", "node_modules"]
+    "include": ["src", "playground"],
+    "exclude": ["**/*.test.ts", "node_modules/**", "www"]
 }

@@ -8,6 +8,7 @@ export default defineConfig({
     plugins: [
         dts({
             insertTypesEntry: true,
+            exclude: ['node_modules/**', 'playground/**']
         }),
         tsconfigPaths(),
     ],
