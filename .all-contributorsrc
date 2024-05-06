@@ -1,43 +1,52 @@
 {
-    "projectName": "advantage",
-    "projectOwner": "get-advantage",
-    "files": [
-        "README.md"
-    ],
-    "commitType": "docs",
-    "commitConvention": "angular",
-    "contributorsPerLine": 7,
-    "contributors": [
-        {
-            "login": "pattan",
-            "name": "Patrik Wilhelmsson",
-            "avatar_url": "https://avatars.githubusercontent.com/u/1073964?v=4",
-            "profile": "https://github.com/pattan",
-            "contributions": [
-                "doc",
-                "ideas"
-            ]
-        },
-        {
-            "login": "pontusarmini",
-            "name": "Pontus Armini",
-            "avatar_url": "https://avatars.githubusercontent.com/u/4329077?v=4",
-            "profile": "https://github.com/pontusarmini",
-            "contributions": [
-                "code",
-                "doc",
-                "ideas"
-            ]
-        },
-        {
-            "login": "rebeckasjostrom1",
-            "name": "Rebecka Sjöström",
-            "avatar_url": "https://avatars.githubusercontent.com/u/73482574?v=4",
-            "profile": "https://github.com/rebeckasjostrom1",
-            "contributions": [
-                "doc",
-                "ideas"
-            ]
-        }
-    ]
+  "projectName": "advantage",
+  "projectOwner": "get-advantage",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "pattan",
+      "name": "Patrik Wilhelmsson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1073964?v=4",
+      "profile": "https://github.com/pattan",
+      "contributions": [
+        "doc",
+        "ideas"
+      ]
+    },
+    {
+      "login": "pontusarmini",
+      "name": "Pontus Armini",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4329077?v=4",
+      "profile": "https://github.com/pontusarmini",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
+    },
+    {
+      "login": "rebeckasjostrom1",
+      "name": "Rebecka Sjöström",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73482574?v=4",
+      "profile": "https://github.com/rebeckasjostrom1",
+      "contributions": [
+        "doc",
+        "ideas"
+      ]
+    },
+    {
+      "login": "dsoohn",
+      "name": "Daniel Granlund",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27854867?v=4",
+      "profile": "https://github.com/dsoohn",
+      "contributions": [
+        "design"
+      ]
+    }
+  ]
 }
