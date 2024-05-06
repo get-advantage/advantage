@@ -264,7 +264,7 @@ layout: page
         <span class="heading-gradient">Reimagined</span>
       </h1>
       <p class="hero-subheading">
-        An Open Source library designed to <i>simplify</i>, <i>streamline</i> and <i>standardize</i> <br> <strong>high-impact</strong> display advertising on the web
+        An Open Source solution designed to <i>simplify</i>, <i>streamline</i> and <i>standardize</i> <br> <strong>high-impact</strong> display advertising on the web
       </p>
       <div class="hero-actions">
         <a href="./about/" class="hero-action secondary">
