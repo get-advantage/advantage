@@ -1,6 +1,10 @@
 import { AdvantageFormat, AdvantageFormatName } from "../../types";
 import topscrollCSS from "./topscroll.css?raw";
 import topscrollUICSS from "./topscroll-ui.css?raw";
+import {
+    setDimensionsUntilAdvantageAdSlot,
+    resetDimensionsUntilAdvantageAdSlot
+} from "./format-helper";
 
 export const topscroll: AdvantageFormat = {
     name: AdvantageFormatName.TopScroll,
@@ -12,7 +16,7 @@ export const topscroll: AdvantageFormat = {
             wrapper.insertCSS(topscrollCSS);
             // Set the styles for the ad iframe
             if (ad) {
-                ad.style.cssText = `display: block; width: 100vw; height: 80vh;`;
+                setDimensionsUntilAdvantageAdSlot(ad);
             }
 
             // Change the content of the UI layer
@@ -61,7 +65,7 @@ export const topscroll: AdvantageFormat = {
     },
     reset: (wrapper, ad?) => {
         if (ad) {
-            ad.style.display = "none";
+            resetDimensionsUntilAdvantageAdSlot(ad);
         }
         wrapper.resetCSS();
     },

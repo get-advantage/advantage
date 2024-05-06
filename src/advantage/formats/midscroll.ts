@@ -1,6 +1,10 @@
 import { AdvantageFormat, AdvantageFormatName } from "../../types";
 import styles from "./midscroll.css?raw";
 import midscrollUICSS from "./midscroll-ui.css?raw";
+import {
+    setDimensionsUntilAdvantageAdSlot,
+    resetDimensionsUntilAdvantageAdSlot
+} from "./format-helper";
 
 export const midscroll: AdvantageFormat = {
     name: AdvantageFormatName.Midscroll,
@@ -11,7 +15,7 @@ export const midscroll: AdvantageFormat = {
             wrapper.insertCSS(styles);
 
             if (ad) {
-                ad.style.cssText = `display: block; width: 100vw; height: 100vh;`;
+                setDimensionsUntilAdvantageAdSlot(ad);
             }
 
             const uiContainer = document.createElement("div");
@@ -33,7 +37,7 @@ export const midscroll: AdvantageFormat = {
     },
     reset: (wrapper, ad?) => {
         if (ad) {
-            ad.style.cssText = "";
+            resetDimensionsUntilAdvantageAdSlot(ad);
         }
         wrapper.resetCSS();
     },
