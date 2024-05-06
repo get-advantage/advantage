@@ -1,6 +1,6 @@
-advantage
+@get-advantage/advantage
 
-# advantage
+# @get-advantage/advantage
 
 ## Modules
 

@@ -1,4 +1,4 @@
-[advantage](../index.md) / [types](../modules/types.md) / IAdvantageUILayer
+[@get-advantage/advantage](../index.md) / [types](../modules/types.md) / IAdvantageUILayer
 
 # Interface: IAdvantageUILayer
 
@@ -1042,7 +1042,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:51](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L51)
+[src/types/index.ts:51](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L51)
 
 ___
 
@@ -1334,7 +1334,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:54](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L54)
+[src/types/index.ts:54](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L54)
 
 ___
 
@@ -1358,7 +1358,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:53](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L53)
+[src/types/index.ts:53](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L53)
 
 ___
 
@@ -1480,7 +1480,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:52](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L52)
+[src/types/index.ts:52](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L52)
 
 ___
 
@@ -3834,7 +3834,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:55](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L55)
+[src/types/index.ts:55](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L55)
 
 ___
 

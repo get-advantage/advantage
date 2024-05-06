@@ -1,4 +1,4 @@
-[advantage](../index.md) / [types](../modules/types.md) / AdvantageConfig
+[@get-advantage/advantage](../index.md) / [types](../modules/types.md) / AdvantageConfig
 
 # Interface: AdvantageConfig
 
@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[src/types/index.ts:24](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L24)
+[src/types/index.ts:24](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L24)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:26](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L26)
+[src/types/index.ts:26](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L26)
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:25](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L25)
+[src/types/index.ts:25](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L25)
 
 ___
 
@@ -65,4 +65,4 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:27](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L27)
+[src/types/index.ts:27](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L27)

@@ -1,4 +1,4 @@
-[advantage](../index.md) / utils/messaging
+[@get-advantage/advantage](../index.md) / utils/messaging
 
 # Module: utils/messaging
 
@@ -10,7 +10,7 @@
 
 #### Defined in
 
-[src/utils/messaging.ts:3](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/utils/messaging.ts#L3)
+[src/utils/messaging.ts:3](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/utils/messaging.ts#L3)
 
 ## Functions
 
@@ -36,7 +36,7 @@ A promise that resolves with the response message.
 
 #### Defined in
 
-[src/utils/messaging.ts:80](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/utils/messaging.ts#L80)
+[src/utils/messaging.ts:80](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/utils/messaging.ts#L80)
 
 ___
 
@@ -62,4 +62,4 @@ A promise that resolves with the reply and the message channel.
 
 #### Defined in
 
-[src/utils/messaging.ts:12](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/utils/messaging.ts#L12)
+[src/utils/messaging.ts:12](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/utils/messaging.ts#L12)

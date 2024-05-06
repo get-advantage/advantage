@@ -1,4 +1,4 @@
-[advantage](../index.md) / advantage/wrapper
+[@get-advantage/advantage](../index.md) / advantage/wrapper
 
 # Module: advantage/wrapper
 

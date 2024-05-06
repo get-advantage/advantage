@@ -1,4 +1,4 @@
-[advantage](../index.md) / advantage/messaging/publisher-side
+[@get-advantage/advantage](../index.md) / advantage/messaging/publisher-side
 
 # Module: advantage/messaging/publisher-side
 

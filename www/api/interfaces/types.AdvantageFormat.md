@@ -1,4 +1,4 @@
-[advantage](../index.md) / [types](../modules/types.md) / AdvantageFormat
+[@get-advantage/advantage](../index.md) / [types](../modules/types.md) / AdvantageFormat
 
 # Interface: AdvantageFormat
 
@@ -27,7 +27,7 @@
 
 #### Defined in
 
-[src/types/index.ts:66](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L66)
+[src/types/index.ts:66](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L66)
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:60](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L60)
+[src/types/index.ts:60](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L60)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:59](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L59)
+[src/types/index.ts:59](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L59)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:65](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L65)
+[src/types/index.ts:65](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L65)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:61](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L61)
+[src/types/index.ts:61](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L61)
 
 ___
 
@@ -121,4 +121,4 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:67](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L67)
+[src/types/index.ts:67](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L67)

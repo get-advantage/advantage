@@ -1,4 +1,4 @@
-[advantage](../index.md) / advantage/messaging/creative-side
+[@get-advantage/advantage](../index.md) / advantage/messaging/creative-side
 
 # Module: advantage/messaging/creative-side
 

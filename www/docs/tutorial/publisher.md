@@ -15,19 +15,19 @@ To install Advantage, run the following command in your terminal:
 ::: code-group
 
 ```sh [npm]
-$ npm i advantage
+$ npm i @get-advantage/advantage
 ```
 
 ```sh [pnpm]
-$ pnpm add advantage
+$ pnpm add @get-advantage/advantage
 ```
 
 ```sh [yarn]
-$ yarn add advantage
+$ yarn add @get-advantage/advantage
 ```
 
 ```sh [bun]
-$ bun i advantage
+$ bun i @get-advantage/advantage
 ```
 
 :::
@@ -37,7 +37,7 @@ $ bun i advantage
 Import Advantage and get a reference to it's singleton
 
 ```ts [index.ts]
-import { Advantage } from "advantage";
+import { Advantage } from "@get-advantage/advantage";
 
 // Get a reference to the Advantage singleton
 const advantage = Advantage.getInstance();
@@ -62,7 +62,7 @@ It is now time to wrap your ad slots in the Advantage Wrapper.
 You can also choose to use a helper method that does the wrapping for you:
 
 ```ts
-import { advantageWrapAdSlotElement } from "advantage";
+import { advantageWrapAdSlotElement } from "@get-advantage/advantage";
 
 /* advantageWrapAdSlotElement is a function that wraps an ad slot element with an
 Advantage-wrapper. It takes either a selector string or an HTMLElement as an argument.
@@ -174,12 +174,12 @@ Congratulations! Your website is now Advantage enabled!
 
 ### Step 6: Without the wrapper {#without-wrapper}
 
-If you don't need the Advantage Wrapper but still want your website to be able to accept Advantage ads, you can use the [`AdvantageAdSlotResponder`](../../api/classes/messaging_publisher_side.AdvantageAdSlotResponder.html) class.
+If you don't need the Advantage Wrapper but still want your website to be able to accept Advantage ads, you can use the [`AdvantageAdSlotResponder`](/api/classes/advantage_messaging_publisher_side.AdvantageAdSlotResponder.html) class.
 
 Create a new instance of the class for each ad slot/placement that you want Advantage-enabled:
 
 ```ts
-import { AdvantageAdSlotResponder } from "advantage";
+import { AdvantageAdSlotResponder } from "@get-advantage/advantage";
 
 new AdvantageAdSlotResponder({
     adSlotElement: document.querySelector("#advantage-enabled-ad-slot")!,

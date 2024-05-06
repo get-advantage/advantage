@@ -1,4 +1,4 @@
-[advantage](../index.md) / advantage/ui-layer
+[@get-advantage/advantage](../index.md) / advantage/ui-layer
 
 # Module: advantage/ui-layer
 

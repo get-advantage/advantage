@@ -1,4 +1,4 @@
-[advantage](../index.md) / [types](../modules/types.md) / AdvantageFormatIntegration
+[@get-advantage/advantage](../index.md) / [types](../modules/types.md) / AdvantageFormatIntegration
 
 # Interface: AdvantageFormatIntegration
 
@@ -12,7 +12,7 @@
 
 #### Defined in
 
-[src/types/index.ts:71](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L71)
+[src/types/index.ts:71](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L71)
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:77](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L77)
+[src/types/index.ts:77](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L77)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:78](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L78)
+[src/types/index.ts:78](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L78)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:72](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L72)
+[src/types/index.ts:72](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L72)
 
 ___
 
@@ -112,4 +112,4 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:76](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L76)
+[src/types/index.ts:76](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L76)

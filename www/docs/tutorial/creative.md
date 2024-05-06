@@ -15,19 +15,19 @@ To install Advantage, run the following command in your terminal:
 ::: code-group
 
 ```sh [npm]
-$ npm i advantage
+$ npm i @get-advantage/advantage
 ```
 
 ```sh [pnpm]
-$ pnpm add advantage
+$ pnpm add @get-advantage/advantage
 ```
 
 ```sh [yarn]
-$ yarn add advantage
+$ yarn add @get-advantage/advantage
 ```
 
 ```sh [bun]
-$ bun i advantage
+$ bun i @get-advantage/advantage
 ```
 
 :::
@@ -37,7 +37,7 @@ $ bun i advantage
 Import the `AdvantageCreativeMessenger` class into your creative's code.
 
 ```ts
-import { AdvantageCreativeMessenger } from "advantage";
+import { AdvantageCreativeMessenger } from "@get-advantage/advantage";
 ```
 
 ### Step 3: Start a session

@@ -1,4 +1,4 @@
-[advantage](../index.md) / [types](../modules/types.md) / AdvantageFormatName
+[@get-advantage/advantage](../index.md) / [types](../modules/types.md) / AdvantageFormatName
 
 # Enumeration: AdvantageFormatName
 
@@ -12,7 +12,7 @@
 
 #### Defined in
 
-[src/types/index.ts:13](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L13)
+[src/types/index.ts:13](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L13)
 
 ___
 
@@ -22,7 +22,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:14](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L14)
+[src/types/index.ts:14](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L14)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:12](https://github.com/madington/advantage/blob/a3374afabf5379dfa1b20c1a8aa5f1925c135e7a/src/types/index.ts#L12)
+[src/types/index.ts:12](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L12)

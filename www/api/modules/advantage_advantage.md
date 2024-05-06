@@ -1,4 +1,4 @@
-[advantage](../index.md) / advantage/advantage
+[@get-advantage/advantage](../index.md) / advantage/advantage
 
 # Module: advantage/advantage
 
