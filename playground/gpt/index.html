@@ -15,6 +15,10 @@
             googletag
                 .defineSlot('/5374/TV2no/marked/test/madington', [10, 10], 'banner-ad')
                 .addService(googletag.pubads());
+            // Define an ad slot for div with id "middle-of-page".
+            googletag
+                .defineSlot('/5374/TV2no/marked/test/madington', [1, 1], 'middle-of-page-ad')
+                .addService(googletag.pubads());
             googletag.enableServices();
         });
     </script>
@@ -336,23 +340,20 @@
             </article>
         </section>
     </div>
-    <advantage-wrapper exclude-formats="TOPSCROLL,MIDSCROLL">
+    <advantage-wrapper>
         <div slot="advantage-ad-slot">
-            <iframe src="./topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
-                scrolling="no"></iframe>
+            <!-- START / This is an ordinary GPT slot  -->
+            <div id="middle-of-page-ad">
+                <script>
+                    googletag.cmd.push(() => {
+                        // Request and render an ad for the "middle-of-page-ad" slot.
+                        googletag.display("middle-of-page-ad");
+                    });
+                </script>
+            </div>
+            <!-- / END -->
         </div>
     </advantage-wrapper>
-
-    <div id="ad-slot-to-be-wrapped" style="width: 100%">
-        <iframe id="midscroll" src="./midscroll.html" title="advantage-ad" style="
-                    display: block;
-                    border: 0;
-                    width: 320px;
-                    height: 320px;
-                    margin-left: auto;
-                    margin-right: auto;
-                " scrolling="no"></iframe>
-    </div>
     <div class="container mx-auto px-4 py-4">
         <section class="grid grid-cols-1 lg:gap-6 lg:grid-cols-2 lg:grid-rows-3">
             <article class="py-4">
@@ -652,19 +653,6 @@
             </article>
         </section>
     </div>
-    <script>
-        // This is a helper function to wrap an ad slot element with an Advantage-wrapper
-        // The advantageCmdQueue will be executed by the Advantage-wrapper script when it is loaded
-        window.advantageCmdQueue = [
-            (advantageWrapAdSlotElement) => {
-                // advantageWrapAdSlotElement is a function that wraps an ad slot element with an Advantage-wrapper. It takes either a selector string or an HTMLElement as an argument.
-                // You can also pass an optional second argument to specify the formats to exclude for the wrapped ad slot.
-                advantageWrapAdSlotElement("#ad-slot-to-be-wrapped", [
-                    "topscroll"
-                ]);
-            }
-        ];
-    </script>
     <script type="module" src="./index.ts"></script>
 </body>
 

@@ -5,19 +5,12 @@ export default {
         {
             format: AdvantageFormatName.TopScroll,
             setup: () => {
-                return new Promise<void>((resolve, reject) => {
-                    const queryParams = new URLSearchParams(
-                        window.location.search
-                    );
-                    const simulateIntegrationError = queryParams.get(
-                        "simulateIntegrationError"
-                    );
+                return new Promise<void>((resolve) => {
+                    /* Setup your site to accomodate the topscroll format here.
+                    Perhaps you might need to hide a sticky header menu or similar. */
 
-                    if (simulateIntegrationError === "true") {
-                        reject();
-                    } else {
-                        resolve();
-                    }
+                    // call resolve when done
+                    resolve();
                 });
             }
             /*
@@ -28,6 +21,18 @@ export default {
                 console.log("Resetting top scroll format");
             }
             */
+        },
+        {
+            format: AdvantageFormatName.Midscroll,
+            setup: () => {
+                return new Promise<void>((resolve) => {
+                    /* Setup your site to accomodate the Midscroll format here.
+                    Perhaps you might need to adjust the wrapper to occupy 100% of page width or similar. */
+
+                    // call resolve when done
+                    resolve();
+                });
+            }
         }
     ]
 };

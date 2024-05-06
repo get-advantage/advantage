@@ -1,6 +1,4 @@
-import { Advantage } from "@src/advantage";
-import { AdvantageAdSlotResponder } from "@src/advantage/messaging/publisher-side";
-import localConfig from "./config";
+import { Advantage, AdvantageFormatName } from "@src/advantage";
 
 /* 
 
@@ -11,31 +9,38 @@ This is the code that the publisher should include in their website.
 const advantage = Advantage.getInstance();
 
 advantage.configure({
-    /* Load the configuration from a remote file. Use your own logic for resolving a config url */
-    configUrlResolver: () => {
-        /* You could use hostname or any other logic to determine the config file 
-        return `https://example.com/configs/${window.location.hostname}.js`;
-        */
-        return "./config.ts";
-    },
-    /* Or use a local configuration */
-    ...localConfig
-});
+    formatIntegrations: [
+        {
+            format: AdvantageFormatName.TopScroll,
+            setup: () => {
+                return new Promise<void>((resolve) => {
+                    /* Setup your site to accomodate the topscroll format here.
+                    Perhaps you might need to hide a sticky header menu or similar. */
 
-// Advantage Publisher API
-new AdvantageAdSlotResponder({
-    adSlotElement: document.querySelector("#custom")!,
-    formatRequestHandler: (format, elem) => {
-        return new Promise((resolve) => {
-            console.log("Received format request: ", format, elem);
-            resolve();
-        });
-    }
-});
+                    // call resolve when done
+                    resolve();
+                });
+            }
+            /*
+            onClose: () => {
+                console.log("Closing top scroll format");
+            }
+            onReset: () => {
+                console.log("Resetting top scroll format");
+            }
+            */
+        },
+        {
+            format: AdvantageFormatName.Midscroll,
+            setup: () => {
+                return new Promise<void>((resolve) => {
+                    /* Setup your site to accomodate the Midscroll format here.
+                    Perhaps you might need to adjust the wrapper to occupy 100% of page width or similar. */
 
-/*
-setTimeout(() => {
-    const midscroll = document.querySelector("#midscroll");
-    midscroll?.parentElement?.removeChild(midscroll);
-}, 5000);
-*/
+                    // call resolve when done
+                    resolve();
+                });
+            }
+        }
+    ]
+});
