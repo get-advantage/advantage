@@ -60,7 +60,7 @@ layout: page
     font-weight: 400;
     font-size: 24px;
     color: var(--vp-c-text-1);
-    max-width: 600px;
+    max-width: 900px;
     text-align: center;
     line-height: 1.5
   }
@@ -267,7 +267,7 @@ layout: page
         <span class="heading-gradient">Reimagined</span>
       </h1>
       <p class="hero-subheading">
-        An Open Source solution designed to <i>simplify</i>, <i>streamline</i> and <i>standardize</i> <br> <strong>high-impact</strong> display advertising on the web
+        An open-source solution designed to <i>simplify</i>, <i>streamline</i> and <i>standardize</i> <br> <strong>high-impact</strong> display advertising on the web
       </p>
       <div class="hero-actions">
         <a href="./about/" class="hero-action secondary">
