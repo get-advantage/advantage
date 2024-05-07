@@ -24,7 +24,7 @@ To learn more about how to become a maintainer, contribute or become a supportin
 
 [Madington](https://www.madington.com)
 
-[TV.no](https://www.tv2.no)
+[TV2.no](https://www.tv2.no)
 
 # Members
 
