@@ -5,7 +5,7 @@ export default defineConfig({
     srcDir: "www",
     ignoreDeadLinks: true,
     title: "Advantage",
-    description: "Building User-First Ad Formats",
+    description: "High Impact Advertising - Reimagined",
     lastUpdated: true,
     //base: process.env.NODE_ENV === "production" ? "/advantage/" : "/",
     base: "/",
@@ -24,6 +24,9 @@ export default defineConfig({
         ['meta', { name: "theme-color", content: "#18181b", media: "(prefers-color-scheme: dark)" }],
         ['meta', { name: "theme-color", content: "#FFFFFF", media: "(prefers-color-scheme: light)" }],
     ],
+    sitemap: {
+        hostname: "https://get-advantage.org"
+    },
     markdown: {
         theme: {
             light: "github-light",
@@ -135,19 +138,8 @@ export default defineConfig({
                             text: `Hello World`,
                             link: "/docs/examples/hello-world.md"
                         },
-                        // {
-                        //     text: "Nuxt",
-                        //     link: "/docs/integration/examples/nuxt.md"
-                        // },
-                        // {
-                        //     text: "Remix",
-                        //     link: "/docs/integration/examples/remix.md"
-                        // }
                     ]
                 },
-                //{ text: "React", link: "/docs/integration/react.md" },
-                //{ text: "Vue", link: "/docs/integration/vue.md" },
-                //{ text: "Svelte", link: "/docs/integration/svelte.md" }
             ]
         }
     }

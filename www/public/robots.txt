@@ -1,2 +1,7 @@
 User-agent: *
-Disallow: /
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /junk/
+Allow: /
+
+Sitemap: https://get-advantage.org/sitemap.xml
