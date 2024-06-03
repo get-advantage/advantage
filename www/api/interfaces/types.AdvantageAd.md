@@ -12,7 +12,7 @@
 
 #### Defined in
 
-[src/types/index.ts:18](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L18)
+[src/types/index.ts:18](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/types/index.ts#L18)
 
 ___
 
@@ -22,7 +22,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:20](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L20)
+[src/types/index.ts:20](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/types/index.ts#L20)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:19](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L19)
+[src/types/index.ts:19](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/types/index.ts#L19)

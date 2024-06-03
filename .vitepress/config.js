@@ -1,5 +1,7 @@
 import { defineConfig } from "vitepress";
 
+const hostname = "https://www.get-advantage.org";
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
     srcDir: "www",
@@ -7,9 +9,20 @@ export default defineConfig({
     title: "Advantage",
     description: "High Impact Advertising - Reimagined",
     lastUpdated: true,
-    //base: process.env.NODE_ENV === "production" ? "/advantage/" : "/",
     base: "/",
     publicDir: "public",
+    cleanUrls: true,
+    transformPageData(pageData) {
+        const canonicalUrl = `${hostname}/${pageData.relativePath}`
+            .replace(/index\.(md|html)$/, '')
+            .replace(/\.(md|html)$/, '')
+
+        pageData.frontmatter.head ??= []
+        pageData.frontmatter.head.push([
+            'link',
+            { rel: 'canonical', href: canonicalUrl }
+        ])
+    },
     head: [
         ['script', { src: 'https://cdn.tailwindcss.com' }],
         ['link', { href: 'https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap', rel: 'stylesheet' }],
@@ -25,7 +38,7 @@ export default defineConfig({
         ['meta', { name: "theme-color", content: "#FFFFFF", media: "(prefers-color-scheme: light)" }],
     ],
     sitemap: {
-        hostname: "https://get-advantage.org"
+        hostname,
     },
     markdown: {
         theme: {

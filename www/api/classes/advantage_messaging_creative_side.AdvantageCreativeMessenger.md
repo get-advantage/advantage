@@ -60,7 +60,7 @@ advantageMessenger.startSession().then((confirmed) => {
 
 #### Defined in
 
-[src/advantage/messaging/creative-side.ts:57](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/advantage/messaging/creative-side.ts#L57)
+[src/advantage/messaging/creative-side.ts:57](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/advantage/messaging/creative-side.ts#L57)
 
 ## Properties
 
@@ -70,7 +70,7 @@ advantageMessenger.startSession().then((confirmed) => {
 
 #### Defined in
 
-[src/advantage/messaging/creative-side.ts:53](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/advantage/messaging/creative-side.ts#L53)
+[src/advantage/messaging/creative-side.ts:53](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/advantage/messaging/creative-side.ts#L53)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[src/advantage/messaging/creative-side.ts:54](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/advantage/messaging/creative-side.ts#L54)
+[src/advantage/messaging/creative-side.ts:54](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/advantage/messaging/creative-side.ts#L54)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[src/advantage/messaging/creative-side.ts:55](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/advantage/messaging/creative-side.ts#L55)
+[src/advantage/messaging/creative-side.ts:55](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/advantage/messaging/creative-side.ts#L55)
 
 ## Methods
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[src/advantage/messaging/creative-side.ts:99](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/advantage/messaging/creative-side.ts#L99)
+[src/advantage/messaging/creative-side.ts:99](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/advantage/messaging/creative-side.ts#L99)
 
 ___
 
@@ -130,7 +130,7 @@ ___
 
 #### Defined in
 
-[src/advantage/messaging/creative-side.ts:78](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/advantage/messaging/creative-side.ts#L78)
+[src/advantage/messaging/creative-side.ts:78](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/advantage/messaging/creative-side.ts#L78)
 
 ___
 
@@ -144,4 +144,4 @@ ___
 
 #### Defined in
 
-[src/advantage/messaging/creative-side.ts:61](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/advantage/messaging/creative-side.ts#L61)
+[src/advantage/messaging/creative-side.ts:61](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/advantage/messaging/creative-side.ts#L61)

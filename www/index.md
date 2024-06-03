@@ -270,7 +270,7 @@ layout: page
         An open-source solution designed to <i>simplify</i>, <i>streamline</i> and <i>standardize</i> <br> <strong>high-impact</strong> display advertising on the web
       </p>
       <div class="hero-actions">
-        <a href="./about/" class="hero-action secondary">
+        <a href="/about/" class="hero-action secondary">
           <span style="padding-right: 8px">Get started</span>
           <img src="/icons/chevron-right.svg" width="20" height="20" />
         </a>

@@ -1042,7 +1042,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:51](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L51)
+[src/types/index.ts:51](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/types/index.ts#L51)
 
 ___
 
@@ -1334,7 +1334,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:54](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L54)
+[src/types/index.ts:54](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/types/index.ts#L54)
 
 ___
 
@@ -1358,7 +1358,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:53](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L53)
+[src/types/index.ts:53](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/types/index.ts#L53)
 
 ___
 
@@ -1480,7 +1480,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:52](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L52)
+[src/types/index.ts:52](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/types/index.ts#L52)
 
 ___
 
@@ -3834,7 +3834,7 @@ ___
 
 #### Defined in
 
-[src/types/index.ts:55](https://github.com/get-advantage/advantage/blob/f2d41437895cf3f477be60f31147a43b479d51d7/src/types/index.ts#L55)
+[src/types/index.ts:55](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/types/index.ts#L55)
 
 ___
 
