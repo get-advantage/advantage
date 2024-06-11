@@ -10,7 +10,7 @@
 
 #### Defined in
 
-[src/utils/messaging.ts:3](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/utils/messaging.ts#L3)
+[src/utils/messaging.ts:3](https://github.com/get-advantage/advantage/blob/3b64a3c9f09adaef20f44c0e2a8b866e77d18b71/src/utils/messaging.ts#L3)
 
 ## Functions
 
@@ -36,7 +36,7 @@ A promise that resolves with the response message.
 
 #### Defined in
 
-[src/utils/messaging.ts:80](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/utils/messaging.ts#L80)
+[src/utils/messaging.ts:80](https://github.com/get-advantage/advantage/blob/3b64a3c9f09adaef20f44c0e2a8b866e77d18b71/src/utils/messaging.ts#L80)
 
 ___
 
@@ -62,4 +62,4 @@ A promise that resolves with the reply and the message channel.
 
 #### Defined in
 
-[src/utils/messaging.ts:12](https://github.com/get-advantage/advantage/blob/caa07d24bc26c2109d091786d253f0c22f313c38/src/utils/messaging.ts#L12)
+[src/utils/messaging.ts:12](https://github.com/get-advantage/advantage/blob/3b64a3c9f09adaef20f44c0e2a8b866e77d18b71/src/utils/messaging.ts#L12)
