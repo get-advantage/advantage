@@ -52,9 +52,8 @@
         "bundle:umd": "esbuild --bundle --sourcemap --platform=node --outfile=dist/bundles/advantage.umd.js dist/advantage/index.js",
         "preview": "vite preview",
         "docs:dev": "vitepress dev",
-        "docs:build": "vitepress build",
+        "docs:build": "typedoc && vitepress build",
         "docs:preview": "vitepress preview",
-        "postbuild": "typedoc",
         "test": "jest",
         "test-server": "node test-server.js",
         "release": "dotenv release-it --"
