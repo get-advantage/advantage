@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Advantage</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,6 +11,10 @@
             overflow-x: hidden;
         }
     </style>
+    <script>
+        window.advantageCmdQueue = window.advantageCmdQueue || [];
+    </script>
+    <script type="module" src="./index.js"></script>
 </head>
 
 <body>
@@ -639,7 +642,7 @@
     <script>
         // This is a helper function to wrap an ad slot element with an Advantage-wrapper
         // The advantageCmdQueue will be executed by the Advantage-wrapper script when it is loaded
-        window.advantageCmdQueue = [
+        window.advantageCmdQueue.push(
             (advantageWrapAdSlotElement) => {
                 // advantageWrapAdSlotElement is a function that wraps an ad slot element with an Advantage-wrapper. It takes either a selector string or an HTMLElement as an argument.
                 // You can also pass an optional second argument to specify the formats to exclude for the wrapped ad slot.
@@ -647,9 +650,8 @@
                     "topscroll"
                 ]);
             }
-        ];
+        );
     </script>
-    <script type="module" src="./index.ts"></script>
 </body>
 
 </html>

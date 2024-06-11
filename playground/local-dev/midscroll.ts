@@ -1,4 +1,4 @@
-import { AdvantageCreativeMessenger } from "@src/advantage";
+import { AdvantageCreativeMessenger } from "@src/advantage/messaging/creative-side";
 import { AdvantageMessageAction, AdvantageFormatName } from "@src/types";
 import { logger } from "@src/utils/logging";
 
@@ -11,7 +11,7 @@ async function main() {
     const session = await advantageMessenger.startSession();
 
     advantageMessenger.onMessage((message) => {
-        console.log("The midscroll ad received a message: ", message);
+        logger.debug("The midscroll ad received a message: ", message);
     });
 
     if (session) {
