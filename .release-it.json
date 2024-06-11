@@ -12,5 +12,8 @@
             },
             "infile": "CHANGELOG.md"
         }
+    },
+    "npm": {
+        "publishPath": "dist"
     }
 }

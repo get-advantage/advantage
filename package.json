@@ -82,5 +82,8 @@
         "vite-plugin-no-bundle": "^4.0.0",
         "vite-tsconfig-paths": "^4.3.2",
         "vitepress": "^1.1.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
