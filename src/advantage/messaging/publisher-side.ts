@@ -61,6 +61,9 @@ export class AdvantageAdSlotResponder {
             message: MessageEvent<any>
         ) => boolean;
     }) {
+        if (!config.adSlotElement) {
+            throw new Error("An adSlotElement must be provided");
+        }
         this.#element = config.adSlotElement;
         this.#formatRequestHandler = config.formatRequestHandler;
         this.#messageValidator = config.messageValidator;

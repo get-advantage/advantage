@@ -38,6 +38,6 @@
     ::slotted(#simulated-ad) {
         width: 100svw;
         height: 80svh;
-        background-image: url("../../../fullscreen-portrait.png")
+        /*background-image: url("../../../fullscreen-portrait.png")*/
     }
 }
