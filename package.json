@@ -13,25 +13,51 @@
     "files": [
         "dist"
     ],
-    "main": "./dist/advantage.cjs.js",
-    "module": "./dist/advantage.js",
+    "main": "./dist/advantage/index.cjs.js",
+    "module": "./dist/advantage/index.js",
     "types": "./dist/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/advantage.js",
-            "require": "./dist/advantage.cjs.js"
+            "import": "./dist/advantage/index.js",
+            "require": "./dist/advantage/index.cjs.js",
+            "types": "./dist/advantage/index.d.ts"
+        },
+        "./types": {
+            "import": "./dist/types/index.js",
+            "require": "./dist/types/index.cjs",
+            "types": "./dist/types/index.d.ts"
+        },
+        "./messaging": {
+            "import": "./dist/advantage/messaging/index.js",
+            "require": "./dist/advantage/messaging/index.cjs",
+            "types": "./dist/advantage/messaging/index.d.ts"
+        },
+        "./creative": {
+            "import": "./dist/advantage/messaging/creative-side.js",
+            "require": "./dist/advantage/messaging/creative-side.cjs",
+            "types": "./dist/advantage/messaging/creative-side.d.ts"
+        },
+        "./publisher": {
+            "import": "./dist/advantage/messaging/publisher-side.js",
+            "require": "./dist/advantage/messaging/publisher-side.cjs",
+            "types": "./dist/advantage/messaging/publisher-side.d.ts"
         }
     },
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "tsc && vite build && npm run bundle",
+        "bundle": "npm run bundle:es && npm run bundle:esmin && npm run bundle:umd",
+        "bundle:es": "esbuild --bundle \"--external:*.png\" --format=esm --platform=browser --sourcemap --outfile=dist/bundles/advantage.js src/advantage/index.js",
+        "bundle:esmin": "esbuild --bundle --format=esm --platform=browser --sourcemap --minify --outfile=dist/bundles/advantage.min.js dist/advantage/index.js",
+        "bundle:umd": "esbuild --bundle --sourcemap --platform=node --outfile=dist/bundles/advantage.umd.js dist/advantage/index.js",
         "preview": "vite preview",
         "docs:dev": "vitepress dev",
         "docs:build": "vitepress build",
         "docs:preview": "vitepress preview",
         "postbuild": "typedoc",
         "test": "jest",
-        "test-server": "node test-server.js"
+        "test-server": "node test-server.js",
+        "release": "release-it"
     },
     "devDependencies": {
         "@types/cypress": "^1.1.3",
@@ -39,10 +65,12 @@
         "@types/jest": "^29.5.12",
         "@types/jsdom": "^21.1.6",
         "cypress": "^13.7.3",
+        "esbuild": "0.21.4",
         "express": "^4.19.2",
         "http-server": "^14.1.1",
         "jest": "^29.7.0",
         "jsdom": "^24.0.0",
+        "release-it": "^17.3.0",
         "ts-jest": "^29.1.2",
         "typedoc": "^0.25.13",
         "typedoc-plugin-markdown": "^3.17.1",
@@ -50,6 +78,7 @@
         "typescript": "^5.2.2",
         "vite": "^5.2.0",
         "vite-plugin-dts": "^3.9.0",
+        "vite-plugin-no-bundle": "^4.0.0",
         "vite-tsconfig-paths": "^4.3.2",
         "vitepress": "^1.1.0"
     }
