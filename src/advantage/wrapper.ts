@@ -166,10 +166,10 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 }
             }
             try {
+                await formatConfig.setup(this, this.messageHandler.ad?.iframe);
                 await Advantage.getInstance()
                     .formatIntegrations.get(format)
                     ?.setup(this, this.messageHandler.ad?.iframe);
-                await formatConfig.setup(this, this.messageHandler.ad?.iframe);
                 resolve();
             } catch (error) {
                 this.reset();
