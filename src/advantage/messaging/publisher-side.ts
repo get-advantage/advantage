@@ -87,7 +87,7 @@ export class AdvantageAdSlotResponder {
         const message = event.data;
         // The message is a request to start a session
         if (message.action === AdvantageMessageAction.START_SESSION) {
-            console.log("start session!", event);
+            logger.debug("start session!", event);
             this.#messagePort = event.ports[0];
             this.#messagePort.postMessage({
                 type: ADVANTAGE,
@@ -101,16 +101,24 @@ export class AdvantageAdSlotResponder {
                 (this.#element as IAdvantageWrapper)
                     .morphIntoFormat(message.format!)
                     .then(() => {
-                        console.log("morphed into format", message.format!);
+                        logger.info("morphed into format", message.format!);
                         this.#messagePort?.postMessage({
                             type: ADVANTAGE,
                             action: AdvantageMessageAction.FORMAT_CONFIRMED,
                             sessionID: message.sessionID
                         });
+                    })
+                    .catch(() => {
+                        logger.error("morphing failed", message.format!);
+                        this.#messagePort?.postMessage({
+                            type: ADVANTAGE,
+                            action: AdvantageMessageAction.FORMAT_REJECTED,
+                            sessionID: message.sessionID
+                        });
                     });
             } else {
                 if (this.#formatRequestHandler) {
-                    console.log(
+                    logger.debug(
                         "Sending format request",
                         this.#formatRequestHandler
                     );
@@ -188,7 +196,7 @@ export class AdvantageAdSlotResponder {
                 iframes.forEach(childAdFinder);
             } else {
                 // Check if the source window is a child of the #element
-                console.log("NOT A WRAPPER!", this.#element);
+                logger.debug("NOT A WRAPPER!", this.#element);
                 Array.from(
                     this.#element.getElementsByTagName("iframe")
                 ).forEach(childAdFinder);

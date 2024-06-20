@@ -1,6 +1,7 @@
 export { Advantage } from "./advantage";
 import { AdvantageWrapper } from "./wrapper";
 import { AdvantageUILayer } from "./ui-layer";
+import logger from "../utils/logging";
 import { advantageWrapAdSlotElement as actualAdvantageWrapAdSlotElement } from "./wrapping-helper";
 export { actualAdvantageWrapAdSlotElement as advantageWrapAdSlotElement };
 export * from "./messaging";
@@ -23,7 +24,7 @@ if ((window as any).advantageCmdQueue) {
         try {
             callback(actualAdvantageWrapAdSlotElement);
         } catch (error) {
-            console.error("Error executing callback:", error);
+            logger.error("Error executing callback:", error);
         }
     }
 } else {
@@ -35,7 +36,7 @@ if ((window as any).advantageCmdQueue) {
     try {
         callback(actualAdvantageWrapAdSlotElement);
     } catch (error) {
-        console.error("Error executing callback:", error);
+        logger.error("Error executing callback:", error);
     }
 };
 
@@ -44,7 +45,7 @@ if ((window as any).advantageCmdQueue) {
     try {
         callback(actualAdvantageWrapAdSlotElement);
     } catch (error) {
-        console.error("Error executing callback:", error);
+        logger.error("Error executing callback:", error);
     }
 };
 

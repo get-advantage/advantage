@@ -5,6 +5,7 @@ import {
     setDimensionsUntilAdvantageAdSlot,
     resetDimensionsUntilAdvantageAdSlot
 } from "./format-helper";
+import logger from "../../utils/logging";
 
 export const midscroll: AdvantageFormat = {
     name: AdvantageFormatName.Midscroll,
@@ -28,7 +29,7 @@ export const midscroll: AdvantageFormat = {
             wrapper.uiLayer.changeContent(uiContainer);
 
             closeBtn.addEventListener("click", () => {
-                console.log("Close button clicked");
+                logger.debug("Close button clicked");
                 wrapper.close();
             });
 

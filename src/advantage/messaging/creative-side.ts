@@ -3,6 +3,7 @@ import {
     sendMessageAndAwaitResponse
 } from "../../utils/messaging";
 import { AdvantageMessage, AdvantageMessageAction } from "../../types";
+import logger from "../../utils/logging";
 
 /**
  * AdvantageCreativeMessenger is the class that should be used in creative ads to communicate with Advantage on the publisher side. This class is used to request formats and other information from the parent website.
@@ -92,7 +93,7 @@ export class AdvantageCreativeMessenger {
 
             return response;
         } catch (e) {
-            console.error("Error sending message", e);
+            logger.error("Error sending message", e);
         }
     }
 

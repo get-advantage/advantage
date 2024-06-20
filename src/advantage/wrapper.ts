@@ -123,7 +123,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         this.simulating = true;
         const formatConfig = Advantage.getInstance().formats.get(format);
         if (formatConfig && formatConfig.simulate) {
-            console.log("SIMULATE FORMAT");
+            logger.debug("SIMULATE FORMAT");
             formatConfig.simulate(this);
         }
     };
@@ -134,7 +134,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * @returns A promise that resolves when the morphing is complete.
      */
     morphIntoFormat = async (format: string) => {
-        console.log("MORPH INTO FORMAT");
+        logger.debug("MORPH INTO FORMAT");
         return new Promise<void>(async (resolve, reject) => {
             const forbiddenFormats = this.getAttribute("exclude-formats")
                 ?.split(",")

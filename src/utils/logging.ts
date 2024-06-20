@@ -1,33 +1,47 @@
-// TODO: Implement logging with different levels
-let isDebugMode = true;
+type LogLevel = "log" | "info" | "error";
 
-export function debugLog(...messages: any[]) {
-    if (isDebugMode) {
-        console.log("ADVANTAGE DEBUG:", ...messages);
-        console.trace("Stack trace");
+class Logger {
+    private debugMode: boolean;
+    private style: string =
+        "color: #f3f1ff; font-weight: bold; background-color: #6b04fd; padding: 2px; border-radius: 2px;";
+
+    constructor() {
+        this.debugMode = new URLSearchParams(window.location.search).has(
+            "adv_debug"
+        );
+    }
+
+    private formatMessage(level: LogLevel): string {
+        const timestamp = new Date().toISOString();
+        return `${timestamp} [${level.toUpperCase()}] %cADVANTAGE`;
+    }
+
+    private log(level: LogLevel, message: any, ...optionalParams: any) {
+        if (this.debugMode) {
+            console[level](
+                this.formatMessage(level),
+                this.style,
+                `- ${message}`,
+                ...optionalParams
+            );
+            if (level === "error") {
+                console.trace();
+            }
+        }
+    }
+
+    debug(message: any, ...optionalParams: any) {
+        this.log("log", message, ...optionalParams);
+    }
+
+    info(message: any, ...optionalParams: any) {
+        this.log("info", message, ...optionalParams);
+    }
+
+    error(message: any, ...optionalParams: any) {
+        this.log("error", message, ...optionalParams);
     }
 }
 
-export function infoLog(...messages: any[]) {
-    if (isDebugMode) {
-        console.info("🤠 ADVANTAGE: ", ...messages);
-    }
-}
-
-export function warnLog(...messages: string[]) {
-    if (isDebugMode) {
-        console.warn("‼️ ADVANTAGE WARNING:", ...messages);
-    }
-}
-
-export function errorLog(...messages: any[]) {
-    console.error("ADVANTAGE ERROR:", ...messages);
-    console.trace("Stack trace");
-}
-
-export const logger = {
-    debug: debugLog,
-    info: infoLog,
-    warn: warnLog,
-    error: errorLog
-};
+const logger = new Logger();
+export default logger;

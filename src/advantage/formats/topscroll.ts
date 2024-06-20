@@ -5,6 +5,7 @@ import {
     setDimensionsUntilAdvantageAdSlot,
     resetDimensionsUntilAdvantageAdSlot
 } from "./format-helper";
+import logger from "../../utils/logging";
 
 export const topscroll: AdvantageFormat = {
     name: AdvantageFormatName.TopScroll,
@@ -33,7 +34,7 @@ export const topscroll: AdvantageFormat = {
             wrapper.uiLayer.style.setProperty("--before-content", "'Close ad'");
 
             closeBtn.addEventListener("click", () => {
-                console.log("Close button clicked");
+                logger.debug("Close button clicked");
                 wrapper.close();
             });
             resolve();
@@ -59,7 +60,7 @@ export const topscroll: AdvantageFormat = {
         wrapper.uiLayer.changeContent(uiContainer);
 
         closeBtn.addEventListener("click", () => {
-            console.log("Close button clicked");
+            logger.debug("Close button clicked");
             wrapper.close();
         });
     },

@@ -68,7 +68,7 @@ export class Advantage {
                 this.applyConfig(module.default);
             })
             .catch((e) => {
-                console.error("Error fetching config", e);
+                logger.error("Error fetching config", e);
             });
     }
 

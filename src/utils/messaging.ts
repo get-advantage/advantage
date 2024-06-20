@@ -44,7 +44,6 @@ export function sendMessageAndOpenChannel(
             let currentWindow: Window & typeof globalThis =
                 window.parent as Window & typeof globalThis;
             do {
-                console.log("currentWindow", currentWindow);
                 currentWindow.postMessage(message, "*", [channel.port2]);
                 currentWindow = currentWindow.parent as Window &
                     typeof globalThis;

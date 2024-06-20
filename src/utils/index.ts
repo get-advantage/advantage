@@ -1,4 +1,4 @@
-export { logger } from "./logging";
+export { default as logger } from "./logging";
 export { collectIframes, traverseNodes } from "./misc";
 export {
     ADVANTAGE,
