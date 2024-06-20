@@ -1,6 +1,6 @@
 import { AdvantageCreativeMessenger } from "@src/advantage";
 import { AdvantageMessageAction, AdvantageFormatName } from "@src/types";
-import { logger } from "@src/utils/logging";
+import logger from "@src/utils/logging";
 
 async function main() {
     const advantageMessenger = new AdvantageCreativeMessenger();
@@ -22,7 +22,7 @@ async function main() {
             document.body.style.opacity = "1";
         }
         if (response?.action === AdvantageMessageAction.FORMAT_REJECTED) {
-            logger.warn("Top scroll format was rejected");
+            logger.info("Top scroll format was rejected");
         }
     }
 }

@@ -1,6 +1,6 @@
 import { AdvantageCreativeMessenger } from "@src/advantage/messaging/creative-side";
 import { AdvantageMessageAction, AdvantageFormatName } from "@src/types";
-import { logger } from "@src/utils/logging";
+import logger from "@src/utils/logging";
 /* 
 This is an example of a topscroll creative ad implementation.
 */
@@ -8,24 +8,8 @@ async function main() {
     const advantageMessenger = new AdvantageCreativeMessenger();
     const session = await advantageMessenger.startSession();
 
-    /*
-    advantageProtocol.startSession().then((confirmed) => {
-        if (confirmed) {
-            console.log("Session started");
-            advantageProtocol.sendMessage({
-                action: AdvantageMessageAction.REQUEST_FORMAT,
-                format: AdvantageFormatName.TopScroll
-            }).then((response) => {
-                console.log("response: ", response);
-            });
-        } else {
-            console.log("Session failed to start");
-        }
-    });
-    */
-
     advantageMessenger.onMessage((message) => {
-        console.log("A topscroll ad received a message: ", message);
+        logger.debug("A topscroll ad received a message: ", message);
     });
 
     if (session) {
@@ -38,7 +22,7 @@ async function main() {
             document.body.style.opacity = "1";
         }
         if (response?.action === AdvantageMessageAction.FORMAT_REJECTED) {
-            logger.warn("Top scroll format was rejected");
+            logger.info("Top scroll format was rejected");
         }
     }
 }

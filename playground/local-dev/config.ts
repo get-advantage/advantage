@@ -1,4 +1,5 @@
 import { AdvantageFormatName, IAdvantageWrapper } from "@src/types";
+import logger from "@src/utils/logging";
 
 export default {
     formats: [
@@ -42,15 +43,13 @@ export default {
                         resolve();
                     }
                 });
+            },
+            close: () => {
+                logger.debug("Closing top scroll format");
+            },
+            reset: () => {
+                logger.debug("Resetting top scroll format");
             }
-            /*
-            onClose: () => {
-                console.log("Closing top scroll format");
-            }
-            onReset: () => {
-                console.log("Resetting top scroll format");
-            }
-            */
         }
     ]
 };

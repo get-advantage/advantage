@@ -22,10 +22,10 @@ advantage.configure({
                 });
             }
             /*
-            onClose: () => {
+            close: () => {
                 console.log("Closing top scroll format");
             }
-            onReset: () => {
+            reset: () => {
                 console.log("Resetting top scroll format");
             }
             */

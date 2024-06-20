@@ -14,13 +14,13 @@
     <script>
         window.advantageCmdQueue = window.advantageCmdQueue || [];
     </script>
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./index.ts"></script>
 </head>
 
 <body>
     <advantage-wrapper>
         <div slot="advantage-ad-slot">
-            <iframe src="./topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
+            <iframe src="./topscroll/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
                 scrolling="no"></iframe>
         </div>
     </advantage-wrapper>
@@ -325,13 +325,13 @@
     </div>
     <advantage-wrapper exclude-formats="TOPSCROLL,MIDSCROLL">
         <div slot="advantage-ad-slot">
-            <iframe src="./topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
+            <iframe src="./topscroll/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
                 scrolling="no"></iframe>
         </div>
     </advantage-wrapper>
 
     <div id="ad-slot-to-be-wrapped" style="width: 100%">
-        <iframe id="midscroll" src="./midscroll.html" title="advantage-ad" style="
+        <iframe id="midscroll" src="./midscroll/midscroll.html" title="advantage-ad" style="
                     display: block;
                     border: 0;
                     width: 320px;
@@ -647,7 +647,7 @@
                 // advantageWrapAdSlotElement is a function that wraps an ad slot element with an Advantage-wrapper. It takes either a selector string or an HTMLElement as an argument.
                 // You can also pass an optional second argument to specify the formats to exclude for the wrapped ad slot.
                 advantageWrapAdSlotElement("#ad-slot-to-be-wrapped", [
-                    "topscroll"
+                    "TOPSCROLL"
                 ]);
             }
         );
