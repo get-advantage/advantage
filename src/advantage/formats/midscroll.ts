@@ -43,9 +43,6 @@ export const midscroll: AdvantageFormat = {
         wrapper.resetCSS();
     },
     close: (wrapper) => {
-        wrapper.addEventListener("transitionend", () => {
-            wrapper.style.display = "none";
-        });
-        wrapper.style.height = "0";
+        wrapper.animateClose();
     }
 };

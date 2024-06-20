@@ -74,7 +74,11 @@ export interface AdvantageFormatIntegration {
         adIframe?: HTMLElement
     ) => Promise<void>;
     teardown?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    close?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    reset?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    /** @deprecated use close */
     onClose?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    /** @deprecated use reset */
     onReset?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
 }
 

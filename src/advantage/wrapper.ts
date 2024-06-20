@@ -219,8 +219,12 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         const integration = Advantage.getInstance().formatIntegrations.get(
             this.currentFormat
         );
-        if (integration && integration.onReset) {
-            integration.onReset(this, this.messageHandler?.ad?.iframe);
+        if (integration) {
+            if (typeof integration.reset === "function") {
+                integration.reset(this, this.messageHandler?.ad?.iframe);
+            } else if (typeof integration.onReset === "function") {
+                integration.onReset(this, this.messageHandler?.ad?.iframe);
+            }
         }
         this.uiLayer.changeContent("");
         this.currentFormat = null;
@@ -260,8 +264,12 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         const integration = Advantage.getInstance().formatIntegrations.get(
             this.currentFormat
         );
-        if (integration && integration.onClose) {
-            integration.onClose(this, this.messageHandler?.ad?.iframe);
+        if (integration) {
+            if (typeof integration.close === "function") {
+                integration.close(this, this.messageHandler?.ad?.iframe);
+            } else if (typeof integration.onClose === "function") {
+                integration.onClose(this, this.messageHandler?.ad?.iframe);
+            }
         }
         this.currentFormat = null;
     }
