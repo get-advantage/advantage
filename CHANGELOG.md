@@ -1,4 +1,19 @@
+# Changelog
 
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [0.2.0](https://github.com/get-advantage/advantage/compare/v0.1.1...v0.2.0) (2024-06-20)
+
+
+### Bug Fixes
+
+* changed the execution order so that integration setup is run after default setup. ([#9](https://github.com/get-advantage/advantage/issues/9)) ([e5831cc](https://github.com/get-advantage/advantage/commit/e5831cc832a52f32bc58bf6d0291701303fe8a5d))
+* deprecate onReset, onClose ([cfd5f91](https://github.com/get-advantage/advantage/commit/cfd5f914552f341aabc1bd1aa23ea1fe36800c81))
+
+
+### Features
+
+* new logging class to make it less noizy ([74d9080](https://github.com/get-advantage/advantage/commit/74d90804d6c9e1a24b2af6343b572317455c64ee))
 
 ## [0.1.1](https://github.com/get-advantage/advantage/compare/v0.1.0...v0.1.1) (2024-06-11)
 
