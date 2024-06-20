@@ -67,7 +67,7 @@ import { advantageWrapAdSlotElement } from "@get-advantage/advantage";
 /* advantageWrapAdSlotElement is a function that wraps an ad slot element with an
 Advantage-wrapper. It takes either a selector string or an HTMLElement as an argument.
 You can also pass an optional second argument to specify the formats to exclude for the wrapped ad slot.*/
-advantageWrapAdSlotElement("#ad-slot-to-be-wrapped", ["topscroll"]);
+advantageWrapAdSlotElement("#ad-slot-to-be-wrapped", ["TOPSCROLL"]);
 ```
 
 The above code will take an ad slot like this...

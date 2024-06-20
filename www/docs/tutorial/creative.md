@@ -37,7 +37,7 @@ $ bun i @get-advantage/advantage
 Import the `AdvantageCreativeMessenger` class into your creative's code.
 
 ```ts
-import { AdvantageCreativeMessenger } from "@get-advantage/advantage";
+import { AdvantageCreativeMessenger } from "@get-advantage/advantage/creative";
 ```
 
 ### Step 3: Start a session
