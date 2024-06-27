@@ -145,7 +145,6 @@ export default defineConfig({
                 },
                 {
                     text: "Examples",
-
                     items: [
                         {
                             text: `Hello World`,
@@ -153,6 +152,19 @@ export default defineConfig({
                         },
                     ]
                 },
+                {
+                    text: "Resources",
+                    items: [
+                        {
+                            text: "Changelog",
+                            link: "/docs/changelog.md"
+                        },
+                        {
+                            text: "Releases",
+                            link: "https://github.com/get-advantage/advantage/releases"
+                        },
+                    ]
+                }
             ]
         }
     }
