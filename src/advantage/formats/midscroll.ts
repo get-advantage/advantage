@@ -1,11 +1,9 @@
 import { AdvantageFormat, AdvantageFormatName } from "../../types";
 import styles from "./midscroll.css?raw";
-import midscrollUICSS from "./midscroll-ui.css?raw";
 import {
     setDimensionsUntilAdvantageAdSlot,
     resetDimensionsUntilAdvantageAdSlot
 } from "./format-helper";
-import logger from "../../utils/logging";
 
 export const midscroll: AdvantageFormat = {
     name: AdvantageFormatName.Midscroll,
@@ -14,24 +12,12 @@ export const midscroll: AdvantageFormat = {
     setup: (wrapper, ad) => {
         return new Promise((resolve) => {
             wrapper.insertCSS(styles);
-
-            if (ad) {
-                setDimensionsUntilAdvantageAdSlot(ad);
-            }
+            if (ad) setDimensionsUntilAdvantageAdSlot(ad);
 
             const uiContainer = document.createElement("div");
             uiContainer.id = "ui-container";
-            const closeBtn = document.createElement("div");
-            closeBtn.id = "close";
-            uiContainer.appendChild(closeBtn);
 
-            wrapper.uiLayer.insertCSS(midscrollUICSS);
             wrapper.uiLayer.changeContent(uiContainer);
-
-            closeBtn.addEventListener("click", () => {
-                logger.debug("Close button clicked");
-                wrapper.close();
-            });
 
             resolve();
         });
