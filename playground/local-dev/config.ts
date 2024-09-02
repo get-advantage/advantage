@@ -1,4 +1,8 @@
-import { AdvantageFormatName, IAdvantageWrapper } from "@src/types";
+import {
+    AdvantageFormatName,
+    IAdvantageWrapper,
+    AdvantageConfig
+} from "@src/types";
 import logger from "@src/utils/logging";
 
 export default {
@@ -28,6 +32,11 @@ export default {
     formatIntegrations: [
         {
             format: AdvantageFormatName.TopScroll,
+            // uncomment to show/hide UI elements
+            // options: {
+            //     closeButton: false,
+            //     downArrow: false
+            // },
             setup: () => {
                 return new Promise<void>((resolve, reject) => {
                     const queryParams = new URLSearchParams(
@@ -52,4 +61,4 @@ export default {
             }
         }
     ]
-};
+} as AdvantageConfig;

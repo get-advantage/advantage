@@ -60,15 +60,23 @@ export interface AdvantageFormat {
     description: string;
     setup: (
         wrapper: IAdvantageWrapper,
-        adIframe?: HTMLElement
+        adIframe?: HTMLElement,
+        options?: AdvantageFormatOptions
     ) => Promise<void>;
     reset: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
     close?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
     simulate?: (wrapper: IAdvantageWrapper) => void;
 }
 
+export interface AdvantageFormatOptions {
+    closeButton?: boolean;
+    closeButtonText?: string;
+    downArrow?: boolean;
+}
+
 export interface AdvantageFormatIntegration {
     format: AdvantageFormatName | string;
+    options?: AdvantageFormatOptions;
     setup: (
         wrapper: IAdvantageWrapper,
         adIframe?: HTMLElement
