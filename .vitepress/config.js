@@ -57,7 +57,8 @@ export default defineConfig({
             { text: "Home", link: "/" },
             { text: "About", link: "/about/index.md" },
             { text: "Docs", link: "/docs/index.md" },
-            { text: "API", link: "/api/index.md" }
+            { text: "API", link: "/api/index.md" },
+            { text: "Certified ✨", link: "/certified/index.md" }
         ],
         socialLinks: [
             {
