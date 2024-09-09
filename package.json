@@ -41,6 +41,11 @@
             "import": "./dist/advantage/messaging/publisher-side.js",
             "require": "./dist/advantage/messaging/publisher-side.cjs",
             "types": "./dist/advantage/messaging/publisher-side.d.ts"
+        },
+        "./utils": {
+            "import": "./dist/utils/index.js",
+            "require": "./dist/utils/index.cjs",
+            "types": "./dist/utils/index.d.ts"
         }
     },
     "scripts": {

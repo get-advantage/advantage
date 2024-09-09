@@ -2,7 +2,7 @@ export { Advantage } from "./advantage";
 import { AdvantageWrapper } from "./wrapper";
 import { AdvantageUILayer } from "./ui-layer";
 import logger from "../utils/logging";
-import { advantageWrapAdSlotElement as actualAdvantageWrapAdSlotElement } from "./wrapping-helper";
+import { advantageWrapAdSlotElement as actualAdvantageWrapAdSlotElement } from "../utils/wrapping-helper";
 export { actualAdvantageWrapAdSlotElement as advantageWrapAdSlotElement };
 export * from "./messaging";
 export * from "../types";
