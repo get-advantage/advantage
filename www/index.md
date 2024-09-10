@@ -240,7 +240,7 @@ layout: page
     }
 
     .homepage .hero-heading {
-      font-size: 55px
+      font-size: 47px
     }
 
     .homepage .hero-subheading {
@@ -263,8 +263,8 @@ layout: page
   <div class="container">
     <div class="hero">
       <h1 class="hero-heading">
-        <span>High Impact Advertising</span>
-        <span class="heading-gradient">Reimagined</span>
+        <span>High Impact Infrastructure</span>
+        <span class="heading-gradient">Open-sourced</span>
       </h1>
       <p class="hero-subheading">
         An open-source solution designed to <i>simplify</i>, <i>streamline</i> and <i>standardize</i> <br> <strong>high-impact</strong> display advertising on the web
