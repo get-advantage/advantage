@@ -165,11 +165,22 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                     return;
                 }
             }
+
+            const integration = Advantage.getInstance().formatIntegrations.get(
+                this.currentFormat
+            );
+
             try {
-                await formatConfig.setup(this, this.messageHandler.ad?.iframe);
-                await Advantage.getInstance()
-                    .formatIntegrations.get(format)
-                    ?.setup(this, this.messageHandler.ad?.iframe);
+                // 1. First we call the format setup function with optinal user defined format options
+                await formatConfig.setup(
+                    this,
+                    this.messageHandler.ad?.iframe,
+                    integration?.options
+                );
+
+                // 2. Then we call the integration setup function to apply site-specific adjustments
+                await integration?.setup(this, this.messageHandler.ad?.iframe);
+
                 resolve();
             } catch (error) {
                 this.reset();

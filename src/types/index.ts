@@ -60,26 +60,50 @@ export interface AdvantageFormat {
     description: string;
     setup: (
         wrapper: IAdvantageWrapper,
-        adIframe?: HTMLElement
+        adIframe?: HTMLElement,
+        options?: AdvantageFormatOptions
     ) => Promise<void>;
     reset: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
     close?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
     simulate?: (wrapper: IAdvantageWrapper) => void;
 }
 
+export interface AdvantageFormatOptions {
+    closeButton?: boolean;
+    closeButtonText?: string;
+    downArrow?: boolean;
+    height?: number;
+}
+
 export interface AdvantageFormatIntegration {
     format: AdvantageFormatName | string;
+    options?: AdvantageFormatOptions;
     setup: (
         wrapper: IAdvantageWrapper,
-        adIframe?: HTMLElement
+        adIframe?: HTMLIFrameElement | HTMLElement
     ) => Promise<void>;
-    teardown?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
-    close?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
-    reset?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    teardown?: (
+        wrapper: IAdvantageWrapper,
+        adIframe?: HTMLIFrameElement | HTMLElement
+    ) => void;
+    close?: (
+        wrapper: IAdvantageWrapper,
+        adIframe?: HTMLIFrameElement | HTMLElement
+    ) => void;
+    reset?: (
+        wrapper: IAdvantageWrapper,
+        adIframe?: HTMLIFrameElement | HTMLElement
+    ) => void;
     /** @deprecated use close */
-    onClose?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    onClose?: (
+        wrapper: IAdvantageWrapper,
+        adIframe?: HTMLIFrameElement | HTMLElement
+    ) => void;
     /** @deprecated use reset */
-    onReset?: (wrapper: IAdvantageWrapper, adIframe?: HTMLElement) => void;
+    onReset?: (
+        wrapper: IAdvantageWrapper,
+        adIframe?: HTMLIFrameElement | HTMLElement
+    ) => void;
 }
 
 export interface AdvantageMessage {
