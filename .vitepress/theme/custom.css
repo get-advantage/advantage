@@ -102,3 +102,12 @@ html.dark img[alt="light"] {
 html.dark img[alt="dark"] {
     display: block;
 }
+
+button.primary {
+    background-color: var(--vp-c-brand);
+    color: #FFF;
+}
+
+button.primary:hover {
+    background-color: var(--vp-hover);
+}
