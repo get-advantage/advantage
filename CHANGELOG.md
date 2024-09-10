@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/get-advantage/advantage/compare/v0.2.0...v0.3.0) (2024-09-10)
+
+
+### Bug Fixes
+
+* removed unused close-button from midscroll ([#11](https://github.com/get-advantage/advantage/issues/11)) ([7d5f793](https://github.com/get-advantage/advantage/commit/7d5f793ebe50f7577d896b6c1f0ae223ec538e7e))
+
+
+### Features
+
+* format options to include closeButton and downArrow properties ([#13](https://github.com/get-advantage/advantage/issues/13)) ([7f919ab](https://github.com/get-advantage/advantage/commit/7f919ab6b09afbe590ba4a4ed8f58c7c575b85cf))
+
 # [0.2.0](https://github.com/get-advantage/advantage/compare/v0.1.1...v0.2.0) (2024-06-20)
 
 
