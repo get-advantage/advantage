@@ -62,7 +62,7 @@ It is now time to wrap your ad slots in the Advantage Wrapper.
 You can also choose to use a helper method that does the wrapping for you:
 
 ```ts
-import { advantageWrapAdSlotElement } from "@get-advantage/advantage";
+import { advantageWrapAdSlotElement } from "@get-advantage/advantage/utils";
 
 /* advantageWrapAdSlotElement is a function that wraps an ad slot element with an
 Advantage-wrapper. It takes either a selector string or an HTMLElement as an argument.

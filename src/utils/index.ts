@@ -5,3 +5,4 @@ export {
     sendMessageAndOpenChannel,
     sendMessageAndAwaitResponse
 } from "./messaging";
+export * from "./wrapping-helper";
