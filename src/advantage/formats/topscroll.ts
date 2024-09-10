@@ -19,7 +19,8 @@ export const topscroll: AdvantageFormat = {
         const defaults: AdvantageFormatOptions = {
             closeButton: true,
             closeButtonText: "Close ad",
-            downArrow: true
+            downArrow: true,
+            height: 80
         };
         const config = { ...defaults, ...(options || {}) };
 
@@ -34,6 +35,13 @@ export const topscroll: AdvantageFormat = {
             // Change the content of the UI layer
             const uiContainer = document.createElement("div");
             uiContainer.id = "ui-container";
+
+            if (config.height && config.height <= 100) {
+                wrapper.style.setProperty(
+                    "--adv-topscroll-height",
+                    `${config.height}svh`
+                );
+            }
 
             if (config?.closeButton) {
                 const closeBtn = document.createElement("div");

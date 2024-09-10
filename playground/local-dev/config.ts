@@ -10,7 +10,7 @@ export default {
         {
             name: "MyCustomFormat",
             description: "A custom format",
-            setup: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
+            setup: (wrapper: IAdvantageWrapper, ad?: HTMLIFrameElement) => {
                 return new Promise<void>((resolve) => {
                     wrapper.style.cssText = `position: relative; width: 100vw; height: 80vh;`;
                     if (ad) {
@@ -21,7 +21,7 @@ export default {
                     resolve();
                 });
             },
-            reset: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
+            reset: (wrapper: IAdvantageWrapper, ad?: HTMLIFrameElement) => {
                 if (ad) {
                     ad.style.cssText = "display: none;";
                 }
@@ -34,8 +34,9 @@ export default {
             format: AdvantageFormatName.TopScroll,
             // uncomment to show/hide UI elements
             // options: {
-            //     closeButton: false,
-            //     downArrow: false
+            //     closeButton: true,
+            //     downArrow: false,
+            //     closeButtonText: "Lukk"
             // },
             setup: () => {
                 return new Promise<void>((resolve, reject) => {
