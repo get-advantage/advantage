@@ -106,7 +106,116 @@ const data = {
                     formatsMobile: [FORMATS.MIDSCROLL]
                 }
             ]
-        }
+        },
+        "AFV Media AB": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Affärsvärlden",
+                    siteUrl: "https://www.affarsvarlden.se/",
+                    formatsDesktop: [FORMATS.MIDSCROLL, FORMATS.TOPSCROLL],
+                    formatsMobile: [FORMATS.MIDSCROLL, FORMATS.TOPSCROLL]
+                }
+            ]
+        },
+        "Raskimedia": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Allt om Elbil",
+                    siteUrl: "https://alltomelbil.se/",
+                    formatsDesktop: [FORMATS.MIDSCROLL, FORMATS.TOPSCROLL],
+                    formatsMobile: [FORMATS.MIDSCROLL, FORMATS.TOPSCROLL]
+                }
+            ]
+        },
+        "Ängsjödal Text AB": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Cornucopia",
+                    siteUrl: "https://cornucopia.se/",
+                    formatsDesktop: [FORMATS.TOPSCROLL],
+                    formatsMobile: [FORMATS.TOPSCROLL]
+                }
+            ]
+        },
+        "Enento Group": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Allabolag",
+                    siteUrl: "https://www.allabolag.se/",
+                    formatsDesktop: [FORMATS.TOPSCROLL],
+                    formatsMobile: [FORMATS.TOPSCROLL]
+                }
+            ]
+        },
+        "Börsforum Sverige AB": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Nyemissioner",
+                    siteUrl: "https://nyemissioner.se/",
+                    formatsDesktop: [FORMATS.TOPSCROLL],
+                    formatsMobile: [FORMATS.TOPSCROLL]
+                }
+            ]
+        },
+        "Blendow Group": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Dagens Juridik",
+                    siteUrl: "https://www.dagensjuridik.se/",
+                    formatsDesktop: [FORMATS.TOPSCROLL],
+                    formatsMobile: [FORMATS.TOPSCROLL]
+                }
+            ]
+        },
+        "Motivation Media Group Stockholm AB": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Motivation.se",
+                    siteUrl: "https://motivation.se/",
+                    formatsDesktop: [FORMATS.TOPSCROLL],
+                    formatsMobile: [FORMATS.TOPSCROLL]
+                }
+            ]
+        },
+        "Placera Media": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Placera",
+                    siteUrl: "https://www.placera.se/",
+                    formatsMobile: [FORMATS.TOPSCROLL, FORMATS.MIDSCROLL],
+                }
+            ]
+        },
+        "Aktiespararna": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Aktiespararna",
+                    siteUrl: "https://www.aktiespararna.se/",
+                    formatsDesktop: [FORMATS.TOPSCROLL],
+                    formatsMobile: [FORMATS.TOPSCROLL]
+                }
+            ]
+        },
+        "Bilweb AB": {
+            country: "Sweden",
+            sites: [
+                {
+                    site: "Bilweb",
+                    siteUrl: "https://www.bilweb.se/",
+                    formatsDesktop: [FORMATS.TOPSCROLL],
+                    formatsMobile: [FORMATS.TOPSCROLL]
+                }
+            ]
+        },
     } as Publishers
 };
 
