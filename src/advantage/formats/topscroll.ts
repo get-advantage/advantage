@@ -20,7 +20,8 @@ export const topscroll: AdvantageFormat = {
             closeButton: true,
             closeButtonText: "Close ad",
             downArrow: true,
-            height: 80
+            height: 80,
+            closeButtonAnimationDuration: 0.5
         };
         const config = { ...defaults, ...(options || {}) };
 
@@ -54,6 +55,10 @@ export const topscroll: AdvantageFormat = {
                 wrapper.uiLayer.style.setProperty(
                     "--before-content",
                     `'${config.closeButtonText}'`
+                );
+                wrapper.style.setProperty(
+                    "--adv-close-button-animation-duration",
+                    `${config.closeButtonAnimationDuration}s`
                 );
             }
 

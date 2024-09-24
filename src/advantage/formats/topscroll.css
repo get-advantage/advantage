@@ -1,4 +1,5 @@
 :host {
+    --adv-close-button-animation-duration: 0.5s;
     --adv-topscroll-height: 80svh;
     display: block;
     position: relative;
@@ -8,7 +9,7 @@
 }
 
 :host(.animate) {
-    transition: height 0.5s;
+    transition: height var(--adv-close-button-animation-duration);
 }
 
 #container {
