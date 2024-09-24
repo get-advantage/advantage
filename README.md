@@ -57,6 +57,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/rebeckasjostrom1"><img src="https://avatars.githubusercontent.com/u/73482574?v=4?s=100" width="100px;" alt="Rebecka Sjöström"/><br /><sub><b>Rebecka Sjöström</b></sub></a><br /><a href="#doc-rebeckasjostrom1" title="Documentation">📖</a> <a href="#ideas-rebeckasjostrom1" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/dsoohn"><img src="https://avatars.githubusercontent.com/u/27854867?v=4?s=100" width="100px;" alt="Daniel Granlund"/><br /><sub><b>Daniel Granlund</b></sub></a><br /><a href="#design-dsoohn" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sannheim"><img src="https://avatars.githubusercontent.com/u/26486263?v=4?s=100" width="100px;" alt="Joakim Sannheim"/><br /><sub><b>Joakim Sannheim</b></sub></a><br /><a href="#code-sannheim" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/erikarvidssonmadington"><img src="https://avatars.githubusercontent.com/u/73878569?v=4?s=100" width="100px;" alt="erikarvidssonmadington"/><br /><sub><b>erikarvidssonmadington</b></sub></a><br /><a href="#ideas-erikarvidssonmadington" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
