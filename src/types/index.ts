@@ -71,6 +71,7 @@ export interface AdvantageFormat {
 export interface AdvantageFormatOptions {
     closeButton?: boolean;
     closeButtonText?: string;
+    closeButtonAnimationDuration?: number;
     downArrow?: boolean;
     height?: number;
 }
