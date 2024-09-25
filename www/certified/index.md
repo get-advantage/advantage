@@ -17,19 +17,19 @@ const gridApi = shallowRef();
 
  // Column Definitions: Defines the columns to be displayed.
  const colDefs = ref([
-  {
-    field: "country",
-    headerName: "Country",
-    headerClass: "header-product",
-    filter: true,
-    maxWidth: 120,
-  },
-  { field: "publisherName", headerName: "Publisher", filter: true, },
-  { field: "site", headerName: "Site", filter: true, },
-  { field: "siteUrl", headerName: "Site URL", hide: true, },
-  { field: "formatsMobile", headerName: "Formats Mobile", filter: true, },
-  { field: "formatsDesktop", headerName: "Formats Desktop", filter: true, },
-  { field: "buyingType", headerName: "Buying Type", filter: true, hide: true, },
+    { field: "site", headerName: "Site", filter: true, },
+    { field: "siteUrl", headerName: "Site URL", hide: true, },
+    { field: "formatsMobile", headerName: "Formats Mobile", filter: true, },
+    { field: "formatsDesktop", headerName: "Formats Desktop", filter: true, },
+    { field: "publisherName", headerName: "Publisher", filter: true,  },
+    {
+        field: "country",
+        headerName: "Country",
+        headerClass: "header-product",
+        filter: true,
+        maxWidth: 120,
+      },
+    { field: "buyingType", headerName: "Buying Type", filter: true, hide: true, },
 ]);
 
 const defaultColDef = {
