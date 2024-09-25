@@ -19,15 +19,3 @@ To learn more about how to become a maintainer, contribute or become a supportin
 ### Contact:
 
 [community@get-advanatge.org](mailto:community@get-advantage.org)
-
-# Maintainers
-
-[Madington](https://www.madington.com)
-
-[TV2.no](https://www.tv2.no)
-
-# Members
-
-[Leeads AB](https://www.leeads.com)
-
-[Adprofit AB](https://www.adprofit.se)
