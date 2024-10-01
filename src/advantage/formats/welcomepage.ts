@@ -18,10 +18,12 @@ export const welcomePage: AdvantageFormat = {
         "Positioned on top of the site content with a close button to continue to the site",
     setup: (wrapper, ad, options) => {
         const defaults: AdvantageFormatOptions = {
-            closeButton: true,
-            closeButtonText: "Close ad",
-            autoCloseDuration: 0,
-            siteTitle: window.location.hostname
+            autoCloseDuration: 12,
+            siteTitle: window.location.hostname,
+            logo: `https://icons.duckduckgo.com/ip3/${window.location.hostname}.ico`,
+            continueToLabel: "Continue to",
+            scrollBackToTop: false,
+            adLabel: "Advertisement"
         };
         const config = { ...defaults, ...(options || {}) };
 
@@ -41,73 +43,78 @@ export const welcomePage: AdvantageFormat = {
                 "afterbegin",
                 `<div class="close-area">
                   <div class="mw">
-                    <div class="countdown">
-                        <svg class="cw" height="2em" width="2em">
-                            <circle class="circle-2" cx="1em" cy="1em" r=".9em" stroke-width=".2em" fill-opacity="0" />
-                            <circle class="circle" cx="1em" cy="1em" r=".9em" stroke-width=".2em" fill-opacity="0" />
-                        </svg>
-                        <span class="cdw"><span class="cd">10</span></span>
+                    <div class="countdown ${
+                        config.autoCloseDuration
+                            ? "countdown--show"
+                            : "countdown--hide"
+                    }">
+                      <div class="loader"></div>
+                      <span class="cdw"><span class="cd">${
+                          config.autoCloseDuration
+                      }</span></span>
                     </div>
-                    <div class="continue">Gå videre til artikkel <img class="arrow" src="assets/arrow-right.svg"></div>
+                    <div class="label">${config.adLabel}</div>
+                    <div class="continue">${
+                        config.logo
+                            ? `<img class="favico" src="${config.logo}" onerror="this.style.display='none'" />`
+                            : ``
+                    } ${config.continueToLabel} ${
+                    config.siteTitle
+                } <span class="arrow">➜</span></div>
                   </div>
                 </div>`
             );
-            // const countdown = document.createElement("div");
-            // countdown.id = "countdown";
 
-            // const continueContainer = document.createElement("div");
-            // continueContainer.id = "continue";
-
-            // if (config?.closeButton) {
-            //     const closeBtn = document.createElement("div");
-            //     closeBtn.id = "close";
-            //     closeBtn.addEventListener("click", () => {
-            //         logger.debug("Close button clicked");
-            //         wrapper.close();
-            //     });
-            //     uiContainer.appendChild(closeBtn);
-            //     wrapper.uiLayer.style.setProperty(
-            //         "--before-content",
-            //         `'${config.closeButtonText}'`
-            //     );
-            // }
+            let countdownInterval = 0;
+            let autoCloseTimeout = 0;
 
             if (config?.autoCloseDuration) {
-                setTimeout(() => {
+                const countdownElement = uiContainer.querySelector(".cd");
+                let count = config.autoCloseDuration;
+                if (countdownElement) {
+                    countdownInterval = setInterval(() => {
+                        count--;
+                        countdownElement.textContent = count.toString();
+                        if (count === 0) {
+                            clearInterval(countdownInterval);
+                        }
+                    }, 1000);
+                }
+
+                wrapper.uiLayer.style.setProperty(
+                    "--adv-wp-countdown-duration",
+                    `${config.autoCloseDuration}s`
+                );
+
+                autoCloseTimeout = setTimeout(() => {
                     logger.debug("Auto closing the ad");
                     wrapper.close();
                 }, config.autoCloseDuration * 1000);
             }
 
+            const countinueElement = uiContainer.querySelector(".continue");
+            if (countinueElement) {
+                countinueElement.addEventListener("click", () => {
+                    clearInterval(countdownInterval);
+                    clearTimeout(autoCloseTimeout);
+                    wrapper.close();
+                });
+            }
+
             wrapper.uiLayer.insertCSS(welcomepageUICSS);
             wrapper.uiLayer.changeContent(uiContainer);
+
+            wrapper.classList.add("show");
 
             resolve();
         });
     },
     simulate: (wrapper) => {
         wrapper.resetCSS();
-        wrapper.insertCSS(welcomepageCSS);
+        wrapper.insertCSS(varsCSS.concat(welcomepageCSS));
         const ad = document.createElement("div");
         ad.id = "simulated-ad";
         wrapper.changeContent(ad);
-
-        // Change the content of the UI layer
-        const uiContainer = document.createElement("div");
-        uiContainer.id = "ui-container";
-        const closeBtn = document.createElement("div");
-        closeBtn.id = "close";
-        const downArrow = document.createElement("div");
-        downArrow.id = "down-arrow";
-        uiContainer.appendChild(closeBtn);
-        uiContainer.appendChild(downArrow);
-        wrapper.uiLayer.insertCSS(welcomepageUICSS);
-        wrapper.uiLayer.changeContent(uiContainer);
-
-        closeBtn.addEventListener("click", () => {
-            logger.debug("Close button clicked");
-            wrapper.close();
-        });
     },
     reset: (wrapper, ad?) => {
         if (ad) {
@@ -116,6 +123,18 @@ export const welcomePage: AdvantageFormat = {
         wrapper.resetCSS();
     },
     close: (wrapper) => {
-        wrapper.animateClose();
+        function handleTransitionEnd() {
+            wrapper.style.display = "none";
+            // Remove the event listener after it has been executed
+            container?.removeEventListener(
+                "transitionend",
+                handleTransitionEnd
+            );
+        }
+
+        const container = wrapper.shadowRoot?.getElementById("container");
+        container?.addEventListener("transitionend", handleTransitionEnd);
+        wrapper.classList.remove("show");
+        wrapper.style.height = "0px";
     }
 };

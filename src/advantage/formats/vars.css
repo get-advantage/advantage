@@ -1,30 +1,30 @@
 /**
  * Colors: Palette
  *
- * The primitive colors used for accent colors. These colors are referenced
- * by functional colors such as "Text", "Background", or "Brand".
+ * This is the set of base colors used for accents. These colors serve as
+ * references for functional elements like "Text", "Background", and "Brand".
  *
- * Each colors have exact same color scale system with 3 levels of solid
- * colors with different brightness, and 1 soft color.
+ * Each color follows the same scale system, consisting of three solid color
+ * variations with differing brightness levels, along with one soft color.
  *
- * - `XXX-1`: The most solid color used mainly for colored text. It must
- *   satisfy the contrast ratio against when used on top of `XXX-soft`.
+ * - `XXX-1`: The most solid variant, primarily used for colored text. It must
+ *   meet the necessary contrast ratio when placed on `XXX-soft`.
  *
- * - `XXX-2`: The color used mainly for hover state of the button.
+ * - `XXX-2`: Typically used for button hover states.
  *
- * - `XXX-3`: The color for solid background, such as bg color of the button.
- *    It must satisfy the contrast ratio with pure white (#ffffff) text on
- *    top of it.
+ * - `XXX-3`: This shade is intended for solid backgrounds, such as buttons.
+ *   It must meet contrast ratio requirements when white text (#ffffff) is 
+ *   applied on top.
  *
- * - `XXX-soft`: The color used for subtle background such as custom container
- *    or badges. It must satisfy the contrast ratio when putting `XXX-1` colors
- *    on top of it.
+ * - `XXX-soft`: A subtle background color, used for elements like custom 
+ *   containers or badges. It should meet the contrast ratio requirements 
+ *   when `XXX-1` is overlaid on top.
  *
- *    The soft color must be semi transparent alpha channel. This is crucial
- *    because it allows adding multiple "soft" colors on top of each other
- *    to create a accent, such as when having inline code block inside
- *    custom containers.
+ *   The soft color must include a semi-transparent alpha channel. This is
+ *   important because it allows stacking multiple "soft" colors to create 
+ *   accents.
  * -------------------------------------------------------------------------- */
+
 
 :host {
   --adv-c-gray-1: #dddde3;
@@ -72,7 +72,7 @@
  * Colors: Function
  *
  * - `default`: The color used purely for subtle indication without any
- *   special meanings attached to it such as bg color for menu hover state.
+ *   special meanings attached to it such as bg color for hover state.
  *
  * - `brand`: Used for primary brand colors, such as link text, button with
  *   brand theme, etc.
@@ -105,10 +105,12 @@
  * Format: Welcome Page
  * -------------------------------------------------------------------------- */
 :host {
+  --adv-wp-zindex: 2147483648;
   --adv-wp-header-height: 48px;
   --adv-wp-header-text: var(--adv-c-text-1);
   --adv-wp-header-hover-text: var(--adv-c-brand-2);
   --adv-wp-header-bg: var(--adv-c-brand-1);
   --adv-wp-countdown-color: var(--adv-c-text-1);
-  --adv-wp-countdown-stroke: var(--adv-c-brand-3);
+  --adv-wp-countdown-stroke: var(--adv-c-brand-2);
+  --adv-wp-countdown-border-width: 4px;
 }
