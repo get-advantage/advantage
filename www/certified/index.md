@@ -17,7 +17,15 @@ const gridApi = shallowRef();
 
  // Column Definitions: Defines the columns to be displayed.
  const colDefs = ref([
-    { field: "site", headerName: "Site", filter: true, },
+    { field: "site", headerName: "Site", filter: true, 
+    cellRenderer: (params) => {
+      const hostName = new URL(params.data.siteUrl).hostname;
+      return `<div class="grid grid-cols-[18px_1fr] items-center gap-3">
+        <img src="https://icons.duckduckgo.com/ip3/${hostName}.ico" class="rounded-sm" />
+        <span>${params.data.site}</span>
+      </div>`
+      }
+    },
     { field: "siteUrl", headerName: "Site URL", hide: true, },
     { field: "formatsMobile", headerName: "Formats Mobile", filter: true, },
     { field: "formatsDesktop", headerName: "Formats Desktop", filter: true, },
