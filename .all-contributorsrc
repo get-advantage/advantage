@@ -65,6 +65,17 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "linusforsell",
+      "name": "Linus Forsell",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4910742?v=4",
+      "profile": "https://github.com/linusforsell",
+      "contributions": [
+        "doc",
+        "ideas",
+        "code"
+      ]
     }
   ]
 }
