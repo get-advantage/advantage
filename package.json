@@ -93,5 +93,8 @@
     },
     "publishConfig": {
         "access": "public"
+    },
+    "dependencies": {
+        "papaparse": "5.4.1"
     }
 }

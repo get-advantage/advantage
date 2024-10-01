@@ -5,15 +5,17 @@ layout: doc
 ---
 
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue'
+import { ref, shallowRef } from 'vue';
 import "./ag-grid-theme-builder-light.css";
 import "./ag-grid-theme-builder-dark.css";
 import { AgGridVue } from "ag-grid-vue3"; // Vue Data Grid Component
-import { getData } from "./data";
+import { getCertifiedSites } from "./getCertifiedSites";
 
 const gridApi = shallowRef();
 // Row Data: The data to be displayed.
- const rowData = ref(getData());
+const rowData = ref([]);
+// Get the certified sites from google sheet
+getCertifiedSites(rowData);
 
  // Column Definitions: Defines the columns to be displayed.
  const colDefs = ref([
@@ -50,9 +52,9 @@ const autoSizeStrategy = {
   type: "fitGridWidth",
   defaultMinWidth: 100,
 };
-const paginationPageSizeSelector = [5, 10, 20];
+const paginationPageSizeSelector = [5, 10, 20, 40, 60, 80, 100, 120];
 const pagination = true;
-const paginationPageSize = 10;
+const paginationPageSize = 40;
 
 const onBtnExport = () => {
   gridApi.value.exportDataAsCsv({allColumns: true});
