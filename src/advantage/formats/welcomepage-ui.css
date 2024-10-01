@@ -1,0 +1,134 @@
+:host(.animate) {
+  transform: translateY(0%);
+}
+
+.close-area {
+  position: absolute;
+  height: var(--adv-wp-header-height);
+  width: 100vw;
+  background-color: var(--adv-wp-header-bg);
+  top: 0;
+  left: 0;
+  color: var(--adv-wp-header-text);
+
+  display: grid;
+  padding: 0 14px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, .15);
+  cursor: pointer;
+  box-sizing: border-box;
+
+  transform: translateX(-6%);
+  transform: translateY(60%);
+  transition: all .5s ease;
+}
+
+.mw {
+  max-width: 1260px;
+  display: grid;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+}
+
+.continue,
+.countdown {
+  grid-area: 1 / 1 / 2 / 2;
+  align-self: center;
+}
+
+.countdown {
+  justify-self: left;
+  font-size: 20px;
+  font-weight: 700;
+  position: relative;
+  margin-left: 13px;
+}
+
+.continue {
+  justify-self: right;
+
+  display: flex;
+  align-items: center;
+
+  color: var(--adv-wp-header-text);
+  font-weight: 700;
+  font-size: 16px;
+  transition: all .15s ease;
+  cursor: pointer;
+}
+
+.arrow {
+  width: auto;
+  height: 1em;
+  margin-left: .25em;
+  transition: all .15s ease;
+}
+
+.continue:hover {
+  color: var(--adv-wp-header-hover-text);
+}
+
+.continue:hover .arrow {
+  transform: translateX(.25em);
+}
+
+.cdw {
+  font-size: 70%;
+  font-size: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cw {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) rotate(-90deg);
+
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg) scale(.88);
+
+  stroke: var(--adv-wp-countdown-stroke);
+}
+
+.circle {
+  /* stroke-dasharray: 1000;
+  stroke-dashoffset: 1000; */
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+}
+
+.circle-2 {
+  stroke: rgba(255, 255, 255, .18);
+}
+
+.circle {
+  /* animation: stroke 85s linear forwards;
+  animation: stroke 42.5s linear forwards; */
+  animation: stroke 10s linear forwards;
+}
+
+@keyframes stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (orientation: portrait) {
+  .continue {
+    font-size: 14px;
+  }
+
+  .countdown {
+    transform: scale(.9);
+  }
+}

@@ -11,7 +11,8 @@ export enum AdvantageMessageAction {
 export enum AdvantageFormatName {
     TopScroll = "TOPSCROLL",
     DoubleMidscroll = "DOUBLE_MIDSCROLL",
-    Midscroll = "MIDSCROLL"
+    Midscroll = "MIDSCROLL",
+    WelcomePage = "WELCOME_PAGE"
 }
 
 export interface AdvantageAd {
@@ -73,6 +74,9 @@ export interface AdvantageFormatOptions {
     closeButtonText?: string;
     downArrow?: boolean;
     height?: number;
+    autoCloseDuration?: number;
+    siteTitle?: string | boolean;
+    logo?: string;
 }
 
 export interface AdvantageFormatIntegration {
