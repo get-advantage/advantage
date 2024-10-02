@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/get-advantage/advantage/compare/v0.3.0...v0.5.0) (2024-10-02)
+
+
+### Features
+
+* extended AdvantageFormatOptions to also include an animation duration for the close button event ([#21](https://github.com/get-advantage/advantage/issues/21)) ([81976e2](https://github.com/get-advantage/advantage/commit/81976e2cb43e9d82ab1bbecd7c58c4ad5fed8740))
+* welcome page format ([#32](https://github.com/get-advantage/advantage/issues/32)) ([5814cf9](https://github.com/get-advantage/advantage/commit/5814cf9ab0fedb9156b4624c7cd789835435d699))
+
 # [0.4.0](https://github.com/get-advantage/advantage/compare/v0.3.0...v0.4.0) (2024-10-01)
 
 
