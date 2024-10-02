@@ -1,0 +1,116 @@
+/**
+ * Colors: Palette
+ *
+ * This is the set of base colors used for accents. These colors serve as
+ * references for functional elements like "Text", "Background", and "Brand".
+ *
+ * Each color follows the same scale system, consisting of three solid color
+ * variations with differing brightness levels, along with one soft color.
+ *
+ * - `XXX-1`: The most solid variant, primarily used for colored text. It must
+ *   meet the necessary contrast ratio when placed on `XXX-soft`.
+ *
+ * - `XXX-2`: Typically used for button hover states.
+ *
+ * - `XXX-3`: This shade is intended for solid backgrounds, such as buttons.
+ *   It must meet contrast ratio requirements when white text (#ffffff) is 
+ *   applied on top.
+ *
+ * - `XXX-soft`: A subtle background color, used for elements like custom 
+ *   containers or badges. It should meet the contrast ratio requirements 
+ *   when `XXX-1` is overlaid on top.
+ *
+ *   The soft color must include a semi-transparent alpha channel. This is
+ *   important because it allows stacking multiple "soft" colors to create 
+ *   accents.
+ * -------------------------------------------------------------------------- */
+
+
+:host {
+  --adv-c-gray-1: #dddde3;
+  --adv-c-gray-2: #e4e4e9;
+  --adv-c-gray-3: #ebebef;
+  --adv-c-gray-soft: rgba(142, 150, 170, 0.14);
+
+  --adv-c-indigo-1: #3451b2;
+  --adv-c-indigo-2: #3a5ccc;
+  --adv-c-indigo-3: #5672cd;
+  --adv-c-indigo-soft: rgba(100, 108, 255, 0.14);
+
+  --adv-c-purple-1: #1f1031;
+  --adv-c-purple-2: #b2aeff;
+  --adv-c-purple-3: #ecebff;
+  --adv-c-purple-soft: rgba(159, 122, 234, 0.14);
+}
+
+/**
+ * Colors: Text
+ *
+ * - `text-1`: Used for primary text.
+ *
+ * - `text-2`: Used for subtle texts, such as "hover state".
+ * -------------------------------------------------------------------------- */
+
+:host {
+  --adv-c-text-1: rgb(255, 255, 255);
+  --adv-c-text-2: rgba(60, 60, 67, 0.78);
+}
+
+/**
+ * Colors: Background
+ *
+ * - `bg`: The bg color used for main screen.
+ *
+ * - `bg-alt`: The alternative bg color
+ * -------------------------------------------------------------------------- */
+:host {
+  --adv-c-bg: #1f1031;
+  --adv-c-bg-alt: #1f1031;
+}
+
+/**
+ * Colors: Function
+ *
+ * - `default`: The color used purely for subtle indication without any
+ *   special meanings attached to it such as bg color for hover state.
+ *
+ * - `brand`: Used for primary brand colors, such as link text, button with
+ *   brand theme, etc.
+ *
+ * To understand the scaling system, refer to "Colors: Palette" section.
+ * -------------------------------------------------------------------------- */
+
+:host {
+  --adv-c-default-1: var(--adv-c-gray-1);
+  --adv-c-default-2: var(--adv-c-gray-2);
+  --adv-c-default-3: var(--adv-c-gray-3);
+  --adv-c-default-soft: var(--adv-c-gray-soft);
+
+  --adv-c-brand-1: var(--adv-c-purple-1);
+  --adv-c-brand-2: var(--adv-c-purple-2);
+  --adv-c-brand-3: var(--adv-c-purple-3);
+  --adv-c-brand-soft: var(--adv-c-purple-soft);
+}
+
+/**
+ * Typography
+ * -------------------------------------------------------------------------- */
+
+:host {
+  --adv-font-family-base: ui-sans-serif, system-ui, sans-serif;
+  font-optical-sizing: auto;
+}
+
+/**
+ * Format: Welcome Page
+ * -------------------------------------------------------------------------- */
+:host {
+  --adv-wp-zindex: 2147483648;
+  --adv-wp-header-height: 48px;
+  --adv-wp-header-text: var(--adv-c-text-1);
+  --adv-wp-header-hover-text: var(--adv-c-brand-2);
+  --adv-wp-header-bg: var(--adv-c-brand-1);
+  --adv-wp-countdown-color: var(--adv-c-text-1);
+  --adv-wp-countdown-stroke: var(--adv-c-brand-2);
+  --adv-wp-countdown-border-width: 4px;
+}

@@ -1,0 +1,163 @@
+.close-area {
+  position: absolute;
+  height: var(--adv-wp-header-height);
+  width: 100vw;
+  background-color: var(--adv-wp-header-bg);
+  top: 0;
+  left: 0;
+  color: var(--adv-wp-header-text);
+  font-family: var(--adv-font-family-base);
+
+  display: grid;
+  padding: 0 14px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, .15);
+  cursor: pointer;
+  box-sizing: border-box;
+
+}
+
+.mw {
+  max-width: 1260px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+}
+
+.continue,
+.countdown,
+.label {
+  /* grid-area: 1 / 1 / 2 / 2; */
+  align-self: center;
+}
+
+.countdown {
+  justify-self: left;
+  font-size: 20px;
+  font-weight: 700;
+  position: relative;
+}
+
+.countdown--hide {
+  opacity: 0;
+}
+
+.label {
+  justify-self: center;
+}
+
+.continue {
+  justify-self: right;
+
+  display: flex;
+  align-items: center;
+
+  color: var(--adv-wp-header-text);
+  font-weight: 700;
+  font-size: 16px;
+  transition: all .15s ease;
+  cursor: pointer;
+}
+
+svg.arrow {
+  width: auto;
+  height: 1em;
+  margin-left: .25em;
+  transition: all .15s ease;
+}
+
+span.arrow {
+  display: inline-block;
+  margin-left: .25em;
+  transition: all .15s ease;
+}
+
+.continue:hover {
+  color: var(--adv-wp-header-hover-text);
+}
+
+.continue:hover .arrow {
+  transform: translateX(.25em);
+}
+
+.favico {
+  width: auto;
+  height: 1.5rem;
+  margin-right: 8px;
+}
+
+.cdw {
+  font-size: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cw {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) rotate(-90deg);
+
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg) scale(.88);
+
+  stroke: var(--adv-wp-countdown-stroke);
+}
+
+.loader {
+  box-sizing: border-box;
+  width: calc(var(--adv-wp-header-height) - 14px);
+  aspect-ratio: 1;
+  border: var(--adv-wp-countdown-border-width) solid rgba(255, 255, 255, .18);
+  border-radius: 50%;
+  position: relative;
+  transform: rotate(45deg);
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--adv-wp-countdown-border-width));
+  border-radius: 50%;
+  border: var(--adv-wp-countdown-border-width) solid var(--adv-wp-countdown-stroke);
+  animation: l18 var(--adv-wp-countdown-duration, 10s) 1 linear;
+  animation-direction: reverse;
+  animation-fill-mode: forwards;
+}
+
+@keyframes l18 {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0)
+  }
+
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0)
+  }
+
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%)
+  }
+
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%)
+  }
+
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0)
+  }
+}
+
+@media (orientation: portrait) {
+  .continue {
+    font-size: 14px;
+  }
+
+  .countdown {
+    transform: scale(.9);
+  }
+}

@@ -1,0 +1,35 @@
+:host {
+  display: block;
+}
+
+#container {
+  width: 100vw;
+  height: 100svh;
+  left: 0;
+  top: 0;
+  overflow-y: hidden;
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  z-index: var(--adv-wp-zindex);
+  opacity: 0;
+  transition: all 0.5s ease;
+  transform: translateY(5%);
+}
+
+:host(.show) #container {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+#ad-slot {
+  width: 100%;
+  height: 100%;
+}
+
+::slotted([slot="advantage-ad-slot"]) {
+  position: absolute;
+  height: calc(100svh - var(--adv-wp-header-height)) !important;
+  top: var(--adv-wp-header-height);
+  left: 0;
+}

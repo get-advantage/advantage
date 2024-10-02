@@ -11,7 +11,8 @@ export enum AdvantageMessageAction {
 export enum AdvantageFormatName {
     TopScroll = "TOPSCROLL",
     DoubleMidscroll = "DOUBLE_MIDSCROLL",
-    Midscroll = "MIDSCROLL"
+    Midscroll = "MIDSCROLL",
+    WelcomePage = "WELCOME_PAGE"
 }
 
 export interface AdvantageAd {
@@ -74,6 +75,37 @@ export interface AdvantageFormatOptions {
     closeButtonAnimationDuration?: number;
     downArrow?: boolean;
     height?: number;
+    /**
+     * The duration in seconds before the format closes automatically.
+     * If set to 0, the format will not close automatically.
+     *
+     * @type {number}
+     * @defult 12
+     */
+    autoCloseDuration?: number;
+    /**
+     * You can customize this item to replace the default site title.
+     * When set to `false`, title will be hidden. Useful when you have customize `continueToLabel`.
+     *
+     * @type {(string | boolean)}
+     * @default window.location.hostname
+     */
+    siteTitle?: string | boolean;
+    /**
+     * Logo file to display in Welcome page header bar, right before the `continueToLabel`. Accepts a path string to the image.
+     * If not set, current sites favicon will be displayed.
+     * If set to `false`, logo will be hidden.
+     *
+     * @type {string | boolean}
+     * @default https://icons.duckduckgo.com/ip3/[hostname].ico
+     */
+    logo?: string;
+    scrollBackToTop?: boolean;
+    adLabel?: string;
+    /**
+     * Can be used to customize the label of the continue to site
+     * @defaul Continue to */
+    continueToLabel?: string;
 }
 
 export interface AdvantageFormatIntegration {
