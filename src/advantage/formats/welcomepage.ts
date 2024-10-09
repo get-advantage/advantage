@@ -3,9 +3,9 @@ import {
     AdvantageFormatName,
     AdvantageFormatOptions
 } from "../../types";
-import varsCSS from "./vars.css?raw";
-import welcomepageCSS from "./welcomepage.css?raw";
-import welcomepageUICSS from "./welcomepage-ui.css?raw";
+import varsCSS from "./vars.css?inline";
+import welcomepageCSS from "./welcomepage.css?inline";
+import welcomepageUICSS from "./welcomepage-ui.css?inline";
 import {
     setDimensionsUntilAdvantageAdSlot,
     resetDimensionsUntilAdvantageAdSlot

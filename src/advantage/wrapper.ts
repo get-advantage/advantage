@@ -12,7 +12,7 @@ import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
  */
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     // Private fields
-    #styleElem: HTMLStyleElement;
+    #styleSheet: CSSStyleSheet;
     #root: ShadowRoot;
     #slotAdvantageContent: HTMLSlotElement;
     #slotChangeRegistered = false;
@@ -29,10 +29,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      */
     constructor() {
         super();
+        this.#styleSheet = new CSSStyleSheet();
         this.#root = this.attachShadow({ mode: "open" });
-        this.#styleElem = document.createElement("style");
-        this.#styleElem.textContent = "";
-        this.#root.append(this.#styleElem);
+        this.#root.adoptedStyleSheets = [this.#styleSheet];
 
         // Create the container div
         this.container = document.createElement("div");
@@ -307,14 +306,14 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * @param CSS - The CSS to insert.
      */
     insertCSS(CSS: string) {
-        this.#styleElem.textContent = CSS;
+        this.#styleSheet.replaceSync(CSS);
     }
 
     /**
      * Resets the CSS in the shadow root of the wrapper.
      */
     resetCSS() {
-        this.#styleElem.textContent = "";
+        this.#styleSheet.replaceSync("");
     }
 
     /**
