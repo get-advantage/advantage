@@ -1,5 +1,5 @@
 import { AdvantageFormat, AdvantageFormatName } from "../../types";
-import styles from "./midscroll.css?raw";
+import styles from "./midscroll.css?inline";
 import {
     setDimensionsUntilAdvantageAdSlot,
     resetDimensionsUntilAdvantageAdSlot

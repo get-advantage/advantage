@@ -3,8 +3,8 @@ import {
     AdvantageFormatName,
     AdvantageFormatOptions
 } from "../../types";
-import topscrollCSS from "./topscroll.css?raw";
-import topscrollUICSS from "./topscroll-ui.css?raw";
+import topscrollCSS from "./topscroll.css?inline";
+import topscrollUICSS from "./topscroll-ui.css?inline";
 import {
     setDimensionsUntilAdvantageAdSlot,
     resetDimensionsUntilAdvantageAdSlot

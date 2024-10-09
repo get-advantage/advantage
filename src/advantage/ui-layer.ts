@@ -5,7 +5,7 @@
  */
 export class AdvantageUILayer extends HTMLElement {
     #root: ShadowRoot;
-    #styleElem: HTMLStyleElement;
+    #styleSheet: CSSStyleSheet;
     #container: HTMLDivElement;
     #content: HTMLDivElement;
     slotName = "advantage-ui-content";
@@ -15,9 +15,9 @@ export class AdvantageUILayer extends HTMLElement {
      */
     constructor() {
         super();
+        this.#styleSheet = new CSSStyleSheet();
         this.#root = this.attachShadow({ mode: "open" });
-        this.#styleElem = document.createElement("style");
-        this.#root.append(this.#styleElem);
+        this.#root.adoptedStyleSheets = [this.#styleSheet];
         this.#container = document.createElement("div");
         this.#container.id = "container";
         this.#content = document.createElement("div");
@@ -44,6 +44,6 @@ export class AdvantageUILayer extends HTMLElement {
      * @param CSS - The CSS styles to be inserted.
      */
     insertCSS(CSS: string) {
-        this.#styleElem.textContent = CSS;
+        this.#styleSheet.replaceSync(CSS);
     }
 }
