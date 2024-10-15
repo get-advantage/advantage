@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/get-advantage/advantage/compare/v0.5.0...v0.5.1) (2024-10-15)
+
+
+### Bug Fixes
+
+* **welcome page:** hide site title on small screens ([#34](https://github.com/get-advantage/advantage/issues/34)) ([3aedf10](https://github.com/get-advantage/advantage/commit/3aedf1067d6a1fe3a1e78fb6533a2d7c0e72f70e))
+
 # [0.5.0](https://github.com/get-advantage/advantage/compare/v0.3.0...v0.5.0) (2024-10-02)
 
 
