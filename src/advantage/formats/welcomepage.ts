@@ -18,10 +18,10 @@ export const welcomePage: AdvantageFormat = {
         "Positioned on top of the site content with a close button to continue to the site",
     setup: (wrapper, ad, options) => {
         const defaults: AdvantageFormatOptions = {
-            autoCloseDuration: 12,
+            autoCloseDuration: 21,
             siteTitle: window.location.hostname,
             logo: `https://icons.duckduckgo.com/ip3/${window.location.hostname}.ico`,
-            continueToLabel: "Continue to",
+            continueToLabel: "To",
             scrollBackToTop: false,
             adLabel: "Advertisement"
         };
@@ -54,13 +54,15 @@ export const welcomePage: AdvantageFormat = {
                       }</span></span>
                     </div>
                     <div class="label">${config.adLabel}</div>
-                    <div class="continue">${
-                        config.logo
-                            ? `<img class="favico" src="${config.logo}" onerror="this.style.display='none'" />`
-                            : ``
-                    } ${config.continueToLabel} ${
-                    config.siteTitle
-                } <span class="arrow">➜</span></div>
+                    <div class="continue">
+                        ${
+                            config.logo
+                                ? `<img class="favico" src="${config.logo}" onerror="this.style.display='none'" />`
+                                : ""
+                        }<span class="to-label">${config.continueToLabel} ${
+                    config.siteTitle ? config.siteTitle : ""
+                }</span><span class="arrow">➜</span>
+                    </div>
                   </div>
                 </div>`
             );

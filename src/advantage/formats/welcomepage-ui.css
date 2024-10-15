@@ -83,6 +83,10 @@ span.arrow {
   transform: translateX(.25em);
 }
 
+.continue .to-label {
+  display: none;
+}
+
 .favico {
   width: auto;
   height: 1.5rem;
@@ -159,5 +163,11 @@ span.arrow {
 
   .countdown {
     transform: scale(.9);
+  }
+}
+
+@media (min-width: 600px) {
+  .continue .to-label {
+    display: inline-block;
   }
 }
