@@ -1,3 +1,4 @@
+import { supportsAdoptingStyleSheets } from "../utils";
 /**
  * Represents the UI layer for an Advantage high-impact format.
  * This class extends the HTMLElement class and provides methods for manipulating the UI content and styles.
@@ -5,7 +6,7 @@
  */
 export class AdvantageUILayer extends HTMLElement {
     #root: ShadowRoot;
-    #styleSheet: CSSStyleSheet;
+    #styleSheet: CSSStyleSheet | HTMLStyleElement;
     #container: HTMLDivElement;
     #content: HTMLDivElement;
     slotName = "advantage-ui-content";
@@ -15,9 +16,19 @@ export class AdvantageUILayer extends HTMLElement {
      */
     constructor() {
         super();
-        this.#styleSheet = new CSSStyleSheet();
+        if (supportsAdoptingStyleSheets) {
+            this.#styleSheet = new CSSStyleSheet();
+        } else {
+            this.#styleSheet = document.createElement(
+                "style"
+            ) as HTMLStyleElement;
+        }
         this.#root = this.attachShadow({ mode: "open" });
-        this.#root.adoptedStyleSheets = [this.#styleSheet];
+        if (supportsAdoptingStyleSheets) {
+            this.#root.adoptedStyleSheets = [this.#styleSheet as CSSStyleSheet];
+        } else {
+            this.#root.appendChild(this.#styleSheet as HTMLStyleElement);
+        }
         this.#container = document.createElement("div");
         this.#container.id = "container";
         this.#content = document.createElement("div");
@@ -44,6 +55,10 @@ export class AdvantageUILayer extends HTMLElement {
      * @param CSS - The CSS styles to be inserted.
      */
     insertCSS(CSS: string) {
-        this.#styleSheet.replaceSync(CSS);
+        if (supportsAdoptingStyleSheets) {
+            (this.#styleSheet as CSSStyleSheet).replaceSync(CSS);
+        } else {
+            (this.#styleSheet as HTMLStyleElement).textContent = CSS;
+        }
     }
 }

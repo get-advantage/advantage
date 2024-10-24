@@ -42,3 +42,10 @@ export const traverseNodes = (
         }
     }
 };
+
+/**
+ * Checks if the browser supports adopting style sheets.
+ */
+export const supportsAdoptingStyleSheets =
+    "adoptedStyleSheets" in Document.prototype &&
+    "replace" in CSSStyleSheet.prototype;

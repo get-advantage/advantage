@@ -1,7 +1,7 @@
 import { Advantage } from "./advantage";
 import { IAdvantageUILayer, IAdvantageWrapper } from "../types";
 
-import { logger, traverseNodes } from "../utils";
+import { logger, traverseNodes, supportsAdoptingStyleSheets } from "../utils";
 
 import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
 
@@ -12,7 +12,7 @@ import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
  */
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     // Private fields
-    #styleSheet: CSSStyleSheet;
+    #styleSheet: CSSStyleSheet | HTMLStyleElement;
     #root: ShadowRoot;
     #slotAdvantageContent: HTMLSlotElement;
     #slotChangeRegistered = false;
@@ -29,9 +29,21 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      */
     constructor() {
         super();
-        this.#styleSheet = new CSSStyleSheet();
+        if (supportsAdoptingStyleSheets) {
+            this.#styleSheet = new CSSStyleSheet();
+        } else {
+            this.#styleSheet = document.createElement(
+                "style"
+            ) as HTMLStyleElement;
+        }
+
         this.#root = this.attachShadow({ mode: "open" });
-        this.#root.adoptedStyleSheets = [this.#styleSheet];
+
+        if (supportsAdoptingStyleSheets) {
+            this.#root.adoptedStyleSheets = [this.#styleSheet as CSSStyleSheet];
+        } else {
+            this.#root.appendChild(this.#styleSheet as HTMLStyleElement);
+        }
 
         // Create the container div
         this.container = document.createElement("div");
@@ -306,14 +318,22 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * @param CSS - The CSS to insert.
      */
     insertCSS(CSS: string) {
-        this.#styleSheet.replaceSync(CSS);
+        if (supportsAdoptingStyleSheets) {
+            (this.#styleSheet as CSSStyleSheet).replaceSync(CSS);
+        } else {
+            (this.#styleSheet as HTMLStyleElement).textContent = CSS;
+        }
     }
 
     /**
      * Resets the CSS in the shadow root of the wrapper.
      */
     resetCSS() {
-        this.#styleSheet.replaceSync("");
+        if (supportsAdoptingStyleSheets) {
+            (this.#styleSheet as CSSStyleSheet).replaceSync("");
+        } else {
+            (this.#styleSheet as HTMLStyleElement).textContent = "";
+        }
     }
 
     /**
