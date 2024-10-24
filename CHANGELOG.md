@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/get-advantage/advantage/compare/v0.5.1...v0.5.2) (2024-10-24)
+
+
+### Bug Fixes
+
+* fallback when "CSSStyleSheet" not supported ([#38](https://github.com/get-advantage/advantage/issues/38)) ([ccd5206](https://github.com/get-advantage/advantage/commit/ccd520620a62e80580d8dc2361ddeb934ff8dea0))
+
 ## [0.5.1](https://github.com/get-advantage/advantage/compare/v0.5.0...v0.5.1) (2024-10-15)
 
 
