@@ -1,7 +1,7 @@
 import { Advantage } from "./advantage";
 import { IAdvantageUILayer, IAdvantageWrapper } from "../types";
 
-import { logger, traverseNodes } from "../utils";
+import { logger, traverseNodes, supportsAdoptingStyleSheets } from "../utils";
 
 import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
 
@@ -29,7 +29,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      */
     constructor() {
         super();
-        if (document.adoptedStyleSheets != undefined) {
+        if (supportsAdoptingStyleSheets) {
             this.#styleSheet = new CSSStyleSheet();
         } else {
             this.#styleSheet = document.createElement(
@@ -39,7 +39,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
         this.#root = this.attachShadow({ mode: "open" });
 
-        if (document.adoptedStyleSheets != undefined) {
+        if (supportsAdoptingStyleSheets) {
             this.#root.adoptedStyleSheets = [this.#styleSheet as CSSStyleSheet];
         } else {
             this.#root.appendChild(this.#styleSheet as HTMLStyleElement);
@@ -318,7 +318,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * @param CSS - The CSS to insert.
      */
     insertCSS(CSS: string) {
-        if (document.adoptedStyleSheets != undefined) {
+        if (supportsAdoptingStyleSheets) {
             (this.#styleSheet as CSSStyleSheet).replaceSync(CSS);
         } else {
             (this.#styleSheet as HTMLStyleElement).textContent = CSS;
@@ -329,7 +329,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * Resets the CSS in the shadow root of the wrapper.
      */
     resetCSS() {
-        if (document.adoptedStyleSheets != undefined) {
+        if (supportsAdoptingStyleSheets) {
             (this.#styleSheet as CSSStyleSheet).replaceSync("");
         } else {
             (this.#styleSheet as HTMLStyleElement).textContent = "";
