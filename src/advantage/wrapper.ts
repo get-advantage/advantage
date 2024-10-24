@@ -29,7 +29,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      */
     constructor() {
         super();
-        if ("CSSStyleSheet" in window) {
+        if (document.adoptedStyleSheets != undefined) {
             this.#styleSheet = new CSSStyleSheet();
         } else {
             this.#styleSheet = document.createElement(
@@ -39,7 +39,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
         this.#root = this.attachShadow({ mode: "open" });
 
-        if ("CSSStyleSheet" in window) {
+        if (document.adoptedStyleSheets != undefined) {
             this.#root.adoptedStyleSheets = [this.#styleSheet as CSSStyleSheet];
         } else {
             this.#root.appendChild(this.#styleSheet as HTMLStyleElement);
@@ -318,7 +318,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * @param CSS - The CSS to insert.
      */
     insertCSS(CSS: string) {
-        if ("CSSStyleSheet" in window) {
+        if (document.adoptedStyleSheets != undefined) {
             (this.#styleSheet as CSSStyleSheet).replaceSync(CSS);
         } else {
             (this.#styleSheet as HTMLStyleElement).textContent = CSS;
@@ -329,7 +329,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * Resets the CSS in the shadow root of the wrapper.
      */
     resetCSS() {
-        if ("CSSStyleSheet" in window) {
+        if (document.adoptedStyleSheets != undefined) {
             (this.#styleSheet as CSSStyleSheet).replaceSync("");
         } else {
             (this.#styleSheet as HTMLStyleElement).textContent = "";
