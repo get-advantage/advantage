@@ -1,0 +1,22 @@
+/* doublemidscroll.css */
+:host {
+    display: block;
+    position: relative;
+    width: 100vw;
+    height: 200vh;
+    overflow: hidden;
+    transition: height 0.5s ease-out;
+}
+#container {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    clip-path: inset(0px 0px 0px 0px);
+}
+#ad-slot {
+    top: 0;
+    position: fixed;
+    width: 100vw;
+    height: 200vh;
+}
