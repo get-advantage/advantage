@@ -121,11 +121,8 @@ function reportDoubleFullscreenError(error) {
 }
 
 function createWaypoint(targetElem, source, data) {
-    if (!targetElem || !source || !data) {
-        return;
+    if (!targetElem || !source || !data) return;
 
-        console.log(targetElem)
-    }
     function createObserver(el, th) {
         const options = {
             root: null,
@@ -162,7 +159,6 @@ function createWaypoint(targetElem, source, data) {
 
 // Intercept waypoint message
 function onMessage(targetElem, event) {
-    console.log('myevent: ', typeof event.data === "object" ? event.data : JSON.parse(event.data))
     try {
         const payload = typeof event.data === "object" ? event.data : JSON.parse(event.data);
         if (payload.action === "addWaypoint") {
@@ -208,14 +204,11 @@ export const PlatformType = {
 };
 
 function getConfig(ad) {
-    console.log(ad)
     const currScript = getCurrentScript(ad);
     //TODO: Add validation and senibel defaults
     const platform = currScript?.dataset?.partner ? PlatformType?.MANUAL : PlatformType?.STATION;
-    console.log(currScript)
     if (currScript?.dataset?.path?.includes('deliver.madington')) {
         const currScriptParentElement = currScript?.parentElement
-        console.log(currScriptParentElement)
 
         return {
             clickTag: currScriptParentElement.dataset.clickTag,
@@ -230,7 +223,6 @@ function getConfig(ad) {
             correlator: currScriptParentElement.dataset.correlator || '',
             adunit: currScriptParentElement.dataset.adunit || '',
             platform: platform,
-            correlator: currScriptParentElement.dataset.correlator || '',
         }
     } else {
         console.log(currScript.dataset)
@@ -252,24 +244,18 @@ function getConfig(ad) {
 
 }
 
-function createDoubleFullscreen(el, setup, onIntersection) {
+export function createDoubleFullscreen(el, setup, onIntersection) {
     try {
         // Get config
         const { pathWithoutFileName, tallAd, shortAd, clickTag, currentScriptElement, gdpr, gdprConsent, correlator } = getConfig(el);
 
         // Create elements
         const { wrapper, style, randomId } = createDoubleFullscreenElements(el);
-
         // Style it
         wrapper.classList.add(randomId);
 
-        // Position it
-        const offsetLeft = calculateOffsetLeft(wrapper);
-
         // Listen for messages
-        window.top.addEventListener("message", function (event) {
-            onMessage(wrapper, event);
-        });
+        window.top.addEventListener("message",  (event) => onMessage(wrapper, event));
 
         // Load tall ad (the one that is 200vh tall)
         const tallAdElement = loadAd(wrapper, pathWithoutFileName, tallAd, clickTag, gdpr, gdprConsent, correlator);
@@ -277,7 +263,7 @@ function createDoubleFullscreen(el, setup, onIntersection) {
 
         // Load short ad (the one that is 100vh tall)
         const shortAdElement = loadAd(
-            currentScriptElement.parentElement,
+            currentScriptElement,
             pathWithoutFileName,
             shortAd,
             clickTag
@@ -322,20 +308,4 @@ function getCurrentScript(ad) {
             return scripts[scripts.length - 1];
         })()
     );
-}
-
-function calculateOffsetLeft(element) {
-    const offsetLeft = element.getBoundingClientRect().left;
-    element.style.setProperty(`--offset-left`, `-${offsetLeft}px`);
-    return offsetLeft;
-}
-
-export {
-    createDoubleFullscreen,
-    loadAd,
-    getConfig,
-    getCurrentScript,
-    calculateOffsetLeft,
-    CREATIVE_BASE_URL,
-    createDoubleFullscreenElements,
 }

@@ -1,10 +1,10 @@
-import { AdvantageFormat, AdvantageFormatName } from "../../types";
+import { AdvantageFormat, AdvantageFormatName } from "@src/types";
 import styles from "./doublemidscroll.css?inline";
 import {
   setDimensionsUntilAdvantageAdSlot,
   resetDimensionsUntilAdvantageAdSlot,
 } from "./format-helper";
-import { createDoubleFullscreen } from "./double_fullscreen";
+import { createDoubleFullscreen } from "./doublefullscreen_helper.ts";
 
 export const doubleMidscroll: AdvantageFormat = {
   name: AdvantageFormatName.DoubleMidscroll,
@@ -12,22 +12,20 @@ export const doubleMidscroll: AdvantageFormat = {
     "A double fullscreen format that fixes the ad to the middle of the page as the user scrolls down.",
   setup: (wrapper, ad) => {
     return new Promise((resolve) => {
-      createDoubleFullscreen(ad);
-      // console.log(ad?.contentWindow);
-      // wrapper[1].contentWindow.document.querySelectorAll("iframe")[1].style.position =
-      //   "absolute";
-      // wrapper[1].contentWindow.document.querySelectorAll("iframe")[1].style.top = "0";
-      // wrapper[1].contentWindow.document.querySelectorAll("iframe")[0].style.opacity = 0;
+      setTimeout(() => {
+        createDoubleFullscreen(ad);
 
-      wrapper.insertCSS(styles);
-      if (ad) setDimensionsUntilAdvantageAdSlot(ad);
+        wrapper.insertCSS(styles);
+        if (ad) setDimensionsUntilAdvantageAdSlot(ad);
 
-      const uiContainer = document.createElement("div");
-      uiContainer.id = "ui-container";
+        const uiContainer = document.createElement("div");
+        uiContainer.id = "ui-container";
 
-      wrapper.uiLayer.changeContent(uiContainer);
+        wrapper.uiLayer.changeContent(uiContainer);
 
-      resolve();
+        resolve();
+      }, 500)
+
     });
   },
   reset: (wrapper, ad?) => {
