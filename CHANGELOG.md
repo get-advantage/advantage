@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+* feat: nested iframes (cf65317)
+
 ## [0.5.2](https://github.com/get-advantage/advantage/compare/v0.5.1...v0.5.2) (2024-10-24)
 
 
