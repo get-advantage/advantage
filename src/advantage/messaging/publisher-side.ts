@@ -172,18 +172,29 @@ export class AdvantageAdSlotResponder {
             return;
         } else {
             const childAdFinder = (iframe: HTMLIFrameElement) => {
-                if (iframe.contentWindow === event.source) {
-                    logger.info(
-                        "The message is from a child of the component. 👍"
-                    );
-                    this.ad = {
-                        iframe,
-                        eventSource: event.source!,
-                        port: event.ports[0]
-                    };
-                    this.#handleMessage(
-                        event as MessageEvent<AdvantageMessage>
-                    );
+                /*
+                 * The message is from an iframe. We need to check if the iframe is a child of the component.
+                 * This is done by checking if the iframe.contentWindow is equal to the event.source.
+                 * If it is, we can be sure that the message is from a child of the component.
+                 * But the event can also be from a child of a child of the component.
+                 */
+
+                let currentWindow: Window | null = event.source as Window;
+                while (currentWindow && currentWindow !== window.top) {
+                    if (iframe.contentWindow === currentWindow) {
+                        logger.info(
+                            "The message is from a child of the component. 👍"
+                        );
+                        this.ad = {
+                            iframe,
+                            eventSource: event.source!,
+                            port: event.ports[0]
+                        };
+                        this.#handleMessage(
+                            event as MessageEvent<AdvantageMessage>
+                        );
+                    }
+                    currentWindow = currentWindow.parent;
                 }
             };
             if (this.#isWrapper) {

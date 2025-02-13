@@ -17,9 +17,47 @@ export function sendMessageAndOpenChannel(
     let attempts = 0;
     let replyReceived = false;
 
+    const getTargetWindow = (currentWindow: Window = window) => {
+        let targetWindow: Window = currentWindow;
+        try {
+            while (currentWindow !== window.top && currentWindow.document) {
+                targetWindow = currentWindow;
+                currentWindow = currentWindow.parent;
+            }
+        } catch (error) {
+            return targetWindow;
+        }
+        return targetWindow;
+    };
+
+    const createMessageContext = (
+        targetWindow: Window,
+        message: Partial<AdvantageMessage>
+    ) => {
+        const avic = targetWindow.document
+            .querySelector("[id^=avic_]")
+            ?.id.replace("avic_", "");
+        const qemid =
+            targetWindow.document.querySelector<HTMLElement>(
+                "[data-jcp-qem-id]"
+            )?.dataset.jcpQemId;
+        const targetingMap = targetWindow.ucTagData?.targetingMap;
+        const origins = Array.from([
+            ...targetWindow.location.ancestorOrigins,
+            targetWindow.location.origin
+        ]);
+
+        return {
+            ...message,
+            gqid: avic || qemid,
+            targetingMap: targetingMap,
+            origins: origins
+        };
+    };
+
     return new Promise((resolve, reject) => {
         // Define a function that we'll call to send the message
-        const sendMessage = () => {
+        const sendMessage = (messageWithContext: Partial<AdvantageMessage>) => {
             attempts++;
             // Create a new MessageChannel for each attempt
             const channel = new MessageChannel();
@@ -40,23 +78,20 @@ export function sendMessageAndOpenChannel(
                 }
             };
 
-            // Send the message up through each parent window until the top is reached
-            let currentWindow: Window & typeof globalThis =
-                window.parent as Window & typeof globalThis;
-            do {
-                currentWindow.postMessage(message, "*", [channel.port2]);
-                currentWindow = currentWindow.parent as Window &
-                    typeof globalThis;
-            } while (currentWindow !== window.top);
+            window.top?.postMessage(messageWithContext, "*", [channel.port2]);
         };
 
+        // try to find direct child window under top window
+        const targetWindow = getTargetWindow();
+        const messageWithContext = createMessageContext(targetWindow, message);
+
         // Send the first message
-        sendMessage();
+        sendMessage(messageWithContext);
 
         // Set up the retry interval
         const retryIntervalRef = setInterval(() => {
             if (attempts < maxAttempts && !replyReceived) {
-                sendMessage();
+                sendMessage(messageWithContext);
             } else {
                 // Clean up and reject promise
                 clearInterval(retryIntervalRef);

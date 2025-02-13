@@ -144,4 +144,7 @@ export interface AdvantageMessage {
     type: ADVANTAGE_MESSAGE;
     action: AdvantageMessageAction;
     format?: AdvantageFormatName;
+    origins?: string[];
+    gqid?: string;
+    targetingMap?: { [key: string]: string[] };
 }
