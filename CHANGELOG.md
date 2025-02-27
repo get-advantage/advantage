@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.1](https://github.com/get-advantage/advantage/compare/v0.6.0-next.0...v0.6.0-next.1) (2025-02-27)
+
+
+### Features
+
+* enhance DOM change detection for iframes in AdvantageWrapper ([8284346](https://github.com/get-advantage/advantage/commit/82843462ced645fcea88cdeba9f7f8dc9d294b85))
+
 * feat: nested iframes (cf65317)
 
 ## [0.5.2](https://github.com/get-advantage/advantage/compare/v0.5.1...v0.5.2) (2024-10-24)
