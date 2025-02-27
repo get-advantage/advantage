@@ -100,14 +100,36 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * Detects DOM changes and resets the wrapper if a new ad is loaded.
      */
     #detectDOMChanges = () => {
-        const observer = new MutationObserver(() => {
-            if (this.currentFormat && this.simulating === false) {
-                logger.info(
-                    "DOM changes detected. This probably means that a new ad was loaded. Time to reset the wrapper."
-                );
+        const observer = new MutationObserver((mutations) => {
+            // Loop through all mutation records
+            mutations.forEach((mutation) => {
+                // We only care about added or removed nodes
+                if (mutation.type === "childList") {
+                    // Check for added nodes
+                    mutation.addedNodes.forEach((node) => {
+                        // Is this node an iframe?
+                        if ((node as Element).tagName === "IFRAME") {
+                            logger.debug("An <iframe> was added:", node);
+                            // Attach a onload event listener to the iframe to detect when the ad is loaded and reloaded.
+                        }
+                    });
 
-                this.reset();
-            }
+                    // Check for removed nodes
+                    mutation.removedNodes.forEach((node) => {
+                        if ((node as Element).tagName === "IFRAME") {
+                            if (
+                                this.currentFormat &&
+                                this.simulating === false
+                            ) {
+                                logger.debug(
+                                    "An <iframe> was removed. This probably means that a new ad was loaded. Time to reset the wrapper."
+                                );
+                                this.reset();
+                            }
+                        }
+                    });
+                }
+            });
         });
         observer.observe(this, {
             childList: true,
