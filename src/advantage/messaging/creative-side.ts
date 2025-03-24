@@ -2,7 +2,12 @@ import {
     sendMessageAndOpenChannel,
     sendMessageAndAwaitResponse
 } from "../../utils/messaging";
-import { AdvantageMessage, AdvantageMessageAction } from "../../types";
+import {
+    AdvantageMessage,
+    AdvantageMessageAction,
+    AdvantageFormatName
+} from "../../types";
+export { AdvantageMessageAction, AdvantageFormatName };
 import logger from "../../utils/logging";
 
 /**

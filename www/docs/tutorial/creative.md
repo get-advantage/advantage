@@ -37,14 +37,18 @@ $ bun i @get-advantage/advantage
 Import the `AdvantageCreativeMessenger` class into your creative's code.
 
 ```ts
-import { AdvantageCreativeMessenger } from "@get-advantage/advantage/creative";
+import {
+    AdvantageCreativeMessenger,
+    AdvantageMessageAction,
+    AdvantageFormatName
+} from "@get-advantage/advantage/creative";
 ```
 
 ### Step 3: Start a session
 
 Create a new instance of the AdvantageCreativeMessenger class and start a session. When a session is established, send a message to request the format the the creative banner was built for:
 
-```ts
+```ts [TypeScript]
 async function main() {
     const advantageMessenger = new AdvantageCreativeMessenger();
     const session = await advantageMessenger.startSession();
