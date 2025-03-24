@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.2](https://github.com/get-advantage/advantage/compare/v0.6.0-next.1...v0.6.0-next.2) (2025-03-24)
+
+
+### Bug Fixes
+
+* export missing types ([d5d2a45](https://github.com/get-advantage/advantage/commit/d5d2a45b8364e837e7c74171aa2919d5c3339033))
+
 # [0.6.0-next.1](https://github.com/get-advantage/advantage/compare/v0.6.0-next.0...v0.6.0-next.1) (2025-02-27)
 
 
