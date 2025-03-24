@@ -70,3 +70,109 @@ async function main() {
 }
 main();
 ```
+
+## Play CDN
+
+Use the CDN to try Advantage right in the browser without any build step.
+
+::: warning
+The CDN is designed for development purposes only, and is not intended for production.
+Talk to your tech vendor to load the script from a 3rd party cirtified CDN used for ad delivery.
+:::
+
+::: code-group
+
+```html{6,10-43} [JS]
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/@get-advantage/advantage/dist/bundles/creative-side.iife.js"></script>
+    </head>
+    <body>
+        <h1>Hello world!</h1>
+        <script>
+            const {
+                AdvantageCreativeMessenger,
+                AdvantageMessageAction,
+                AdvantageFormatName
+            } = window.advantage;
+            const advantageMessenger = new AdvantageCreativeMessenger();
+            advantageMessenger.startSession().then((session) => {
+                if (session) {
+                    advantageMessenger
+                        .sendMessage({
+                            action: AdvantageMessageAction.REQUEST_FORMAT,
+                            format: AdvantageFormatName.TopScroll
+                        })
+                        .then((response) => {
+                            if (
+                                response?.action ===
+                                AdvantageMessageAction.FORMAT_CONFIRMED
+                            ) {
+                                // Yay! Format is confirmed by Advantage on the website
+                                // Start the ad here
+                            }
+                            if (
+                                response?.action ===
+                                AdvantageMessageAction.FORMAT_REJECTED
+                            ) {
+                                // Oh no, the format was rejected. Time to for a backup plan
+                            }
+                        });
+                } else {
+                    // For some reason, a session was not created. Perhaps the site isn't yet Advantage enabled?
+                }
+            });
+        </script>
+    </body>
+</html>
+```
+
+```html{10-14} [ESM]
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <h1>Hello world!</h1>
+        <script type="module">
+            import {
+                AdvantageCreativeMessenger,
+                AdvantageMessageAction,
+                AdvantageFormatName
+            } from "https://cdn.jsdelivr.net/npm/@get-advantage/advantage/dist/bundles/creative-side.js";
+            const advantageMessenger = new AdvantageCreativeMessenger();
+            const session = await advantageMessenger.startSession();
+            if (session) {
+                const response = await advantageMessenger.sendMessage({
+                    action: AdvantageMessageAction.REQUEST_FORMAT,
+                    format: AdvantageFormatName.TopScroll
+                });
+                if (
+                    response.action === AdvantageMessageAction.FORMAT_CONFIRMED
+                ) {
+                    // Yay! Format is confirmed by Advantage on the website
+                    // Start the ad here
+                }
+                if (
+                    response?.action === AdvantageMessageAction.FORMAT_REJECTED
+                ) {
+                    // Oh no, the format was rejected. Time to for a backup plan
+                }
+            } else {
+                // For some reason, a session was not created. Perhaps the site isn't yet Advantage enabled?
+            }
+        </script>
+    </body>
+</html>
+```
+
+:::
+
+::: tip
+There are many more pre baked bundles available in the CDN. Check out the [CDN documentation](https://cdn.jsdelivr.net/npm/@get-advantage/advantage/dist/bundles/) for more information.
+:::
