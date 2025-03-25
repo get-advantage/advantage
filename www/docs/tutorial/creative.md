@@ -77,7 +77,7 @@ Use the CDN to try Advantage right in the browser without any build step.
 
 ::: warning
 The CDN is designed for development purposes only, and is not intended for production.
-Talk to your tech vendor to load the script from a 3rd party cirtified CDN used for ad delivery.
+Talk to your tech vendor to load the script from a 3rd party certified CDN used for ad delivery.
 :::
 
 ::: code-group
