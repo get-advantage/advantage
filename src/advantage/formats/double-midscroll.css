@@ -1,0 +1,32 @@
+ :host #ad-slot {
+   display: block;
+   position: relative;
+   width: 100dvw;
+   height: 200dvh;
+ }
+
+ /* Foreground ad slot */
+ ::slotted([slot="advantage-ad-slot"]) {
+   position: sticky;
+   width: 100dvw;
+   height: 100dvh;
+   top: 0;
+   left: 0;
+   z-index: var(--adv-wp-zindex);
+   transition: all 0.5s ease;
+ }
+
+ /* Background ad slot */
+ #advantage-ad-background {
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   top: 0;
+   left: 0;
+ }
+
+ #advantage-ad-background>iframe {
+   width: 100%;
+   height: 100%;
+   border: none;
+ }

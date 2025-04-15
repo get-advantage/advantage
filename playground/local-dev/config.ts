@@ -60,6 +60,19 @@ export default {
             reset: () => {
                 logger.debug("Resetting top scroll format");
             }
+        },
+        {
+            format: AdvantageFormatName.DoubleMidscroll,
+            options: {
+                allowedOrigins: ["http://localhost:5173"]
+            },
+            setup: () => {},
+            close: () => {
+                logger.debug("Closing double midscroll format");
+            },
+            reset: () => {
+                logger.debug("Resetting double midscroll format");
+            }
         }
     ]
 } as AdvantageConfig;

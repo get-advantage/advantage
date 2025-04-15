@@ -34,10 +34,10 @@ export interface AdvantageConfig {
 export interface IAdvantageWrapper extends HTMLElement {
     container: HTMLElement;
     content: HTMLElement;
-    currentFormat: AdvantageFormatName | string | null;
+    currentFormat?: AdvantageFormatName;
     uiLayer: IAdvantageUILayer;
     contentNodes: Node[];
-    morphIntoFormat: (format: AdvantageFormatName | string) => Promise<void>;
+    morphIntoFormat: ({ format }: AdvantageMessage) => Promise<void>;
     applyStylesToAllChildElements: (styles: string) => void;
     insertCSS: (CSS: string) => void;
     resetCSS: () => void;
@@ -75,6 +75,7 @@ export interface AdvantageFormatOptions {
     closeButtonAnimationDuration?: number;
     downArrow?: boolean;
     height?: number;
+    sessionID?: string;
     /**
      * The duration in seconds before the format closes automatically.
      * If set to 0, the format will not close automatically.
@@ -106,6 +107,13 @@ export interface AdvantageFormatOptions {
      * Can be used to customize the label of the continue to site
      * @defaul Continue to */
     continueToLabel?: string;
+    /**
+     * URL to the background ad. Only used in the Double Midscroll format.
+     * This is set from the foreground ad.
+     */
+    backgroundAdURL?: string;
+    allowedOrigins?: string[];
+    dangerouslyAllowAllOrigins?: boolean;
 }
 
 export interface AdvantageFormatIntegration {
@@ -147,4 +155,5 @@ export interface AdvantageMessage {
     origins?: string[];
     gqid?: string;
     targetingMap?: { [key: string]: string[] };
+    backgroundAdURL?: string;
 }

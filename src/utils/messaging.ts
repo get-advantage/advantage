@@ -46,12 +46,14 @@ export function sendMessageAndOpenChannel(
             ...targetWindow.location.ancestorOrigins,
             targetWindow.location.origin
         ]);
+        const backgroundAdURL = location.href;
 
         return {
             ...message,
             gqid: avic || qemid,
             targetingMap: targetingMap,
-            origins: origins
+            origins: origins,
+            backgroundAdURL: backgroundAdURL
         };
     };
 

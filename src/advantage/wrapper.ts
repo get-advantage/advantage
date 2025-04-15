@@ -1,5 +1,10 @@
 import { Advantage } from "./advantage";
-import { IAdvantageUILayer, IAdvantageWrapper } from "../types";
+import {
+    AdvantageFormatName,
+    IAdvantageUILayer,
+    IAdvantageWrapper,
+    AdvantageMessage
+} from "../types";
 
 import { logger, traverseNodes, supportsAdoptingStyleSheets } from "../utils";
 
@@ -20,7 +25,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     container: HTMLDivElement;
     content: HTMLDivElement;
     uiLayer: IAdvantageUILayer;
-    currentFormat: string | null = null;
+    currentFormat: AdvantageFormatName | undefined = undefined;
     messageHandler: AdvantageAdSlotResponder;
     simulating = false;
 
@@ -166,13 +171,20 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * @param format - The format to morph into.
      * @returns A promise that resolves when the morphing is complete.
      */
-    morphIntoFormat = async (format: string) => {
+    morphIntoFormat = async ({
+        format,
+        backgroundAdURL,
+        sessionID
+    }: AdvantageMessage) => {
         logger.debug("MORPH INTO FORMAT");
         return new Promise<void>(async (resolve, reject) => {
             const forbiddenFormats = this.getAttribute("exclude-formats")
                 ?.split(",")
                 .map((format) => format.trim());
-            if (forbiddenFormats && forbiddenFormats.includes(format)) {
+            if (
+                forbiddenFormats &&
+                forbiddenFormats.includes(format as string)
+            ) {
                 logger.info(
                     `This wrapper does not support the format(s): \"${forbiddenFormats.join(
                         ", "
@@ -184,7 +196,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 return;
             }
             this.currentFormat = format;
-            let formatConfig = Advantage.getInstance().formats.get(format);
+            let formatConfig = Advantage.getInstance().formats.get(
+                format as string
+            );
 
             if (!formatConfig) {
                 formatConfig = Advantage.getInstance().defaultFormats.find(
@@ -194,22 +208,22 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                     reject(
                         `😱 The format ${format} is not supported. No configuration was found.`
                     );
-                    this.currentFormat = null;
+                    this.currentFormat = undefined;
                     return;
                 }
             }
 
             const integration = Advantage.getInstance().formatIntegrations.get(
-                this.currentFormat
+                this.currentFormat as string
             );
 
             try {
                 // 1. First we call the format setup function with optinal user defined format options
-                await formatConfig.setup(
-                    this,
-                    this.messageHandler.ad?.iframe,
-                    integration?.options
-                );
+                await formatConfig.setup(this, this.messageHandler.ad?.iframe, {
+                    ...integration?.options,
+                    backgroundAdURL,
+                    sessionID
+                });
 
                 // 2. Then we call the integration setup function to apply site-specific adjustments
                 await integration?.setup(this, this.messageHandler.ad?.iframe);
@@ -271,7 +285,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
         }
         this.uiLayer.changeContent("");
-        this.currentFormat = null;
+        this.currentFormat = undefined;
     }
 
     animateClose() {
@@ -315,7 +329,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 integration.onClose(this, this.messageHandler?.ad?.iframe);
             }
         }
-        this.currentFormat = null;
+        this.currentFormat = undefined;
     }
 
     /**

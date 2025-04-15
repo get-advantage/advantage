@@ -99,7 +99,7 @@ export class AdvantageAdSlotResponder {
         if (message.action === AdvantageMessageAction.REQUEST_FORMAT) {
             if (this.#isWrapper) {
                 (this.#element as IAdvantageWrapper)
-                    .morphIntoFormat(message.format!)
+                    .morphIntoFormat(message)
                     .then(() => {
                         logger.info("morphed into format", message.format!);
                         this.#messagePort?.postMessage({
@@ -108,8 +108,8 @@ export class AdvantageAdSlotResponder {
                             sessionID: message.sessionID
                         });
                     })
-                    .catch(() => {
-                        logger.error("morphing failed", message.format!);
+                    .catch((error) => {
+                        logger.error("morphing failed", message.format!, error);
                         this.#messagePort?.postMessage({
                             type: ADVANTAGE,
                             action: AdvantageMessageAction.FORMAT_REJECTED,
