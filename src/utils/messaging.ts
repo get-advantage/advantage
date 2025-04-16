@@ -43,7 +43,7 @@ export function sendMessageAndOpenChannel(
             )?.dataset.jcpQemId;
         const targetingMap = targetWindow.ucTagData?.targetingMap;
         const origins = Array.from([
-            ...targetWindow.location.ancestorOrigins,
+            ...(targetWindow.location.ancestorOrigins || []),
             targetWindow.location.origin
         ]);
         const backgroundAdURL = location.href;
