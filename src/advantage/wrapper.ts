@@ -25,7 +25,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     container: HTMLDivElement;
     content: HTMLDivElement;
     uiLayer: IAdvantageUILayer;
-    currentFormat: AdvantageFormatName | undefined = undefined;
+    currentFormat: AdvantageFormatName | string = "";
     messageHandler: AdvantageAdSlotResponder;
     simulating = false;
 
@@ -169,13 +169,14 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     /**
      * Morphs the wrapper into a specific ad format.
      * @param format - The format to morph into.
+     * @param sessionID - The session ID for the ad.
+     * @param backgroundAdURL - The URL for the background ad.
      * @returns A promise that resolves when the morphing is complete.
      */
-    morphIntoFormat = async ({
-        format,
-        backgroundAdURL,
-        sessionID
-    }: AdvantageMessage) => {
+    morphIntoFormat = async (
+        format: AdvantageFormatName | string,
+        { sessionID, backgroundAdURL }: AdvantageMessage
+    ) => {
         logger.debug("MORPH INTO FORMAT");
         return new Promise<void>(async (resolve, reject) => {
             const forbiddenFormats = this.getAttribute("exclude-formats")
@@ -208,7 +209,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                     reject(
                         `😱 The format ${format} is not supported. No configuration was found.`
                     );
-                    this.currentFormat = undefined;
+                    this.currentFormat = "";
                     return;
                 }
             }
@@ -285,7 +286,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
         }
         this.uiLayer.changeContent("");
-        this.currentFormat = undefined;
+        this.currentFormat = "";
     }
 
     animateClose() {
@@ -329,7 +330,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 integration.onClose(this, this.messageHandler?.ad?.iframe);
             }
         }
-        this.currentFormat = undefined;
+        this.currentFormat = "";
     }
 
     /**

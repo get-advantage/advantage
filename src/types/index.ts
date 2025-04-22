@@ -34,10 +34,13 @@ export interface AdvantageConfig {
 export interface IAdvantageWrapper extends HTMLElement {
     container: HTMLElement;
     content: HTMLElement;
-    currentFormat?: AdvantageFormatName;
+    currentFormat?: AdvantageFormatName | string;
     uiLayer: IAdvantageUILayer;
     contentNodes: Node[];
-    morphIntoFormat: ({ format }: AdvantageMessage) => Promise<void>;
+    morphIntoFormat: (
+        format: AdvantageFormatName | string,
+        message: AdvantageMessage
+    ) => Promise<void>;
     applyStylesToAllChildElements: (styles: string) => void;
     insertCSS: (CSS: string) => void;
     resetCSS: () => void;

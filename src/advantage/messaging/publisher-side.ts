@@ -99,7 +99,7 @@ export class AdvantageAdSlotResponder {
         if (message.action === AdvantageMessageAction.REQUEST_FORMAT) {
             if (this.#isWrapper) {
                 (this.#element as IAdvantageWrapper)
-                    .morphIntoFormat(message)
+                    .morphIntoFormat(message.format!, message)
                     .then(() => {
                         logger.info("morphed into format", message.format!);
                         this.#messagePort?.postMessage({
