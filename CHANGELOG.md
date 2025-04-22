@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-next.2](https://github.com/get-advantage/advantage/compare/v0.6.1-next.1...v0.6.1-next.2) (2025-04-22)
+
+
+### Bug Fixes
+
+* make message parameter optional in morphIntoFormat method ([a6de41d](https://github.com/get-advantage/advantage/commit/a6de41d4c9380f48df88ed1a4b7925ec6c5b1453))
+
 ## [0.6.1-next.1](https://github.com/get-advantage/advantage/compare/v0.6.1-next.0...v0.6.1-next.1) (2025-04-22)
 
 
