@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-next.3](https://github.com/get-advantage/advantage/compare/v0.6.1-next.2...v0.6.1-next.3) (2025-04-22)
+
 ## [0.6.1-next.2](https://github.com/get-advantage/advantage/compare/v0.6.1-next.1...v0.6.1-next.2) (2025-04-22)
 
 
