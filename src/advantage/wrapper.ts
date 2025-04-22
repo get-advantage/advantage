@@ -175,7 +175,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      */
     morphIntoFormat = async (
         format: AdvantageFormatName | string,
-        { sessionID, backgroundAdURL }: AdvantageMessage
+        message?: AdvantageMessage
     ) => {
         logger.debug("MORPH INTO FORMAT");
         return new Promise<void>(async (resolve, reject) => {
@@ -222,8 +222,8 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 // 1. First we call the format setup function with optinal user defined format options
                 await formatConfig.setup(this, this.messageHandler.ad?.iframe, {
                     ...integration?.options,
-                    backgroundAdURL,
-                    sessionID
+                    backgroundAdURL: message?.backgroundAdURL,
+                    sessionID: message?.sessionID
                 });
 
                 // 2. Then we call the integration setup function to apply site-specific adjustments

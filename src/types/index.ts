@@ -39,7 +39,7 @@ export interface IAdvantageWrapper extends HTMLElement {
     contentNodes: Node[];
     morphIntoFormat: (
         format: AdvantageFormatName | string,
-        message: AdvantageMessage
+        message?: AdvantageMessage
     ) => Promise<void>;
     applyStylesToAllChildElements: (styles: string) => void;
     insertCSS: (CSS: string) => void;
