@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-next.1](https://github.com/get-advantage/advantage/compare/v0.6.1-next.0...v0.6.1-next.1) (2025-04-22)
+
+
+### Bug Fixes
+
+* handle potential undefined ancestorOrigins in sendMessageAndOpenChannel ([b9fe1cf](https://github.com/get-advantage/advantage/commit/b9fe1cfc0e061fc1be4aa8e53ddd7b8b13d3914f))
+* morphIntoFormat call signature ([67f4b44](https://github.com/get-advantage/advantage/commit/67f4b44f5723ee5fc8fd54646af379dfb21ed3ad))
+
 ## [0.6.1-next.0](https://github.com/get-advantage/advantage/compare/v0.6.0...v0.6.1-next.0) (2025-04-15)
 
 # [0.6.0](https://github.com/get-advantage/advantage/compare/v0.6.0-next.2...v0.6.0) (2025-03-24)
