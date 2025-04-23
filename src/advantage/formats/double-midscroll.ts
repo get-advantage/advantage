@@ -52,8 +52,8 @@ export const doubleMidscroll: AdvantageFormat = {
                 !validateBackgroundAdURL(
                     config.backgroundAdURL,
                     config.allowedOrigins ?? []
-                ) ||
-                config.dangerouslyAllowAllOrigins
+                ) &&
+                !config.dangerouslyAllowAllOrigins
             ) {
                 reject(new Error("backgroundAdURL is not allowed"));
                 return;
