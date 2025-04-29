@@ -36,6 +36,27 @@ export class AdvantageAdSlotResponder {
               message: MessageEvent<any>
           ) => boolean)
         | undefined = undefined;
+    #defaultMessageValidator(
+        _adSlotElement: HTMLElement | IAdvantageWrapper,
+        event: MessageEvent<AdvantageMessage>
+    ): boolean {
+        // Basic validation - check if message has expected properties
+        if (!event.data || typeof event.data !== "object") {
+            return false;
+        }
+
+        // Check if the message has a type field that matches ADVANTAGE
+        if (event.data.type !== "ADVANTAGE") {
+            return false;
+        }
+
+        // Check for essential action property
+        if (!event.data.action) {
+            return false;
+        }
+
+        return true;
+    }
     #isWrapper: boolean;
     #messagePort: MessagePort | null = null;
     #formatRequestHandler:
@@ -165,22 +186,31 @@ export class AdvantageAdSlotResponder {
             this.#handleMessage(event as MessageEvent<AdvantageMessage>);
             return;
         }
-        if (
-            this.#messageValidator &&
-            !this.#messageValidator(this.#element, event)
-        ) {
-            return;
-        } else {
-            const childAdFinder = (iframe: HTMLIFrameElement) => {
-                /*
-                 * The message is from an iframe. We need to check if the iframe is a child of the component.
-                 * This is done by checking if the iframe.contentWindow is equal to the event.source.
-                 * If it is, we can be sure that the message is from a child of the component.
-                 * But the event can also be from a child of a child of the component.
-                 */
 
-                let currentWindow: Window | null = event.source as Window;
-                while (currentWindow && currentWindow !== window.top) {
+        const validator =
+            this.#messageValidator || this.#defaultMessageValidator.bind(this);
+        if (!validator(this.#element, event)) {
+            return;
+        }
+
+        const childAdFinder = (iframe: HTMLIFrameElement) => {
+            /*
+             * The message is from an iframe. We need to check if the iframe is a child of the component.
+             * This is done by checking if the iframe.contentWindow is equal to the event.source.
+             * If it is, we can be sure that the message is from a child of the component.
+             * But the event can also be from a child of a child of the component.
+             */
+            const MAX_ITERATIONS = 10;
+            let iterations = 0;
+            let currentWindow: Window | null = event.source as Window;
+
+            while (
+                currentWindow &&
+                currentWindow !== window.top &&
+                iterations < MAX_ITERATIONS
+            ) {
+                iterations++;
+                try {
                     if (iframe.contentWindow === currentWindow) {
                         logger.info(
                             "The message is from a child of the component. 👍"
@@ -193,25 +223,32 @@ export class AdvantageAdSlotResponder {
                         this.#handleMessage(
                             event as MessageEvent<AdvantageMessage>
                         );
+                        break;
                     }
                     currentWindow = currentWindow.parent;
+                } catch (error) {
+                    logger.error(
+                        "Error while traversing iframe hierarchy",
+                        error
+                    );
+                    break;
                 }
-            };
-            if (this.#isWrapper) {
-                const iframes = (
-                    this.#element as IAdvantageWrapper
-                ).contentNodes.flatMap((node) => collectIframes(node));
-                if (iframes.length === 0) {
-                    return;
-                }
-                iframes.forEach(childAdFinder);
-            } else {
-                // Check if the source window is a child of the #element
-                logger.debug("NOT A WRAPPER!", this.#element);
-                Array.from(
-                    this.#element.getElementsByTagName("iframe")
-                ).forEach(childAdFinder);
             }
+        };
+        if (this.#isWrapper) {
+            const iframes = (
+                this.#element as IAdvantageWrapper
+            ).contentNodes.flatMap((node) => collectIframes(node));
+            if (iframes.length === 0) {
+                return;
+            }
+            iframes.forEach(childAdFinder);
+        } else {
+            // Check if the source window is a child of the #element
+            logger.debug("NOT A WRAPPER!", this.#element);
+            Array.from(this.#element.getElementsByTagName("iframe")).forEach(
+                childAdFinder
+            );
         }
     };
     /**
