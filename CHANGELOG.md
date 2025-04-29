@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-next.5](https://github.com/get-advantage/advantage/compare/v0.6.1-next.4...v0.6.1-next.5) (2025-04-29)
+
+
+### Features
+
+* add default message validator for AdvantageAdSlotResponder ([f51d3f3](https://github.com/get-advantage/advantage/commit/f51d3f39e08e98e034213289843829878d84c165))
+
 ## [0.6.1-next.4](https://github.com/get-advantage/advantage/compare/v0.6.1-next.3...v0.6.1-next.4) (2025-04-23)
 
 
