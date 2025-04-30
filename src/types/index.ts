@@ -41,6 +41,11 @@ export interface IAdvantageWrapper extends HTMLElement {
         format: AdvantageFormatName | string,
         message?: AdvantageMessage
     ) => Promise<void>;
+    forceFormat: (
+        format: AdvantageFormatName | string,
+        iframe?: HTMLIFrameElement,
+        options?: any
+    ) => Promise<void>;
     applyStylesToAllChildElements: (styles: string) => void;
     insertCSS: (CSS: string) => void;
     resetCSS: () => void;
