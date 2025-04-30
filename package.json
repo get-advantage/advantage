@@ -59,7 +59,8 @@
         "docs:preview": "vitepress preview",
         "test": "jest",
         "test-server": "node test-server.js",
-        "release": "dotenv release-it --"
+        "release": "dotenv release-it --",
+        "release:next": "dotenv release-it -- --preRelease=next"
     },
     "devDependencies": {
         "@release-it/conventional-changelog": "^8.0.1",
