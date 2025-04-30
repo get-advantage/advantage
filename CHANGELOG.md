@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1-next.6](https://github.com/get-advantage/advantage/compare/v0.6.1-next.5...v0.6.1-next.6) (2025-04-30)
+
+
+### Features
+
+* add forceFormat method to AdvantageWrapper for direct ad format control ([61b0d78](https://github.com/get-advantage/advantage/commit/61b0d7828b9a3c7adb2eaef1669a8bd98a6bf5a2))
+
 ## [0.6.1-next.5](https://github.com/get-advantage/advantage/compare/v0.6.1-next.4...v0.6.1-next.5) (2025-04-29)
 
 
