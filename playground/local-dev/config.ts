@@ -38,7 +38,8 @@ export default {
             //     downArrow: false,
             //     closeButtonText: "Lukk"
             // },
-            setup: () => {
+            setup: (wrapper, ad) => {
+                console.log(wrapper, ad);
                 return new Promise<void>((resolve, reject) => {
                     const queryParams = new URLSearchParams(
                         window.location.search

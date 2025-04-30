@@ -3,10 +3,16 @@ import {
     AdvantageFormatName,
     IAdvantageUILayer,
     IAdvantageWrapper,
-    AdvantageMessage
+    AdvantageMessage,
+    AdvantageMessageAction
 } from "../types";
 
-import { logger, traverseNodes, supportsAdoptingStyleSheets } from "../utils";
+import {
+    logger,
+    traverseNodes,
+    supportsAdoptingStyleSheets,
+    ADVANTAGE
+} from "../utils";
 
 import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
 
@@ -235,6 +241,50 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 reject(error);
             }
         });
+    };
+
+    /**
+     * Forces a specific ad format without waiting for a message from the iframe.
+     * This allows publishers to directly control which format to display.
+     *
+     * @param format - The format to apply
+     * @param iframe - The iframe element to use for the ad (optional)
+     * @param options - Additional options to pass to the format's setup function
+     * @returns A promise that resolves when the format has been applied
+     */
+    forceFormat = async (
+        format: AdvantageFormatName | string,
+        iframe?: HTMLIFrameElement,
+        options?: any
+    ) => {
+        logger.debug("FORCE FORMAT", format);
+
+        // If iframe is provided, create an AdvantageAd object
+        if (iframe) {
+            // Create a dummy MessageChannel for type compatibility
+            const channel = new MessageChannel();
+
+            this.messageHandler.ad = {
+                iframe,
+                eventSource: iframe.contentWindow!,
+                port: channel.port1 // Using port1 from the MessageChannel instead of null
+            };
+        }
+
+        // Create a session ID if needed for the format
+        const sessionID = Math.random().toString(36).substring(2, 15);
+
+        // Construct a message object with the format and session ID
+        const message: AdvantageMessage = {
+            type: ADVANTAGE,
+            action: AdvantageMessageAction.REQUEST_FORMAT,
+            format: format,
+            sessionID: sessionID,
+            ...options
+        };
+
+        // Call morphIntoFormat with the constructed message
+        return this.morphIntoFormat(format, message);
     };
 
     /**
