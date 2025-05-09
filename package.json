@@ -59,7 +59,9 @@
         "docs:preview": "vitepress preview",
         "test": "jest",
         "test-server": "node test-server.js",
-        "release": "dotenv release-it --"
+        "release": "dotenv release-it --",
+        "generate-formats-json": "node scripts/generate-formats-json.cjs",
+        "postbuild": "npm run generate-formats-json"
     },
     "devDependencies": {
         "@release-it/conventional-changelog": "^8.0.1",
