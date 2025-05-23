@@ -59,6 +59,31 @@ It is now time to wrap your ad slots in the Advantage Wrapper.
 </advantage-wrapper>
 ```
 
+You can control which ad formats are allowed for an `<advantage-wrapper>` by specifying them in the allowed-formats attribute. Provide a comma-separated list of format names; only these listed formats will be permitted for this specific wrapper instance.
+
+```html
+<advantage-wrapper allowed-formats="TOPSCROLL,WELCOMEPAGE">
+    <div slot="advantage-ad-slot">
+        <!-- YOUR AD SLOT HERE -->
+    </div>
+</advantage-wrapper>
+```
+
+You can also dynamically set or update the allowed ad formats for an `<advantage-wrapper>` instance using its setAllowedFormats() JavaScript method. This method is useful for changing format permissions after the page has loaded or in response to user interactions.
+
+Method: `element.setAllowedFormats(formatsArray)`
+
+-   `formatsArray`: An array of strings, where each string is a valid format identifier (e.g., `["MIDSCROLL", "WELCOME_PAGE"]`).
+-   Ensure the format identifiers used are valid. See a list of built-in formats [here](/docs/concepts/formats)
+
+```ts
+import { Advantage, IAdvantageWrapper } from "@get-advantage/advantage";
+const wrapper = document.querySelector(
+    "advantage-wrapper"
+) as IAdvantageWrapper;
+wrapper.setAllowedFormats(["MIDSCROLL", "WELCOME_PAGE"]);
+```
+
 You can also choose to use a helper method that does the wrapping for you:
 
 ```ts

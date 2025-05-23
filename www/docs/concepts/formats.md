@@ -16,6 +16,17 @@ Formats focus on:
 
 Formats in Advantage are essentially a definition of how an ad looks and behaves; Such as animation on scroll. The format offer a standardized interface that allows it to be initialized, displayed, and otherwise manipulated by the integration code.
 
+These are the current built-in format identifiers:
+
+```ts
+export enum AdvantageFormatName {
+    TopScroll = "TOPSCROLL",
+    DoubleMidscroll = "DOUBLE_MIDSCROLL",
+    Midscroll = "MIDSCROLL",
+    WelcomePage = "WELCOME_PAGE"
+}
+```
+
 ## Welcome Page
 
 An impactful format that welcomes users with swift and wide reach. Positioned on top of the site content with a close button to continue to the site offers ample creative freedom, allowing for work with high-resolution materials to ensure a high-quality experience and excellent outcomes.
