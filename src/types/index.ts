@@ -37,6 +37,7 @@ export interface IAdvantageWrapper extends HTMLElement {
     currentFormat: AdvantageFormatName | string | null;
     uiLayer: IAdvantageUILayer;
     contentNodes: Node[];
+    allowedFormats: string[] | null;
     morphIntoFormat: (format: AdvantageFormatName | string) => Promise<void>;
     applyStylesToAllChildElements: (styles: string) => void;
     insertCSS: (CSS: string) => void;
@@ -46,6 +47,8 @@ export interface IAdvantageWrapper extends HTMLElement {
     changeContent: (content: string | HTMLElement) => void;
     simulateFormat: (format: AdvantageFormatName | string) => Promise<void>;
     animateClose: () => void;
+    setAllowedFormats: (formats: string[]) => void;
+    clearAllowedFormats: () => void;
 }
 
 export interface IAdvantageUILayer extends HTMLElement {

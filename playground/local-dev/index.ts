@@ -1,4 +1,4 @@
-import { Advantage } from "@src/advantage";
+import { Advantage, IAdvantageWrapper } from "@src/advantage";
 import localConfig from "./config";
 
 /* 
@@ -21,3 +21,9 @@ advantage.configure({
     /* Or use a local configuration */
     ...localConfig
 });
+
+const allowedFormatsWrapper = document.querySelector(
+    "#allowed-formats-wrapper"
+) as IAdvantageWrapper;
+allowedFormatsWrapper.setAllowedFormats(["WELCOMEPAGE"]);
+console.log("Allowed formats: ", allowedFormatsWrapper.allowedFormats);
