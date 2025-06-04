@@ -9,6 +9,7 @@ import {
     resetDimensionsUntilAdvantageAdSlot,
     createIframe
 } from "./format-helper";
+import logger from "../../utils/logging";
 
 export const doubleMidscroll: AdvantageFormat = {
     name: AdvantageFormatName.DoubleMidscroll,
@@ -34,7 +35,7 @@ export const doubleMidscroll: AdvantageFormat = {
                     allowedOrigins.includes(urlOrigin)
                 );
             } catch (error) {
-                console.error(
+                logger.error(
                     "Invalid backgroundAdURL:",
                     backgroundAdURL,
                     error
@@ -45,7 +46,7 @@ export const doubleMidscroll: AdvantageFormat = {
 
         return new Promise((resolve, reject) => {
             if (!config.backgroundAdURL || !config.sessionID) {
-                reject(new Error("backgroundAdURL or sessionId is required"));
+                reject(new Error("backgroundAdURL or sessionID is required"));
                 return;
             }
             if (
@@ -77,7 +78,7 @@ export const doubleMidscroll: AdvantageFormat = {
                 ?.getElementById("ad-slot")
                 ?.insertAdjacentElement("afterbegin", background);
 
-            console.log("GOT BACKGROUND_AD_URL", config.backgroundAdURL);
+            logger.debug("GOT BACKGROUND_AD_URL", config.backgroundAdURL);
             resolve();
         });
     },
