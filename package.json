@@ -1,7 +1,7 @@
 {
     "name": "@get-advantage/advantage",
     "private": false,
-    "version": "0.6.1-next.7",
+    "version": "0.6.1",
     "license": "AGPL-3.0-only",
     "repository": {
         "type": "git",
@@ -60,7 +60,9 @@
         "test": "jest",
         "test-server": "node test-server.js",
         "release": "dotenv release-it --",
-        "release:next": "dotenv release-it -- --preRelease=next"
+        "release:next": "dotenv release-it -- --preRelease=next",
+        "generate-formats-json": "node scripts/generate-formats-json.cjs",
+        "postbuild": "npm run generate-formats-json"
     },
     "devDependencies": {
         "@release-it/conventional-changelog": "^8.0.1",
