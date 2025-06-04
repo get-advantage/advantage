@@ -94,6 +94,20 @@ Your ad slot is now Advantage enabled!
   ℹ️ Remember: It is the serving creative that advertise its intended format. In case you'r ad slot can serve both standard size ads and hight impact ads from the same ad slot. Nothing will happend if a none Advantage ad is served.     
 </div>
 
+#### Manual Format Control
+
+If you need to programmatically control which format to display without waiting for communication from the ad iframe, you can use the wrapper's `forceFormat` method. This is useful for testing, custom business logic, or integration scenarios.
+
+```ts
+// Get reference to the wrapper element
+const wrapper = document.querySelector("advantage-wrapper");
+
+// Force a specific format
+await wrapper.forceFormat("interstitial");
+```
+
+For detailed information about the `forceFormat` method, including all parameters and use cases, see the [Wrapper documentation](../concepts/wrapper.html#force-format).
+
 ### Step 5: Configuration
 
 Advantage comes pre-built with a number of high-impact formats (detailed list and definitions coming soon) and they are included in the `<advantage-wrapper>`. These formats are pre-configured with the necessary styling out-of-the-box. Integration with your site might still be necessary for optimal performance. You can customize the integration through settings passed to Advantage. Pass your custom integrations in the `formatIntegrations` array. When the `<advantage-wrapper>` is about to transform into a format, it will run the provided `setup` function, so that you can make the necessary adjustments.

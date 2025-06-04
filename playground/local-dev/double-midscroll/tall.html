@@ -55,6 +55,19 @@
       background-color: #d9ceff;
       opacity: 1
     }
+
+    .section {
+      width: 100%;
+      height: 50vh;
+    }
+
+    .section-top {
+      background-color: #6b04fd;
+    }
+
+    .section-bottom {
+      background-color: #4317a6;
+    }
   </style>
 
   <script type="module">
@@ -74,38 +87,17 @@
 
 <body style="transition: opacity 1s ease-in;" class="grid">
 
-  <!-- 
-    The grid is used to create a two-row layout for the images. 
-    The first row will contain the first image and the second row will contain the second image.
-    The images are set to cover the entire area of their respective rows.
-  -->
-  <div class="grid grid-rows-[1fr_1fr]">
-
-    <!-- Scene 1 -->
-    <picture class="w-full h-full relative">
-      <source srcset="./safearea-midscroll-landscape.png" media="(orientation: landscape)">
-      <source srcset="./safearea-midscroll-portrait.png" media="(orientation: portrait)">
-      <img alt="banner image" src="./safearea-midscroll-portrait.png"
-        style="width: 100%; height: 100%; object-fit: cover; object-position: center center;">
-    </picture>
-
-    <!-- Scene 2 -->
-    <picture class="w-full h-full relative">
-      <source srcset="./safearea-midscroll-landscape.png" media="(orientation: landscape)">
-      <source srcset="./safearea-midscroll-portrait.png" media="(orientation: portrait)">
-      <img alt="banner image" src="./safearea-midscroll-portrait.png"
-        style="width: 100%; height: 100%; object-fit: cover; object-position: center center;">
-    </picture>
-
-  </div>
+  <!-- Two sections stacked vertically -->
+  <div class="section section-top"></div>
+  <div class="section section-bottom"></div>
 
   <!-- 
     The waypoints are used to trigger animation. 
     The data-id attribute is used to identify the waypoint and the style attribute is used to set the position of the waypoint on the page.
   -->
-  <div id="waypoints" class="absolute inset-0 waypoint-debug">
-    <div class="h-2 w-full absolute" data-id="start" style="top: 30%"></div>
-    <div class="h-2 w-full absolute" data-id="midpoint" style="top: 75%"></div>
+  <div id="waypoints" class="absolute inset-0">
+    <div class="h-2 w-full absolute" data-id="start" style="top: 0%"></div>
+    <div class="h-2 w-full absolute" data-id="midpoint" style="top: 50%"></div>
     <div class="h-2 w-full absolute" data-id="end" style="top: 99%"></div>
   </div>
 </body>
