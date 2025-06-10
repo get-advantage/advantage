@@ -5,7 +5,7 @@
         "module": "ESNext",
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "skipLibCheck": true,
-        "types": ["cypress"],
+        "types": ["cypress", "jest", "node"],
 
         /* Bundler mode */
         "moduleResolution": "bundler",
@@ -13,6 +13,8 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
 
         /* Linting */
         "strict": true,
