@@ -112,7 +112,7 @@ describe("AdvantageWrapper morphIntoFormat", () => {
             expect(mockFormatConfig.setup).toHaveBeenCalledWith(
                 wrapper,
                 wrapper.messageHandler.ad?.iframe,
-                mockIntegration.options
+                { backgroundAdURL: undefined, sessionID: undefined }
             );
             expect(mockIntegration.setup).toHaveBeenCalled();
         });
@@ -247,7 +247,7 @@ describe("AdvantageWrapper morphIntoFormat", () => {
             ).rejects.toBe(
                 "😱 The format UNKNOWN_FORMAT is not supported. No configuration was found."
             );
-            expect(wrapper.currentFormat).toBeNull();
+            expect(wrapper.currentFormat).toBe("");
         });
     });
 
@@ -258,7 +258,7 @@ describe("AdvantageWrapper morphIntoFormat", () => {
             expect(mockFormatConfig.setup).toHaveBeenCalledWith(
                 wrapper,
                 wrapper.messageHandler.ad?.iframe,
-                mockIntegration.options
+                { backgroundAdURL: undefined, sessionID: undefined }
             );
         });
 
@@ -287,7 +287,7 @@ describe("AdvantageWrapper morphIntoFormat", () => {
             expect(mockFormatConfig.setup).toHaveBeenCalledWith(
                 wrapper,
                 wrapper.messageHandler.ad?.iframe,
-                undefined
+                { backgroundAdURL: undefined, sessionID: undefined }
             );
         });
 
@@ -337,7 +337,7 @@ describe("AdvantageWrapper morphIntoFormat", () => {
             await expect(
                 wrapper.morphIntoFormat("UNKNOWN_FORMAT")
             ).rejects.toContain("not supported");
-            expect(wrapper.currentFormat).toBeNull();
+            expect(wrapper.currentFormat).toBe("");
         });
     });
 
