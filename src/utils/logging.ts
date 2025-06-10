@@ -41,6 +41,13 @@ class Logger {
     error(message: any, ...optionalParams: any) {
         this.log("error", message, ...optionalParams);
     }
+
+    /**
+     * Enables debug mode for logging.
+     */
+    enableDebugMode() {
+        this.debugMode = true;
+    }
 }
 
 const logger = new Logger();

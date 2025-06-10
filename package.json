@@ -60,6 +60,7 @@
         "test": "jest",
         "test-server": "node test-server.js",
         "release": "dotenv release-it --",
+        "release:next": "dotenv release-it -- --preRelease=next",
         "generate-formats-json": "node scripts/generate-formats-json.cjs",
         "postbuild": "npm run generate-formats-json"
     },

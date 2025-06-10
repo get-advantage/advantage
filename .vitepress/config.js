@@ -145,6 +145,15 @@ export default defineConfig({
                     ]
                 },
                 {
+                    text: "Format Reference",
+                    items: [
+                        {
+                            text: `Double Midscroll`,
+                            link: "/docs/formats/double_midscroll.md"
+                        },
+                    ]
+                },
+                {
                     text: "Examples",
                     items: [
                         {
