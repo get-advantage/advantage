@@ -25,5 +25,5 @@ advantage.configure({
 const allowedFormatsWrapper = document.querySelector(
     "#allowed-formats-wrapper"
 ) as IAdvantageWrapper;
-allowedFormatsWrapper.setAllowedFormats(["WELCOMEPAGE"]);
+allowedFormatsWrapper.setAllowedFormats(["WELCOME_PAGE"]);
 console.log("Allowed formats: ", allowedFormatsWrapper.allowedFormats);
