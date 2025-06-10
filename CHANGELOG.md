@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/get-advantage/advantage/compare/v0.6.1...v0.7.0) (2025-06-10)
+
+
+### Features
+
+* allowed-formats ([#48](https://github.com/get-advantage/advantage/issues/48)) ([d2737d3](https://github.com/get-advantage/advantage/commit/d2737d393ffa848e58a90af2353791ae8d00a793))
+* introduce Double Midscroll Format ([#49](https://github.com/get-advantage/advantage/issues/49)) ([0155be3](https://github.com/get-advantage/advantage/commit/0155be32abe0b1110787134ad6334f063093d0c7))
+
 ## [0.6.1](https://github.com/get-advantage/advantage/compare/v0.6.0...v0.6.1) (2025-05-12)
 
 # [0.6.0](https://github.com/get-advantage/advantage/compare/v0.6.0-next.2...v0.6.0) (2025-03-24)
