@@ -166,6 +166,10 @@ export default defineConfig({
                     text: "Resources",
                     items: [
                         {
+                            text: "AI Tools ✨",
+                            link: "/docs/ai-tools.md"
+                        },
+                        {
                             text: "Changelog",
                             link: "/docs/changelog.md"
                         },

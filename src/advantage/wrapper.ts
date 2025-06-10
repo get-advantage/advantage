@@ -27,6 +27,8 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     #root: ShadowRoot;
     #slotAdvantageContent: HTMLSlotElement;
     #slotChangeRegistered = false;
+    // Whitelist set via attribute or API; when present it overrides exclude‑formats
+    allowedFormats: string[] | null = null;
     // Public fields
     container: HTMLDivElement;
     content: HTMLDivElement;
@@ -173,7 +175,25 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     };
 
     /**
+     * Restrict this wrapper to the given list of formats.
+     * Calling this method overrides any list previously set via attribute or API.
+     * @param formats Array of format names that are allowed for this wrapper.
+     */
+    setAllowedFormats(formats: string[]) {
+        this.allowedFormats = formats.map((f) => f.trim().toUpperCase());
+    }
+
+    /**
+     * Clears the programmatic whitelist so the wrapper falls back to attribute or default behaviour.
+     */
+    clearAllowedFormats() {
+        this.allowedFormats = null;
+    }
+
+    /**
      * Morphs the wrapper into a specific ad format.
+     * If `allowed-formats` is set (via attribute or API) it takes precedence over `exclude-formats`.
+     * Comparisons are case-insensitive.
      * @param format - The format to morph into.
      * @param sessionID - The session ID for the ad.
      * @param backgroundAdURL - The URL for the background ad.
@@ -185,20 +205,39 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     ) => {
         logger.debug("MORPH INTO FORMAT");
         return new Promise<void>(async (resolve, reject) => {
-            const forbiddenFormats = this.getAttribute("exclude-formats")
+            const formatId = format.toUpperCase();
+            // 1. Check for an explicit allow‑list (attribute or programmatic).
+            const attrAllowed = this.getAttribute("allowed-formats")
                 ?.split(",")
-                .map((format) => format.trim());
-            if (
-                forbiddenFormats &&
-                forbiddenFormats.includes(format as string)
-            ) {
+                .map((f) => f.trim().toUpperCase())
+                .filter(Boolean);
+            const allowedList = this.allowedFormats ?? attrAllowed;
+            if (allowedList && !allowedList.includes(formatId)) {
                 logger.info(
-                    `This wrapper does not support the format(s): \"${forbiddenFormats.join(
+                    `The format "${formatId}" is not in the allowed-formats list (${allowedList.join(
                         ", "
-                    )}\".`
+                    )}).`
                 );
                 reject(
-                    `The format ${format} is forbidden for this wrapper. 🛑`
+                    `The format ${formatId} is not allowed for this wrapper. 🛑`
+                );
+                return;
+            }
+
+            // 2. If no allow‑list, fall back to exclude‑list logic.
+            const forbiddenFormats = !allowedList
+                ? this.getAttribute("exclude-formats")
+                      ?.split(",")
+                      .map((f) => f.trim().toUpperCase())
+                : undefined;
+            if (forbiddenFormats && forbiddenFormats.includes(formatId)) {
+                logger.info(
+                    `This wrapper does not support the format(s): "${forbiddenFormats.join(
+                        ", "
+                    )}".`
+                );
+                reject(
+                    `The format ${formatId} is forbidden for this wrapper. 🛑`
                 );
                 return;
             }

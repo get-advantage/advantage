@@ -18,7 +18,13 @@
 </head>
 
 <body>
-    <advantage-wrapper>
+    <advantage-wrapper id="allowed-formats-wrapper">
+        <div slot="advantage-ad-slot">
+            <iframe src="./topscroll/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
+                scrolling="no"></iframe>
+        </div>
+    </advantage-wrapper>
+    <advantage-wrapper allowed-formats="TOPSCROLL">
         <div slot="advantage-ad-slot">
             <iframe src="./topscroll/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
                 scrolling="no"></iframe>
@@ -323,7 +329,7 @@
             </article>
         </section>
     </div>
-    <advantage-wrapper exclude-formats="TOPSCROLL,MIDSCROLL">
+    <advantage-wrapper allowed-formats="MIDSCROLL">
         <div slot="advantage-ad-slot">
             <iframe src="./topscroll/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
                 scrolling="no"></iframe>
@@ -660,8 +666,7 @@
                 advantageWrapAdSlotElement("#ad-slot-to-be-wrapped", [
                     "TOPSCROLL"
                 ]);
-            }
-        );
+            });
     </script>
 </body>
 
