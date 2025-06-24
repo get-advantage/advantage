@@ -376,6 +376,12 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
         this.uiLayer.changeContent("");
         this.currentFormat = "";
+        
+        // Dispatch reset event for external listeners (like React components)
+        this.dispatchEvent(new CustomEvent("reset", { 
+            bubbles: true, 
+            detail: { wrapper: this } 
+        }));
     }
 
     animateClose() {
@@ -420,6 +426,12 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
         }
         this.currentFormat = "";
+        
+        // Dispatch close event for external listeners (like React components)
+        this.dispatchEvent(new CustomEvent("close", { 
+            bubbles: true, 
+            detail: { wrapper: this } 
+        }));
     }
 
     /**

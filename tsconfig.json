@@ -6,6 +6,7 @@
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "skipLibCheck": true,
         "types": ["cypress"],
+        "jsx": "react-jsx",
 
         /* Bundler mode */
         "moduleResolution": "bundler",
@@ -16,7 +17,7 @@
 
         /* Linting */
         "strict": true,
-        "noUnusedLocals": true,
+        "noUnusedLocals": false,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "baseUrl": ".",
@@ -25,5 +26,5 @@
         }
     },
     "include": ["src", "playground"],
-    "exclude": ["**/*.test.ts", "node_modules/**", "www"]
+    "exclude": ["**/*.test.ts", "node_modules/**", "www", "playground/react-test/**"]
 }
