@@ -98,6 +98,7 @@ export const advantageConfig = {
 
                 console.log("reset!!!");
                 styleManager.restoreStyles();
+                document.body.style.marginTop = "";
             },
             close: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
                 const styleManager = StyleManager.getInstance(

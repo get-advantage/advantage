@@ -481,7 +481,7 @@ function App() {
                             eventLog.map((log, index) => (
                                 <div
                                     key={index}
-                                    style={{ marginBottom: "2px" }}
+                                    style={{ marginBottom: "2px", color: "#000" }}
                                 >
                                     {log}
                                 </div>
