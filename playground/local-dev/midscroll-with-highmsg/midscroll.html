@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Advantage - Original High Impact JS Message (Midscroll)</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                width: 100vw;
+                cursor: pointer;
+            }
+        </style>
+        <script type="module" src="./midscroll.ts"></script>
+    </head>
+
+    <body
+        style="opacity: 0; transition: opacity 1s ease-in"
+        onclick="window.open('https://www.get-advantage.org', '_blank')"
+    >
+        <picture style="display: block; height: 100vh; width: 100vw">
+            <source
+                srcset="../midscroll/safearea-midscroll-landscape.png"
+                media="(orientation: landscape)"
+            />
+            <source
+                srcset="../midscroll/safearea-midscroll-portrait.png"
+                media="(orientation: portrait)"
+            />
+            <img
+                alt="banner image"
+                src="../midscroll/safearea-midscroll-portrait.png"
+                style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                "
+            />
+        </picture>
+
+        <div
+            style="
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background: rgba(255, 255, 255, 0.8);
+                padding: 5px;
+                font-size: 12px;
+                border-radius: 3px;
+            "
+        >
+            Original High Impact JS Message (Midscroll)
+        </div>
+    </body>
+</html>

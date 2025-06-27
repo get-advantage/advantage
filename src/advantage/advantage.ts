@@ -7,6 +7,7 @@ import type {
     AdvantageFormatIntegration
 } from "../types";
 import { defaultFormats } from "./formats";
+import { initializeHighImpactJs } from "./high-impact-js";
 
 /**
  * The main class for the Advantage library. This class is a singleton and is used to configure the library, register wrappers, and register custom elements.
@@ -98,6 +99,17 @@ export class Advantage {
                 "Format integrations applied ✅",
                 this.formatIntegrations
             );
+        }
+
+        // Initialize High Impact JS compatibility layer if requested
+        if (config.enableHighImpactCompatibility) {
+            logger.info("Initializing High Impact JS compatibility layer");
+            initializeHighImpactJs().catch((error) => {
+                logger.error(
+                    "Failed to initialize High Impact JS compatibility:",
+                    error
+                );
+            });
         }
     }
 

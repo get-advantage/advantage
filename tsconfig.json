@@ -5,7 +5,8 @@
         "module": "ESNext",
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "skipLibCheck": true,
-        "types": ["cypress"],
+        "types": ["cypress", "jest", "node"],
+        "esModuleInterop": true,
 
         /* Bundler mode */
         "moduleResolution": "bundler",
@@ -25,5 +26,5 @@
         }
     },
     "include": ["src", "playground"],
-    "exclude": ["**/*.test.ts", "node_modules/**", "www"]
+    "exclude": ["node_modules/**", "www"]
 }

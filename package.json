@@ -96,5 +96,8 @@
     },
     "publishConfig": {
         "access": "public"
+    },
+    "dependencies": {
+        "jest-environment-jsdom": "30.0.0"
     }
 }
