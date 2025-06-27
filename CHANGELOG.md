@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/get-advantage/advantage/compare/v0.7.0...v0.8.0) (2025-06-27)
+
+
+### Features
+
+* add allowedFormats parameter to advantageWrapAdSlotElement helper ([429e3d0](https://github.com/get-advantage/advantage/commit/429e3d00690859dd22ffb5153b824d3d5db110ec))
+
 # [0.7.0](https://github.com/get-advantage/advantage/compare/v0.6.1...v0.7.0) (2025-06-10)
 
 
