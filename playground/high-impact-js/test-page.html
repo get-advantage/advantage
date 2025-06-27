@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>High Impact JS Compatibility Test</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            .demo-container {
+                border: 2px solid #e5e7eb;
+                margin: 20px;
+                padding: 20px;
+                border-radius: 8px;
+            }
+
+            .ad-unit {
+                border: 2px dashed #d1d5db;
+                padding: 20px;
+                background: #f9fafb;
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            advantage-wrapper {
+                border: 2px solid #10b981;
+                display: block;
+                margin: 10px 0;
+                border-radius: 4px;
+            }
+
+            .log {
+                background: #1f2937;
+                color: #10b981;
+                padding: 15px;
+                border-radius: 8px;
+                font-family: monospace;
+                font-size: 12px;
+                height: 300px;
+                overflow-y: auto;
+                margin: 20px 0;
+            }
+        </style>
+    </head>
+    <body class="bg-gray-50">
+        <!-- Initialize highImpactJs before anything else -->
+        <script>
+            window.highImpactJs = window.highImpactJs || { cmd: [] };
+            console.log("[Test] highImpactJs initialized");
+        </script>
+
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold mb-8">
+                High Impact JS Compatibility Test
+            </h1>
+
+            <div class="demo-container">
+                <h2 class="text-xl font-semibold mb-4">🧪 Pre-wrapping Test</h2>
+                <p class="text-gray-600 mb-4">
+                    This test verifies that ad units are pre-wrapped with
+                    AdvantageWrapper when defineSlot is called.
+                </p>
+
+                <div id="test-ad-unit" class="ad-unit">
+                    <div class="font-semibold">Test Ad Unit</div>
+                    <div class="text-sm text-gray-500">ID: test-ad-unit</div>
+                    <div class="text-sm text-gray-400">
+                        Will be pre-wrapped on defineSlot()
+                    </div>
+                </div>
+
+                <button
+                    id="run-test"
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    Run Pre-wrapping Test
+                </button>
+
+                <div
+                    id="test-results"
+                    class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded hidden"
+                >
+                    <!-- Test results will appear here -->
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <h2 class="text-xl font-semibold mb-4">📋 Debug Log</h2>
+                <div id="debug-log" class="log">
+                    [INFO] Page loaded, initializing...<br />
+                </div>
+            </div>
+        </div>
+
+        <!-- Load Advantage with High Impact compatibility -->
+        <script type="module">
+            import { Advantage } from "../../src/advantage";
+
+            let testResults = [];
+
+            function log(message, type = "info") {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEl = document.getElementById("debug-log");
+                const color =
+                    type === "success"
+                        ? "#10b981"
+                        : type === "error"
+                        ? "#ef4444"
+                        : type === "warning"
+                        ? "#f59e0b"
+                        : "#3b82f6";
+
+                logEl.innerHTML += `<span style="color: ${color}">[${timestamp}] ${message}</span><br>`;
+                logEl.scrollTop = logEl.scrollHeight;
+            }
+
+            function showResults() {
+                const resultsEl = document.getElementById("test-results");
+                resultsEl.classList.remove("hidden");
+
+                let html = '<h3 class="font-semibold mb-2">Test Results:</h3>';
+                testResults.forEach((result, index) => {
+                    const color = result.success
+                        ? "text-green-600"
+                        : "text-red-600";
+                    html += `<div class="${color}">✓ ${result.message}</div>`;
+                });
+
+                resultsEl.innerHTML = html;
+            }
+
+            async function runPreWrapTest() {
+                log("🧪 Starting pre-wrap test...");
+                testResults = [];
+
+                try {
+                    // Check if compatibility layer is ready
+                    if (
+                        !window.highImpactJs ||
+                        !window.highImpactJs.defineSlot
+                    ) {
+                        throw new Error(
+                            "High Impact JS compatibility layer not ready"
+                        );
+                    }
+
+                    testResults.push({
+                        success: true,
+                        message:
+                            "High Impact JS compatibility layer is available"
+                    });
+                    log("✅ Compatibility layer ready");
+
+                    // Check initial state - should not be wrapped yet
+                    const initialWrapper = document
+                        .querySelector("#test-ad-unit")
+                        .closest("advantage-wrapper");
+                    if (!initialWrapper) {
+                        testResults.push({
+                            success: true,
+                            message:
+                                "Ad unit is not wrapped initially (correct)"
+                        });
+                        log("✅ Ad unit not wrapped initially (as expected)");
+                    } else {
+                        testResults.push({
+                            success: false,
+                            message: "Ad unit was already wrapped (unexpected)"
+                        });
+                        log("❌ Ad unit was already wrapped", "error");
+                    }
+
+                    // Call defineSlot - this should trigger pre-wrapping
+                    log("📝 Calling defineSlot...");
+                    window.highImpactJs.defineSlot({
+                        template: "topscroll",
+                        adUnitId: "test-ad-unit",
+                        sizes: [
+                            [728, 90],
+                            [970, 250]
+                        ]
+                    });
+
+                    // Wait a moment for pre-wrapping to complete
+                    await new Promise((resolve) => setTimeout(resolve, 500));
+
+                    // Check if ad unit is now wrapped
+                    const afterWrapper = document
+                        .querySelector("#test-ad-unit")
+                        .closest("advantage-wrapper");
+                    if (afterWrapper) {
+                        testResults.push({
+                            success: true,
+                            message:
+                                "Ad unit successfully pre-wrapped with AdvantageWrapper"
+                        });
+                        log("🎉 Ad unit successfully pre-wrapped!", "success");
+
+                        // Check allowed formats
+                        const allowedFormats =
+                            afterWrapper.getAttribute("allowed-formats");
+                        if (allowedFormats === "TOPSCROLL") {
+                            testResults.push({
+                                success: true,
+                                message: `Allowed formats correctly set: ${allowedFormats}`
+                            });
+                            log(
+                                `✅ Allowed formats: ${allowedFormats}`,
+                                "success"
+                            );
+                        } else {
+                            testResults.push({
+                                success: false,
+                                message: `Unexpected allowed formats: ${allowedFormats}`
+                            });
+                            log(
+                                `❌ Unexpected allowed formats: ${allowedFormats}`,
+                                "error"
+                            );
+                        }
+                    } else {
+                        testResults.push({
+                            success: false,
+                            message: "Ad unit was not pre-wrapped"
+                        });
+                        log(
+                            "❌ Pre-wrapping failed - no wrapper found",
+                            "error"
+                        );
+                    }
+
+                    showResults();
+                } catch (error) {
+                    log(`❌ Test failed: ${error.message}`, "error");
+                    testResults.push({
+                        success: false,
+                        message: `Test failed: ${error.message}`
+                    });
+                    showResults();
+                }
+            }
+
+            // Initialize Advantage
+            log("🚀 Initializing Advantage...");
+            const advantage = Advantage.getInstance();
+
+            advantage.configure({
+                enableHighImpactCompatibility: true,
+                formatIntegrations: [
+                    {
+                        format: "TOPSCROLL",
+                        setup: () => {
+                            log("🎬 TopScroll format setup called");
+                            return Promise.resolve();
+                        }
+                    }
+                ]
+            });
+
+            // Wait for full initialization
+            setTimeout(() => {
+                if (window.highImpactJs && window.highImpactJs.defineSlot) {
+                    log(
+                        "✅ Advantage and High Impact JS compatibility initialized",
+                        "success"
+                    );
+
+                    // Enable the test button
+                    document
+                        .getElementById("run-test")
+                        .addEventListener("click", runPreWrapTest);
+                } else {
+                    log(
+                        "❌ High Impact JS compatibility not initialized",
+                        "error"
+                    );
+                }
+            }, 1000);
+        </script>
+    </body>
+</html>

@@ -6,6 +6,7 @@ import { advantageWrapAdSlotElement as actualAdvantageWrapAdSlotElement } from "
 export { actualAdvantageWrapAdSlotElement as advantageWrapAdSlotElement };
 export * from "./messaging";
 export * from "../types";
+export * from "./high-impact-js";
 
 // Process any queued items
 if ((window as any).advantageWrapQueue) {

@@ -67,8 +67,8 @@ export const welcomePage: AdvantageFormat = {
                 </div>`
             );
 
-            let countdownInterval = 0;
-            let autoCloseTimeout = 0;
+            let countdownInterval: any = 0;
+            let autoCloseTimeout: any = 0;
 
             if (config?.autoCloseDuration) {
                 const countdownElement = uiContainer.querySelector(".cd");
