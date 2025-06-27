@@ -94,6 +94,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         // Register the wrapper with the hub, so that it is aware of its existence
         Advantage.getInstance().registerWrapper(this);
 
+        // Set the advantageWrapper property for High Impact JS compatibility
+        (this as any).advantageWrapper = this;
+
         this.#slotAdvantageContent.addEventListener("slotchange", () => {
             if (!this.#slotChangeRegistered) {
                 logger.info("The content slot has been changed");

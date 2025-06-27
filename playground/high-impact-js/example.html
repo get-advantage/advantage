@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>High Impact JS Compatibility Example</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            html {
+                overflow-x: hidden;
+            }
+            .content-section {
+                min-height: 100vh;
+                padding: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- High Impact JS Compatibility Layer -->
+        <script type="module">
+            // Import and initialize the compatibility layer
+            import { initializeHighImpactJs } from "../../src/advantage/high-impact-js/index";
+            import {
+                Advantage,
+                AdvantageFormatName
+            } from "../../src/advantage/index";
+
+            console.log(
+                "🔥 MODULE SCRIPT STARTED - this should appear in console"
+            );
+
+            try {
+                console.log(
+                    "🔧 Starting High Impact JS compatibility initialization..."
+                );
+
+                // Initialize Advantage first
+                const advantage = Advantage.getInstance();
+                advantage.configure({
+                    enableHighImpactCompatibility: true,
+                    formatIntegrations: [
+                        {
+                            format: AdvantageFormatName.TopScroll,
+                            setup: (wrapper, ad) => {
+                                return new Promise((resolve) => {
+                                    console.log("Setting up TopScroll format");
+                                    const cords =
+                                        wrapper.getBoundingClientRect();
+                                    console.log(
+                                        "TopScroll wrapper coordinates:",
+                                        cords
+                                    );
+                                    if (cords.left > 0) {
+                                        wrapper.style[
+                                            "marginLeft"
+                                        ] = `-${cords.left}px`;
+                                    }
+                                    resolve();
+                                });
+                            }
+                        },
+                        {
+                            format: AdvantageFormatName.Midscroll,
+                            setup: (wrapper, ad) => {
+                                return new Promise((resolve) => {
+                                    console.log("Setting up MidScroll format");
+                                    const cords =
+                                        wrapper.getBoundingClientRect();
+                                    console.log(
+                                        "Midscroll wrapper coordinates:",
+                                        cords
+                                    );
+                                    if (cords.left > 0) {
+                                        wrapper.style[
+                                            "marginLeft"
+                                        ] = `-${cords.left}px`;
+                                    }
+                                    resolve();
+                                });
+                            }
+                        }
+                    ]
+                });
+
+                console.log("✅ Advantage configured");
+
+                // This example shows how existing High Impact JS code can work with Advantage
+                // The API remains exactly the same as before
+
+                // Configure High Impact JS (exactly as before)
+                window.highImpactJs = window.highImpactJs || { cmd: [] };
+
+                window.highImpactJs.cmd.push(function () {
+                    console.log("⚙️ Configuring High Impact JS...");
+
+                    // Set global configuration
+                    window.highImpactJs.setConfig({
+                        plugins: ["gam"], // or ['xandr'] for Xandr
+                        debug: true,
+                        topBarHeight: 50
+                    });
+
+                    // Configure topscroll template
+                    window.highImpactJs.setTemplateConfig("topscroll", {
+                        showCloseButton: true,
+                        peekAmount: "80vh",
+                        title: "Continue reading",
+                        fadeOnScroll: true
+                    });
+
+                    // Configure midscroll template
+                    window.highImpactJs.setTemplateConfig("midscroll", {
+                        zIndex: 1000
+                    });
+
+                    // Define ad slots (exactly as before)
+                    window.highImpactJs.defineSlot({
+                        template: "topscroll",
+                        adUnitId: "/123456/topscroll-ad",
+                        sizes: [
+                            [970, 250],
+                            [728, 90]
+                        ],
+                        waitForAdSignal: false
+                    });
+
+                    window.highImpactJs.defineSlot({
+                        template: "midscroll",
+                        adUnitId: "/123456/midscroll-ad",
+                        sizes: [
+                            [300, 250],
+                            [320, 50]
+                        ]
+                    });
+
+                    // Test slot for original High Impact JS messaging
+                    window.highImpactJs.defineSlot({
+                        template: "midscroll",
+                        adUnitId: "/123456/midscroll-original-msg-ad",
+                        sizes: [
+                            [300, 250],
+                            [320, 50]
+                        ],
+                        waitForAdSignal: true // This slot waits for the original message
+                    });
+                });
+
+                // Listen for High Impact JS events (for compatibility)
+                window.addEventListener("high-impact-ad-rendered", (event) => {
+                    console.log("High Impact Ad Rendered:", event.detail);
+                });
+
+                // Initialize the compatibility layer and THEN trigger mock ads
+                console.log(
+                    "🚀 Initializing High Impact JS compatibility layer..."
+                );
+                await initializeHighImpactJs();
+                console.log(
+                    "✅ High Impact JS compatibility layer initialized"
+                );
+
+                // Notify that we're ready for mock ads
+                window.highImpactJsReady = true;
+                console.log("📢 High Impact JS is ready for mock ads");
+
+                // Trigger the mock ad process
+                if (window.triggerMockAds) {
+                    window.triggerMockAds();
+                }
+            } catch (error) {
+                console.error("❌ Error in module script:", error);
+            }
+        </script>
+
+        <!-- Mock GAM (Google Ad Manager) -->
+        <script>
+            // Add debugging
+            console.log("🔧 Setting up mock GAM...");
+
+            // Mock GAM for demo purposes - but with real iframe ads
+            window.googletag = window.googletag || { cmd: [] };
+
+            // Enhanced mock GAM to support original High Impact JS message protocol
+            window.googletag.pubads = () => {
+                return {
+                    getSlots: () => {
+                        // Return mock slots for each ad unit
+                        return [
+                            {
+                                getSlotElementId: () => "/123456/topscroll-ad",
+                                size: [970, 250],
+                                getHtml: () => "<div>Mock Topscroll Ad</div>"
+                            },
+                            {
+                                getSlotElementId: () => "/123456/midscroll-ad",
+                                size: [300, 250],
+                                getHtml: () => "<div>Mock Midscroll Ad</div>"
+                            },
+                            {
+                                getSlotElementId: () =>
+                                    "/123456/midscroll-original-msg-ad",
+                                size: [300, 250],
+                                getHtml: () =>
+                                    "<div>Mock Midscroll Original Message Ad</div>"
+                            }
+                        ];
+                    },
+                    getSlotIdMap: () => {
+                        // Return a map for slot ID lookups
+                        return {
+                            topscroll: {
+                                getSlotElementId: () => "/123456/topscroll-ad",
+                                size: [970, 250],
+                                getHtml: () => "<div>Mock Topscroll Ad</div>"
+                            },
+                            midscroll: {
+                                getSlotElementId: () => "/123456/midscroll-ad",
+                                size: [300, 250],
+                                getHtml: () => "<div>Mock Midscroll Ad</div>"
+                            },
+                            midscroll_original: {
+                                getSlotElementId: () =>
+                                    "/123456/midscroll-original-msg-ad",
+                                size: [300, 250],
+                                getHtml: () =>
+                                    "<div>Mock Midscroll Original Message Ad</div>"
+                            }
+                        };
+                    },
+                    addEventListener: (eventType, callback) => {
+                        console.log(
+                            `📋 Mock GAM: addEventListener called for ${eventType}`
+                        );
+                        // Store the callback for potential future use
+                        window.googletag._eventCallbacks =
+                            window.googletag._eventCallbacks || {};
+                        window.googletag._eventCallbacks[eventType] = callback;
+                    }
+                };
+            };
+
+            // Function to inject ads and trigger callbacks
+            const injectAdsAndTriggerCallbacks = () => {
+                console.log("🚀 Starting ad injection process...");
+
+                // Wait a bit to ensure DOM is ready
+                setTimeout(() => {
+                    // Create and inject topscroll ad iframe
+                    const topscrollContainer = document.getElementById(
+                        "/123456/topscroll-ad"
+                    );
+                    console.log(
+                        "🔍 Looking for topscroll container:",
+                        topscrollContainer
+                    );
+
+                    if (topscrollContainer) {
+                        console.log(
+                            "✅ Found topscroll container, injecting iframe..."
+                        );
+                        // Clear any existing content
+                        topscrollContainer.innerHTML = "";
+
+                        const topscrollIframe =
+                            document.createElement("iframe");
+                        topscrollIframe.src =
+                            "../local-dev/topscroll-nomessage/topscroll.html";
+                        topscrollIframe.style.border = "0";
+                        topscrollIframe.style.width = "970px";
+                        topscrollIframe.style.height = "250px";
+                        topscrollIframe.style.display = "block";
+                        topscrollIframe.scrolling = "no";
+                        topscrollIframe.id = "google_ads_iframe_topscroll";
+
+                        // Add load event listener to see when iframe is ready
+                        topscrollIframe.addEventListener("load", () => {
+                            console.log(
+                                "✅ Topscroll iframe loaded successfully!"
+                            );
+
+                            // Trigger slot rendered after iframe loads
+                            setTimeout(() => {
+                                if (
+                                    window.highImpactJs &&
+                                    window.highImpactJs._triggerSlotRendered
+                                ) {
+                                    console.log(
+                                        "📢 Triggering slot rendered event for topscroll ad (after iframe load)"
+                                    );
+
+                                    const adWrapper = document.getElementById(
+                                        "/123456/topscroll-ad"
+                                    );
+                                    const adIframe = document.getElementById(
+                                        "google_ads_iframe_topscroll"
+                                    );
+
+                                    if (adWrapper && adIframe) {
+                                        window.highImpactJs._triggerSlotRendered(
+                                            {
+                                                adWrapper: adWrapper,
+                                                adUnit: adWrapper,
+                                                adIframe: adIframe,
+                                                size: [970, 250],
+                                                html: "<div>Mock Ad Content</div>",
+                                                elementId:
+                                                    "/123456/topscroll-ad",
+                                                plugin: "gam"
+                                            }
+                                        );
+                                        console.log(
+                                            "✅ _triggerSlotRendered called with proper DOM elements"
+                                        );
+                                    } else {
+                                        console.log(
+                                            "❌ Could not find adWrapper or adIframe elements"
+                                        );
+                                    }
+                                }
+                            }, 1000); // Small delay after iframe load
+                        });
+
+                        topscrollContainer.appendChild(topscrollIframe);
+                        console.log("✅ Topscroll iframe injected into DOM");
+                    } else {
+                        console.error("❌ Topscroll container not found!");
+                    }
+
+                    // Create and inject midscroll ad iframe after delay
+                    setTimeout(() => {
+                        const midscrollContainer = document.getElementById(
+                            "/123456/midscroll-ad"
+                        );
+                        console.log(
+                            "🔍 Looking for midscroll container:",
+                            midscrollContainer
+                        );
+
+                        if (midscrollContainer) {
+                            console.log(
+                                "✅ Found midscroll container, injecting iframe..."
+                            );
+                            // Clear any existing content
+                            midscrollContainer.innerHTML = "";
+
+                            const midscrollIframe =
+                                document.createElement("iframe");
+                            midscrollIframe.src =
+                                "../local-dev/midscroll/midscroll.html";
+                            midscrollIframe.style.border = "0";
+                            midscrollIframe.style.width = "300px";
+                            midscrollIframe.style.height = "250px";
+                            midscrollIframe.style.display = "block";
+                            midscrollIframe.scrolling = "no";
+                            midscrollIframe.id = "google_ads_iframe_midscroll";
+
+                            // Add load event listener
+                            midscrollIframe.addEventListener("load", () => {
+                                console.log(
+                                    "✅ Midscroll iframe loaded successfully!"
+                                );
+                            });
+
+                            midscrollContainer.appendChild(midscrollIframe);
+                            console.log(
+                                "✅ Midscroll iframe injected into DOM"
+                            );
+                        } else {
+                            console.error("❌ Midscroll container not found!");
+                        }
+                    }, 2000);
+
+                    // Create and inject midscroll ad with original High Impact JS message after delay
+                    setTimeout(() => {
+                        const midscrollOriginalContainer =
+                            document.getElementById(
+                                "/123456/midscroll-original-msg-ad"
+                            );
+                        console.log(
+                            "🔍 Looking for midscroll-original-msg container:",
+                            midscrollOriginalContainer
+                        );
+
+                        if (midscrollOriginalContainer) {
+                            console.log(
+                                "✅ Found midscroll-original-msg container, injecting iframe..."
+                            );
+                            // Clear any existing content
+                            midscrollOriginalContainer.innerHTML = "";
+
+                            const midscrollOriginalIframe =
+                                document.createElement("iframe");
+                            midscrollOriginalIframe.src =
+                                "../local-dev/midscroll-with-highmsg/midscroll.html";
+                            midscrollOriginalIframe.style.border = "0";
+                            midscrollOriginalIframe.style.width = "300px";
+                            midscrollOriginalIframe.style.height = "250px";
+                            midscrollOriginalIframe.style.display = "block";
+                            midscrollOriginalIframe.scrolling = "no";
+                            midscrollOriginalIframe.id =
+                                "google_ads_iframe_midscroll_original";
+
+                            // Add load event listener
+                            midscrollOriginalIframe.addEventListener(
+                                "load",
+                                () => {
+                                    console.log(
+                                        "✅ Midscroll original message iframe loaded successfully!"
+                                    );
+                                }
+                            );
+
+                            midscrollOriginalContainer.appendChild(
+                                midscrollOriginalIframe
+                            );
+                            console.log(
+                                "✅ Midscroll original message iframe injected into DOM"
+                            );
+                        } else {
+                            console.error(
+                                "❌ Midscroll original message container not found!"
+                            );
+                        }
+                    }, 3000);
+                }, 500);
+            };
+
+            // Function to trigger mock ads - will be called when High Impact JS is ready
+            window.triggerMockAds = () => {
+                if (window.mockAdsTriggered) {
+                    console.log("� Mock ads already triggered, skipping");
+                    return;
+                }
+                window.mockAdsTriggered = true;
+                console.log("🎬 triggerMockAds called (first time)");
+
+                // Direct call to injection instead of using GAM cmd queue
+                console.log("📋 Starting direct GAM simulation...");
+                injectAdsAndTriggerCallbacks();
+            };
+
+            // Check if High Impact JS is already ready
+            const checkReady = () => {
+                if (window.highImpactJsReady) {
+                    console.log("✅ High Impact JS detected as ready");
+                    window.triggerMockAds();
+                } else {
+                    console.log(
+                        "⏳ High Impact JS not ready yet, checking again..."
+                    );
+                    setTimeout(checkReady, 100);
+                }
+            };
+
+            // Start checking for readiness
+            checkReady();
+        </script>
+
+        <div class="container mx-auto">
+            <!-- Topscroll Ad Slot -->
+            <div
+                id="/123456/topscroll-ad"
+                class="border-2 border-dashed border-gray-400 p-4 text-center bg-white"
+            >
+                <p class="text-gray-600">
+                    Topscroll Ad Slot (will be replaced with iframe)
+                </p>
+                <p class="text-sm text-gray-500">ID: /123456/topscroll-ad</p>
+                <!-- Ad iframe will be injected here by GAM mock -->
+            </div>
+            <!-- Header -->
+            <header class="bg-blue-600 text-white p-4">
+                <h1 class="text-2xl font-bold">
+                    High Impact JS Compatibility Demo - Real Formats
+                </h1>
+                <p class="text-blue-100">
+                    This demo shows how existing High Impact JS code works with
+                    Advantage using real iframe ads that morph into actual
+                    topscroll and midscroll formats
+                </p>
+            </header>
+
+            <!-- Content Section 1 -->
+            <section class="content-section bg-gray-50">
+                <h2 class="text-xl font-semibold mb-4">Content Section 1</h2>
+                <p class="mb-4">
+                    This is the first content section. When the topscroll ad
+                    iframe loads, it will automatically request the TOPSCROLL
+                    format from Advantage. The High Impact JS compatibility
+                    layer detects this and transforms the ad slot into a real
+                    topscroll format with fullscreen capabilities.
+                </p>
+            </section>
+
+            <!-- Content Section 2 -->
+            <section class="content-section">
+                <h2 class="text-xl font-semibold mb-4">Content Section 2</h2>
+                <p class="mb-4">
+                    This is some content that comes after the topscroll ad.
+                    Users will see this content after scrolling past the
+                    topscroll format.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-4 rounded">
+                        <h3 class="font-semibold">Feature 1</h3>
+                        <p>Description of feature 1</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded">
+                        <h3 class="font-semibold">Feature 2</h3>
+                        <p>Description of feature 2</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Section 3 -->
+            <section class="content-section bg-gray-50">
+                <h2 class="text-xl font-semibold mb-4">Content Section 3</h2>
+                <p class="mb-4">
+                    This section contains the midscroll ad. When the midscroll
+                    iframe loads, it will request the MIDSCROLL format from
+                    Advantage. The compatibility layer detects this and
+                    transforms the ad slot into a real midscroll format that
+                    appears fullscreen when scrolled into view.
+                </p>
+
+                <!-- Midscroll Ad Slot -->
+                <div
+                    id="/123456/midscroll-ad"
+                    class="border-2 border-dashed border-gray-400 p-4 text-center bg-white mb-4"
+                >
+                    <p class="text-gray-600">
+                        Midscroll Ad Slot (will be replaced with iframe)
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        ID: /123456/midscroll-ad
+                    </p>
+                    <!-- Ad iframe will be injected here by GAM mock -->
+                </div>
+            </section>
+
+            <!-- Content Section 4 -->
+            <section class="content-section bg-gray-50">
+                <h2 class="text-xl font-semibold mb-4">
+                    Content Section 4 - Original Message Test
+                </h2>
+                <p class="mb-4">
+                    This section contains a topscroll ad that uses the original
+                    High Impact JS messaging protocol. The creative will send a
+                    postMessage with the format:
+                    <code
+                        >{"sender": "high-impact-js", "action":
+                        "AD_RENDERED"}</code
+                    >
+                    This tests the compatibility layer's ability to handle both
+                    the new Advantage messaging and the legacy High Impact JS
+                    messages.
+                </p>
+
+                <!-- Midscroll Original Message Ad Slot -->
+                <div
+                    id="/123456/midscroll-original-msg-ad"
+                    class="border-2 border-dashed border-red-400 p-4 text-center bg-white mb-4"
+                >
+                    <p class="text-gray-600">
+                        Midscroll Ad Slot (Original High Impact JS Message) -
+                        waitForAdSignal: true
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        ID: /123456/midscroll-original-msg-ad
+                    </p>
+                    <!-- Ad iframe will be injected here by GAM mock -->
+                </div>
+            </section>
+
+            <!-- Content Section 5 -->
+            <section class="content-section">
+                <h2 class="text-xl font-semibold mb-4">Content Section 5</h2>
+                <p class="mb-4">
+                    This is the final content section. It demonstrates that the
+                    page continues normally after all ad formats.
+                </p>
+                <div class="bg-yellow-50 p-6 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-2">
+                        Key Benefits of the Compatibility Layer
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>
+                            Existing High Impact JS code works without changes
+                        </li>
+                        <li>Automatic detection and conversion of ad slots</li>
+                        <li>Support for both GAM and Xandr plugins</li>
+                        <li>Template configurations are preserved</li>
+                        <li>Events are fired for backward compatibility</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="bg-gray-800 text-white p-4 text-center">
+                <p>&copy; 2025 High Impact JS Compatibility Demo</p>
+            </footer>
+        </div>
+
+        <!-- Debug Panel -->
+        <div
+            id="debug-panel"
+            class="fixed bottom-4 right-4 bg-black text-white p-4 rounded-lg max-w-md text-sm opacity-90"
+        >
+            <h3 class="font-bold mb-2">Debug Info</h3>
+            <div id="debug-content">
+                <p>Compatibility layer loading...</p>
+            </div>
+        </div>
+
+        <script>
+            // Debug panel updates
+            const updateDebugPanel = () => {
+                const debugContent = document.getElementById("debug-content");
+                const highImpactJs = window.highImpactJs;
+
+                let debugInfo = "";
+
+                if (highImpactJs && highImpactJs.initialized) {
+                    debugInfo += `<p>✅ Compatibility layer initialized</p>`;
+                    debugInfo += `<p>📋 Plugins: ${JSON.stringify(
+                        highImpactJs.config?.plugins || []
+                    )}</p>`;
+                    debugInfo += `<p>🎯 Slots defined: ${
+                        Object.keys(highImpactJs.slots || {}).length
+                    }</p>`;
+
+                    // Check if iframes are in DOM
+                    const topscrollIframe = document.getElementById(
+                        "google_ads_iframe_topscroll"
+                    );
+                    const midscrollIframe = document.getElementById(
+                        "google_ads_iframe_midscroll"
+                    );
+                    debugInfo += `<p>🖼️ Topscroll iframe: ${
+                        topscrollIframe ? "✅ Present" : "❌ Missing"
+                    }</p>`;
+                    debugInfo += `<p>🖼️ Midscroll iframe: ${
+                        midscrollIframe ? "✅ Present" : "❌ Missing"
+                    }</p>`;
+
+                    // Check if advantage wrappers exist
+                    const advantageWrappers =
+                        document.querySelectorAll("advantage-wrapper");
+                    debugInfo += `<p>🎁 Advantage wrappers: ${advantageWrappers.length}</p>`;
+                } else {
+                    debugInfo = "<p>⏳ Initializing compatibility layer...</p>";
+                }
+
+                debugContent.innerHTML = debugInfo;
+            };
+
+            // Update debug panel periodically
+            setInterval(updateDebugPanel, 1000);
+            updateDebugPanel();
+
+            // Log when ads are rendered
+            window.addEventListener("high-impact-ad-rendered", (event) => {
+                const debugContent = document.getElementById("debug-content");
+                debugContent.innerHTML += `<p>🎬 Ad rendered: ${event.detail.template}</p>`;
+            });
+
+            // Listen for any console messages
+            const originalLog = console.log;
+            console.log = function (...args) {
+                originalLog.apply(console, args);
+                // Update debug panel to show latest activity
+                setTimeout(updateDebugPanel, 100);
+            };
+        </script>
+    </body>
+</html>

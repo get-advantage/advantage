@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Impact JS - Template Demos</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --hover-color: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .intro {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .template-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 0;
+            list-style: none;
+        }
+
+        .template-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .template-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .template-item h3 {
+            font-size: 1.25rem;
+            margin: 0 0 1rem;
+            color: var(--text-color);
+        }
+
+        .template-item p {
+            margin: 0 0 1.5rem;
+            color: #64748b;
+        }
+
+        .template-item a {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .template-item a:hover {
+            background-color: var(--hover-color);
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .template-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>High Impact JS<br>Template Demos</h1>
+            <p class="intro">An open-source JavaScript library for creating high-impact advertising experiences. Explore our templates and build amazing ad units for your web content.</p>
+        </header>
+
+    <ul class="template-list">
+        <li class="template-item">
+            <h3>Topscroll</h3>
+            <p>A premium ad format that appears at the top of the page and responds to scroll behavior. Perfect for creating impactful above-the-fold advertising experiences.</p>
+            <a href="demos/topscroll.html">View Topscroll Demo →</a>
+        </li>
+
+        <li class="template-item">
+            <h3>Midscroll</h3>
+            <p>An engaging ad format that appears while scrolling through content. Ideal for maintaining user attention mid-article or mid-content.</p>
+            <a href="demos/midscroll.html">View Midscroll Demo →</a>
+        </li>
+
+        <li class="template-item">
+            <h3>Double Fullscreen</h3>
+            <p>An immersive advertising experience that utilizes the full screen real estate for maximum impact, with support for multiple creative elements.</p>
+            <a href="demos/double-fullscreen.html">View Double Fullscreen Demo →</a>
+        </li>
+
+        <li class="template-item">
+            <h3>Sitebar</h3>
+            <p>A responsive side-aligned ad format that stays in view while scrolling. Great for persistent brand visibility without disrupting the main content.</p>
+            <a href="demos/sitebar.html">View Sitebar Demo →</a>
+        </li>
+
+        <li class="template-item">
+            <h3>Skins</h3>
+            <p>A customizable template that allows for site skinning and background takeovers. Perfect for creating immersive branded experiences.</p>
+            <a href="demos/skins.html">View Skins Demo →</a>
+        </li>
+
+        <li class="template-item">
+            <h3>Takeover</h3>
+            <p>A full-page takeover format that creates an immersive brand experience. Features a customizable top bar where you can add custom HTML content with text and styling.</p>
+            <a href="demos/takeover.html">View Takeover Demo →</a>
+        </li>
+
+        <li class="template-item">
+            <h3>Xandr Integration</h3>
+            <p>Demonstrates integration with Xandr (formerly AppNexus) ad platform, showing how to implement programmatic advertising with High Impact JS.</p>
+            <a href="demos/xandr.html?ast_test=true&ast_debug=true">View Xandr Demo →</a>
+        </li>
+    </ul>
+
+    <footer>
+        <p>For more information about implementation and integration, please refer to our documentation.</p>
+    </footer>
+</body>
+</html>

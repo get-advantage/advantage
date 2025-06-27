@@ -30,6 +30,7 @@ export interface AdvantageConfig {
         parentElement: HTMLElement | IAdvantageWrapper,
         message: MessageEvent<any>
     ) => boolean;
+    enableHighImpactCompatibility?: boolean;
 }
 
 export interface IAdvantageWrapper extends HTMLElement {
