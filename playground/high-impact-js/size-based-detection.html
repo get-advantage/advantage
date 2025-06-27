@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>High Impact JS - Size-Based Format Detection</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            html {
+                overflow-x: hidden;
+            }
+            .content-section {
+                min-height: 100vh;
+                padding: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- High Impact JS Compatibility Layer -->
+        <script type="module">
+            // Import and initialize the compatibility layer
+            import { initializeHighImpactJs } from "../../src/advantage/high-impact-js/index";
+            import { Advantage } from "../../src/advantage/index";
+
+            console.log("🔥 Size-based detection example starting...");
+
+            try {
+                console.log(
+                    "🔧 Starting High Impact JS compatibility initialization..."
+                );
+
+                // Initialize Advantage first
+                const advantage = Advantage.getInstance();
+                advantage.configure({
+                    enableHighImpactCompatibility: true
+                });
+
+                console.log("✅ Advantage configured");
+
+                // Configure High Impact JS
+                window.highImpactJs = window.highImpactJs || { cmd: [] };
+
+                window.highImpactJs.cmd.push(function () {
+                    console.log(
+                        "⚙️ Configuring High Impact JS (Nordic style: 1x1 → topscroll)..."
+                    );
+
+                    // Set global configuration
+                    window.highImpactJs.setConfig({
+                        plugins: ["gam"],
+                        debug: true,
+                        topBarHeight: 50
+                    });
+
+                    // Configure topscroll template
+                    window.highImpactJs.setTemplateConfig("topscroll", {
+                        showCloseButton: true,
+                        peekAmount: "80vh",
+                        title: "Continue reading",
+                        fadeOnScroll: true
+                    });
+
+                    // Configure midscroll template
+                    window.highImpactJs.setTemplateConfig("midscroll", {
+                        zIndex: 1000
+                    });
+
+                    // Nordic style: Define topscroll slot that triggers ONLY on 1x1 creatives
+                    window.highImpactJs.defineSlot({
+                        template: "topscroll",
+                        adUnitId: "/123456/topscroll-1x1-slot",
+                        sizes: [[1, 1]] // Only 1x1 size triggers topscroll format
+                    });
+
+                    // Example: Midscroll slot that triggers on 1x2 creatives
+                    window.highImpactJs.defineSlot({
+                        template: "midscroll",
+                        adUnitId: "/123456/midscroll-1x2-slot",
+                        sizes: [[1, 2]] // Only 1x2 size triggers midscroll format
+                    });
+
+                    // Regular banner slot - no template, so no format transformation
+                    window.highImpactJs.defineSlot({
+                        // No template specified = regular banner behavior
+                        adUnitId: "/123456/regular-banner-slot",
+                        sizes: [
+                            [728, 90],
+                            [970, 250]
+                        ] // Regular banner sizes
+                    });
+                });
+
+                // Listen for High Impact JS events
+                window.addEventListener("high-impact-ad-rendered", (event) => {
+                    console.log("🎬 High Impact Ad Rendered:", event.detail);
+                });
+
+                // Initialize the compatibility layer
+                console.log(
+                    "🚀 Initializing High Impact JS compatibility layer..."
+                );
+                await initializeHighImpactJs();
+                console.log(
+                    "✅ High Impact JS compatibility layer initialized"
+                );
+
+                // Notify that we're ready for mock ads
+                window.highImpactJsReady = true;
+                console.log(
+                    "📢 High Impact JS is ready for size-based detection"
+                );
+
+                // Trigger the mock ad process
+                if (window.triggerMockAds) {
+                    window.triggerMockAds();
+                }
+            } catch (error) {
+                console.error("❌ Error in module script:", error);
+            }
+        </script>
+
+        <!-- Mock GAM with Size-Based Detection -->
+        <script>
+            console.log("🔧 Setting up mock GAM with size-based detection...");
+
+            window.googletag = window.googletag || { cmd: [] };
+
+            // Function to inject different sized ads and trigger the compatibility layer
+            const injectSizeBasedAds = () => {
+                console.log("🚀 Starting size-based ad injection...");
+
+                setTimeout(() => {
+                    // Inject 1x1 creative → should trigger topscroll
+                    const slot1Container = document.getElementById(
+                        "/123456/size-detection-slot-1"
+                    );
+                    if (slot1Container) {
+                        console.log(
+                            "✅ Found slot 1, injecting 1x1 creative (should trigger topscroll)..."
+                        );
+                        slot1Container.innerHTML = "";
+
+                        // Create a simple 1x1 creative (could be from any source)
+                        const creative1x1 = document.createElement("div");
+                        creative1x1.style.width = "1px";
+                        creative1x1.style.height = "1px";
+                        creative1x1.style.backgroundColor = "transparent";
+                        creative1x1.style.border = "1px solid red"; // Just for visibility in dev
+                        creative1x1.innerHTML = `
+                            <style>
+                                body { margin: 0; padding: 20px; background: linear-gradient(45deg, #FF6B6B, #4ECDC4); cursor: pointer; }
+                                .content { text-align: center; color: white; font-family: Arial, sans-serif; }
+                                h1 { font-size: 2em; margin-bottom: 10px; }
+                                p { font-size: 1.2em; }
+                            </style>
+                            <div class="content">
+                                <h1>🎯 1x1 Topscroll Ad</h1>
+                                <p>This 1x1 creative automatically became a topscroll!</p>
+                                <p>Click to visit advertiser site</p>
+                            </div>
+                        `;
+                        creative1x1.onclick = () =>
+                            window.open(
+                                "https://www.get-advantage.org",
+                                "_blank"
+                            );
+
+                        slot1Container.appendChild(creative1x1);
+                        console.log("✅ 1x1 creative injected");
+
+                        // Simulate GAM slotRenderEnded event for size-based detection
+                        console.log(
+                            "📞 Simulating GAM slotRenderEnded event for 1x1 creative..."
+                        );
+                        if (
+                            window.highImpactJs &&
+                            window.highImpactJs._triggerSlotRendered
+                        ) {
+                            window.highImpactJs._triggerSlotRendered({
+                                adWrapper: slot1Container,
+                                adUnit: creative1x1,
+                                adIframe: creative1x1,
+                                size: [1, 1], // This should trigger topscroll via size mapping
+                                html: creative1x1.outerHTML,
+                                elementId: "/123456/size-detection-slot-1",
+                                plugin: "gam"
+                            });
+                        } else {
+                            console.log(
+                                "⚠️ High Impact JS compatibility layer not ready for event trigger"
+                            );
+                        }
+                    }
+
+                    // Inject 1x2 creative → should trigger midscroll
+                    setTimeout(() => {
+                        const slot2Container = document.getElementById(
+                            "/123456/size-detection-slot-2"
+                        );
+                        if (slot2Container) {
+                            console.log(
+                                "✅ Found slot 2, injecting 1x2 creative (should trigger midscroll)..."
+                            );
+                            slot2Container.innerHTML = "";
+
+                            const creative1x2 = document.createElement("div");
+                            creative1x2.style.width = "1px";
+                            creative1x2.style.height = "2px";
+                            creative1x2.style.backgroundColor = "transparent";
+                            creative1x2.style.border = "1px solid blue";
+                            creative1x2.innerHTML = `
+                                <style>
+                                    body { margin: 0; padding: 20px; background: linear-gradient(45deg, #667eea, #764ba2); cursor: pointer; }
+                                    .content { text-align: center; color: white; font-family: Arial, sans-serif; }
+                                    h1 { font-size: 2em; margin-bottom: 10px; }
+                                    p { font-size: 1.2em; }
+                                </style>
+                                <div class="content">
+                                    <h1>📱 1x2 Midscroll Ad</h1>
+                                    <p>This 1x2 creative automatically became a midscroll!</p>
+                                    <p>Click to visit advertiser site</p>
+                                </div>
+                            `;
+                            creative1x2.onclick = () =>
+                                window.open(
+                                    "https://www.get-advantage.org",
+                                    "_blank"
+                                );
+
+                            slot2Container.appendChild(creative1x2);
+                            console.log("✅ 1x2 creative injected");
+
+                            // Simulate GAM slotRenderEnded event for 1x2 creative
+                            console.log(
+                                "📞 Simulating GAM slotRenderEnded event for 1x2 creative..."
+                            );
+                            if (
+                                window.highImpactJs &&
+                                window.highImpactJs._triggerSlotRendered
+                            ) {
+                                window.highImpactJs._triggerSlotRendered({
+                                    adWrapper: slot2Container,
+                                    adUnit: creative1x2,
+                                    adIframe: creative1x2,
+                                    size: [1, 2], // This should trigger midscroll via size mapping
+                                    html: creative1x2.outerHTML,
+                                    elementId: "/123456/size-detection-slot-2",
+                                    plugin: "gam"
+                                });
+                            }
+                        }
+                    }, 1000);
+
+                    // Inject regular banner → should NOT trigger any format
+                    setTimeout(() => {
+                        const regularSlotContainer = document.getElementById(
+                            "/123456/regular-slot"
+                        );
+                        if (regularSlotContainer) {
+                            console.log(
+                                "✅ Found regular slot, injecting 728x90 banner (no format change)..."
+                            );
+                            regularSlotContainer.innerHTML = "";
+
+                            const regularBanner = document.createElement("div");
+                            regularBanner.style.width = "728px";
+                            regularBanner.style.height = "90px";
+                            regularBanner.style.backgroundColor = "#f0f0f0";
+                            regularBanner.style.border = "1px solid #ccc";
+                            regularBanner.style.display = "flex";
+                            regularBanner.style.alignItems = "center";
+                            regularBanner.style.justifyContent = "center";
+                            regularBanner.style.fontFamily =
+                                "Arial, sans-serif";
+                            regularBanner.style.cursor = "pointer";
+                            regularBanner.innerHTML = `
+                                <div style="text-align: center;">
+                                    <strong>Regular 728x90 Banner</strong><br>
+                                    <small>No format transformation</small>
+                                </div>
+                            `;
+                            regularBanner.onclick = () =>
+                                window.open(
+                                    "https://www.get-advantage.org",
+                                    "_blank"
+                                );
+
+                            regularSlotContainer.appendChild(regularBanner);
+                            console.log("✅ Regular banner injected");
+
+                            // Simulate GAM event for regular banner (should not trigger format change)
+                            console.log(
+                                "📞 Simulating GAM slotRenderEnded event for regular banner..."
+                            );
+                            if (
+                                window.highImpactJs &&
+                                window.highImpactJs._triggerSlotRendered
+                            ) {
+                                window.highImpactJs._triggerSlotRendered({
+                                    adWrapper: regularSlotContainer,
+                                    adUnit: regularBanner,
+                                    adIframe: regularBanner,
+                                    size: [728, 90], // Regular size - no format mapping
+                                    html: regularBanner.outerHTML,
+                                    elementId: "/123456/regular-slot",
+                                    plugin: "gam"
+                                });
+                            }
+                        }
+                    }, 2000);
+                }, 500);
+            };
+
+            // Function to trigger mock ads
+            window.triggerMockAds = () => {
+                if (window.mockAdsTriggered) {
+                    console.log("🚫 Mock ads already triggered, skipping");
+                    return;
+                }
+                window.mockAdsTriggered = true;
+                console.log("🎬 triggerMockAds called (size-based detection)");
+
+                injectSizeBasedAds();
+            };
+
+            // Check if High Impact JS is ready
+            const checkReady = () => {
+                if (window.highImpactJsReady) {
+                    console.log("✅ High Impact JS detected as ready");
+                    window.triggerMockAds();
+                } else {
+                    console.log(
+                        "⏳ High Impact JS not ready yet, checking again..."
+                    );
+                    setTimeout(checkReady, 100);
+                }
+            };
+
+            checkReady();
+        </script>
+
+        <div class="container mx-auto">
+            <!-- Header -->
+            <header class="bg-purple-600 text-white p-4">
+                <h1 class="text-2xl font-bold">
+                    High Impact JS - Size-Based Format Detection
+                </h1>
+                <p class="text-purple-100">
+                    This demo shows how the compatibility layer automatically
+                    detects High Impact formats based on creative size (Nordic
+                    style: 1x1 → topscroll, 1x2 → midscroll)
+                </p>
+            </header>
+
+            <!-- Explanation Section -->
+            <section class="bg-blue-50 p-6 m-4 rounded-lg">
+                <h2 class="text-xl font-semibold mb-4 text-blue-800">
+                    How Size-Based Detection Works
+                </h2>
+                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-white p-4 rounded border-l-4 border-red-400">
+                        <h3 class="font-semibold text-red-700">1x1 Creative</h3>
+                        <p>
+                            Automatically transforms into
+                            <strong>topscroll</strong> format
+                        </p>
+                        <p class="text-gray-600">
+                            Common Nordic practice for High Impact ads
+                        </p>
+                    </div>
+                    <div
+                        class="bg-white p-4 rounded border-l-4 border-blue-400"
+                    >
+                        <h3 class="font-semibold text-blue-700">
+                            1x2 Creative
+                        </h3>
+                        <p>
+                            Automatically transforms into
+                            <strong>midscroll</strong> format
+                        </p>
+                        <p class="text-gray-600">
+                            Example of custom size mapping
+                        </p>
+                    </div>
+                    <div
+                        class="bg-white p-4 rounded border-l-4 border-gray-400"
+                    >
+                        <h3 class="font-semibold text-gray-700">
+                            Regular Sizes
+                        </h3>
+                        <p>
+                            728x90, 300x250, etc. remain as
+                            <strong>regular banners</strong>
+                        </p>
+                        <p class="text-gray-600">No format transformation</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Section 1 -->
+            <section class="content-section bg-gray-50">
+                <h2 class="text-xl font-semibold mb-4">
+                    Content Section 1 - Size Detection Slot
+                </h2>
+                <p class="mb-4">
+                    This ad slot accepts multiple sizes including 1x1. When a
+                    1x1 creative is served, it will automatically transform into
+                    a topscroll format.
+                </p>
+
+                <!-- Topscroll Slot (1x1 → topscroll) -->
+                <div
+                    id="/123456/topscroll-1x1-slot"
+                    class="border-2 border-dashed border-red-400 p-4 text-center bg-white mb-4"
+                >
+                    <p class="text-gray-600">
+                        Topscroll Slot (1x1 creatives only)
+                    </p>
+                    <p class="text-sm text-red-500">
+                        🎯 1x1 creative → topscroll format (Nordic style)
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        ID: /123456/topscroll-1x1-slot
+                    </p>
+                </div>
+
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-yellow-800 mb-2">
+                        What happens here:
+                    </h3>
+                    <ol
+                        class="list-decimal list-inside space-y-1 text-sm text-yellow-700"
+                    >
+                        <li>Mock GAM serves a 1x1 creative to this slot</li>
+                        <li>
+                            High Impact JS compatibility layer detects the 1x1
+                            size
+                        </li>
+                        <li>
+                            Based on sizeFormatMapping config, it maps 1x1 →
+                            topscroll
+                        </li>
+                        <li>
+                            The slot automatically morphs into a full topscroll
+                            format
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Content Section 2 -->
+            <section class="content-section">
+                <h2 class="text-xl font-semibold mb-4">
+                    Content Section 2 - Another Size Detection Slot
+                </h2>
+                <p class="mb-4">
+                    This ad slot demonstrates 1x2 → midscroll transformation.
+                    Publishers can configure any size-to-format mapping that
+                    suits their business needs.
+                </p>
+
+                <!-- Midscroll Slot (1x2 → midscroll) -->
+                <div
+                    id="/123456/midscroll-1x2-slot"
+                    class="border-2 border-dashed border-blue-400 p-4 text-center bg-white mb-4"
+                >
+                    <p class="text-gray-600">
+                        Midscroll Slot (1x2 creatives only)
+                    </p>
+                    <p class="text-sm text-blue-500">
+                        📱 1x2 creative → midscroll format
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        ID: /123456/midscroll-1x2-slot
+                    </p>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-blue-800 mb-2">
+                        Custom Size Mapping:
+                    </h3>
+                    <pre class="text-sm text-blue-700 bg-white p-2 rounded">
+sizeFormatMapping: {
+    "1x1": "topscroll",     // Nordic standard
+    "1x2": "midscroll",     // Custom mapping
+    "2x2": "welcomepage"    // Another example
+}</pre
+                    >
+                </div>
+            </section>
+
+            <!-- Content Section 3 -->
+            <section class="content-section bg-gray-50">
+                <h2 class="text-xl font-semibold mb-4">
+                    Content Section 3 - Regular Ad Slot
+                </h2>
+                <p class="mb-4">
+                    This is a regular ad slot that only accepts standard banner
+                    sizes. No format transformation will occur here.
+                </p>
+
+                <!-- Regular Banner Slot (no template) -->
+                <div
+                    id="/123456/regular-banner-slot"
+                    class="border-2 border-dashed border-gray-400 p-4 text-center bg-white mb-4"
+                >
+                    <p class="text-gray-600">
+                        Regular Banner Slot (728x90, 970x250)
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        ⚪ No template = no format transformation
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        ID: /123456/regular-banner-slot
+                    </p>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="bg-gray-800 text-white p-4 text-center">
+                <p>&copy; 2025 High Impact JS Size-Based Detection Demo</p>
+            </footer>
+        </div>
+
+        <!-- Debug Panel -->
+        <div
+            id="debug-panel"
+            class="fixed bottom-4 right-4 bg-black text-white p-4 rounded-lg max-w-md text-sm opacity-90"
+        >
+            <h3 class="font-bold mb-2">Debug Info</h3>
+            <div id="debug-content">
+                <p>Size-based detection loading...</p>
+            </div>
+        </div>
+
+        <script>
+            // Debug panel updates
+            const updateDebugPanel = () => {
+                const debugContent = document.getElementById("debug-content");
+                const highImpactJs = window.highImpactJs;
+
+                let debugInfo = "";
+
+                if (highImpactJs && highImpactJs.initialized) {
+                    debugInfo += `<p>✅ Compatibility layer initialized</p>`;
+                    debugInfo += `<p>📋 Plugins: ${JSON.stringify(
+                        highImpactJs.config?.plugins || []
+                    )}</p>`;
+                    debugInfo += `<p>🎯 Slots defined: ${
+                        Object.keys(highImpactJs.slots || {}).length
+                    }</p>`;
+
+                    // Show size mapping config
+                    if (highImpactJs.config?.sizeFormatMapping) {
+                        debugInfo += `<p>📏 Size mappings: ${JSON.stringify(
+                            highImpactJs.config.sizeFormatMapping
+                        )}</p>`;
+                    }
+
+                    // Check if creatives are in DOM
+                    const creative1x1 = document.querySelector(
+                        "#\\/123456\\/size-detection-slot-1 > div"
+                    );
+                    const creative1x2 = document.querySelector(
+                        "#\\/123456\\/size-detection-slot-2 > div"
+                    );
+                    const regularCreative = document.querySelector(
+                        "#\\/123456\\/regular-slot > div"
+                    );
+
+                    debugInfo += `<p>🎨 1x1 creative: ${
+                        creative1x1 ? "✅ Present" : "❌ Missing"
+                    }</p>`;
+                    debugInfo += `<p>🎨 1x2 creative: ${
+                        creative1x2 ? "✅ Present" : "❌ Missing"
+                    }</p>`;
+                    debugInfo += `<p>🎨 Regular creative: ${
+                        regularCreative ? "✅ Present" : "❌ Missing"
+                    }</p>`;
+
+                    // Check for advantage wrappers
+                    const advantageWrappers =
+                        document.querySelectorAll("advantage-wrapper");
+                    debugInfo += `<p>🎁 Advantage wrappers: ${advantageWrappers.length}</p>`;
+                } else {
+                    debugInfo =
+                        "<p>⏳ Initializing size-based detection...</p>";
+                }
+
+                debugContent.innerHTML = debugInfo;
+            };
+
+            // Update debug panel periodically
+            setInterval(updateDebugPanel, 1000);
+            updateDebugPanel();
+
+            // Log when ads are rendered with size info
+            window.addEventListener("high-impact-ad-rendered", (event) => {
+                const debugContent = document.getElementById("debug-content");
+                debugContent.innerHTML += `<p>🎬 ${event.detail.template} rendered (${event.detail.size?.width}x${event.detail.size?.height})</p>`;
+            });
+        </script>
+    </body>
+</html>

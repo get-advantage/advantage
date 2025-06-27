@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Debug DOM Structure</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            .debug-output {
+                background: #f5f5f5;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+            }
+            code {
+                background: #eee;
+                padding: 2px 4px;
+                border-radius: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>DOM Structure Debug Tool</h1>
+        <p>
+            This page will help us debug what's happening with the iframe DOM
+            structure.
+        </p>
+
+        <button onclick="inspectDom()">Inspect Current DOM</button>
+        <button onclick="openExamplePage()">Open Example Page</button>
+
+        <div id="output" class="debug-output"></div>
+
+        <script>
+            function inspectDom() {
+                const output = document.getElementById("output");
+                output.innerHTML = "<h3>Current DOM Analysis:</h3>";
+
+                // Look for iframes
+                const iframes = document.querySelectorAll("iframe");
+                output.innerHTML += `<p>Found ${iframes.length} iframes</p>`;
+
+                iframes.forEach((iframe, index) => {
+                    output.innerHTML += `<h4>Iframe ${index + 1}:</h4>`;
+                    output.innerHTML += `<p>ID: <code>${iframe.id}</code></p>`;
+                    output.innerHTML += `<p>Source: <code>${iframe.src}</code></p>`;
+                    output.innerHTML += `<p>Size: ${
+                        iframe.style.width || iframe.width || "auto"
+                    } x ${iframe.style.height || iframe.height || "auto"}</p>`;
+
+                    // Analyze parent chain
+                    let parent = iframe.parentElement;
+                    let level = 0;
+                    output.innerHTML += "<p>Parent chain:</p><ul>";
+
+                    while (parent && level < 10) {
+                        const tagName = parent.tagName.toLowerCase();
+                        const id = parent.id ? ` id="${parent.id}"` : "";
+                        const slot = parent.slot
+                            ? ` slot="${parent.slot}"`
+                            : "";
+                        const className = parent.className
+                            ? ` class="${parent.className}"`
+                            : "";
+
+                        output.innerHTML += `<li>Level ${level}: &lt;${tagName}${id}${slot}${className}&gt;</li>`;
+
+                        if (parent.slot === "advantage-ad-slot") {
+                            output.innerHTML +=
+                                "<li><strong>Found advantage-ad-slot!</strong></li>";
+                            break;
+                        }
+
+                        parent = parent.parentElement;
+                        level++;
+                    }
+
+                    output.innerHTML += "</ul>";
+                });
+
+                // Look for advantage wrappers
+                const wrappers = document.querySelectorAll("advantage-wrapper");
+                output.innerHTML += `<p>Found ${wrappers.length} advantage-wrapper elements</p>`;
+
+                wrappers.forEach((wrapper, index) => {
+                    output.innerHTML += `<h4>Wrapper ${index + 1}:</h4>`;
+                    output.innerHTML += `<p>Allowed formats: <code>${wrapper.getAttribute(
+                        "allowed-formats"
+                    )}</code></p>`;
+                    output.innerHTML += `<p>HTML: <code>${wrapper.outerHTML.substring(
+                        0,
+                        200
+                    )}...</code></p>`;
+                });
+            }
+
+            function openExamplePage() {
+                window.open(
+                    "http://localhost:5174/playground/high-impact-js/example.html",
+                    "_blank"
+                );
+            }
+
+            // Auto-inspect when loaded
+            window.addEventListener("load", () => {
+                setTimeout(inspectDom, 1000);
+            });
+        </script>
+    </body>
+</html>

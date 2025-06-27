@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Advantage Creative - Pre-wrapping + Iframe Messaging Test</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 20px;
+                font-family: Arial, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                text-align: center;
+                opacity: 1;
+                transition: opacity 0.5s ease;
+            }
+
+            .creative-content {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .status {
+                padding: 10px;
+                margin: 10px;
+                border-radius: 4px;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+            }
+
+            .success {
+                background: rgba(34, 197, 94, 0.2);
+                border: 1px solid rgba(34, 197, 94, 0.5);
+            }
+
+            .error {
+                background: rgba(239, 68, 68, 0.2);
+                border: 1px solid rgba(239, 68, 68, 0.5);
+            }
+
+            .cta-button {
+                background: #ff6b6b;
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                border-radius: 25px;
+                font-size: 18px;
+                cursor: pointer;
+                margin: 20px;
+                transition: transform 0.2s;
+            }
+
+            .cta-button:hover {
+                transform: scale(1.05);
+            }
+
+            .communication-log {
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 8px;
+                padding: 15px;
+                margin: 20px 0;
+                text-align: left;
+                font-family: monospace;
+                font-size: 12px;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Add a simulated ad unit for pre-wrapping -->
+        <div
+            id="my-ad-unit"
+            style="
+                border: 2px solid red;
+                padding: 10px;
+                margin: 10px;
+                min-height: 400px;
+            "
+        >
+            <!-- This simulates where the actual ad would be loaded -->
+            <p>Ad Unit Placeholder - Creative iframe will be loaded here</p>
+            <div id="iframe-container" style="margin-top: 10px"></div>
+        </div>
+
+        <!-- Add manual test button -->
+        <div
+            style="
+                margin: 20px;
+                padding: 10px;
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+            "
+        >
+            <h3>🔧 Manual Debug</h3>
+            <button
+                onclick="manualTest()"
+                style="
+                    background: #28a745;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                "
+            >
+                Manual Pre-wrap Test
+            </button>
+            <div
+                id="manual-result"
+                style="
+                    margin-top: 10px;
+                    font-family: monospace;
+                    font-size: 12px;
+                "
+            ></div>
+        </div>
+
+        <div class="creative-content">
+            <h1>🚀 Advantage Creative Demo</h1>
+            <p>Testing pre-wrapping + iframe messaging architecture</p>
+            <p style="font-size: 14px; color: #ccc">
+                1. Publisher sets up AdvantageWrapper via pre-wrapping<br />
+                2. Creative loads in iframe within the wrapper<br />
+                3. Iframe creative communicates with parent via postMessage
+            </p>
+
+            <div id="communication-status" class="status">
+                🚀 Setting up publisher-side wrapper...
+            </div>
+
+            <div id="debug-status" class="status">
+                ⏳ Waiting for debug information...
+            </div>
+
+            <div
+                id="console-log"
+                class="status"
+                style="
+                    font-family: monospace;
+                    font-size: 10px;
+                    text-align: left;
+                    max-height: 150px;
+                    overflow-y: auto;
+                "
+            >
+                Console Log:
+            </div>
+
+            <div class="communication-log" id="comm-log">
+                <div>Communication Log:</div>
+            </div>
+
+            <button class="cta-button" onclick="requestFormat()">
+                Request TopScroll Format
+            </button>
+
+            <div id="format-status" class="status">
+                ⏳ Ready to request format
+            </div>
+        </div>
+
+        <!-- First, set up the publisher side (High Impact JS compatibility) -->
+        <script type="module">
+            console.log("🚀 Loading High Impact JS compatibility module...");
+            // Import the main Advantage module to register custom elements
+            import "../../src/advantage/index";
+            import { Advantage } from "../../src/advantage/advantage";
+            console.log("✅ High Impact JS compatibility module loaded");
+
+            // Debug function to show status on page
+            function updateDebugStatus(message) {
+                console.log(message);
+                const debugEl = document.getElementById("debug-status");
+                if (debugEl) {
+                    debugEl.textContent = message;
+                    debugEl.className = "status";
+                }
+
+                // Also add to console log display
+                const consoleEl = document.getElementById("console-log");
+                if (consoleEl) {
+                    const timestamp = new Date().toLocaleTimeString();
+                    consoleEl.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+                    consoleEl.scrollTop = consoleEl.scrollHeight;
+                }
+            }
+
+            console.log("🚀 Starting publisher-side setup...");
+
+            // Initialize the High Impact JS compatibility layer and wait for it
+            async function setupPublisherSide() {
+                updateDebugStatus(
+                    "🔧 Initializing High Impact JS compatibility..."
+                );
+
+                // Initialize the main Advantage instance with High Impact JS compatibility
+                const advantage = Advantage.getInstance();
+                advantage.configure({
+                    enableHighImpactCompatibility: true,
+                    // CRITICAL: Add format integrations for message handling to work
+                    formatIntegrations: [
+                        {
+                            format: "TOPSCROLL",
+                            setup: (wrapper, iframe) => {
+                                return new Promise((resolve) => {
+                                    // Basic setup for demo - no site-specific adjustments needed
+                                    console.log(
+                                        "🔧 TOPSCROLL format integration setup called",
+                                        {
+                                            wrapper: wrapper.tagName,
+                                            iframe: !!iframe
+                                        }
+                                    );
+                                    resolve();
+                                });
+                            },
+                            close: (wrapper, iframe) => {
+                                console.log(
+                                    "🔄 TOPSCROLL format integration close called"
+                                );
+                            },
+                            reset: (wrapper, iframe) => {
+                                console.log(
+                                    "🔄 TOPSCROLL format integration reset called"
+                                );
+                            }
+                        }
+                    ]
+                });
+                console.log(
+                    "✅ Main Advantage instance configured with High Impact JS compatibility and TOPSCROLL format integration"
+                );
+
+                // Import and directly call the initialization function to wait for completion
+                const { initializeHighImpactJs } = await import(
+                    "../../src/advantage/high-impact-js/index"
+                );
+
+                updateDebugStatus(
+                    "⏳ Waiting for High Impact JS compatibility initialization..."
+                );
+                await initializeHighImpactJs();
+
+                console.log(
+                    "✅ High Impact JS compatibility layer fully initialized"
+                );
+                updateDebugStatus(
+                    "✅ High Impact JS compatibility layer ready!"
+                );
+
+                // Now we can safely use High Impact JS APIs
+                if (window.highImpactJs && window.highImpactJs.defineSlot) {
+                    updateDebugStatus(
+                        "🔧 Calling defineSlot to trigger pre-wrapping..."
+                    );
+
+                    try {
+                        window.highImpactJs.defineSlot({
+                            template: "topscroll",
+                            adUnitId: "my-ad-unit",
+                            sizes: [
+                                [728, 90],
+                                [970, 250]
+                            ]
+                        });
+                        updateDebugStatus("✅ defineSlot called successfully");
+
+                        // Check after defineSlot with a short delay
+                        setTimeout(() => {
+                            const wrapper =
+                                document.querySelector("advantage-wrapper");
+                            const debugInfo = window.preWrapDebug || [];
+
+                            console.log("🔍 Check after defineSlot:", {
+                                wrapper: !!wrapper,
+                                preWrapDebug: debugInfo
+                            });
+
+                            if (!wrapper) {
+                                console.warn(
+                                    "⚠️ Pre-wrapping may need more time..."
+                                );
+                                updateDebugStatus(
+                                    "⚠️ Pre-wrapping in progress..."
+                                );
+                            } else {
+                                console.log("✅ Pre-wrapping successful!");
+                                updateDebugStatus(
+                                    "✅ Pre-wrapping successful!"
+                                );
+                            }
+                        }, 100);
+                    } catch (error) {
+                        updateDebugStatus(
+                            "❌ defineSlot failed: " + error.message
+                        );
+                        console.error("defineSlot error:", error);
+                        throw error;
+                    }
+                } else {
+                    throw new Error(
+                        "High Impact JS compatibility layer not properly initialized"
+                    );
+                }
+            }
+
+            // Set up publisher side first, then run creative
+            setupPublisherSide()
+                .then(() => {
+                    console.log(
+                        "✅ Publisher setup complete, starting creative..."
+                    );
+                    updateDebugStatus("✅ Publisher setup complete!");
+
+                    // Wait a bit longer for pre-wrapping to complete before loading creative iframe
+                    setTimeout(() => {
+                        loadCreativeIframe();
+                    }, 2000); // Increased wait time to ensure everything is ready
+                })
+                .catch((error) => {
+                    console.error("❌ Publisher setup failed:", error);
+                    updateDebugStatus(
+                        "❌ Publisher setup failed: " + error.message
+                    );
+                });
+        </script>
+
+        <!-- Load creative in iframe for proper messaging architecture -->
+        <script type="module">
+            function log(message, type = "info") {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEl = document.getElementById("comm-log");
+                const color =
+                    type === "success"
+                        ? "#22c55e"
+                        : type === "error"
+                        ? "#ef4444"
+                        : type === "warning"
+                        ? "#f59e0b"
+                        : "#3b82f6";
+
+                if (logEl) {
+                    logEl.innerHTML += `<div style="color: ${color}">[${timestamp}] ${message}</div>`;
+                    logEl.scrollTop = logEl.scrollHeight;
+                }
+            }
+
+            function updateStatus(elementId, message, type = "default") {
+                const el = document.getElementById(elementId);
+                if (el) {
+                    el.textContent = message;
+                    el.className = `status ${type}`;
+                }
+            }
+
+            // Function to load creative iframe into the pre-wrapped element
+            window.loadCreativeIframe = function () {
+                log("🎬 Loading creative iframe...");
+                updateStatus(
+                    "communication-status",
+                    "🎬 Loading creative iframe...",
+                    "default"
+                );
+
+                // Find the pre-wrapped AdvantageWrapper
+                const wrapper = document.querySelector("advantage-wrapper");
+                if (!wrapper) {
+                    log(
+                        "❌ No AdvantageWrapper found for iframe placement",
+                        "error"
+                    );
+                    updateStatus(
+                        "communication-status",
+                        "❌ No AdvantageWrapper found",
+                        "error"
+                    );
+                    return;
+                }
+
+                log("✅ Found AdvantageWrapper, creating iframe...", "success");
+
+                // Debug the wrapper's messaging capabilities
+                log(
+                    `🔍 Wrapper message handler: ${
+                        wrapper.messageHandler ? "AVAILABLE" : "MISSING"
+                    }`,
+                    wrapper.messageHandler ? "success" : "error"
+                );
+                if (wrapper.messageHandler) {
+                    log(
+                        `🔍 Message handler element: ${
+                            wrapper.messageHandler.ad ? "HAS AD" : "NO AD"
+                        }`,
+                        "info"
+                    );
+                    log(
+                        `🔍 Message handler is wrapper: ${
+                            wrapper.messageHandler ? "YES" : "NO"
+                        }`,
+                        "info"
+                    );
+                }
+
+                // Debug contentNodes before adding iframe
+                log(
+                    `🔍 Wrapper contentNodes count before iframe: ${
+                        wrapper.contentNodes
+                            ? wrapper.contentNodes.length
+                            : "undefined"
+                    }`,
+                    "info"
+                );
+
+                // Create iframe for creative
+                const iframe = document.createElement("iframe");
+                iframe.src = "./creative-iframe.html";
+                iframe.style.width = "100%";
+                iframe.style.height = "400px";
+                iframe.style.border = "1px solid #ccc";
+                iframe.style.borderRadius = "8px";
+                iframe.setAttribute("allowfullscreen", "true");
+                iframe.id = "creative-iframe"; // Add ID for easier debugging
+
+                // Instead of using the slot system, add iframe directly to wrapper's content area
+                // This bypasses the slot timing issues
+                const contentDiv =
+                    wrapper.shadowRoot?.querySelector("#ad-slot") ||
+                    wrapper.querySelector(".advantage-ad-slot");
+                if (contentDiv) {
+                    contentDiv.appendChild(iframe);
+                    log(
+                        "✅ Iframe added directly to wrapper content area",
+                        "success"
+                    );
+                } else {
+                    // Fallback: try the slot approach
+                    const adSlot = wrapper.querySelector(
+                        '[slot="advantage-ad-slot"]'
+                    );
+                    if (adSlot) {
+                        adSlot.appendChild(iframe);
+                        log(
+                            "✅ Iframe added to advantage-ad-slot (fallback)",
+                            "success"
+                        );
+                    } else {
+                        // Last resort: add directly to wrapper
+                        wrapper.appendChild(iframe);
+                        log(
+                            "⚠️ Added iframe directly to wrapper (last resort)",
+                            "warning"
+                        );
+                    }
+                }
+
+                // Debug contentNodes after adding iframe
+                setTimeout(() => {
+                    log(
+                        `🔍 Wrapper contentNodes count after iframe: ${
+                            wrapper.contentNodes
+                                ? wrapper.contentNodes.length
+                                : "undefined"
+                        }`,
+                        "info"
+                    );
+
+                    // Test if wrapper can find the iframe
+                    const foundIframes = wrapper.contentNodes.flatMap(
+                        (node) => {
+                            // Use the same collectIframes logic
+                            const collectIframes = (node) => {
+                                let iframes = [];
+                                if (node.nodeType === Node.ELEMENT_NODE) {
+                                    const element = node;
+                                    if (element.tagName === "IFRAME") {
+                                        iframes.push(element);
+                                    }
+                                    element.childNodes.forEach((child) => {
+                                        iframes = iframes.concat(
+                                            collectIframes(child)
+                                        );
+                                    });
+                                }
+                                return iframes;
+                            };
+                            return collectIframes(node);
+                        }
+                    );
+
+                    log(
+                        `🔍 Iframes found by wrapper: ${foundIframes.length}`,
+                        foundIframes.length > 0 ? "success" : "error"
+                    );
+                    if (foundIframes.length > 0) {
+                        const testIframe = foundIframes[0];
+                        log(
+                            `🔍 First iframe contentWindow: ${
+                                testIframe.contentWindow
+                                    ? "AVAILABLE"
+                                    : "NOT AVAILABLE"
+                            }`,
+                            testIframe.contentWindow ? "success" : "error"
+                        );
+                    }
+                }, 100);
+
+                log(
+                    "✅ Creative iframe loaded into AdvantageWrapper",
+                    "success"
+                );
+                updateStatus(
+                    "communication-status",
+                    "✅ Creative iframe loaded",
+                    "success"
+                );
+
+                // Listen for messages from the iframe creative
+                window.addEventListener("message", (event) => {
+                    // Only handle messages from our creative iframe
+                    if (event.source !== iframe.contentWindow) return;
+
+                    const data = event.data;
+                    if (data.type === "creative-log") {
+                        log(
+                            `📩 Creative: ${data.message}`,
+                            data.logType || "info"
+                        );
+                    } else if (data.type === "creative-status") {
+                        updateStatus(
+                            "communication-status",
+                            data.message,
+                            data.statusType || "default"
+                        );
+                    }
+                });
+
+                // Debug: Add enhanced message interception
+                const originalPostMessage = window.postMessage;
+                window.postMessage = function (
+                    message,
+                    targetOrigin,
+                    transfer
+                ) {
+                    if (message && message.type === "ADVANTAGE") {
+                        log(
+                            `🔍 [INTERCEPTED] Message to window: ${JSON.stringify(
+                                message
+                            )}`,
+                            "info"
+                        );
+                    }
+                    return originalPostMessage.call(
+                        this,
+                        message,
+                        targetOrigin,
+                        transfer
+                    );
+                };
+
+                // Debug: Intercept ALL window messages to see what's happening
+                window.addEventListener(
+                    "message",
+                    (event) => {
+                        // Handle iframe detection test
+                        if (
+                            event.data &&
+                            event.data.type === "IFRAME_DETECTION_TEST"
+                        ) {
+                            log(
+                                `🔍 [DETECTION TEST] Iframe requesting detection test`,
+                                "info"
+                            );
+
+                            // Check if we can find this iframe
+                            const foundIframes = wrapper.contentNodes.flatMap(
+                                (node) => {
+                                    const collectIframes = (node) => {
+                                        let iframes = [];
+                                        if (
+                                            node.nodeType === Node.ELEMENT_NODE
+                                        ) {
+                                            const element = node;
+                                            if (element.tagName === "IFRAME") {
+                                                iframes.push(element);
+                                            }
+                                            element.childNodes.forEach(
+                                                (child) => {
+                                                    iframes = iframes.concat(
+                                                        collectIframes(child)
+                                                    );
+                                                }
+                                            );
+                                        }
+                                        return iframes;
+                                    };
+                                    return collectIframes(node);
+                                }
+                            );
+
+                            const matchingIframes = foundIframes.filter(
+                                (f) => f.contentWindow === event.source
+                            );
+                            const canDetect = matchingIframes.length > 0;
+
+                            log(
+                                `   - Can detect iframe: ${
+                                    canDetect ? "YES" : "NO"
+                                }`,
+                                canDetect ? "success" : "error"
+                            );
+
+                            // Respond to the iframe
+                            if (event.source) {
+                                event.source.postMessage(
+                                    {
+                                        type: "IFRAME_DETECTION_TEST_RESPONSE",
+                                        canDetect: canDetect
+                                    },
+                                    "*"
+                                );
+                            }
+
+                            return;
+                        }
+
+                        if (event.data && event.data.type === "ADVANTAGE") {
+                            log(
+                                `🔍 [MESSAGE EVENT] Received ADVANTAGE message from ${event.origin}:`,
+                                "info"
+                            );
+                            log(`   - Action: ${event.data.action}`, "info");
+                            log(
+                                `   - SessionID: ${event.data.sessionID}`,
+                                "info"
+                            );
+                            log(
+                                `   - Source: ${
+                                    event.source === iframe.contentWindow
+                                        ? "OUR IFRAME"
+                                        : "OTHER"
+                                }`,
+                                "info"
+                            );
+                            log(
+                                `   - Ports: ${
+                                    event.ports ? event.ports.length : 0
+                                }`,
+                                "info"
+                            );
+
+                            // Check if wrapper can find this iframe
+                            if (event.source === iframe.contentWindow) {
+                                const foundIframes =
+                                    wrapper.contentNodes.flatMap((node) => {
+                                        const collectIframes = (node) => {
+                                            let iframes = [];
+                                            if (
+                                                node.nodeType ===
+                                                Node.ELEMENT_NODE
+                                            ) {
+                                                const element = node;
+                                                if (
+                                                    element.tagName === "IFRAME"
+                                                ) {
+                                                    iframes.push(element);
+                                                }
+                                                element.childNodes.forEach(
+                                                    (child) => {
+                                                        iframes =
+                                                            iframes.concat(
+                                                                collectIframes(
+                                                                    child
+                                                                )
+                                                            );
+                                                    }
+                                                );
+                                            }
+                                            return iframes;
+                                        };
+                                        return collectIframes(node);
+                                    });
+
+                                const matchingIframes = foundIframes.filter(
+                                    (f) => f.contentWindow === event.source
+                                );
+                                log(
+                                    `   - Wrapper can find iframe: ${
+                                        matchingIframes.length > 0
+                                            ? "YES"
+                                            : "NO"
+                                    }`,
+                                    matchingIframes.length > 0
+                                        ? "success"
+                                        : "error"
+                                );
+                            }
+                        }
+                    },
+                    true
+                ); // Use capture phase
+
+                // Also update the iframe container in the ad unit for visual feedback
+                const container = document.getElementById("iframe-container");
+                if (container) {
+                    container.innerHTML = `<p style="color: #28a745; font-weight: bold;">✅ Creative iframe loaded into AdvantageWrapper above</p>`;
+                }
+            };
+
+            // Manual test function remains the same but simplified
+            window.manualTest = function () {
+                const resultEl = document.getElementById("manual-result");
+                let result = "Manual Test Results:\n";
+
+                // Check if elements exist
+                const adUnit = document.querySelector("#my-ad-unit");
+                const wrapper = document.querySelector("advantage-wrapper");
+
+                result += `1. Ad unit element: ${
+                    adUnit ? "FOUND" : "NOT FOUND"
+                }\n`;
+                result += `2. Wrapper element: ${
+                    wrapper ? "FOUND" : "NOT FOUND"
+                }\n`;
+                result += `3. High Impact JS: ${
+                    window.highImpactJs ? "AVAILABLE" : "NOT AVAILABLE"
+                }\n`;
+                result += `4. defineSlot function: ${
+                    window.highImpactJs?.defineSlot
+                        ? "AVAILABLE"
+                        : "NOT AVAILABLE"
+                }\n`;
+
+                // Check debug messages
+                const debugMsgs = window.preWrapDebug || [];
+                result += `5. Pre-wrap debug messages: ${debugMsgs.length}\n`;
+                debugMsgs.forEach((msg, i) => {
+                    result += `   ${i + 1}. ${msg}\n`;
+                });
+
+                resultEl.textContent = result;
+            };
+
+            // Global function for format requests from iframe
+            window.requestFormat = function () {
+                log("📨 Format request received from iframe creative", "info");
+                updateStatus(
+                    "format-status",
+                    "📨 Format request from creative...",
+                    "default"
+                );
+
+                // In a real scenario, this would be handled by the iframe creative's messaging
+                // For this demo, we'll just show that the architecture is working
+                setTimeout(() => {
+                    log(
+                        "🎉 Format would be handled by iframe creative messaging",
+                        "success"
+                    );
+                    updateStatus(
+                        "format-status",
+                        "🎉 Format handled by iframe",
+                        "success"
+                    );
+                }, 1000);
+            };
+        </script>
+    </body>
+</html>

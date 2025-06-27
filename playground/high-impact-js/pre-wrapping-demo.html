@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Advantage + High Impact JS Compatibility - Pre-wrapping Demo
+        </title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            .demo-section {
+                border: 2px solid #e5e7eb;
+                margin: 20px 0;
+                padding: 20px;
+                border-radius: 8px;
+            }
+
+            .ad-slot {
+                border: 2px dashed #d1d5db;
+                padding: 20px;
+                text-align: center;
+                background: #f9fafb;
+                margin: 10px 0;
+            }
+
+            advantage-wrapper {
+                border: 2px solid #10b981;
+                display: block;
+                margin: 10px 0;
+            }
+
+            .status {
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 4px;
+                font-family: monospace;
+            }
+
+            .status.success {
+                background: #d1fae5;
+                color: #065f46;
+            }
+
+            .status.pending {
+                background: #fef3c7;
+                color: #92400e;
+            }
+
+            .status.error {
+                background: #fee2e2;
+                color: #991b1b;
+            }
+        </style>
+    </head>
+    <body class="bg-gray-50">
+        <!-- Initialize window.highImpactJs before any scripts load -->
+        <script>
+            window.highImpactJs = window.highImpactJs || { cmd: [] };
+        </script>
+
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">
+                Advantage + High Impact JS Compatibility Demo
+            </h1>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
+                <h2 class="text-lg font-semibold text-blue-900 mb-2">
+                    📋 Problem Solved
+                </h2>
+                <p class="text-blue-800">
+                    This demo shows how the updated High Impact JS compatibility
+                    layer now pre-wraps ad units with AdvantageWrapper when
+                    `defineSlot` is called, ensuring Advantage creatives can
+                    communicate immediately when they load, regardless of size
+                    or HTML content.
+                </p>
+            </div>
+
+            <!-- Demo Section 1: Pre-wrapped Ad Unit -->
+            <div class="demo-section">
+                <h2 class="text-xl font-semibold mb-4">
+                    🎯 Scenario 1: Pre-wrapped Ad Unit (New Behavior)
+                </h2>
+                <p class="text-gray-600 mb-4">
+                    This ad unit is defined with High Impact JS API and gets
+                    immediately wrapped with AdvantageWrapper. Any Advantage
+                    creative that loads here can communicate immediately.
+                </p>
+
+                <div id="status-1" class="status pending">
+                    Status: Waiting for ad unit definition...
+                </div>
+
+                <!-- This will be wrapped by the compatibility layer -->
+                <div id="pre-wrapped-ad-unit" class="ad-slot">
+                    <div>Ad Unit: pre-wrapped-ad-unit</div>
+                    <div class="text-sm text-gray-500">
+                        Will be pre-wrapped when defineSlot() is called
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Section 2: Traditional wrapping (fallback) -->
+            <div class="demo-section">
+                <h2 class="text-xl font-semibold mb-4">
+                    ⏳ Scenario 2: Traditional Wrapping (Fallback)
+                </h2>
+                <p class="text-gray-600 mb-4">
+                    This demonstrates the fallback behavior when pre-wrapping
+                    isn't possible (e.g., DOM element doesn't exist yet). The ad
+                    unit will be wrapped when a matching creative is rendered.
+                </p>
+
+                <div id="status-2" class="status pending">
+                    Status: Waiting for creative to render...
+                </div>
+
+                <!-- This simulates an ad unit that doesn't exist when defineSlot is called -->
+                <div id="traditional-wrap-demo" class="ad-slot">
+                    <div>Ad Unit: traditional-wrap-demo</div>
+                    <div class="text-sm text-gray-500">
+                        Will be created dynamically to simulate GAM/Xandr
+                        behavior
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Section 3: Already wrapped (edge case) -->
+            <div class="demo-section">
+                <h2 class="text-xl font-semibold mb-4">
+                    ✅ Scenario 3: Already Wrapped (Edge Case)
+                </h2>
+                <p class="text-gray-600 mb-4">
+                    This ad unit is already wrapped with AdvantageWrapper. The
+                    compatibility layer should detect this and reuse the
+                    existing wrapper instead of creating a new one.
+                </p>
+
+                <div id="status-3" class="status pending">
+                    Status: Checking for existing wrapper...
+                </div>
+
+                <!-- This is already wrapped -->
+                <advantage-wrapper allowed-formats="MIDSCROLL">
+                    <div slot="advantage-ad-slot">
+                        <div id="already-wrapped-ad-unit" class="ad-slot">
+                            <div>Ad Unit: already-wrapped-ad-unit</div>
+                            <div class="text-sm text-gray-500">
+                                Already wrapped with AdvantageWrapper
+                            </div>
+                        </div>
+                    </div>
+                </advantage-wrapper>
+            </div>
+
+            <!-- Log Section -->
+            <div class="demo-section">
+                <h2 class="text-xl font-semibold mb-4">📝 Debug Log</h2>
+                <div
+                    id="debug-log"
+                    class="bg-gray-900 text-green-400 p-4 rounded font-mono text-sm h-64 overflow-y-auto"
+                >
+                    <!-- Debug messages will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Load Advantage and initialize compatibility first -->
+        <script type="module">
+            import { Advantage } from "../../src/advantage";
+
+            // Initialize Advantage with High Impact compatibility FIRST
+            console.log("🚀 Initializing Advantage...");
+            const advantage = Advantage.getInstance();
+
+            advantage.configure({
+                enableHighImpactCompatibility: true,
+                formatIntegrations: [
+                    {
+                        format: "TOPSCROLL",
+                        setup: () => Promise.resolve()
+                    },
+                    {
+                        format: "MIDSCROLL",
+                        setup: () => Promise.resolve()
+                    },
+                    {
+                        format: "WELCOMEPAGE",
+                        setup: () => Promise.resolve()
+                    }
+                ]
+            });
+
+            // Make Advantage available globally for debugging
+            window.advantage = advantage;
+            console.log(
+                "✅ Advantage configured with High Impact compatibility"
+            );
+        </script>
+
+        <!-- Demo script -->
+        <script type="module">
+            // Debug logging
+            function log(message, type = "info") {
+                const timestamp = new Date().toLocaleTimeString();
+                const logElement = document.getElementById("debug-log");
+                const color =
+                    type === "success"
+                        ? "text-green-400"
+                        : type === "error"
+                        ? "text-red-400"
+                        : type === "warning"
+                        ? "text-yellow-400"
+                        : "text-blue-400";
+
+                logElement.innerHTML += `<div class="${color}">[${timestamp}] ${message}</div>`;
+                logElement.scrollTop = logElement.scrollHeight;
+            }
+
+            function updateStatus(sectionId, message, type = "pending") {
+                const statusEl = document.getElementById(`status-${sectionId}`);
+                statusEl.textContent = `Status: ${message}`;
+                statusEl.className = `status ${type}`;
+            }
+
+            // Scenario 1: Pre-wrapped ad unit
+            async function scenario1() {
+                log("🎯 Starting Scenario 1: Pre-wrapped ad unit");
+
+                // Define slot - this should immediately wrap the ad unit
+                window.highImpactJs.defineSlot({
+                    template: "topscroll",
+                    adUnitId: "pre-wrapped-ad-unit",
+                    sizes: [
+                        [728, 90],
+                        [970, 250]
+                    ]
+                });
+
+                log("✅ defineSlot called for pre-wrapped-ad-unit");
+
+                // Check if it was wrapped
+                setTimeout(() => {
+                    const wrapper = document
+                        .querySelector("#pre-wrapped-ad-unit")
+                        .closest("advantage-wrapper");
+                    if (wrapper) {
+                        updateStatus(
+                            1,
+                            "Ad unit pre-wrapped successfully!",
+                            "success"
+                        );
+                        log(
+                            "✅ Pre-wrapping successful - AdvantageWrapper created immediately"
+                        );
+                        log(
+                            `   Allowed formats: ${wrapper.getAttribute(
+                                "allowed-formats"
+                            )}`
+                        );
+                    } else {
+                        updateStatus(1, "Pre-wrapping failed", "error");
+                        log(
+                            "❌ Pre-wrapping failed - no AdvantageWrapper found",
+                            "error"
+                        );
+                    }
+                }, 100);
+            }
+
+            // Scenario 2: Traditional wrapping
+            async function scenario2() {
+                log("⏳ Starting Scenario 2: Traditional wrapping (fallback)");
+
+                // Define slot for non-existent element first
+                window.highImpactJs.defineSlot({
+                    template: "midscroll",
+                    adUnitId: "dynamic-ad-unit",
+                    sizes: [[300, 250]]
+                });
+
+                log("📝 defineSlot called for non-existent dynamic-ad-unit");
+
+                // Create the element later (simulating GAM/Xandr dynamic creation)
+                setTimeout(() => {
+                    const adUnit = document.createElement("div");
+                    adUnit.id = "dynamic-ad-unit";
+                    adUnit.className = "ad-slot";
+                    adUnit.innerHTML =
+                        '<div>Dynamic Ad Unit: dynamic-ad-unit</div><div class="text-sm text-gray-500">Created dynamically after defineSlot</div>';
+
+                    document
+                        .getElementById("traditional-wrap-demo")
+                        .appendChild(adUnit);
+                    log("📦 Dynamic ad unit element created");
+                    updateStatus(
+                        2,
+                        "Element created, waiting for creative...",
+                        "pending"
+                    );
+                }, 1000);
+            }
+
+            // Scenario 3: Already wrapped
+            async function scenario3() {
+                log("✅ Starting Scenario 3: Already wrapped ad unit");
+
+                // Check existing wrapper count before
+                const wrappersBefore =
+                    document.querySelectorAll("advantage-wrapper").length;
+                log(`📊 Wrapper count before defineSlot: ${wrappersBefore}`);
+
+                // Define slot for already wrapped element
+                window.highImpactJs.defineSlot({
+                    template: "midscroll",
+                    adUnitId: "already-wrapped-ad-unit",
+                    sizes: [[300, 250]]
+                });
+
+                log("📝 defineSlot called for already-wrapped-ad-unit");
+
+                setTimeout(() => {
+                    const wrappersAfter =
+                        document.querySelectorAll("advantage-wrapper").length;
+                    log(`📊 Wrapper count after defineSlot: ${wrappersAfter}`);
+
+                    if (wrappersAfter === wrappersBefore) {
+                        updateStatus(
+                            3,
+                            "Existing wrapper reused (no duplicates)",
+                            "success"
+                        );
+                        log(
+                            "✅ Correctly reused existing wrapper - no duplicates created"
+                        );
+                    } else {
+                        updateStatus(
+                            3,
+                            "Unexpected wrapper duplication",
+                            "error"
+                        );
+                        log(
+                            "❌ Unexpected wrapper duplication detected",
+                            "error"
+                        );
+                    }
+                }, 100);
+            }
+
+            // Wait for High Impact compatibility to initialize
+            async function waitForCompatibilityLayer() {
+                log(
+                    "🚀 Page loaded, waiting for High Impact JS compatibility..."
+                );
+
+                let attempts = 0;
+                const maxAttempts = 20;
+
+                while (attempts < maxAttempts) {
+                    if (window.highImpactJs && window.highImpactJs.defineSlot) {
+                        log(
+                            "✅ High Impact JS compatibility layer initialized"
+                        );
+                        return true;
+                    }
+
+                    await new Promise((resolve) => setTimeout(resolve, 250));
+                    attempts++;
+
+                    if (attempts % 4 === 0) {
+                        log(
+                            `⏳ Still waiting... (attempt ${attempts}/${maxAttempts})`
+                        );
+                    }
+                }
+
+                log(
+                    "❌ High Impact JS compatibility layer not found after timeout",
+                    "error"
+                );
+                return false;
+            }
+
+            window.addEventListener("load", async () => {
+                const compatible = await waitForCompatibilityLayer();
+
+                if (compatible) {
+                    // Run scenarios with better timing
+                    log("🎬 Starting demo scenarios...");
+
+                    try {
+                        await scenario1();
+                        await new Promise((resolve) =>
+                            setTimeout(resolve, 500)
+                        );
+
+                        await scenario2();
+                        await new Promise((resolve) =>
+                            setTimeout(resolve, 500)
+                        );
+
+                        await scenario3();
+
+                        log("🎉 All scenarios completed!");
+                    } catch (error) {
+                        log(
+                            `❌ Error during scenarios: ${error.message}`,
+                            "error"
+                        );
+                    }
+                } else {
+                    updateStatus(
+                        1,
+                        "Compatibility layer initialization failed",
+                        "error"
+                    );
+                    updateStatus(
+                        2,
+                        "Compatibility layer initialization failed",
+                        "error"
+                    );
+                    updateStatus(
+                        3,
+                        "Compatibility layer initialization failed",
+                        "error"
+                    );
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Debug Pre-wrapping</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 20px;
+                background: #f0f0f0;
+            }
+            .debug-box {
+                background: white;
+                padding: 20px;
+                margin: 10px 0;
+                border-radius: 8px;
+                border: 1px solid #ddd;
+            }
+            .ad-unit {
+                border: 2px solid red;
+                padding: 20px;
+                margin: 20px 0;
+                background: #ffe6e6;
+            }
+            button {
+                background: #007bff;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin: 5px;
+            }
+            button:hover {
+                background: #0056b3;
+            }
+            pre {
+                background: #f8f9fa;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>🔧 Debug Pre-wrapping</h1>
+
+        <div class="debug-box">
+            <h2>Step 1: Import modules</h2>
+            <div id="import-status">⏳ Loading...</div>
+        </div>
+
+        <div class="debug-box">
+            <h2>Step 2: Initialize High Impact JS</h2>
+            <div id="init-status">⏳ Waiting...</div>
+            <button onclick="testInitialization()">Test Initialization</button>
+        </div>
+
+        <div class="debug-box">
+            <h2>Step 3: Ad Unit Element</h2>
+            <div class="ad-unit" id="my-ad-unit">
+                <p>📍 This is the ad unit (ID: my-ad-unit)</p>
+            </div>
+            <div id="element-status">⏳ Checking...</div>
+            <button onclick="checkElement()">Check Element</button>
+        </div>
+
+        <div class="debug-box">
+            <h2>Step 4: Pre-wrapping Test</h2>
+            <div id="prewrap-status">⏳ Ready to test...</div>
+            <button onclick="testPreWrap()">Test Pre-wrap</button>
+            <button onclick="checkWrapper()">Check for Wrapper</button>
+        </div>
+
+        <div class="debug-box">
+            <h2>Debug Info</h2>
+            <pre id="debug-info">No debug info yet...</pre>
+        </div>
+
+        <script type="module">
+            // Import modules
+            console.log("🚀 Starting debug script...");
+
+            import "../../src/advantage/index";
+            import { initializeHighImpactJs } from "../../src/advantage/high-impact-js/index";
+
+            document.getElementById("import-status").textContent =
+                "✅ Modules imported successfully";
+
+            let initialized = false;
+            let highImpactJs = null;
+
+            // Test initialization
+            window.testInitialization = async function () {
+                try {
+                    document.getElementById("init-status").textContent =
+                        "🔧 Initializing...";
+
+                    await customElements.whenDefined("advantage-wrapper");
+                    await initializeHighImpactJs();
+
+                    highImpactJs = window.highImpactJs;
+                    initialized = true;
+
+                    document.getElementById("init-status").textContent =
+                        "✅ Initialized successfully";
+                    updateDebugInfo();
+                } catch (error) {
+                    document.getElementById("init-status").textContent =
+                        "❌ Initialization failed: " + error.message;
+                    console.error("Initialization error:", error);
+                }
+            };
+
+            // Check element
+            window.checkElement = function () {
+                const element = document.querySelector("#my-ad-unit");
+                const status = document.getElementById("element-status");
+
+                if (element) {
+                    status.textContent = `✅ Element found: ${element.tagName}#${element.id}`;
+                } else {
+                    status.textContent = "❌ Element not found";
+                }
+                updateDebugInfo();
+            };
+
+            // Test pre-wrap
+            window.testPreWrap = function () {
+                if (!initialized) {
+                    document.getElementById("prewrap-status").textContent =
+                        "❌ Must initialize first";
+                    return;
+                }
+
+                try {
+                    document.getElementById("prewrap-status").textContent =
+                        "🔧 Testing pre-wrap...";
+
+                    // Call defineSlot which should trigger pre-wrapping
+                    window.highImpactJs.defineSlot({
+                        template: "topscroll",
+                        adUnitId: "my-ad-unit",
+                        sizes: [
+                            [728, 90],
+                            [970, 250]
+                        ]
+                    });
+
+                    document.getElementById("prewrap-status").textContent =
+                        "✅ defineSlot called";
+
+                    // Check after a brief delay
+                    setTimeout(() => {
+                        checkWrapper();
+                    }, 100);
+                } catch (error) {
+                    document.getElementById("prewrap-status").textContent =
+                        "❌ Pre-wrap failed: " + error.message;
+                    console.error("Pre-wrap error:", error);
+                }
+            };
+
+            // Check for wrapper
+            window.checkWrapper = function () {
+                const wrapper = document.querySelector("advantage-wrapper");
+                const adUnit = document.querySelector("#my-ad-unit");
+
+                let result = "Wrapper Check Results:\n";
+                result += `- Wrapper element: ${
+                    wrapper ? "FOUND" : "NOT FOUND"
+                }\n`;
+                result += `- Ad unit element: ${
+                    adUnit ? "FOUND" : "NOT FOUND"
+                }\n`;
+
+                if (wrapper) {
+                    result += `- Wrapper HTML: ${wrapper.outerHTML}\n`;
+                }
+
+                if (adUnit) {
+                    result += `- Ad unit parent: ${
+                        adUnit.parentElement?.tagName || "none"
+                    }\n`;
+                }
+
+                // Check debug array
+                const debugArray = window.preWrapDebug || [];
+                result += `- Debug messages: ${debugArray.length} messages\n`;
+                debugArray.forEach((msg, i) => {
+                    result += `  ${i + 1}. ${msg}\n`;
+                });
+
+                document.getElementById("debug-info").textContent = result;
+
+                // Update status
+                const statusEl = document.getElementById("prewrap-status");
+                if (wrapper) {
+                    statusEl.textContent = "✅ Wrapper created successfully!";
+                } else {
+                    statusEl.textContent = "❌ No wrapper found";
+                }
+            };
+
+            function updateDebugInfo() {
+                let info = "Debug Information:\n";
+                info += `- High Impact JS available: ${!!window.highImpactJs}\n`;
+                info += `- defineSlot function: ${!!window.highImpactJs
+                    ?.defineSlot}\n`;
+                info += `- Initialized: ${initialized}\n`;
+                info += `- Ad unit element: ${!!document.querySelector(
+                    "#my-ad-unit"
+                )}\n`;
+                info += `- Advantage wrapper elements: ${
+                    document.querySelectorAll("advantage-wrapper").length
+                }\n`;
+
+                // Check if custom element is defined
+                try {
+                    const isDefined = customElements.get("advantage-wrapper");
+                    info += `- advantage-wrapper custom element: ${
+                        isDefined ? "DEFINED" : "NOT DEFINED"
+                    }\n`;
+                } catch (e) {
+                    info += `- advantage-wrapper custom element: ERROR - ${e.message}\n`;
+                }
+
+                document.getElementById("debug-info").textContent = info;
+            }
+
+            // Auto-check element on load
+            checkElement();
+            updateDebugInfo();
+
+            // Auto-initialize after a short delay
+            setTimeout(() => {
+                testInitialization();
+            }, 500);
+        </script>
+    </body>
+</html>
