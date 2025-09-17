@@ -126,7 +126,6 @@ export interface AdvantageFormatOptions {
     backgroundAdURL?: string;
     allowedOrigins?: string[];
     dangerouslyAllowAllOrigins?: boolean;
-    numberOfMidscrolls?: number;
 }
 
 export interface AdvantageFormatIntegration {

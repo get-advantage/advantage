@@ -268,8 +268,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 await formatConfig.setup(this, this.messageHandler.ad?.iframe, {
                     ...integration?.options,
                     backgroundAdURL: message?.backgroundAdURL,
-                    sessionID: message?.sessionID,
-                    allowedOrigins: message?.origins
+                    sessionID: message?.sessionID
                 });
 
                 // 2. Then we call the integration setup function to apply site-specific adjustments

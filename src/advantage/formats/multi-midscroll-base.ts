@@ -26,14 +26,6 @@ export function createMultiMidscroll(
             };
             const config = { ...defaults, ...(options || {}) };
 
-            // For development: If no allowedOrigins are provided but we're on localhost,
-            // automatically allow localhost origins
-            if ((!config.allowedOrigins || config.allowedOrigins.length === 0) &&
-                window.location.hostname === 'localhost') {
-                config.allowedOrigins = ['http://localhost:5173'];
-                logger.debug('Auto-allowing localhost origins for development');
-            }
-
             function validateBackgroundAdURL(
                 backgroundAdURL: string,
                 allowedOrigins: string[]
