@@ -4,7 +4,7 @@ import {
     AdvantageMessage,
     AdvantageMessageAction
 } from "../../types";
-import { Advantage } from "..";
+import { Advantage } from "../advantage";
 import { collectIframes, logger, ADVANTAGE } from "../../utils";
 
 /**
