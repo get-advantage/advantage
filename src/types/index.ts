@@ -12,6 +12,7 @@ export enum AdvantageFormatName {
     TopScroll = "TOPSCROLL",
     DoubleMidscroll = "DOUBLE_MIDSCROLL",
     Midscroll = "MIDSCROLL",
+    TripleMidscroll = "TRIPLE_MIDSCROLL",
     WelcomePage = "WELCOME_PAGE"
 }
 
@@ -125,6 +126,7 @@ export interface AdvantageFormatOptions {
     backgroundAdURL?: string;
     allowedOrigins?: string[];
     dangerouslyAllowAllOrigins?: boolean;
+    numberOfMidscrolls?: number;
 }
 
 export interface AdvantageFormatIntegration {
