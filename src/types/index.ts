@@ -12,6 +12,7 @@ export enum AdvantageFormatName {
     TopScroll = "TOPSCROLL",
     DoubleMidscroll = "DOUBLE_MIDSCROLL",
     Midscroll = "MIDSCROLL",
+    TripleMidscroll = "TRIPLE_MIDSCROLL",
     WelcomePage = "WELCOME_PAGE"
 }
 
