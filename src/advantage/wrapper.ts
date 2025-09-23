@@ -110,6 +110,18 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     }
 
     /**
+     * Updates the current-format attribute to match the currentFormat property.
+     * Sets the attribute when currentFormat has a value, removes it when empty.
+     */
+    #updateCurrentFormatAttribute() {
+        if (this.currentFormat) {
+            this.setAttribute('current-format', this.currentFormat);
+        } else {
+            this.removeAttribute('current-format');
+        }
+    }
+
+    /**
      * Detects DOM changes and resets the wrapper if a new ad is loaded.
      */
     #detectDOMChanges = () => {
@@ -242,6 +254,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 return;
             }
             this.currentFormat = format;
+            this.#updateCurrentFormatAttribute();
             let formatConfig = Advantage.getInstance().formats.get(
                 format as string
             );
@@ -255,6 +268,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                         `😱 The format ${format} is not supported. No configuration was found.`
                     );
                     this.currentFormat = "";
+                    this.#updateCurrentFormatAttribute();
                     return;
                 }
             }
@@ -376,6 +390,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
         this.uiLayer.changeContent("");
         this.currentFormat = "";
+        this.#updateCurrentFormatAttribute();
     }
 
     animateClose() {
@@ -420,6 +435,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
         }
         this.currentFormat = "";
+        this.#updateCurrentFormatAttribute();
     }
 
     /**
