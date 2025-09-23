@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/get-advantage/advantage/compare/v0.8.0...v0.9.0) (2025-09-23)
+
+
+### Features
+
+* current-format attribute to AdvantageWrapper for easier debugging ([#53](https://github.com/get-advantage/advantage/issues/53)) ([07e30dc](https://github.com/get-advantage/advantage/commit/07e30dcefc06fba79075557410b794d41b0239e0))
+* triple midscroll format support ([#55](https://github.com/get-advantage/advantage/issues/55)) ([e4c70fc](https://github.com/get-advantage/advantage/commit/e4c70fcb07fa46f67643d36236e986ba7f9c96f5))
+
 # [0.8.0](https://github.com/get-advantage/advantage/compare/v0.7.0...v0.8.0) (2025-06-27)
 
 
