@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>High Impact JS Compatibility Example</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            html {
+                overflow-x: hidden;
+            }
+
+            /* Publisher-style content layout */
+            .site-wrapper {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            .navbar-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 16px 20px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e9ecef;
+                margin-bottom: 20px;
+            }
+
+            .back-link {
+                color: #6c757d;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .logo {
+                fill: #007bff;
+            }
+
+            .section {
+                display: grid;
+                grid-template-columns: 1fr 300px;
+                gap: 40px;
+                margin-bottom: 40px;
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .article-big {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .articles-vertical {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .articles-horizontal {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .article-small {
+                display: flex;
+                gap: 16px;
+                align-items: flex-start;
+            }
+
+            .article-medium {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .dummy-image {
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .dummy-image.large {
+                width: 100%;
+                height: 200px;
+            }
+
+            .dummy-image.medium {
+                width: 100%;
+                height: 120px;
+            }
+
+            .dummy-image.small {
+                width: 80px;
+                height: 80px;
+            }
+
+            .image-icon {
+                fill: #6c757d;
+            }
+
+            .dummy-text {
+                background: #e9ecef;
+                border-radius: 4px;
+                height: 16px;
+                animation: pulse 2s infinite;
+            }
+
+            .dummy-text.large {
+                height: 20px;
+                margin-bottom: 12px;
+            }
+
+            .dummy-text.small {
+                height: 14px;
+                margin-bottom: 8px;
+            }
+
+            .dummy-text:nth-child(odd) {
+                width: 85%;
+            }
+
+            .dummy-text:nth-child(even) {
+                width: 70%;
+            }
+
+            .text-wrapper {
+                flex: 1;
+            }
+
+            .side-column {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .side-column .header {
+                background: #007bff;
+                height: 40px;
+                border-radius: 4px;
+            }
+
+            .side-column-section {
+                background: #f8f9fa;
+                padding: 16px;
+                border-radius: 8px;
+                border: 1px solid #e9ecef;
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.5;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .section {
+                    grid-template-columns: 1fr;
+                    gap: 20px;
+                }
+
+                .articles-horizontal {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- SVG symbols for icons -->
+        <svg style="display: none">
+            <symbol id="logo" viewBox="0 -960 960 960">
+                <path
+                    d="M380.385-102.117q-65.423 0-111.846-45.942-46.422-45.942-46.422-110.402 0-31.116 15.173-58.058t52.788-62.633q12.461-10.924 21.654-22.713 9.193-11.789 22.078-26.596-47.923-73.385-73.462-153.115-25.538-79.73-25.538-156.499 0-50.269 15.346-75.903 15.346-25.635 44.46-25.635 43.961 0 83.73 47.058 39.769 47.057 63.423 97.365 13.962 30.577 23.269 63.463 9.308 32.885 14.962 68.886 5.654-36.001 15.058-68.886 9.404-32.886 23.481-63.463 22.961-50.308 62.923-97.365 39.961-47.058 83.922-47.058 29.114 0 44.556 25.635 15.442 25.634 15.442 75.903 0 76.769-25.634 156.499-25.635 79.73-73.558 153.115 12.885 14.807 22.078 26.596t21.654 22.713q37.615 35.691 52.884 62.633 15.27 26.942 15.27 58.058 0 64.46-46.519 110.402-46.519 45.942-111.942 45.942-41.153 0-70.384-11.308L480-124.732l-29.231 11.307q-29.231 11.308-70.384 11.308Z"
+                />
+            </symbol>
+            <symbol id="image-icon" viewBox="0 -960 960 960">
+                <path
+                    d="M240.615-184q-24.315 0-40.465-16.5Q184-217 184-240.615v-478.77Q184-743 200.15-759.5 216.3-776 240.615-776h478.77q24.315 0 40.465 16.5Q776-743 776-719.385v478.77Q776-217 759.85-200.5 743.7-184 719.385-184h-478.77Zm0-32h478.77q9.23 0 16.923-7.692Q744-231.385 744-240.615v-478.77q0-9.23-7.692-16.923Q728.615-744 719.385-744h-478.77q-9.23 0-16.923 7.692Q216-728.615 216-719.385v478.77q0 9.23 7.692 16.923Q231.385-216 240.615-216ZM324-308h318.154L535.077-450.769l-92.615 116.307-52.001-60.615L324-308Zm-108 92v-528 528Z"
+                />
+            </symbol>
+            <symbol id="image-icon-2" viewBox="0 -960 960 960">
+                <path
+                    d="M164.615-232q-23.354 0-39.985-16.631Q108-265.261 108-288.615v-382.77q0-23.354 16.63-39.984Q141.261-728 164.615-728h382.77q23.354 0 39.984 16.631Q604-694.739 604-671.385v382.77q0 23.354-16.631 39.984Q570.739-232 547.385-232h-382.77Zm528.074-284q-7.504 0-12.097-4.592Q676-525.185 676-532.688v-178.624q0-7.504 4.592-12.096Q685.185-728 692.689-728h142.623q7.504 0 12.096 4.592Q852-718.816 852-711.312v178.624q0 7.503-4.592 12.096Q842.816-516 835.312-516H692.689ZM708-548h112v-148H708v148ZM164.615-264h382.77q10.769 0 17.692-6.923T572-288.615v-382.77q0-10.769-6.923-17.692T547.385-696h-382.77q-10.769 0-17.692 6.923T140-671.385v382.77q0 10.769 6.923 17.692T164.615-264Zm31.077-75.846h320.616L415-473.846l-83 107-59-77-77.308 104ZM692.689-232q-7.504 0-12.097-4.592Q676-241.184 676-248.688v-178.624q0-7.503 4.592-12.096Q685.185-444 692.689-444h142.623q7.504 0 12.096 4.592Q852-434.815 852-427.312v178.624q0 7.504-4.592 12.096Q842.816-232 835.312-232H692.689ZM708-264h112v-148H708v148Zm-568 0v-432 432Zm568-284v-148 148Zm0 284v-148 148Z"
+                />
+            </symbol>
+        </svg>
+
+        <!-- Topscroll ad slot -->
+        <div id="/123456/topscroll-ad"></div>
+
+        <!-- Header navbar -->
+        <header class="navbar-wrapper">
+            <a href="#" class="back-link">← Back to Examples</a>
+            <svg height="32" width="32" class="logo">
+                <use href="#logo" />
+            </svg>
+            <h1 style="margin: 0; font-size: 20px; font-weight: 600">
+                High Impact News
+            </h1>
+        </header>
+
+        <!-- Main content wrapper -->
+        <div class="site-wrapper">
+            <div class="section">
+                <main class="content">
+                    <div class="article-big">
+                        <div class="dummy-image large">
+                            <svg class="image-icon" height="48" width="48">
+                                <use href="#image-icon-2" />
+                            </svg>
+                        </div>
+                        <div class="dummy-text large"></div>
+                        <div class="dummy-text large"></div>
+                        <div class="dummy-text large"></div>
+                    </div>
+
+                    <div class="articles-vertical">
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="articles-horizontal">
+                        <div class="article-medium">
+                            <div class="dummy-image medium">
+                                <svg class="image-icon" height="40" width="40">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                        </div>
+                        <div class="article-medium">
+                            <div class="dummy-image medium">
+                                <svg class="image-icon" height="40" width="40">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                        </div>
+                    </div>
+                </main>
+
+                <aside class="side-column">
+                    <div class="header"></div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Second section for more content -->
+            <div class="section">
+                <main class="content">
+                    <div class="article-big">
+                        <div class="dummy-image large">
+                            <svg class="image-icon" height="48" width="48">
+                                <use href="#image-icon-2" />
+                            </svg>
+                        </div>
+                        <div class="dummy-text large"></div>
+                        <div class="dummy-text large"></div>
+                    </div>
+
+                    <div class="articles-vertical">
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="articles-horizontal">
+                        <div class="article-medium">
+                            <div class="dummy-image medium">
+                                <svg class="image-icon" height="40" width="40">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                        </div>
+                        <div class="article-medium">
+                            <div class="dummy-image medium">
+                                <svg class="image-icon" height="40" width="40">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                        </div>
+                    </div>
+                </main>
+
+                <aside class="side-column">
+                    <div class="header"></div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Third section - more content before midscroll -->
+            <div class="section">
+                <main class="content">
+                    <div class="article-big">
+                        <div class="dummy-image large">
+                            <svg class="image-icon" height="48" width="48">
+                                <use href="#image-icon-2" />
+                            </svg>
+                        </div>
+                        <div class="dummy-text large"></div>
+                        <div class="dummy-text large"></div>
+                        <div class="dummy-text large"></div>
+                    </div>
+
+                    <div class="articles-vertical">
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                <aside class="side-column">
+                    <div class="header"></div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- MIDSCROLL AD PLACEMENT -->
+            <div style="margin: 60px 0; text-align: center">
+                <div
+                    style="
+                        font-size: 12px;
+                        color: #6c757d;
+                        margin-bottom: 10px;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                    "
+                >
+                    Advertisement
+                </div>
+                <div id="/123456/midscroll-ad"></div>
+            </div>
+
+            <!-- Fourth section - content after midscroll -->
+            <div class="section">
+                <main class="content">
+                    <div class="article-big">
+                        <div class="dummy-image large">
+                            <svg class="image-icon" height="48" width="48">
+                                <use href="#image-icon-2" />
+                            </svg>
+                        </div>
+                        <div class="dummy-text large"></div>
+                        <div class="dummy-text large"></div>
+                        <div class="dummy-text large"></div>
+                    </div>
+
+                    <div class="articles-horizontal">
+                        <div class="article-medium">
+                            <div class="dummy-image medium">
+                                <svg class="image-icon" height="40" width="40">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                        </div>
+                        <div class="article-medium">
+                            <div class="dummy-image medium">
+                                <svg class="image-icon" height="40" width="40">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                        </div>
+                    </div>
+
+                    <div class="articles-vertical">
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                <aside class="side-column">
+                    <div class="header"></div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Fifth section - even more content after midscroll -->
+            <div class="section">
+                <main class="content">
+                    <div class="article-big">
+                        <div class="dummy-image large">
+                            <svg class="image-icon" height="48" width="48">
+                                <use href="#image-icon-2" />
+                            </svg>
+                        </div>
+                        <div class="dummy-text large"></div>
+                        <div class="dummy-text large"></div>
+                    </div>
+
+                    <div class="articles-vertical">
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                        <div class="article-small">
+                            <div class="dummy-image small">
+                                <svg class="image-icon" height="32" width="32">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="text-wrapper">
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                                <div class="dummy-text small"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="articles-horizontal">
+                        <div class="article-medium">
+                            <div class="dummy-image medium">
+                                <svg class="image-icon" height="40" width="40">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                        </div>
+                        <div class="article-medium">
+                            <div class="dummy-image medium">
+                                <svg class="image-icon" height="40" width="40">
+                                    <use href="#image-icon" />
+                                </svg>
+                            </div>
+                            <div class="dummy-text small"></div>
+                            <div class="dummy-text small"></div>
+                        </div>
+                    </div>
+                </main>
+
+                <aside class="side-column">
+                    <div class="header"></div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                    <div class="side-column-section">
+                        <div class="dummy-text small"></div>
+                        <div class="dummy-text small"></div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <script type="module">
+            // Unified API: Import everything from main module
+            import {
+                Advantage,
+                AdvantageFormatName,
+                initializeHighImpactJs
+            } from "../../src/advantage/index";
+
+            console.log(
+                "✅ Advantage API imported - High Impact JS will auto-initialize on first use"
+            );
+            import config from "./config";
+
+            const advantage = Advantage.getInstance();
+            advantage.configure(config);
+
+            // Configure High Impact JS (exactly as before)
+            window.highImpactJs = window.highImpactJs || { cmd: [] };
+
+            window.highImpactJs.cmd.push(function () {
+                console.log("⚙️ Configuring High Impact JS...");
+
+                // Set global configuration
+                window.highImpactJs.setConfig({
+                    plugins: ["gam"] // or ['xandr'] for Xandr
+                });
+
+                window.highImpactJs.setTemplateConfig("topscroll", {
+                    showCloseButton: true,
+                    peekAmount: "60vh",
+                    title: "Continue reading"
+                });
+
+                // Configure midscroll template
+                window.highImpactJs.setTemplateConfig("midscroll", {
+                    showCloseButton: true,
+                    title: "Close ad"
+                });
+
+                // Define topscroll slot
+                window.highImpactJs.defineSlot({
+                    template: "topscroll",
+                    adUnitId: "/123456/topscroll-ad",
+                    sizes: [[1, 1]],
+                    waitForAdSignal: true
+                });
+
+                // Define midscroll slot
+                window.highImpactJs.defineSlot({
+                    template: "midscroll",
+                    adUnitId: "/123456/midscroll-ad",
+                    sizes: [[300, 250]],
+                    waitForAdSignal: true
+                });
+
+                window.highImpactJsReady = true;
+                console.log("📢 High Impact JS is ready for mock ads");
+            });
+
+            const injectAdsAndTriggerCallbacks = () => {
+                console.log("🚀 Starting ad injection process...");
+
+                // Wait a bit to ensure DOM is ready
+                setTimeout(() => {
+                    // Create and inject topscroll ad iframe
+                    const topscrollContainer = document.getElementById(
+                        "/123456/topscroll-ad"
+                    );
+                    console.log(
+                        "🔍 Looking for topscroll container:",
+                        topscrollContainer
+                    );
+
+                    if (topscrollContainer) {
+                        console.log(
+                            "✅ Found topscroll container, injecting iframe..."
+                        );
+                        // Clear any existing content
+                        topscrollContainer.innerHTML = "";
+
+                        const topscrollIframe =
+                            document.createElement("iframe");
+                        topscrollIframe.src =
+                            "../local-dev/topscroll-with-highmsg/topscroll.html";
+                        topscrollIframe.style.border = "0";
+                        topscrollIframe.style.width = "1px";
+                        topscrollIframe.style.height = "1px";
+                        topscrollIframe.style.display = "block";
+                        topscrollIframe.scrolling = "no";
+                        topscrollIframe.id = "google_ads_iframe_topscroll";
+
+                        // Add load event listener to see when iframe is ready
+                        topscrollIframe.addEventListener("load", () => {
+                            console.log(
+                                "✅ Topscroll iframe loaded successfully!"
+                            );
+
+                            // Trigger slot rendered after iframe loads
+                            setTimeout(() => {
+                                if (
+                                    window.highImpactJs &&
+                                    window.highImpactJs._triggerSlotRendered
+                                ) {
+                                    console.log(
+                                        "📢 Triggering slot rendered event for topscroll ad (after iframe load)"
+                                    );
+
+                                    const adWrapper = document.getElementById(
+                                        "/123456/topscroll-ad"
+                                    );
+                                    const adIframe = document.getElementById(
+                                        "google_ads_iframe_topscroll"
+                                    );
+
+                                    if (adWrapper && adIframe) {
+                                        window.highImpactJs._triggerSlotRendered(
+                                            {
+                                                adWrapper: adWrapper,
+                                                adUnit: adWrapper,
+                                                adIframe: adIframe,
+                                                size: [1, 1],
+                                                html: "<div>Mock Topscroll Ad Content</div>",
+                                                elementId:
+                                                    "/123456/topscroll-ad",
+                                                plugin: "gam"
+                                            }
+                                        );
+                                        console.log(
+                                            "✅ _triggerSlotRendered called for topscroll with proper DOM elements"
+                                        );
+                                    } else {
+                                        console.log(
+                                            "❌ Could not find topscroll adWrapper or adIframe elements"
+                                        );
+                                    }
+                                }
+                            }, 50); // Small delay after iframe load
+                        });
+
+                        topscrollContainer.appendChild(topscrollIframe);
+                        console.log("✅ Topscroll iframe injected into DOM");
+                    } else {
+                        console.error("❌ Topscroll container not found!");
+                    }
+
+                    // Create and inject midscroll ad iframe
+                    const midscrollContainer = document.getElementById(
+                        "/123456/midscroll-ad"
+                    );
+                    console.log(
+                        "🔍 Looking for midscroll container:",
+                        midscrollContainer
+                    );
+
+                    if (midscrollContainer) {
+                        console.log(
+                            "✅ Found midscroll container, injecting iframe..."
+                        );
+                        // Clear any existing content
+                        midscrollContainer.innerHTML = "";
+
+                        const midscrollIframe =
+                            document.createElement("iframe");
+                        midscrollIframe.src =
+                            "../local-dev/midscroll-with-highmsg/midscroll.html";
+                        midscrollIframe.style.border = "0";
+                        midscrollIframe.style.width = "300px";
+                        midscrollIframe.style.height = "250px";
+                        midscrollIframe.style.display = "block";
+                        midscrollIframe.scrolling = "no";
+                        midscrollIframe.id = "google_ads_iframe_midscroll";
+
+                        // Add load event listener to see when iframe is ready
+                        midscrollIframe.addEventListener("load", () => {
+                            console.log(
+                                "✅ Midscroll iframe loaded successfully!"
+                            );
+
+                            // Trigger slot rendered after iframe loads
+                            setTimeout(() => {
+                                if (
+                                    window.highImpactJs &&
+                                    window.highImpactJs._triggerSlotRendered
+                                ) {
+                                    console.log(
+                                        "📢 Triggering slot rendered event for midscroll ad (after iframe load)"
+                                    );
+
+                                    const adWrapper = document.getElementById(
+                                        "/123456/midscroll-ad"
+                                    );
+                                    const adIframe = document.getElementById(
+                                        "google_ads_iframe_midscroll"
+                                    );
+
+                                    if (adWrapper && adIframe) {
+                                        window.highImpactJs._triggerSlotRendered(
+                                            {
+                                                adWrapper: adWrapper,
+                                                adUnit: adWrapper,
+                                                adIframe: adIframe,
+                                                size: [300, 250],
+                                                html: "<div>Mock Midscroll Ad Content</div>",
+                                                elementId:
+                                                    "/123456/midscroll-ad",
+                                                plugin: "gam"
+                                            }
+                                        );
+                                        console.log(
+                                            "✅ _triggerSlotRendered called for midscroll with proper DOM elements"
+                                        );
+                                    } else {
+                                        console.log(
+                                            "❌ Could not find midscroll adWrapper or adIframe elements"
+                                        );
+                                    }
+                                }
+                            }, 200); // Small delay after iframe load (slightly offset from topscroll)
+                        });
+
+                        midscrollContainer.appendChild(midscrollIframe);
+                        console.log("✅ Midscroll iframe injected into DOM");
+                    } else {
+                        console.error("❌ Midscroll container not found!");
+                    }
+                }, 100);
+            };
+
+            window.triggerMockAds = () => {
+                if (window.mockAdsTriggered) {
+                    console.log("� Mock ads already triggered, skipping");
+                    return;
+                }
+                window.mockAdsTriggered = true;
+                console.log("🎬 triggerMockAds called (first time)");
+
+                // Direct call to injection instead of using GAM cmd queue
+                console.log("📋 Starting direct GAM simulation...");
+                injectAdsAndTriggerCallbacks();
+            };
+
+            const checkReady = () => {
+                if (window.highImpactJsReady) {
+                    console.log("✅ High Impact JS detected as ready");
+                    window.triggerMockAds();
+                } else {
+                    console.log(
+                        "⏳ High Impact JS not ready yet, checking again..."
+                    );
+                    setTimeout(checkReady, 100);
+                }
+            };
+
+            // Start checking for readiness
+            checkReady();
+        </script>
+    </body>
+</html>
