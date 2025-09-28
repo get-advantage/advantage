@@ -43,24 +43,11 @@ export const topscroll: AdvantageFormat = {
         const config = { ...defaults, ...(options || {}) };
 
         return new Promise((resolve) => {
-            // Debug logging
-            console.log("🎯 TOPSCROLL DEBUG: ad element:", ad);
-            console.log("🎯 TOPSCROLL DEBUG: ad.tagName:", ad?.tagName);
-            console.log("🎯 TOPSCROLL DEBUG: ad.id:", ad?.id);
-            console.log(
-                "🎯 TOPSCROLL DEBUG: ad dimensions before:",
-                ad ? `${ad.style.width} x ${ad.style.height}` : "no ad"
-            );
-
             // Inser the CSS for the top scroll format
             wrapper.insertCSS(topscrollCSS);
             // Set the styles for the ad iframe
             if (ad) {
                 setDimensionsUntilAdvantageAdSlot(ad);
-                console.log(
-                    "🎯 TOPSCROLL DEBUG: ad dimensions after setDimensions:",
-                    `${ad.style.width} x ${ad.style.height}`
-                );
             }
 
             // Change the content of the UI layer

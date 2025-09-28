@@ -342,11 +342,16 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                     );
                 }
 
-                // 1. First we call the format setup function with optinal user defined format options
+                // Extract format options from message, excluding control properties
+                const messageOptions: any = message ? { ...message } : {};
+                delete messageOptions.type;
+                delete messageOptions.action;
+                delete messageOptions.format;
+
+                // 1. First we call the format setup function with optional user defined format options
                 await formatConfig.setup(this, this.messageHandler.ad?.iframe, {
                     ...integration?.options,
-                    backgroundAdURL: message?.backgroundAdURL,
-                    sessionID: message?.sessionID
+                    ...messageOptions
                 });
 
                 // 2. Then we call the integration setup function to apply site-specific adjustments

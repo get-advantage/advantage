@@ -19,7 +19,9 @@ export default {
     },
     setupFilesAfterEnv: ["<rootDir>/src/test-setup.ts"],
     moduleNameMapper: {
-        "^@src/(.*)$": "<rootDir>/src/$1"
+        "^@src/(.*)$": "<rootDir>/src/$1",
+        "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+        "\\.css\\?inline$": "identity-obj-proxy"
     },
     extensionsToTreatAsEsm: [".ts"],
     collectCoverageFrom: [
