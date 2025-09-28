@@ -6,9 +6,9 @@ class Logger {
         "color: #f3f1ff; font-weight: bold; background-color: #6b04fd; padding: 2px; border-radius: 2px;";
 
     constructor() {
-        this.debugMode = new URLSearchParams(window.location.search).has(
-            "adv_debug"
-        );
+        this.debugMode =
+            new URLSearchParams(window.location.search).has("adv_debug") ||
+            new URLSearchParams(window.location.search).has("debugHighImpact");
     }
 
     private formatMessage(level: LogLevel): string {
