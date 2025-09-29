@@ -33,7 +33,14 @@ const state = {
     plugins: {} as Record<string, CompatibilityPlugin>,
     config: {} as GlobalConfig,
     templateConfig: {} as Record<string, TemplateConfig>,
-    initialized: false
+    initialized: false,
+    pluginsReady: false,
+    pluginSetupInProgress: false, // Prevent multiple simultaneous plugin setups
+    messageQueue: [] as Array<{
+        source?: Window;
+        adMessageData?: any;
+        iframeName?: string;
+    }>
 };
 
 /**
@@ -162,44 +169,52 @@ const convertTemplateConfigToFormatOptions = (
  * Handles when an ad slot is rendered
  */
 const onAdSlotRendered = (options: {
-    adWrapper: HTMLElement;
-    adUnit: HTMLElement;
-    adIframe: HTMLElement;
-    size: number[];
-    html: string;
     elementId: string;
+    plugin: string;
     fromAdResponsiveSignal?: boolean;
+    adIframe?: HTMLElement;
+    adWrapper?: HTMLElement;
+    adUnit?: HTMLElement;
+    size?: [number, number];
+    html?: string;
     adMessageData?: any;
-    plugin?: string;
 }) => {
+    const slotRenderStartTime = performance.now();
     const {
-        adWrapper,
+        elementId,
+        plugin,
+        fromAdResponsiveSignal = false,
         adIframe,
+        adWrapper,
+        adUnit,
         size,
         html,
-        elementId,
-        fromAdResponsiveSignal = false,
-        plugin = "unknown"
+        adMessageData
     } = options;
+    logger.debug(
+        `⚡ [TIMING] onAdSlotRendered called for ${elementId} at ${slotRenderStartTime.toFixed(
+            2
+        )}ms`
+    );
 
     logger.debug(
         `[High Impact Compatibility] Ad slot rendered: ${elementId} via ${plugin}`
     );
 
-    console.log(
+    logger.debug(
         `📢 [AD SLOT DEBUG] Ad slot rendered: ${elementId} via ${plugin}, fromAdResponsiveSignal: ${fromAdResponsiveSignal}`
     );
 
     const config = getSlotConfig(elementId);
     if (!config) {
-        console.log(`❌ [AD SLOT DEBUG] No config found for ${elementId}`);
+        logger.debug(`❌ [AD SLOT DEBUG] No config found for ${elementId}`);
         logger.debug(
             `[High Impact Compatibility] No config found for ${elementId}`
         );
         return;
     }
 
-    console.log(`✅ [AD SLOT DEBUG] Found config for ${elementId}:`, {
+    logger.debug(`✅ [AD SLOT DEBUG] Found config for ${elementId}:`, {
         template: config.template,
         waitForAdSignal: config.waitForAdSignal,
         rendered: !!config.rendered,
@@ -224,7 +239,9 @@ const onAdSlotRendered = (options: {
         }
     } else {
         // Inject test tag if specified
-        injectTestTagInAdWrapper(adWrapper, config);
+        if (adWrapper) {
+            injectTestTagInAdWrapper(adWrapper, config);
+        }
     }
 
     // Check if size matches config
@@ -242,7 +259,7 @@ const onAdSlotRendered = (options: {
 
     // Check if we should wait for ad signal
     if (config.waitForAdSignal && !fromAdResponsiveSignal) {
-        console.log(
+        logger.debug(
             `⏸️ [AD SLOT DEBUG] Waiting for ad signal for ${elementId} (waitForAdSignal: ${config.waitForAdSignal}, fromAdResponsiveSignal: ${fromAdResponsiveSignal})`
         );
         logger.debug(
@@ -251,12 +268,12 @@ const onAdSlotRendered = (options: {
         return;
     }
 
-    console.log(
+    logger.debug(
         `🚀 [AD SLOT DEBUG] Proceeding with format transformation for ${elementId} (waitForAdSignal: ${config.waitForAdSignal}, fromAdResponsiveSignal: ${fromAdResponsiveSignal})`
     );
 
     // Check if we should ignore this slot
-    if (shouldIgnore(html)) {
+    if (html && shouldIgnore(html)) {
         logger.debug(
             `[High Impact Compatibility] Ignoring slot ${elementId} based on HTML content`
         );
@@ -338,14 +355,18 @@ const onAdSlotRendered = (options: {
 
                 logger.debug(`🎯 DEBUG: Moving iframe into new wrapper`);
                 // Move the ad iframe into the advantage wrapper
-                slotDiv.appendChild(adIframe);
+                if (adIframe) {
+                    slotDiv.appendChild(adIframe);
+                }
                 advantageWrapperElement.appendChild(slotDiv);
 
                 // Replace the original ad wrapper with advantage wrapper
-                adWrapper.parentNode?.replaceChild(
-                    advantageWrapperElement,
-                    adWrapper
-                );
+                if (adWrapper) {
+                    adWrapper.parentNode?.replaceChild(
+                        advantageWrapperElement,
+                        adWrapper
+                    );
+                }
                 logger.debug(
                     `🎯 DEBUG: Replaced adWrapper with advantage-wrapper in DOM`
                 );
@@ -353,9 +374,15 @@ const onAdSlotRendered = (options: {
 
             // Wait for the custom element to be defined and upgraded
             logger.debug(
+                `⏳ [WRAPPER DEBUG] Waiting for advantage-wrapper custom element definition for ${config.template}...`
+            );
+            logger.debug(
                 `🎯 DEBUG: Waiting for advantage-wrapper custom element definition`
             );
             customElements.whenDefined("advantage-wrapper").then(() => {
+                logger.debug(
+                    `✅ [WRAPPER DEBUG] advantage-wrapper custom element defined for ${config.template}`
+                );
                 wrapper = (advantageWrapperElement as any).advantageWrapper;
                 logger.debug(
                     `🎯 DEBUG: Custom element defined, wrapper instance:`,
@@ -369,6 +396,9 @@ const onAdSlotRendered = (options: {
                     wrapper
                         .forceFormat(advantageFormat, adIframe, formatOptions)
                         .then(() => {
+                            logger.debug(
+                                `✅ [FORMAT SUCCESS] Successfully applied ${advantageFormat} format to ${config.template} slot!`
+                            );
                             logger.debug(
                                 `🎯 DEBUG: Successfully applied ${advantageFormat} format!`
                             );
@@ -390,9 +420,13 @@ const onAdSlotRendered = (options: {
                                     detail: {
                                         size: {
                                             width:
-                                                adIframe.clientWidth || size[0],
+                                                adIframe?.clientWidth ||
+                                                size?.[0] ||
+                                                0,
                                             height:
-                                                adIframe.clientHeight || size[1]
+                                                adIframe?.clientHeight ||
+                                                size?.[1] ||
+                                                0
                                         },
                                         template: config.template,
                                         advantageFormat
@@ -401,6 +435,10 @@ const onAdSlotRendered = (options: {
                             );
                         })
                         .catch((error: any) => {
+                            console.error(
+                                `❌ [FORMAT ERROR] Failed to apply ${advantageFormat} format to ${config.template}:`,
+                                error
+                            );
                             logger.debug(
                                 `🎯 DEBUG: ERROR applying format:`,
                                 error
@@ -424,6 +462,9 @@ const onAdSlotRendered = (options: {
                 .forceFormat(advantageFormat, adIframe, formatOptions)
                 .then(() => {
                     logger.debug(
+                        `✅ [FORMAT SUCCESS] Successfully applied ${advantageFormat} format to existing ${config.template} wrapper!`
+                    );
+                    logger.debug(
                         `🎯 DEBUG: Successfully applied ${advantageFormat} format to existing wrapper!`
                     );
                     logger.debug(
@@ -442,8 +483,10 @@ const onAdSlotRendered = (options: {
                         new CustomEvent("high-impact-ad-rendered", {
                             detail: {
                                 size: {
-                                    width: adIframe.clientWidth || size[0],
-                                    height: adIframe.clientHeight || size[1]
+                                    width:
+                                        adIframe?.clientWidth || size?.[0] || 0,
+                                    height:
+                                        adIframe?.clientHeight || size?.[1] || 0
                                 },
                                 template: config.template,
                                 advantageFormat
@@ -965,6 +1008,29 @@ export const getConfig = (): GlobalConfig => {
 const setupPlugins = async (
     plugins: string[] = []
 ): Promise<Record<string, CompatibilityPlugin>> => {
+    // Prevent multiple simultaneous plugin setups
+    if (state.pluginSetupInProgress) {
+        logger.debug(
+            `⏸️ [SETUP PLUGINS DEBUG] Plugin setup already in progress, skipping duplicate call`
+        );
+        return state.plugins;
+    }
+
+    // If plugins are already ready, return them immediately
+    if (state.pluginsReady) {
+        logger.debug(
+            `✅ [SETUP PLUGINS DEBUG] Plugins already ready, returning existing plugins`
+        );
+        return state.plugins;
+    }
+
+    state.pluginSetupInProgress = true;
+    const setupStartTime = performance.now();
+    logger.debug(
+        `🔌 [SETUP PLUGINS DEBUG] Setting up plugins:`,
+        plugins,
+        `at ${setupStartTime.toFixed(2)}ms`
+    );
     const imported: Record<string, CompatibilityPlugin> = {};
 
     for (const pluginName of plugins) {
@@ -986,10 +1052,16 @@ const setupPlugins = async (
             }
 
             imported[pluginName] = plugin;
+            logger.debug(
+                `✅ [SETUP PLUGINS DEBUG] Successfully created ${pluginName} plugin`
+            );
 
             // Initialize the plugin
             if (plugin.init) {
                 plugin.init();
+                logger.debug(
+                    `🚀 [SETUP PLUGINS DEBUG] Initialized ${pluginName} plugin`
+                );
             }
 
             // Set up ad slot rendered handler
@@ -997,19 +1069,8 @@ const setupPlugins = async (
                 plugin.onAdSlotRendered(onAdSlotRendered);
             }
 
-            // Get already rendered slots (skip in test environment to avoid hanging)
-            if (plugin.getRenderedSlots && process.env.NODE_ENV !== "test") {
-                const renderedSlots = await plugin.getRenderedSlots();
-                renderedSlots.forEach((slot) => {
-                    if (slot.getResponseInformation) {
-                        const responseInformation =
-                            slot.getResponseInformation();
-                        if (responseInformation.lineItemId) {
-                            onAdSlotRendered(slot);
-                        }
-                    }
-                });
-            }
+            // REMOVED: getRenderedSlots() call - was causing 4-second delay
+            // This async operation was the bottleneck causing slow initialization
 
             logger.debug(
                 `[High Impact Compatibility] Plugin ${pluginName} imported and initialized successfully`
@@ -1022,21 +1083,41 @@ const setupPlugins = async (
         }
     }
 
+    logger.debug(
+        `🏁 [SETUP PLUGINS DEBUG] Plugin setup complete. Loaded plugins:`,
+        Object.keys(imported)
+    );
+
+    // Assign plugins to state BEFORE processing queued messages
+    state.plugins = imported;
+    logger.debug(
+        `🔗 [SETUP PLUGINS DEBUG] Plugins assigned to state:`,
+        Object.keys(state.plugins)
+    );
+
+    // Mark plugins as ready and process any queued messages
+    state.pluginsReady = true;
+    state.pluginSetupInProgress = false; // Reset the flag
+    const setupEndTime = performance.now();
+    const setupDuration = setupEndTime - setupStartTime;
+    logger.debug(
+        `🎉 [SETUP PLUGINS DEBUG] Plugins are now ready! Setup took ${setupDuration.toFixed(
+            2
+        )}ms`
+    );
+    processQueuedMessages();
+
     return imported;
 };
 
 /**
- * Handles ad responsive signal from post messages
+ * Core message processing logic (extracted to avoid duplication)
  */
-const onAdResponsiveSignal = (options: {
+const processHighImpactMessage = (options: {
     source?: Window;
     adMessageData?: any;
+    iframeName?: string;
 }) => {
-    console.log(
-        "🎯 [AD RESPONSIVE DEBUG] onAdResponsiveSignal called with:",
-        options
-    );
-
     logger.debug(
         "[High Impact Compatibility] Got ad responsive signal",
         options
@@ -1044,13 +1125,13 @@ const onAdResponsiveSignal = (options: {
 
     const { adMessageData } = options;
 
-    console.log(
+    logger.debug(
         "🔍 [AD RESPONSIVE DEBUG] Checking plugins:",
         Object.keys(state.plugins)
     );
 
     // Debug: log all defined slots
-    console.log(
+    logger.debug(
         "📋 [AD RESPONSIVE DEBUG] All defined slots:",
         Object.keys(state.slots)
     );
@@ -1058,23 +1139,23 @@ const onAdResponsiveSignal = (options: {
     let slotFound = false;
 
     for (const [pluginName, plugin] of Object.entries(state.plugins)) {
-        console.log(`🔌 [AD RESPONSIVE DEBUG] Checking plugin: ${pluginName}`);
+        logger.debug(`🔌 [AD RESPONSIVE DEBUG] Checking plugin: ${pluginName}`);
 
         let slot;
         if (plugin.getSlotFromSource && options?.source) {
-            console.log(
+            logger.debug(
                 `🔍 [AD RESPONSIVE DEBUG] Getting slot from source for ${pluginName}...`
             );
             slot = plugin.getSlotFromSource(options.source);
             if (slot) {
-                console.log(
+                logger.debug(
                     `✅ [AD RESPONSIVE DEBUG] Got slot from source:`,
                     slot
                 );
 
                 // Debug: Check if we have a matching slot config
                 const slotConfig = getSlotConfig(slot.elementId);
-                console.log(
+                logger.debug(
                     `🔍 [AD RESPONSIVE DEBUG] Slot config for ${slot.elementId}:`,
                     slotConfig
                 );
@@ -1084,18 +1165,18 @@ const onAdResponsiveSignal = (options: {
                 );
                 slotFound = true;
             } else {
-                console.log(
+                logger.debug(
                     `❌ [AD RESPONSIVE DEBUG] No slot found for source in ${pluginName}`
                 );
             }
         } else {
-            console.log(
+            logger.debug(
                 `⚠️ [AD RESPONSIVE DEBUG] Plugin ${pluginName} has no getSlotFromSource method or no source provided`
             );
         }
 
         if (slot) {
-            console.log(
+            logger.debug(
                 `🚀 [AD RESPONSIVE DEBUG] Calling onAdSlotRendered for slot:`,
                 slot
             );
@@ -1107,91 +1188,94 @@ const onAdResponsiveSignal = (options: {
         }
     }
 
-    // Fallback: if no slot was found via plugin matching, try a simpler approach
-    // This is useful for test environments where cross-origin restrictions interfere
-    if (!slotFound) {
-        console.log(
-            "🔄 [AD RESPONSIVE DEBUG] No slot found via plugin matching, trying fallback approach..."
-        );
-
-        // Look for any recently created iframes that match our expected patterns
-        const allIframes = document.querySelectorAll(
-            'iframe[id*="google_ads_iframe"]'
-        );
-        console.log(
-            `📋 [AD RESPONSIVE DEBUG] Found ${allIframes.length} iframes for fallback matching`
-        );
-
-        // Try to find a matching iframe and create a slot for it
-        for (const iframe of allIframes) {
-            const iframeId = iframe.id;
-            let elementId = "";
-
-            if (iframeId.includes("topscroll")) {
-                elementId = "/123456/topscroll-ad";
-            } else if (iframeId.includes("midscroll")) {
-                elementId = "/123456/midscroll-ad";
-            }
-
-            if (elementId) {
-                console.log(
-                    `🎯 [AD RESPONSIVE DEBUG] Trying fallback slot for iframe ${iframeId} → ${elementId}`
-                );
-
-                const slotConfig = getSlotConfig(elementId);
-                if (slotConfig && slotConfig.waitForAdSignal) {
-                    console.log(
-                        `✅ [AD RESPONSIVE DEBUG] Found slot config with waitForAdSignal, processing...`
-                    );
-
-                    const adWrapper = document.getElementById(elementId);
-                    if (adWrapper) {
-                        const fallbackSlot = {
-                            adWrapper,
-                            adUnit: iframe as HTMLElement,
-                            adIframe: iframe as HTMLElement,
-                            size: [300, 250], // Default size
-                            html: "<div>Fallback slot content</div>",
-                            elementId,
-                            plugin: "fallback"
-                        };
-
-                        console.log(
-                            `🚀 [AD RESPONSIVE DEBUG] Calling onAdSlotRendered for fallback slot:`,
-                            fallbackSlot
-                        );
-
-                        onAdSlotRendered({
-                            ...fallbackSlot,
-                            fromAdResponsiveSignal: true,
-                            adMessageData
-                        });
-
-                        slotFound = true;
-                        break; // Only process the first matching slot
-                    }
-                }
-            }
-        }
-    }
+    // Original High Impact JS approach: if no plugin found a slot, we're done
+    // The plugins handle all the validation and iframe matching
 
     if (!slotFound) {
-        console.log("❌ [AD RESPONSIVE DEBUG] No slot found via any method");
+        logger.debug("❌ [AD RESPONSIVE DEBUG] No slot found via any method");
     }
 
-    console.log("🏁 [AD RESPONSIVE DEBUG] onAdResponsiveSignal completed");
+    logger.debug("🏁 [AD RESPONSIVE DEBUG] Message processing completed");
+};
+
+/**
+ * Processes any queued messages after plugins are ready
+ */
+const processQueuedMessages = () => {
+    if (state.messageQueue.length > 0) {
+        logger.debug(
+            `📨 [QUEUE DEBUG] Processing ${state.messageQueue.length} queued messages...`
+        );
+
+        const queuedMessages = [...state.messageQueue];
+        state.messageQueue = []; // Clear the queue
+
+        queuedMessages.forEach((message, index) => {
+            logger.debug(
+                `🔄 [QUEUE DEBUG] Processing queued message ${index + 1}:`,
+                message
+            );
+            processHighImpactMessage(message);
+        });
+
+        logger.debug(
+            `✅ [QUEUE DEBUG] Finished processing all queued messages`
+        );
+    } else {
+        logger.debug(`📭 [QUEUE DEBUG] No messages in queue to process`);
+    }
+};
+
+/**
+ * Handles ad responsive signal from post messages
+ */
+const onAdResponsiveSignal = (options: {
+    source?: Window;
+    adMessageData?: any;
+    iframeName?: string;
+}) => {
+    const startTime = performance.now();
+    logger.debug(
+        "🎯 [AD RESPONSIVE DEBUG] onAdResponsiveSignal called with:",
+        options,
+        `at ${startTime.toFixed(2)}ms`
+    );
+
+    // Ultra-fast path: If plugins are ready, process immediately
+    if (state.pluginsReady) {
+        const processStartTime = performance.now();
+        logger.debug(
+            `🚀 [ULTRA-FAST] Processing message immediately (plugins ready) at ${processStartTime.toFixed(
+                2
+            )}ms`
+        );
+        processHighImpactMessage(options);
+        const processEndTime = performance.now();
+        logger.debug(
+            `🚀 [ULTRA-FAST] Message processing completed in ${(
+                processEndTime - processStartTime
+            ).toFixed(2)}ms`
+        );
+        return;
+    }
+
+    // Fallback: If plugins aren't ready yet, queue this message
+    logger.debug(
+        "⏳ [AD RESPONSIVE DEBUG] Plugins not ready yet, queueing message..."
+    );
+    state.messageQueue.push(options);
 };
 
 /**
  * Sets up post message listeners for ad responsive signals
  */
 const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
-    console.log(
+    logger.debug(
         "🎧 [MESSAGE DEBUG] Setting up High Impact JS message listener"
     );
 
     window.addEventListener("message", (event) => {
-        console.log("📨 [MESSAGE DEBUG] Received message:", {
+        logger.debug("📨 [MESSAGE DEBUG] Received message:", {
             data: event.data,
             origin: event.origin,
             source: event.source,
@@ -1204,19 +1288,19 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
         // Support both original High Impact JS format and new format
         if (event.data && event.data.type === "high-impact-ad-responsive") {
             // New format
-            console.log("✅ [MESSAGE DEBUG] Recognized as NEW format message");
+            logger.debug("✅ [MESSAGE DEBUG] Recognized as NEW format message");
             isValidMessage = true;
         } else if (typeof event.data === "string") {
             // Original High Impact JS format (JSON string)
-            console.log("🔍 [MESSAGE DEBUG] Checking string format message");
+            logger.debug("🔍 [MESSAGE DEBUG] Checking string format message");
             try {
                 const data = JSON.parse(event.data);
-                console.log("📋 [MESSAGE DEBUG] Parsed JSON data:", data);
+                logger.debug("📋 [MESSAGE DEBUG] Parsed JSON data:", data);
                 if (
                     data.sender === "high-impact-js" &&
                     data.action === "AD_RENDERED"
                 ) {
-                    console.log(
+                    logger.debug(
                         "✅ [MESSAGE DEBUG] Recognized as ORIGINAL format message (JSON string)"
                     );
                     isValidMessage = true;
@@ -1227,7 +1311,7 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
                     );
                 }
             } catch (e) {
-                console.log(
+                logger.debug(
                     "❌ [MESSAGE DEBUG] Failed to parse JSON string:",
                     e
                 );
@@ -1240,7 +1324,7 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
             event.data.action === "AD_RENDERED"
         ) {
             // Original High Impact JS format (object)
-            console.log(
+            logger.debug(
                 "✅ [MESSAGE DEBUG] Recognized as ORIGINAL format message (object)"
             );
             isValidMessage = true;
@@ -1249,11 +1333,11 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
                 event.data
             );
         } else {
-            console.log("❌ [MESSAGE DEBUG] Message format not recognized");
+            logger.debug("❌ [MESSAGE DEBUG] Message format not recognized");
         }
 
         if (isValidMessage) {
-            console.log("🎯 [MESSAGE DEBUG] Processing valid message...");
+            logger.debug("🎯 [MESSAGE DEBUG] Processing valid message...");
             let iframeName;
             try {
                 iframeName = (event.source as any)?.name;
@@ -1265,11 +1349,11 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
                 adMessageData: messageData
             });
         } else {
-            console.log("🚫 [MESSAGE DEBUG] Ignoring invalid message");
+            logger.debug("🚫 [MESSAGE DEBUG] Ignoring invalid message");
         }
     });
 
-    console.log("✅ [MESSAGE DEBUG] Message listener setup complete");
+    logger.debug("✅ [MESSAGE DEBUG] Message listener setup complete");
 };
 
 /**
@@ -1320,9 +1404,13 @@ export const initializeHighImpactJs = async (): Promise<void> => {
         state.config.plugins = ["gam", "xandr"];
     }
 
-    // Set up plugins
-    if (state.config.plugins) {
-        state.plugins = await setupPlugins(state.config.plugins);
+    // Set up plugins (skip if already initialized by pre-init)
+    if (state.config.plugins && !state.pluginsReady) {
+        await setupPlugins(state.config.plugins);
+    } else if (state.pluginsReady) {
+        logger.debug(
+            "⚡ [SPEED OPTIMIZATION] Plugins already pre-initialized, skipping setup"
+        );
     }
 
     logger.debug("[High Impact Compatibility] Initialization complete");
@@ -1330,10 +1418,27 @@ export const initializeHighImpactJs = async (): Promise<void> => {
 
 // Set up message listener immediately when module loads (not waiting for full init)
 if (typeof window !== "undefined") {
-    console.log(
+    logger.debug(
         "🚀 [EARLY INIT] Setting up High Impact JS message listener immediately on module load"
     );
     listenToHighImpactPostMessages(onAdResponsiveSignal);
+
+    // Pre-initialize plugins with default configuration for speed (GAM only for now)
+    logger.debug(
+        "⚡ [SPEED OPTIMIZATION] Pre-initializing GAM plugin for fast message processing"
+    );
+    setupPlugins(["gam"])
+        .then(() => {
+            logger.debug(
+                "🚀 [SPEED OPTIMIZATION] Plugin pre-initialization complete! Ready for messages."
+            );
+        })
+        .catch((error) => {
+            console.warn(
+                "⚠️ [SPEED OPTIMIZATION] Plugin pre-initialization failed:",
+                error
+            );
+        });
 }
 
 // Export a reset function for testing
