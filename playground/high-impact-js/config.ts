@@ -6,7 +6,7 @@ export default {
         {
             format: AdvantageFormatName.TopScroll,
             setup: () => {
-                return new Promise<void>((resolve, reject) => {
+                return new Promise<void>((resolve) => {
                     resolve();
                 });
             }
