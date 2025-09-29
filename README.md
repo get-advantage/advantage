@@ -24,31 +24,6 @@
 
 `Advantage` revolutionizes the way site owners integrate with high impact formats by providing a flexible, customizable unified API. Unlike traditional integrations that offer a one-size-fits-all solution, AdVantage empowers you to tailor the interaction between you site and high impact formats, ensuring a perfect fit for your specific needs.
 
-## 🔄 High Impact JS Compatibility
-
-**Migrating from High Impact JS?** Your existing code works unchanged! Advantage now includes full High Impact JS API compatibility.
-
-```javascript
-// Your existing High Impact JS code works as-is
-window.highImpactJs.cmd.push(function () {
-    window.highImpactJs.setConfig({ plugins: ["gam"] });
-    window.highImpactJs.defineSlot({
-        template: "topscroll",
-        adUnitId: "/123456/my-ad",
-        sizes: [[970, 250]]
-    });
-});
-```
-
-**✨ Benefits of the new implementation:**
-
--   ✅ **Zero code changes** required
--   ✅ **Better performance** with pre-wrapping technology
--   ✅ **Enhanced reliability** built on Advantage foundation
--   ✅ **Improved debugging** and error handling
-
-📖 **[Complete Migration Guide](docs/high-impact-js-migration-guide.md)** | 🎮 **[Live Examples](playground/high-impact-js/)**
-
 ## ✨ Features
 
 -   📐 Unified Standards
