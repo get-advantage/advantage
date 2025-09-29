@@ -6,7 +6,7 @@ This document explains how the Advantage framework provides a compatibility laye
 
 ## Architecture Comparison
 
-### Original High Impact JS (`/ref` folder)
+### Original High Impact JS
 
 ```
 ┌─────────────────────────────────────┐
@@ -230,31 +230,31 @@ window.highImpactJs.setTemplateConfig("topscroll", {
 });
 ```
 
-## Key Advantages Over Original
+## Technical Differences
 
-### 1. Modern Web Standards
+### 1. Underlying Architecture
 
--   **Custom Elements**: Uses Web Components instead of DOM manipulation
--   **CSS Custom Properties**: Modern CSS architecture with better browser support
--   **Responsive Design**: Advanced viewport handling and orientation support
+-   **Web Components**: Built on Custom Elements standard for better encapsulation
+-   **CSS Custom Properties**: Uses modern CSS features when available
+-   **Shadow DOM**: Provides style isolation and prevents conflicts
 
-### 2. Better Performance
+### 2. Implementation Approach
 
--   **Component Reuse**: Advantage components are reusable across different contexts
--   **Optimized Rendering**: More efficient DOM updates and style calculations
--   **Memory Management**: Better cleanup and resource management
+-   **Component-based**: Reusable format components that can be shared across contexts
+-   **Declarative Configuration**: Formats configured through HTML attributes and properties
+-   **Event-driven**: Uses standard DOM events for communication between components
 
-### 3. Enhanced Flexibility
+### 3. Additional Capabilities
 
--   **Format Extensions**: Easy to add new formats without touching core logic
--   **Plugin Architecture**: More robust and extensible plugin system
--   **Configuration Options**: More granular control over format behavior
+-   **Format Extensibility**: New formats can be added without modifying core library
+-   **Enhanced Plugin System**: Plugin architecture designed for complex integrations
+-   **TypeScript Integration**: Provides type definitions for development tooling
 
-### 4. Improved Developer Experience
+### 4. Development & Maintenance
 
--   **TypeScript Support**: Full type safety and IntelliSense
--   **Better Debugging**: Enhanced logging and development tools
--   **Testing**: Comprehensive test coverage and easier testing setup
+-   **Testing Framework**: Comprehensive test suite for reliability
+-   **Modern Tooling**: Built with current JavaScript ecosystem practices
+-   **Documentation**: Detailed API documentation and examples
 
 ## Migration Path
 
