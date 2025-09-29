@@ -49,6 +49,14 @@ const ensureAutoInit = (): void => {
                 );
             });
         }
+
+        // Always initialize High Impact JS compatibility layer (regardless of Advantage config)
+        initializeHighImpactJs().catch((error) => {
+            logger.error(
+                "Auto-initialization of High Impact JS failed:",
+                error
+            );
+        });
     }
 };
 
