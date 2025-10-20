@@ -53,6 +53,7 @@
         "build": "tsc && vite build --mode production && npm run bundle && npm run bundle:creative",
         "bundle": "vite build --mode bundle",
         "bundle:creative": "vite build --mode bundle:creative",
+        "bundle:highimpact": "vite build --mode bundle:highimpact",
         "preview": "vite preview",
         "docs:dev": "vitepress dev",
         "docs:build": "typedoc && vitepress build",
