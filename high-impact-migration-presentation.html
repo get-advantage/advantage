@@ -284,8 +284,7 @@
                         <ul class="benefit-list">
                             <li>Widely adopted across multiple websites</li>
                             <li>Battle-tested ad format handling</li>
-                            <li>Deep Google Ad Manager integration</li>
-                            <li>Existing creative library</li>
+                            <li>Google Ad Manager integration</li>
                         </ul>
                     </div>
 
@@ -295,7 +294,6 @@
                         </div>
                         <ul class="benefit-list">
                             <li>Modern, modular architecture</li>
-                            <li>Better performance & maintainability</li>
                             <li>Flexible configuration system</li>
                             <li>Active development & updates</li>
                         </ul>
@@ -403,8 +401,7 @@
                         >&lt;!-- Load Advantage with High Impact JS
                         compatibility --&gt;</span
                     >
-                    &lt;script src="<span class="string"
-                        >advantage-with-high-impact-integration.umd.cjs</span
+                    &lt;script src="<span class="string">advantage.js</span
                     >"&gt;&lt;/script&gt; &lt;script&gt;
                     <span class="comment"
                         >// Same code - no changes needed!</span
@@ -552,8 +549,6 @@
                         </div>
                         <ul class="problem-list" style="margin-top: 20px">
                             <li>New bundle needed for each site</li>
-                            <li>Settings changes require redeployment</li>
-                            <li>Harder to maintain multiple versions</li>
                         </ul>
                     </div>
 
@@ -571,15 +566,18 @@
                         </p>
                         <div class="code-block" style="margin-top: 20px">
                             <span class="comment">// Universal bundle</span>
-                            advantage.umd.cjs
+                            advantage.js
 
                             <span class="comment">// + Publisher's config</span>
                             publisher-config.js
                         </div>
                         <ul class="benefit-list" style="margin-top: 20px">
-                            <li>One bundle for all sites</li>
-                            <li>Config updates without redeployment</li>
-                            <li>Can be hosted remotely</li>
+                            <li>One core bundle for all sites</li>
+                            <li>
+                                Config updates without redeployment of core
+                                bundle
+                            </li>
+                            <li>Can be hosted by publisher or remotely</li>
                         </ul>
                     </div>
                 </div>
@@ -756,9 +754,8 @@
                                 line-height: 1.8;
                             "
                         >
-                            Either bundle the config with Advantage (like we did
-                            for the integration bundle), or load it separately
-                            from your server or a 3rd party CDN.
+                            Either bundle the config with Advantage or load it
+                            separately from your server or a 3rd party CDN.
                         </p>
                     </div>
                 </div>
@@ -771,8 +768,7 @@
                         <p style="margin-top: 15px; color: #666">
                             Create a custom bundle that includes your config
                             (like
-                            <code
-                                >advantage-with-your-site-integration.umd.cjs</code
+                            <code>advantage-with-your-site-integration.js</code
                             >)
                         </p>
                         <ul class="benefit-list" style="margin-top: 15px">
@@ -946,18 +942,6 @@
                         </tr>
                         <tr>
                             <td>Existing creatives work</td>
-                            <td><strong>✓</strong> Yes</td>
-                        </tr>
-                        <tr>
-                            <td>Modern Advantage features available</td>
-                            <td><strong>✓</strong> Yes</td>
-                        </tr>
-                        <tr>
-                            <td>Better performance</td>
-                            <td><strong>✓</strong> Yes</td>
-                        </tr>
-                        <tr>
-                            <td>Future-proof architecture</td>
                             <td><strong>✓</strong> Yes</td>
                         </tr>
                     </table>
@@ -1138,22 +1122,6 @@
                             <li>No client-specific versions</li>
                         </ul>
                     </div>
-                </div>
-
-                <div
-                    class="card highlight"
-                    style="margin-top: 40px; padding: 40px; text-align: center"
-                >
-                    <h3 style="margin-top: 0">The Ecosystem Benefit</h3>
-                    <p style="font-size: 1.2em; line-height: 1.8; color: #333">
-                        This unified approach eliminates fragmentation in the ad
-                        ecosystem.
-                        <strong>Multiple suppliers and creators</strong> can
-                        continue using their preferred tools and workflows,
-                        while
-                        <strong>all their output works seamlessly</strong>
-                        across any publisher using the merged library.
-                    </p>
                 </div>
             </div>
         </div>
