@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>High Impact JS → Advantage Migration Overview</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: #333;
+                line-height: 1.6;
+            }
+            .slide {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 60px 40px;
+            }
+            .slide-content {
+                background: white;
+                border-radius: 20px;
+                padding: 60px;
+                max-width: 1200px;
+                width: 100%;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            }
+            h1 {
+                font-size: 3em;
+                color: #667eea;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            h2 {
+                font-size: 2.2em;
+                color: #667eea;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            h3 {
+                font-size: 1.5em;
+                color: #764ba2;
+                margin: 30px 0 15px;
+            }
+            .subtitle {
+                font-size: 1.3em;
+                color: #666;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .two-column {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+                margin: 40px 0;
+            }
+            .card {
+                background: #f8f9fa;
+                border-radius: 12px;
+                padding: 30px;
+                border: 2px solid #e9ecef;
+            }
+            .card.highlight {
+                background: #e8f4f8;
+                border-color: #667eea;
+            }
+            .card.success {
+                background: #d4edda;
+                border-color: #28a745;
+            }
+            .card-title {
+                font-size: 1.4em;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .code-block {
+                background: #2d2d2d;
+                color: #f8f8f2;
+                padding: 20px;
+                border-radius: 8px;
+                font-family: "Monaco", "Courier New", monospace;
+                font-size: 0.9em;
+                overflow-x: auto;
+                margin: 15px 0;
+                line-height: 1.5;
+            }
+            .code-block .comment {
+                color: #6a9955;
+            }
+            .code-block .string {
+                color: #ce9178;
+            }
+            .code-block .keyword {
+                color: #569cd6;
+            }
+            .code-block .function {
+                color: #dcdcaa;
+            }
+            .migration-arrow {
+                text-align: center;
+                font-size: 3em;
+                color: #667eea;
+                margin: 20px 0;
+            }
+            .benefit-list {
+                list-style: none;
+                margin: 20px 0;
+            }
+            .benefit-list li {
+                padding: 12px 0;
+                padding-left: 40px;
+                position: relative;
+                font-size: 1.1em;
+            }
+            .benefit-list li:before {
+                content: "✓";
+                position: absolute;
+                left: 0;
+                color: #28a745;
+                font-weight: bold;
+                font-size: 1.4em;
+            }
+            .problem-list {
+                list-style: none;
+                margin: 20px 0;
+            }
+            .problem-list li {
+                padding: 12px 0;
+                padding-left: 40px;
+                position: relative;
+                font-size: 1.1em;
+            }
+            .problem-list li:before {
+                content: "⚠️";
+                position: absolute;
+                left: 0;
+                font-size: 1.2em;
+            }
+            .timeline {
+                display: flex;
+                justify-content: space-between;
+                margin: 40px 0;
+                position: relative;
+            }
+            .timeline:before {
+                content: "";
+                position: absolute;
+                top: 30px;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: #667eea;
+            }
+            .timeline-step {
+                flex: 1;
+                text-align: center;
+                position: relative;
+            }
+            .timeline-dot {
+                width: 60px;
+                height: 60px;
+                background: #667eea;
+                border: 5px solid white;
+                border-radius: 50%;
+                margin: 0 auto 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5em;
+                color: white;
+                font-weight: bold;
+                position: relative;
+                z-index: 1;
+            }
+            .timeline-label {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+            }
+            .timeline-desc {
+                font-size: 0.9em;
+                color: #666;
+            }
+            .cta {
+                background: #28a745;
+                color: white;
+                padding: 20px 40px;
+                border-radius: 50px;
+                font-size: 1.3em;
+                font-weight: bold;
+                text-align: center;
+                margin: 40px auto;
+                max-width: 600px;
+            }
+            .emoji {
+                font-size: 1.2em;
+            }
+            .comparison-table {
+                margin: 30px 0;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            .comparison-table th {
+                background: #667eea;
+                color: white;
+                padding: 15px;
+                text-align: left;
+                font-size: 1.1em;
+            }
+            .comparison-table td {
+                padding: 15px;
+                border-bottom: 1px solid #e9ecef;
+            }
+            .comparison-table tr:hover {
+                background: #f8f9fa;
+            }
+            .step-number {
+                display: inline-block;
+                width: 35px;
+                height: 35px;
+                background: #667eea;
+                color: white;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 35px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Slide 1: Title -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>🚀 Merging High Impact JS with Advantage</h1>
+                <p class="subtitle">
+                    A seamless migration path to modern ad technology
+                </p>
+                <div style="text-align: center; margin-top: 60px">
+                    <div
+                        style="
+                            font-size: 4em;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 30px;
+                        "
+                    >
+                        <span>📊</span>
+                        <span style="color: #667eea">+</span>
+                        <span>⚡</span>
+                        <span style="color: #667eea">=</span>
+                        <span>🎯</span>
+                    </div>
+                    <p style="margin-top: 30px; font-size: 1.2em; color: #666">
+                        High Impact JS + Advantage = Unified Solution
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Challenge -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>The Challenge</h2>
+                <p class="subtitle">Two great libraries, one goal</p>
+
+                <div class="two-column">
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">📊</span> High Impact JS
+                        </div>
+                        <ul class="benefit-list">
+                            <li>Widely adopted across multiple websites</li>
+                            <li>Battle-tested ad format handling</li>
+                            <li>Deep Google Ad Manager integration</li>
+                            <li>Existing creative library</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">⚡</span> Advantage
+                        </div>
+                        <ul class="benefit-list">
+                            <li>Modern, modular architecture</li>
+                            <li>Better performance & maintainability</li>
+                            <li>Flexible configuration system</li>
+                            <li>Active development & updates</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card highlight" style="margin-top: 30px">
+                    <div class="card-title">💡 The Problem</div>
+                    <ul class="problem-list">
+                        <li>
+                            Switching would require updating code on multiple
+                            websites
+                        </li>
+                        <li>
+                            Existing High Impact JS creatives need to work
+                            without changes
+                        </li>
+                        <li>Can't afford downtime or broken ads</li>
+                        <li>Need a migration path that's invisible to users</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Solution -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>The Solution</h2>
+                <p class="subtitle">
+                    Advantage with High Impact JS Compatibility Layer
+                </p>
+
+                <div class="card success" style="margin: 40px 0">
+                    <div class="card-title">
+                        <span class="emoji">🎯</span> Key Concept
+                    </div>
+                    <p style="font-size: 1.2em; line-height: 1.8">
+                        Advantage now includes a
+                        <strong>compatibility layer</strong> that understands
+                        and responds to High Impact JS API calls. Your existing
+                        code keeps working, but uses Advantage's modern engine
+                        under the hood.
+                    </p>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-step">
+                        <div class="timeline-dot">1</div>
+                        <div class="timeline-label">Website Code</div>
+                        <div class="timeline-desc">
+                            Calls High Impact JS API
+                        </div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-dot">2</div>
+                        <div class="timeline-label">Compatibility Layer</div>
+                        <div class="timeline-desc">Translates the call</div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-dot">3</div>
+                        <div class="timeline-label">Advantage</div>
+                        <div class="timeline-desc">Renders the format</div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-dot">4</div>
+                        <div class="timeline-label">User</div>
+                        <div class="timeline-desc">Sees the ad</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Before & After Code -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>The Code: Before & After</h2>
+
+                <h3>
+                    <span class="step-number">1</span> Original High Impact JS
+                    Setup
+                </h3>
+                <div class="code-block">
+                    <span class="comment"
+                        >&lt;!-- Load High Impact JS library --&gt;</span
+                    >
+                    &lt;script src="<span class="string">highimpact.min.js</span
+                    >"&gt;&lt;/script&gt; &lt;script&gt;
+                    <span class="comment">// Configure ad slots</span>
+                    window.highImpactJs.<span class="function"
+                        >setTemplateConfig</span
+                    >(<span class="string">'topscroll'</span>, { peekAmount:
+                    <span class="string">'70vh'</span>, showCloseButton:
+                    <span class="keyword">true</span> });
+                    window.highImpactJs.<span class="function">defineSlot</span
+                    >({ template: <span class="string">'topscroll'</span>,
+                    adUnitId: <span class="string">'/123456/top-ad'</span>,
+                    sizes: [[1, 1]] }); &lt;/script&gt;
+                </div>
+
+                <div class="migration-arrow">⬇️ Simply replace the file</div>
+
+                <h3><span class="step-number">2</span> New Advantage Bundle</h3>
+                <div class="code-block">
+                    <span class="comment"
+                        >&lt;!-- Load Advantage with High Impact JS
+                        compatibility --&gt;</span
+                    >
+                    &lt;script src="<span class="string"
+                        >advantage-with-high-impact-integration.umd.cjs</span
+                    >"&gt;&lt;/script&gt; &lt;script&gt;
+                    <span class="comment"
+                        >// Same code - no changes needed!</span
+                    >
+                    window.highImpactJs.<span class="function"
+                        >setTemplateConfig</span
+                    >(<span class="string">'topscroll'</span>, { peekAmount:
+                    <span class="string">'70vh'</span>, showCloseButton:
+                    <span class="keyword">true</span> });
+                    window.highImpactJs.<span class="function">defineSlot</span
+                    >({ template: <span class="string">'topscroll'</span>,
+                    adUnitId: <span class="string">'/123456/top-ad'</span>,
+                    sizes: [[1, 1]] }); &lt;/script&gt;
+                </div>
+
+                <div class="card success" style="margin-top: 30px">
+                    <p
+                        style="
+                            font-size: 1.2em;
+                            text-align: center;
+                            font-weight: bold;
+                        "
+                    >
+                        ✨ That's it! Your website code doesn't change.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: How It Works -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>How It Works Behind the Scenes</h2>
+
+                <div style="margin: 40px 0">
+                    <div class="card" style="margin-bottom: 20px">
+                        <div class="card-title">
+                            <span class="step-number">1</span> Website Calls
+                            High Impact JS API
+                        </div>
+                        <div class="code-block">
+                            window.highImpactJs.<span class="function"
+                                >defineSlot</span
+                            >({ ... });
+                        </div>
+                    </div>
+
+                    <div
+                        style="
+                            text-align: center;
+                            font-size: 2em;
+                            color: #667eea;
+                        "
+                    >
+                        ⬇️
+                    </div>
+
+                    <div class="card highlight" style="margin-bottom: 20px">
+                        <div class="card-title">
+                            <span class="step-number">2</span> Compatibility
+                            Layer Intercepts
+                        </div>
+                        <p>
+                            Advantage detects the High Impact JS call and
+                            translates it into Advantage's format system.
+                        </p>
+                    </div>
+
+                    <div
+                        style="
+                            text-align: center;
+                            font-size: 2em;
+                            color: #667eea;
+                        "
+                    >
+                        ⬇️
+                    </div>
+
+                    <div class="card" style="margin-bottom: 20px">
+                        <div class="card-title">
+                            <span class="step-number">3</span> Advantage Renders
+                            Format
+                        </div>
+                        <p>
+                            Advantage creates the ad format using its modern
+                            engine with proper styling and responsive behavior.
+                        </p>
+                    </div>
+
+                    <div
+                        style="
+                            text-align: center;
+                            font-size: 2em;
+                            color: #667eea;
+                        "
+                    >
+                        ⬇️
+                    </div>
+
+                    <div class="card success">
+                        <div class="card-title">
+                            <span class="step-number">4</span> User Sees Perfect
+                            Ad
+                        </div>
+                        <p>
+                            The ad displays exactly as expected - no differences
+                            visible to users.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Configuration Pattern Change -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>One Important Change: Configuration Pattern</h2>
+                <p class="subtitle">
+                    Moving from bundled configs to separate config files
+                </p>
+
+                <div class="two-column" style="margin: 40px 0">
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">📦</span> Old: High Impact JS
+                        </div>
+                        <p style="margin: 15px 0; font-size: 1.1em">
+                            <strong>Bundled Configuration</strong>
+                        </p>
+                        <p style="color: #666; line-height: 1.8">
+                            Each publisher gets a custom-built JavaScript bundle
+                            with their site-specific settings compiled into the
+                            code.
+                        </p>
+                        <div class="code-block" style="margin-top: 20px">
+                            <span class="comment"
+                                >// Custom bundle for Publisher A</span
+                            >
+                            highimpact-publisherA.min.js
+
+                            <span class="comment"
+                                >// Custom bundle for Publisher B</span
+                            >
+                            highimpact-publisherB.min.js
+                        </div>
+                        <ul class="problem-list" style="margin-top: 20px">
+                            <li>New bundle needed for each site</li>
+                            <li>Settings changes require redeployment</li>
+                            <li>Harder to maintain multiple versions</li>
+                        </ul>
+                    </div>
+
+                    <div class="card highlight">
+                        <div class="card-title">
+                            <span class="emoji">⚙️</span> New: Advantage
+                        </div>
+                        <p style="margin: 15px 0; font-size: 1.1em">
+                            <strong>Separate Configuration</strong>
+                        </p>
+                        <p style="color: #666; line-height: 1.8">
+                            One universal bundle for everyone. Each publisher
+                            has their own config file with site-specific
+                            settings.
+                        </p>
+                        <div class="code-block" style="margin-top: 20px">
+                            <span class="comment">// Universal bundle</span>
+                            advantage.umd.cjs
+
+                            <span class="comment">// + Publisher's config</span>
+                            publisher-config.js
+                        </div>
+                        <ul class="benefit-list" style="margin-top: 20px">
+                            <li>One bundle for all sites</li>
+                            <li>Config updates without redeployment</li>
+                            <li>Can be hosted remotely</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: What's in the Config? -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>What Goes in the Configuration?</h2>
+                <p class="subtitle">Site-specific adjustments for formats</p>
+
+                <div class="card" style="margin: 40px 0">
+                    <h3 style="margin-top: 0">
+                        Typical Site-Specific Settings
+                    </h3>
+
+                    <div class="two-column" style="margin-top: 30px">
+                        <div>
+                            <div class="card-title">
+                                <span class="emoji">🎨</span> Visual Adjustments
+                            </div>
+                            <ul
+                                style="
+                                    margin-left: 20px;
+                                    line-height: 1.8;
+                                    color: #666;
+                                "
+                            >
+                                <li>
+                                    <strong>Z-index:</strong> Ensure ads appear
+                                    above page elements
+                                </li>
+                                <li>
+                                    <strong>Positioning:</strong> Account for
+                                    sticky headers/footers
+                                </li>
+                                <li>
+                                    <strong>Spacing:</strong> Adjust margins for
+                                    page layout
+                                </li>
+                                <li>
+                                    <strong>Colors:</strong> Match close buttons
+                                    to site theme
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <div class="card-title">
+                                <span class="emoji">🔧</span> Behavior Settings
+                            </div>
+                            <ul
+                                style="
+                                    margin-left: 20px;
+                                    line-height: 1.8;
+                                    color: #666;
+                                "
+                            >
+                                <li>
+                                    <strong>Hide elements:</strong> Sidebar ads,
+                                    navigation during fullscreen
+                                </li>
+                                <li>
+                                    <strong>Scroll behavior:</strong>
+                                    Lock/unlock page scroll
+                                </li>
+                                <li>
+                                    <strong>Timing:</strong> When formats
+                                    activate
+                                </li>
+                                <li>
+                                    <strong>Responsive:</strong> Different
+                                    settings per device
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card highlight">
+                    <div class="card-title">
+                        <span class="emoji">💡</span> Example: TopScroll Config
+                    </div>
+                    <div class="code-block">
+                        formatIntegrations: [{ format:
+                        <span class="string">'TopScroll'</span>,
+                        <span class="function">setup</span>: (wrapper) => {
+                        <span class="comment"
+                            >// Hide sticky header during format</span
+                        >
+                        document.<span class="function">querySelector</span
+                        >(<span class="string">'.site-header'</span
+                        >).style.display = <span class="string">'none'</span>;
+
+                        <span class="comment"
+                            >// Adjust z-index to be above sidebar ads</span
+                        >
+                        wrapper.style.zIndex =
+                        <span class="string">'9999'</span>;
+
+                        <span class="comment"
+                            >// Account for top navigation bar</span
+                        >
+                        wrapper.style.top = <span class="string">'60px'</span>;
+                        }, <span class="function">close</span>: () => {
+                        <span class="comment">// Show header again</span>
+                        document.<span class="function">querySelector</span
+                        >(<span class="string">'.site-header'</span
+                        >).style.display = <span class="string">'block'</span>;
+                        } }]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Migration Path for Configs -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Migrating Configuration to Advantage Style</h2>
+
+                <div class="card" style="margin: 40px 0; padding: 40px">
+                    <h3 style="margin-top: 0; text-align: center">
+                        The Migration Path
+                    </h3>
+
+                    <div style="margin: 40px 0">
+                        <div class="card-title">
+                            <span class="step-number">1</span> Extract Settings
+                            from Bundle
+                        </div>
+                        <p
+                            style="
+                                margin-left: 50px;
+                                color: #666;
+                                line-height: 1.8;
+                            "
+                        >
+                            Your integration team identifies the site-specific
+                            settings currently compiled into your High Impact JS
+                            bundle (z-indexes, element hiding, responsive
+                            adjustments, etc.)
+                        </p>
+                    </div>
+
+                    <div style="margin: 40px 0">
+                        <div class="card-title">
+                            <span class="step-number">2</span> Create Advantage
+                            Config File
+                        </div>
+                        <p
+                            style="
+                                margin-left: 50px;
+                                color: #666;
+                                line-height: 1.8;
+                            "
+                        >
+                            Convert these settings into an Advantage
+                            <code>formatIntegrations</code> config file. This
+                            uses simple JavaScript with setup/close/reset
+                            functions for each format.
+                        </p>
+                    </div>
+
+                    <div style="margin: 40px 0">
+                        <div class="card-title">
+                            <span class="step-number">3</span> Load Config with
+                            Bundle
+                        </div>
+                        <p
+                            style="
+                                margin-left: 50px;
+                                color: #666;
+                                line-height: 1.8;
+                            "
+                        >
+                            Either bundle the config with Advantage (like we did
+                            for the integration bundle), or load it separately
+                            from your server or a 3rd party CDN.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="two-column" style="margin-top: 40px">
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">📦</span> Option A: Bundled
+                        </div>
+                        <p style="margin-top: 15px; color: #666">
+                            Create a custom bundle that includes your config
+                            (like
+                            <code
+                                >advantage-with-your-site-integration.umd.cjs</code
+                            >)
+                        </p>
+                        <ul class="benefit-list" style="margin-top: 15px">
+                            <li>One file to load</li>
+                            <li>Similar to current approach</li>
+                            <li>No extra HTTP request</li>
+                        </ul>
+                    </div>
+
+                    <div class="card highlight">
+                        <div class="card-title">
+                            <span class="emoji">🌐</span> Option B: Separate
+                            (Recommended)
+                        </div>
+                        <p style="margin-top: 15px; color: #666">
+                            Load universal Advantage bundle + separate config
+                            file from your CDN or 3rd party
+                        </p>
+                        <ul class="benefit-list" style="margin-top: 15px">
+                            <li>Update settings without redeployment</li>
+                            <li>Can be managed by 3rd party</li>
+                            <li>More flexible</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Who Handles the Config? -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Who Manages the Configuration?</h2>
+                <p class="subtitle">Flexible options for different needs</p>
+
+                <div class="two-column" style="margin: 40px 0; gap: 30px">
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">🏢</span> Publisher-Managed
+                        </div>
+                        <p style="margin: 15px 0; font-weight: bold">
+                            You control your own config
+                        </p>
+                        <div class="code-block" style="margin: 20px 0">
+                            <span class="comment"
+                                >&lt;!-- Load from your CDN --&gt;</span
+                            >
+                            &lt;script src="<span class="string"
+                                >https://your-cdn.com/advantage.umd.cjs</span
+                            >"&gt;&lt;/script&gt; &lt;script src="<span
+                                class="string"
+                                >https://your-cdn.com/site-config.js</span
+                            >"&gt;&lt;/script&gt;
+                        </div>
+                        <ul class="benefit-list">
+                            <li>Full control over settings</li>
+                            <li>Update anytime</li>
+                            <li>Host on your infrastructure</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">🤝</span> 3rd Party Managed
+                        </div>
+                        <p style="margin: 15px 0; font-weight: bold">
+                            Integration partner handles config
+                        </p>
+                        <div class="code-block" style="margin: 20px 0">
+                            <span class="comment"
+                                >&lt;!-- Load from partner CDN --&gt;</span
+                            >
+                            &lt;script src="<span class="string"
+                                >https://partner-cdn.com/advantage.umd.cjs</span
+                            >"&gt;&lt;/script&gt; &lt;script src="<span
+                                class="string"
+                                >https://partner-cdn.com/configs/yoursite.js</span
+                            >"&gt;&lt;/script&gt;
+                        </div>
+                        <ul class="benefit-list">
+                            <li>Expert integration support</li>
+                            <li>They handle updates</li>
+                            <li>Less technical overhead</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card highlight" style="margin-top: 40px">
+                    <div class="card-title">
+                        <span class="emoji">🔄</span> Hybrid: Remote Config
+                        Loading
+                    </div>
+                    <p style="margin-top: 15px; line-height: 1.8">
+                        Advantage can also load config dynamically via
+                        <code>configUrlResolver</code>. You specify a URL, and
+                        Advantage fetches the config at runtime. This allows
+                        config changes without touching your website code at
+                        all.
+                    </p>
+                    <div class="code-block" style="margin-top: 20px">
+                        Advantage.<span class="function">getInstance</span
+                        >().<span class="function">configure</span>({
+                        configUrlResolver: () =>
+                        <span class="string"
+                            >'https://config-cdn.com/site-12345.json'</span
+                        >
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Migration Benefits (renumbered) -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Why This Approach Wins</h2>
+
+                <div
+                    style="
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        gap: 30px;
+                        margin: 40px 0;
+                    "
+                >
+                    <div>
+                        <h3>For Publishers</h3>
+                        <ul class="benefit-list">
+                            <li>Zero code changes required</li>
+                            <li>Drop-in replacement</li>
+                            <li>No downtime</li>
+                            <li>Test on staging first</li>
+                            <li>Rollback instantly if needed</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3>For Creative Teams</h3>
+                        <ul class="benefit-list">
+                            <li>No need to rebuild ads</li>
+                            <li>High Impact JS creatives work</li>
+                            <li>Advantage creatives work</li>
+                            <li>One ad runs everywhere</li>
+                            <li>Keep existing workflows</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3>For Development</h3>
+                        <ul class="benefit-list">
+                            <li>Single codebase to maintain</li>
+                            <li>Modern architecture</li>
+                            <li>Better performance</li>
+                            <li>Easier to add features</li>
+                            <li>Comprehensive testing</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card highlight" style="margin-top: 40px">
+                    <div class="card-title">
+                        <span class="emoji">💎</span> Best of Both Worlds
+                    </div>
+                    <table class="comparison-table" style="margin-top: 20px">
+                        <tr>
+                            <th>Feature</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>Existing High Impact JS code works</td>
+                            <td><strong>✓</strong> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Existing creatives work</td>
+                            <td><strong>✓</strong> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Modern Advantage features available</td>
+                            <td><strong>✓</strong> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Better performance</td>
+                            <td><strong>✓</strong> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Future-proof architecture</td>
+                            <td><strong>✓</strong> Yes</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Universal Creative Compatibility -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🎨 Universal Creative Compatibility</h2>
+                <p class="subtitle">
+                    One merged library, all creatives work everywhere
+                </p>
+
+                <div class="card success" style="margin: 40px 0; padding: 40px">
+                    <h3
+                        style="
+                            margin-top: 0;
+                            text-align: center;
+                            font-size: 1.8em;
+                        "
+                    >
+                        The Game-Changing Benefit
+                    </h3>
+                    <p
+                        style="
+                            font-size: 1.3em;
+                            text-align: center;
+                            color: #666;
+                            line-height: 1.8;
+                            margin-top: 30px;
+                        "
+                    >
+                        After migration,
+                        <strong>any creative built for either library</strong>
+                        will run on <strong>any website</strong> with the merged
+                        Advantage code installed.
+                    </p>
+                </div>
+
+                <div style="margin: 50px 0; text-align: center">
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 40px;
+                            font-size: 1.2em;
+                        "
+                    >
+                        <div
+                            class="card"
+                            style="flex: 1; max-width: 300px; padding: 30px"
+                        >
+                            <div style="font-size: 3em; margin-bottom: 15px">
+                                📊
+                            </div>
+                            <div
+                                style="
+                                    font-weight: bold;
+                                    color: #667eea;
+                                    margin-bottom: 10px;
+                                "
+                            >
+                                High Impact JS<br />Creative
+                            </div>
+                            <div style="color: #666; font-size: 0.9em">
+                                Built the old way
+                            </div>
+                        </div>
+
+                        <div style="font-size: 3em; color: #28a745">✓</div>
+
+                        <div
+                            class="card highlight"
+                            style="flex: 1; max-width: 300px; padding: 30px"
+                        >
+                            <div style="font-size: 3em; margin-bottom: 15px">
+                                🌐
+                            </div>
+                            <div
+                                style="
+                                    font-weight: bold;
+                                    color: #667eea;
+                                    margin-bottom: 10px;
+                                "
+                            >
+                                Any Website with<br />Merged Library
+                            </div>
+                            <div style="color: #666; font-size: 0.9em">
+                                Works perfectly
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin: 60px 0; font-size: 2em; color: #667eea">
+                        ⬍
+                    </div>
+
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 40px;
+                            font-size: 1.2em;
+                        "
+                    >
+                        <div
+                            class="card highlight"
+                            style="flex: 1; max-width: 300px; padding: 30px"
+                        >
+                            <div style="font-size: 3em; margin-bottom: 15px">
+                                🌐
+                            </div>
+                            <div
+                                style="
+                                    font-weight: bold;
+                                    color: #667eea;
+                                    margin-bottom: 10px;
+                                "
+                            >
+                                Any Website with<br />Merged Library
+                            </div>
+                            <div style="color: #666; font-size: 0.9em">
+                                Works perfectly
+                            </div>
+                        </div>
+
+                        <div style="font-size: 3em; color: #28a745">✓</div>
+
+                        <div
+                            class="card"
+                            style="flex: 1; max-width: 300px; padding: 30px"
+                        >
+                            <div style="font-size: 3em; margin-bottom: 15px">
+                                ⚡
+                            </div>
+                            <div
+                                style="
+                                    font-weight: bold;
+                                    color: #667eea;
+                                    margin-bottom: 10px;
+                                "
+                            >
+                                Advantage<br />Creative
+                            </div>
+                            <div style="color: #666; font-size: 0.9em">
+                                Built the old way
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="two-column" style="margin-top: 50px; gap: 40px">
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">🏢</span> For Ad Networks &
+                            Suppliers
+                        </div>
+                        <ul class="benefit-list">
+                            <li>Don't need to rebuild existing creatives</li>
+                            <li>Can deliver to any client</li>
+                            <li>No "which library?" confusion</li>
+                            <li>Wider market reach</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">🎨</span> For Creative Agencies
+                        </div>
+                        <ul class="benefit-list">
+                            <li>Keep existing workflows</li>
+                            <li>Choose preferred API</li>
+                            <li>One creative works everywhere</li>
+                            <li>No client-specific versions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div
+                    class="card highlight"
+                    style="margin-top: 40px; padding: 40px; text-align: center"
+                >
+                    <h3 style="margin-top: 0">The Ecosystem Benefit</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8; color: #333">
+                        This unified approach eliminates fragmentation in the ad
+                        ecosystem.
+                        <strong>Multiple suppliers and creators</strong> can
+                        continue using their preferred tools and workflows,
+                        while
+                        <strong>all their output works seamlessly</strong>
+                        across any publisher using the merged library.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Complete Migration Steps -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Complete Migration Process</h2>
+
+                <div class="timeline" style="margin: 60px 0">
+                    <div class="timeline-step">
+                        <div class="timeline-dot">1</div>
+                        <div class="timeline-label">Extract Config</div>
+                        <div class="timeline-desc">
+                            Move settings to Advantage format
+                        </div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-dot">2</div>
+                        <div class="timeline-label">Test</div>
+                        <div class="timeline-desc">Deploy to staging</div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-dot">3</div>
+                        <div class="timeline-label">Replace</div>
+                        <div class="timeline-desc">Swap bundle + config</div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-dot">4</div>
+                        <div class="timeline-label">Done</div>
+                        <div class="timeline-desc">Running Advantage!</div>
+                    </div>
+                </div>
+
+                <div class="card highlight">
+                    <h3 style="margin-top: 0">Step-by-Step Guide</h3>
+
+                    <div style="margin: 20px 0">
+                        <div class="card-title">
+                            <span class="step-number">1</span> Configuration
+                            Migration
+                        </div>
+                        <ul
+                            style="
+                                margin-left: 50px;
+                                margin-top: 10px;
+                                line-height: 1.8;
+                            "
+                        >
+                            <li>
+                                Extract site-specific settings from current High
+                                Impact JS bundle
+                            </li>
+                            <li>
+                                Create Advantage
+                                <code>formatIntegrations</code> config file
+                            </li>
+                            <li>Test config in isolation</li>
+                            <li>Choose bundled or separate config approach</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin: 30px 0">
+                        <div class="card-title">
+                            <span class="step-number">2</span> Testing Phase
+                        </div>
+                        <ul
+                            style="
+                                margin-left: 50px;
+                                margin-top: 10px;
+                                line-height: 1.8;
+                            "
+                        >
+                            <li>Deploy to your staging website</li>
+                            <li>Verify all ad formats work correctly</li>
+                            <li>
+                                Check site-specific adjustments (z-index, sticky
+                                elements, etc.)
+                            </li>
+                            <li>Test different ad sizes and platforms</li>
+                            <li>Monitor console for any errors</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin: 30px 0">
+                        <div class="card-title">
+                            <span class="step-number">3</span> Production
+                            Deployment
+                        </div>
+                        <ul
+                            style="
+                                margin-left: 50px;
+                                margin-top: 10px;
+                                line-height: 1.8;
+                            "
+                        >
+                            <li>
+                                Replace
+                                <code>highimpact.min.js</code> with
+                                <code>advantage.umd.cjs</code> + config
+                            </li>
+                            <li>
+                                Or use custom bundled version with config
+                                included
+                            </li>
+                            <li>Can be done via CDN update</li>
+                            <li>Instant rollback available</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin: 30px 0">
+                        <div class="card-title">
+                            <span class="step-number">3</span> Verification
+                        </div>
+                        <ul
+                            style="
+                                margin-left: 50px;
+                                margin-top: 10px;
+                                line-height: 1.8;
+                            "
+                        >
+                            <li>Monitor for 24-48 hours</li>
+                            <li>Check ad performance metrics</li>
+                            <li>Verify no console errors</li>
+                            <li>Celebrate! 🎉</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Technical Deep Dive (Optional) -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Technical Details (For the Curious)</h2>
+
+                <div class="card">
+                    <h3 style="margin-top: 0">What's Inside the Bundle?</h3>
+
+                    <div style="margin: 20px 0">
+                        <div class="card-title">
+                            <span class="emoji">🎯</span> Advantage Core
+                        </div>
+                        <p>
+                            Modern format system with TopScroll, Midscroll,
+                            DoubleMidscroll, and more. Built with Web Components
+                            for encapsulation.
+                        </p>
+                    </div>
+
+                    <div style="margin: 20px 0">
+                        <div class="card-title">
+                            <span class="emoji">🔌</span> Compatibility Layer
+                        </div>
+                        <p>
+                            Translates High Impact JS API calls into Advantage
+                            format commands. Handles GAM integration, message
+                            passing, and ad detection.
+                        </p>
+                    </div>
+
+                    <div style="margin: 20px 0">
+                        <div class="card-title">
+                            <span class="emoji">🎨</span> Responsive Styling
+                        </div>
+                        <p>
+                            Injects platform-specific CSS into ad iframes (GAM,
+                            Adform, Xandr, etc.) to ensure proper banner scaling
+                            across all ad servers.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card highlight" style="margin-top: 30px">
+                    <h3 style="margin-top: 0">Key Innovations</h3>
+                    <ul class="benefit-list">
+                        <li>
+                            <strong>Pre-wrapping:</strong> Ad slots are wrapped
+                            before ads load, preventing layout shifts
+                        </li>
+                        <li>
+                            <strong>Message interception:</strong> Listens for
+                            format requests from creatives
+                        </li>
+                        <li>
+                            <strong>Two-phase rendering:</strong> Waits for both
+                            ad load and creative signal
+                        </li>
+                        <li>
+                            <strong>Platform detection:</strong> Automatically
+                            applies correct styling per ad server
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: The Way Forward -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🚀 The Way Forward</h2>
+                <p class="subtitle">Long-term vision and rebranding</p>
+
+                <div
+                    class="card highlight"
+                    style="margin: 40px 0; padding: 40px; text-align: center"
+                >
+                    <h3 style="margin-top: 0; font-size: 2em; color: #667eea">
+                        The Future: High Impact JS
+                    </h3>
+                    <p
+                        style="
+                            font-size: 1.3em;
+                            line-height: 1.8;
+                            color: #333;
+                            margin-top: 30px;
+                        "
+                    >
+                        The merged codebase will adopt the
+                        <strong>High Impact JS</strong>
+                        name going forward. The Advantage brand will be retired.
+                    </p>
+                </div>
+
+                <div
+                    style="
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        gap: 30px;
+                        margin: 50px 0;
+                    "
+                >
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">📦</span> GitHub Repository
+                        </div>
+                        <p
+                            style="
+                                margin-top: 15px;
+                                color: #666;
+                                line-height: 1.8;
+                            "
+                        >
+                            <strong>Current:</strong><br />
+                            <code>get-advantage/advantage</code>
+                        </p>
+                        <div
+                            style="
+                                text-align: center;
+                                margin: 15px 0;
+                                font-size: 1.5em;
+                                color: #667eea;
+                            "
+                        >
+                            ↓
+                        </div>
+                        <p style="color: #28a745; line-height: 1.8">
+                            <strong>Future:</strong><br />
+                            Renamed to High Impact JS repo
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">📚</span> NPM Package
+                        </div>
+                        <p
+                            style="
+                                margin-top: 15px;
+                                color: #666;
+                                line-height: 1.8;
+                            "
+                        >
+                            <strong>Current:</strong><br />
+                            <code>@get-advantage/advantage</code>
+                        </p>
+                        <div
+                            style="
+                                text-align: center;
+                                margin: 15px 0;
+                                font-size: 1.5em;
+                                color: #667eea;
+                            "
+                        >
+                            ↓
+                        </div>
+                        <p style="color: #28a745; line-height: 1.8">
+                            <strong>Future:</strong><br />
+                            Published under High Impact JS package name
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">🌐</span> Domain & Docs
+                        </div>
+                        <p
+                            style="
+                                margin-top: 15px;
+                                color: #666;
+                                line-height: 1.8;
+                            "
+                        >
+                            <strong>Current:</strong><br />
+                            <code>get-advantage.org</code>
+                        </p>
+                        <div
+                            style="
+                                text-align: center;
+                                margin: 15px 0;
+                                font-size: 1.5em;
+                                color: #667eea;
+                            "
+                        >
+                            ↓
+                        </div>
+                        <p style="color: #28a745; line-height: 1.8">
+                            <strong>Future:</strong><br />
+                            Migration to High Impact JS domain
+                        </p>
+                    </div>
+                </div>
+
+                <div class="two-column" style="margin-top: 50px; gap: 40px">
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">🎯</span> Why High Impact JS?
+                        </div>
+                        <ul class="benefit-list">
+                            <li>Established brand recognition</li>
+                            <li>Clearer, more descriptive name</li>
+                            <li>Better market positioning</li>
+                            <li>Continuity for existing users</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">
+                            <span class="emoji">🔄</span> Transition Plan
+                        </div>
+                        <ul class="benefit-list">
+                            <li>Gradual migration of resources</li>
+                            <li>Maintain backward compatibility</li>
+                            <li>Clear communication to users</li>
+                            <li>Documentation updates</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div
+                    class="card success"
+                    style="margin-top: 50px; padding: 40px; text-align: center"
+                >
+                    <h3 style="margin-top: 0">One Unified Future</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8; color: #333">
+                        The technical merge is just the beginning. By
+                        consolidating under the High Impact JS brand, we create
+                        a single, unified ecosystem with the best technology
+                        from both libraries.
+                    </p>
+                    <div
+                        style="
+                            margin-top: 30px;
+                            font-size: 1.5em;
+                            color: #667eea;
+                        "
+                    >
+                        📊 + ⚡ = 🚀
+                    </div>
+                    <div
+                        style="margin-top: 15px; font-size: 1.1em; color: #666"
+                    >
+                        Two libraries → One powerful solution
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation hints -->
+        <div
+            style="
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: rgba(255, 255, 255, 0.9);
+                padding: 15px 25px;
+                border-radius: 30px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                font-size: 0.9em;
+                color: #666;
+            "
+        >
+            Use <strong>arrow keys</strong> or <strong>scroll</strong> to
+            navigate
+        </div>
+    </body>
+</html>
