@@ -160,5 +160,11 @@ if ((window as any).advantageCmdQueue) {
     }
 };
 
-customElements.define("advantage-wrapper", AdvantageWrapper);
-customElements.define("advantage-ui-layer", AdvantageUILayer);
+// Only define custom elements if they haven't been registered yet
+// This prevents errors when Advantage is already installed on the page
+if (!customElements.get("advantage-wrapper")) {
+    customElements.define("advantage-wrapper", AdvantageWrapper);
+}
+if (!customElements.get("advantage-ui-layer")) {
+    customElements.define("advantage-ui-layer", AdvantageUILayer);
+}

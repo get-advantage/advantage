@@ -186,10 +186,8 @@ const onAdSlotRendered = (options: {
         fromAdResponsiveSignal = false,
         adIframe,
         adWrapper,
-        adUnit,
         size,
-        html,
-        adMessageData
+        html
     } = options;
     logger.debug(
         `⚡ [TIMING] onAdSlotRendered called for ${elementId} at ${slotRenderStartTime.toFixed(
@@ -561,18 +559,18 @@ const attemptPreWrap = (slotConfig: SlotConfig): boolean => {
 
     logger.debug(`✅ [Pre-wrapping] Found ad unit element:`, adUnitElement);
 
-    // Check if already wrapped
-    if (adUnitElement.closest("advantage-wrapper")) {
+    // Check if already wrapped - important to prevent double-wrapping
+    // when both Advantage and High Impact JS compatibility layer are present
+    const existingWrapper = adUnitElement.closest("advantage-wrapper");
+    if (existingWrapper) {
         logger.debug(
-            `ℹ️ [Pre-wrapping] Ad unit ${slotConfig.adUnitId} already wrapped`
+            `ℹ️ [Pre-wrapping] Ad unit ${slotConfig.adUnitId} already wrapped (existing Advantage installation detected)`
         );
         logger.debug(
             `[High Impact Compatibility] Ad unit ${slotConfig.adUnitId} already wrapped`
         );
         slotConfig.preWrapped = true;
-        slotConfig.wrapperElement = adUnitElement.closest(
-            "advantage-wrapper"
-        ) as HTMLElement;
+        slotConfig.wrapperElement = existingWrapper as HTMLElement;
         return true;
     }
 
@@ -1275,47 +1273,35 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
     );
 
     window.addEventListener("message", (event) => {
-        logger.debug("📨 [MESSAGE DEBUG] Received message:", {
-            data: event.data,
-            origin: event.origin,
-            source: event.source,
-            dataType: typeof event.data
-        });
-
+        // Silently check message formats without logging every message
         let isValidMessage = false;
         let messageData = event.data;
 
         // Support both original High Impact JS format and new format
         if (event.data && event.data.type === "high-impact-ad-responsive") {
             // New format
-            logger.debug("✅ [MESSAGE DEBUG] Recognized as NEW format message");
             isValidMessage = true;
+            logger.debug("✅ [MESSAGE DEBUG] Recognized as NEW format message");
         } else if (typeof event.data === "string") {
             // Original High Impact JS format (JSON string)
-            logger.debug("🔍 [MESSAGE DEBUG] Checking string format message");
             try {
                 const data = JSON.parse(event.data);
-                logger.debug("📋 [MESSAGE DEBUG] Parsed JSON data:", data);
                 if (
                     data.sender === "high-impact-js" &&
                     data.action === "AD_RENDERED"
                 ) {
+                    isValidMessage = true;
+                    messageData = data;
                     logger.debug(
                         "✅ [MESSAGE DEBUG] Recognized as ORIGINAL format message (JSON string)"
                     );
-                    isValidMessage = true;
-                    messageData = data;
                     logger.debug(
                         "[High Impact Compatibility] Received original High Impact JS message:",
                         data
                     );
                 }
             } catch (e) {
-                logger.debug(
-                    "❌ [MESSAGE DEBUG] Failed to parse JSON string:",
-                    e
-                );
-                // Not a valid JSON string, ignore
+                // Not a valid JSON string, silently ignore
             }
         } else if (
             event.data &&
@@ -1324,20 +1310,21 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
             event.data.action === "AD_RENDERED"
         ) {
             // Original High Impact JS format (object)
+            isValidMessage = true;
             logger.debug(
                 "✅ [MESSAGE DEBUG] Recognized as ORIGINAL format message (object)"
             );
-            isValidMessage = true;
             logger.debug(
                 "[High Impact Compatibility] Received original High Impact JS message:",
                 event.data
             );
-        } else {
-            logger.debug("❌ [MESSAGE DEBUG] Message format not recognized");
         }
 
+        // Only process and log valid messages
         if (isValidMessage) {
-            logger.debug("🎯 [MESSAGE DEBUG] Processing valid message...");
+            logger.debug(
+                "🎯 [MESSAGE DEBUG] Processing valid High Impact JS message..."
+            );
             let iframeName;
             try {
                 iframeName = (event.source as any)?.name;
@@ -1348,9 +1335,8 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
                 iframeName: iframeName,
                 adMessageData: messageData
             });
-        } else {
-            logger.debug("🚫 [MESSAGE DEBUG] Ignoring invalid message");
         }
+        // Silently ignore invalid messages - no logging for non-High Impact JS messages
     });
 
     logger.debug("✅ [MESSAGE DEBUG] Message listener setup complete");
