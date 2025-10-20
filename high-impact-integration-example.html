@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>High Impact JS Integration Config Example</title>
+        <style>
+            body {
+                font-family: system-ui, -apple-system, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                line-height: 1.6;
+            }
+            .info-box {
+                background: #f0f7ff;
+                border: 1px solid #0066cc;
+                border-radius: 8px;
+                padding: 16px;
+                margin: 20px 0;
+            }
+            .code-block {
+                background: #1e1e1e;
+                color: #d4d4d4;
+                padding: 16px;
+                border-radius: 8px;
+                overflow-x: auto;
+                font-family: "Monaco", "Courier New", monospace;
+                font-size: 14px;
+            }
+            h1 {
+                color: #0066cc;
+            }
+            h2 {
+                color: #333;
+                margin-top: 32px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>🚀 High Impact JS Integration Config Example</h1>
+
+        <div class="info-box">
+            <strong>📋 Purpose:</strong> This example shows how to load the High
+            Impact JS integration config file to ensure proper banner scaling in
+            Advantage formats.
+        </div>
+
+        <h2>Step 1: Import Advantage and Config</h2>
+        <div class="code-block">
+            <span style="color: #c586c0">import</span> { Advantage }
+            <span style="color: #c586c0">from</span>
+            <span style="color: #ce9178">'./src/advantage'</span>;
+            <span style="color: #c586c0">import</span> highImpactConfig
+            <span style="color: #c586c0">from</span>
+            <span style="color: #ce9178"
+                >'./high-impact-integration-config'</span
+            >;
+        </div>
+
+        <h2>Step 2: Configure Advantage</h2>
+        <div class="code-block">
+            <span style="color: #4ec9b0">const</span> advantage =
+            Advantage.<span style="color: #dcdcaa">getInstance</span>();
+            advantage.<span style="color: #dcdcaa">configure</span
+            >(highImpactConfig);
+        </div>
+
+        <h2>Step 3: Use High Impact JS API</h2>
+        <div class="code-block">
+            <span style="color: #6a9955">// Define a High Impact JS slot</span>
+            window.highImpactJs.cmd.<span style="color: #dcdcaa">push</span
+            >(<span style="color: #c586c0">function</span>() {
+            window.highImpactJs.<span style="color: #dcdcaa">defineSlot</span>({
+            template: <span style="color: #ce9178">'topscroll'</span>, adUnitId:
+            <span style="color: #ce9178">'/123456/topscroll-ad'</span>, sizes:
+            [[<span style="color: #b5cea8">1</span>,
+            <span style="color: #b5cea8">1</span>]], waitForAdSignal:
+            <span style="color: #569cd6">false</span>
+            }); });
+
+            <span style="color: #6a9955">// Configure template settings</span>
+            window.highImpactJs.<span style="color: #dcdcaa"
+                >setTemplateConfig</span
+            >(<span style="color: #ce9178">'topscroll'</span>, { peekAmount:
+            <span style="color: #ce9178">'70vh'</span>, showCloseButton:
+            <span style="color: #569cd6">true</span>, title:
+            <span style="color: #ce9178">'Continue reading'</span>
+            });
+        </div>
+
+        <h2>What Happens?</h2>
+        <ul>
+            <li>
+                <strong>Format Integration:</strong> When a topscroll ad
+                renders, the integration config's <code>setup</code> function
+                runs
+            </li>
+            <li>
+                <strong>Responsive Styling:</strong> CSS is injected into the ad
+                iframe to ensure proper scaling
+            </li>
+            <li>
+                <strong>Platform Support:</strong> Special handling for GAM,
+                Adform, Xandr, etc.
+            </li>
+            <li>
+                <strong>Banner Scaling:</strong> Ad creative fills the format
+                container correctly
+            </li>
+        </ul>
+
+        <h2>Complete Example</h2>
+        <div class="code-block">
+            <span style="color: #808080">&lt;!DOCTYPE html&gt;</span>
+            <span style="color: #808080">&lt;html&gt;</span>
+            <span style="color: #808080">&lt;head&gt;</span>
+            <span style="color: #808080">&lt;script </span
+            ><span style="color: #9cdcfe">type</span>=<span
+                style="color: #ce9178"
+                >"module"</span
+            ><span style="color: #808080">&gt;</span>
+            <span style="color: #c586c0">import</span> { Advantage }
+            <span style="color: #c586c0">from</span>
+            <span style="color: #ce9178">'./src/advantage'</span>;
+            <span style="color: #c586c0">import</span> config
+            <span style="color: #c586c0">from</span>
+            <span style="color: #ce9178"
+                >'./high-impact-integration-config'</span
+            >;
+
+            <span style="color: #6a9955"
+                >// Initialize Advantage with integration config</span
+            >
+            <span style="color: #4ec9b0">const</span> advantage =
+            Advantage.<span style="color: #dcdcaa">getInstance</span>();
+            advantage.<span style="color: #dcdcaa">configure</span>(config);
+
+            <span style="color: #6a9955"
+                >// Configure High Impact JS slots</span
+            >
+            window.highImpactJs = window.highImpactJs || { cmd: [] };
+            window.highImpactJs.cmd.<span style="color: #dcdcaa">push</span
+            >(<span style="color: #c586c0">function</span>() {
+            window.highImpactJs.<span style="color: #dcdcaa">defineSlot</span>({
+            template: <span style="color: #ce9178">'topscroll'</span>, adUnitId:
+            <span style="color: #ce9178">'/123456/topscroll-ad'</span>, sizes:
+            [[<span style="color: #b5cea8">1</span>,
+            <span style="color: #b5cea8">1</span>]] }); });
+            <span style="color: #808080">&lt;/script&gt;</span>
+
+            <span style="color: #6a9955">&lt;!-- Google Ad Manager --&gt;</span>
+            <span style="color: #808080">&lt;script </span
+            ><span style="color: #9cdcfe">src</span>=<span
+                style="color: #ce9178"
+                >"https://securepubads.g.doubleclick.net/tag/js/gpt.js"</span
+            ><span style="color: #808080">&gt;&lt;/script&gt;</span>
+            <span style="color: #808080">&lt;/head&gt;</span>
+            <span style="color: #808080">&lt;body&gt;</span>
+            <span style="color: #808080">&lt;div </span
+            ><span style="color: #9cdcfe">id</span>=<span style="color: #ce9178"
+                >"/123456/topscroll-ad"</span
+            ><span style="color: #808080">&gt;&lt;/div&gt;</span>
+
+            <span style="color: #808080">&lt;script&gt;</span>
+            googletag.cmd.<span style="color: #dcdcaa">push</span>(<span
+                style="color: #c586c0"
+                >function</span
+            >() { googletag.<span style="color: #dcdcaa">defineSlot</span>(<span
+                style="color: #ce9178"
+                >'/123456/topscroll-ad'</span
+            >, [[<span style="color: #b5cea8">1</span>,
+            <span style="color: #b5cea8">1</span>]],
+            <span style="color: #ce9178">'/123456/topscroll-ad'</span>) .<span
+                style="color: #dcdcaa"
+                >addService</span
+            >(googletag.<span style="color: #dcdcaa">pubads</span>());
+            googletag.<span style="color: #dcdcaa">pubads</span>().<span
+                style="color: #dcdcaa"
+                >enableSingleRequest</span
+            >(); googletag.<span style="color: #dcdcaa">enableServices</span>();
+            googletag.<span style="color: #dcdcaa">display</span>(<span
+                style="color: #ce9178"
+                >'/123456/topscroll-ad'</span
+            >); });
+            <span style="color: #808080">&lt;/script&gt;</span>
+            <span style="color: #808080">&lt;/body&gt;</span>
+            <span style="color: #808080">&lt;/html&gt;</span>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 Pro Tip:</strong> For production, host the config file on
+            your CDN and use the <code>configUrlResolver</code> option to load
+            it remotely. This allows you to update integration settings without
+            redeploying your main bundle.
+        </div>
+
+        <h2>Key Benefits</h2>
+        <ul>
+            <li>
+                ✅ <strong>Proper banner scaling:</strong> Ads fill format
+                containers correctly
+            </li>
+            <li>
+                ✅ <strong>Platform compatibility:</strong> Works with GAM,
+                Adform, Xandr, etc.
+            </li>
+            <li>
+                ✅ <strong>Separation of concerns:</strong> Core library vs.
+                site-specific settings
+            </li>
+            <li>
+                ✅ <strong>Flexible deployment:</strong> Can be updated
+                independently
+            </li>
+            <li>
+                ✅ <strong>High Impact JS compatible:</strong> Drop-in
+                replacement for existing implementations
+            </li>
+        </ul>
+
+        <h2>Need Help?</h2>
+        <p>
+            Check the
+            <a href="./HIGH_IMPACT_INTEGRATION_README.md">full README</a> for
+            detailed documentation, troubleshooting, and customization options.
+        </p>
+    </body>
+</html>
