@@ -109,6 +109,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             adSlotElement: this,
             messageValidator: Advantage.getInstance().config?.messageValidator
         });
+
+        // Temporary log for testing the new iframe tracking version
+        logger.info(
+            "🔍 AdvantageWrapper initialized with ENHANCED iframe tracking (fix/detect-reset branch) 🔍"
+        );
     }
 
     /**
