@@ -27,6 +27,8 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     #root: ShadowRoot;
     #slotAdvantageContent: HTMLSlotElement;
     #slotChangeRegistered = false;
+    #trackedIframes = new WeakSet<HTMLIFrameElement>();
+    #activeFormatIframe: HTMLIFrameElement | null = null;
     // Whitelist set via attribute or API; when present it overrides exclude‑formats
     allowedFormats: string[] | null = null;
     // Public fields
@@ -107,6 +109,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             adSlotElement: this,
             messageValidator: Advantage.getInstance().config?.messageValidator
         });
+
+        // Temporary log for testing the new iframe tracking version
+        logger.info(
+            "🔍 AdvantageWrapper initialized with ENHANCED iframe tracking (fix/detect-reset branch) 🔍"
+        );
     }
 
     /**
@@ -115,14 +122,15 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      */
     #updateCurrentFormatAttribute() {
         if (this.currentFormat) {
-            this.setAttribute('current-format', this.currentFormat);
+            this.setAttribute("current-format", this.currentFormat);
         } else {
-            this.removeAttribute('current-format');
+            this.removeAttribute("current-format");
         }
     }
 
     /**
      * Detects DOM changes and resets the wrapper if a new ad is loaded.
+     * Tracks iframes and resets the wrapper when an iframe that requested a format is removed.
      */
     #detectDOMChanges = () => {
         const observer = new MutationObserver((mutations) => {
@@ -134,22 +142,55 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                     mutation.addedNodes.forEach((node) => {
                         // Is this node an iframe?
                         if ((node as Element).tagName === "IFRAME") {
-                            logger.debug("An <iframe> was added:", node);
-                            // Attach a onload event listener to the iframe to detect when the ad is loaded and reloaded.
+                            const iframe = node as HTMLIFrameElement;
+                            logger.debug("An <iframe> was added:", iframe);
+
+                            // Track this iframe
+                            this.#trackedIframes.add(iframe);
+
+                            // If we have an active format but the active iframe was replaced,
+                            // we need to reset
+                            if (
+                                this.currentFormat &&
+                                this.#activeFormatIframe &&
+                                this.#activeFormatIframe !== iframe &&
+                                !this.simulating
+                            ) {
+                                logger.info(
+                                    "A new <iframe> was added while a format is active. " +
+                                        "The previous iframe may have been replaced. Resetting wrapper."
+                                );
+                                this.reset();
+                            }
                         }
                     });
 
                     // Check for removed nodes
                     mutation.removedNodes.forEach((node) => {
                         if ((node as Element).tagName === "IFRAME") {
-                            if (
-                                this.currentFormat &&
-                                this.simulating === false
-                            ) {
+                            const iframe = node as HTMLIFrameElement;
+
+                            // Only reset if this was the iframe that requested a format
+                            if (this.#activeFormatIframe === iframe) {
+                                if (
+                                    this.currentFormat &&
+                                    this.simulating === false
+                                ) {
+                                    logger.debug(
+                                        "The active format <iframe> was removed. " +
+                                            "This probably means that a new ad was loaded. " +
+                                            "Resetting the wrapper."
+                                    );
+                                    this.reset();
+                                }
+                            } else if (this.#trackedIframes.has(iframe)) {
                                 logger.debug(
-                                    "An <iframe> was removed. This probably means that a new ad was loaded. Time to reset the wrapper."
+                                    "A tracked <iframe> was removed, but it wasn't the active format iframe."
                                 );
-                                this.reset();
+                            } else {
+                                logger.debug(
+                                    "An untracked <iframe> was removed."
+                                );
                             }
                         }
                     });
@@ -278,6 +319,16 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             );
 
             try {
+                // Track the iframe that is requesting this format
+                if (this.messageHandler.ad?.iframe) {
+                    this.#activeFormatIframe = this.messageHandler.ad
+                        .iframe as HTMLIFrameElement;
+                    logger.debug(
+                        `Set active format iframe for format: ${format}`,
+                        this.#activeFormatIframe
+                    );
+                }
+
                 // 1. First we call the format setup function with optinal user defined format options
                 await formatConfig.setup(this, this.messageHandler.ad?.iframe, {
                     ...integration?.options,
@@ -372,6 +423,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         if (!this.currentFormat) {
             return;
         }
+
+        logger.debug("Resetting wrapper. Current format:", this.currentFormat);
+
         const formatConfig = Advantage.getInstance().formats.get(
             this.currentFormat
         );
@@ -391,6 +445,10 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         this.uiLayer.changeContent("");
         this.currentFormat = "";
         this.#updateCurrentFormatAttribute();
+
+        // Clear the active format iframe reference
+        this.#activeFormatIframe = null;
+        logger.debug("Wrapper reset complete. Active iframe cleared.");
     }
 
     animateClose() {
@@ -436,6 +494,10 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         }
         this.currentFormat = "";
         this.#updateCurrentFormatAttribute();
+
+        // Clear the active format iframe reference
+        this.#activeFormatIframe = null;
+        logger.debug("Format closed. Active iframe cleared.");
     }
 
     /**
