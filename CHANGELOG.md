@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/get-advantage/advantage/compare/v0.9.0...v0.9.1) (2025-10-21)
+
+
+### Bug Fixes
+
+* detect reset ([#56](https://github.com/get-advantage/advantage/issues/56)) ([333fc5a](https://github.com/get-advantage/advantage/commit/333fc5ae99dbe70eb00d12f63cc7b1904592bec3))
+
 # [0.9.0](https://github.com/get-advantage/advantage/compare/v0.8.0...v0.9.0) (2025-09-23)
 
 
