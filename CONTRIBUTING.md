@@ -155,7 +155,56 @@ Updating, improving and correcting the documentation
 
 ## Join The Project Team
 
-<!-- TODO -->
+We're always looking for dedicated community members to join as maintainers! Maintainers play a crucial role in keeping the project healthy, welcoming, and moving forward.
+
+### What Do Maintainers Do?
+
+Maintainers are trusted community members who:
+- Review and merge pull requests
+- Triage and respond to issues
+- Guide the project's technical direction
+- Welcome and mentor new contributors
+- Ensure the project follows its Code of Conduct
+- Maintain documentation and infrastructure
+
+### How to Become a Maintainer
+
+To become a maintainer, you should:
+
+1. **Build a Track Record**: Make meaningful contributions to the project over at least 3 months
+   - Submit quality pull requests (code, documentation, or tests)
+   - Help review other contributors' work
+   - Participate in discussions and issue triage
+   - Demonstrate understanding of the project's architecture
+
+2. **Show Community Leadership**: 
+   - Be helpful and constructive in your interactions
+   - Mentor or assist other contributors
+   - Consistently follow the Code of Conduct
+
+3. **Make Your Interest Known**:
+   - You can be nominated by an existing maintainer, or
+   - Self-nominate by emailing community@get-advantage.org with:
+     - Summary of your contributions
+     - Areas you're interested in maintaining
+     - Your expected time commitment
+
+### The Selection Process
+
+1. The maintainer committee reviews nominations
+2. They evaluate technical skills, community engagement, and alignment with project values
+3. A decision is made within 1-2 weeks
+4. If approved, you'll be onboarded with mentor support
+5. Your contributions will be recognized in our MAINTAINERS.md file
+
+For complete details about maintainer roles, responsibilities, and governance, see our [GOVERNANCE.md](GOVERNANCE.md) document.
+
+### Questions?
+
+If you have questions about becoming a maintainer or want to learn more:
+- Email: community@get-advantage.org
+- Join our [Slack community](https://join.slack.com/t/get-advantage/shared_invite/zt-2gy6c4z4m-4~pIuwRfe8eqPM5H7iV9MQ)
+- Start a [GitHub Discussion](https://github.com/get-advantage/advantage/discussions)
 
 <!-- omit in toc -->
 

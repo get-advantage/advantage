@@ -40,6 +40,8 @@ Any kind of positive contribution is welcome! Please help us to grow by contribu
 
 > Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details on our [`CODE OF CONDUCT`](CODE_OF_CONDUCT.md), and the process for submitting pull requests to us.
 
+Interested in becoming a maintainer? Check out our [Governance](GOVERNANCE.md) and [Maintainers](MAINTAINERS.md) documentation.
+
 🆕 New to Open Source? 💡 Follow this [guide](https://opensource.guide/how-to-contribute/) to jumpstart your Open Source journey 🚀.
 
 ## Contributors ✨
