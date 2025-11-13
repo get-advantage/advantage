@@ -697,3 +697,148 @@ export const injectResponsiveAdStyling = (iframe: HTMLIFrameElement): void => {
 4. Keep config separate from core library
 
 This approach gives you the **same styling power** with **better maintainability**.
+
+---
+
+### Live example:
+
+```typescript
+import {
+    Advantage,
+    AdvantageFormatName,
+    IAdvantageWrapper
+} from "@get-advantage/advantage";
+import { StyleManager } from "../styleManager";
+import { styleWelcomePageBar } from "../functions/welcomepage.leeads";
+import { addAdvantageWrapper } from "../functions/addAdvantageWrapper";
+
+addAdvantageWrapper("#div-leeadsFullpageAd", AdvantageFormatName.WelcomePage);
+// Get a reference to the Advantage singleton
+const advantage = Advantage.getInstance();
+advantage.configure({
+    formatIntegrations: [
+        {
+            format: AdvantageFormatName.TopScroll,
+            options: {
+                closeButton: true,
+                closeButtonText: "Fortsätt till sajt",
+                downArrow: true,
+                height: 80,
+                closeButtonAnimationDuration: 0.5
+            },
+            setup: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
+                return new Promise<void>((resolve) => {
+                    resolve();
+                });
+            },
+            reset(wrapper, ad) {
+                const styleManager = StyleManager.getInstance(
+                    ad?.id ?? AdvantageFormatName.TopScroll
+                );
+                styleManager.restoreStyles();
+            },
+            close: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
+                const styleManager = StyleManager.getInstance(
+                    ad?.id ?? AdvantageFormatName.TopScroll
+                );
+                styleManager.restoreStyles();
+            }
+        },
+        {
+            format: AdvantageFormatName.Midscroll,
+            setup: (wrapper, ad) => {
+                return new Promise<void>((resolve) => {
+                    const styleManager = StyleManager.getInstance(
+                        ad?.id ?? AdvantageFormatName.Midscroll
+                    );
+
+                    styleManager.setStyle(<HTMLElement>wrapper.parentElement, {
+                        position: "relative",
+                        width: "100vw",
+                        zIndex: "9999999999"
+                    });
+
+                    styleManager.setStyle(
+                        <HTMLElement>ad?.parentElement?.parentElement,
+                        {
+                            margin: "0",
+                            padding: "0"
+                        }
+                    );
+
+                    //Position ad in center of the screen
+                    const cords = (<HTMLElement>(
+                        wrapper.parentElement
+                    )).getBoundingClientRect();
+                    if (cords.left > 0) {
+                        styleManager.setStyle(
+                            <HTMLElement>wrapper.parentElement,
+                            {
+                                marginLeft: `-${cords.left}px`
+                            }
+                        );
+                    }
+                    resolve();
+                });
+            },
+            reset(wrapper, ad) {
+                const styleManager = StyleManager.getInstance(
+                    ad?.id ?? AdvantageFormatName.Midscroll
+                );
+                styleManager.restoreStyles();
+            },
+            close(wrapper, ad) {
+                const styleManager = StyleManager.getInstance(
+                    ad?.id ?? AdvantageFormatName.Midscroll
+                );
+                styleManager.restoreStyles();
+            }
+        },
+        {
+            format: AdvantageFormatName.WelcomePage,
+            options: {
+                autoCloseDuration: 20,
+                siteTitle: `${window.innerWidth < 450 ? "" : "Fragbite"}`,
+                logo: `https://icons.duckduckgo.com/ip3/${window.location.hostname}.ico`,
+                continueToLabel: `${
+                    window.innerWidth < 450 ? "Fortsätt" : "Fortsätt till"
+                }`,
+                scrollBackToTop: false,
+                adLabel: "Annons"
+            },
+            setup: (wrapper, ad) => {
+                return new Promise<void>((resolve) => {
+                    const styleManager = StyleManager.getInstance(
+                        ad?.id ?? AdvantageFormatName.WelcomePage
+                    );
+
+                    styleManager.setStyle(<HTMLElement>ad?.parentElement, {
+                        margin: "0"
+                    });
+
+                    styleManager.setStyle(document.body, {
+                        paddingTop: "100vh",
+                        overflow: "hidden"
+                    });
+
+                    styleWelcomePageBar(wrapper, "Fragbite");
+
+                    resolve();
+                });
+            },
+            reset(wrapper, ad) {
+                const styleManager = StyleManager.getInstance(
+                    ad?.id ?? AdvantageFormatName.WelcomePage
+                );
+                styleManager.restoreStyles();
+            },
+            close(wrapper, ad) {
+                const styleManager = StyleManager.getInstance(
+                    ad?.id ?? AdvantageFormatName.WelcomePage
+                );
+                styleManager.restoreStyles();
+            }
+        }
+    ]
+});
+```
