@@ -348,6 +348,24 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 delete messageOptions.action;
                 delete messageOptions.format;
 
+                // Get High Impact JS global config if compatibility is enabled
+                let highImpactConfig: any = undefined;
+                try {
+                    // Dynamically import to avoid circular dependencies
+                    const highImpactModule = await import(
+                        "./high-impact-js/index"
+                    );
+                    highImpactConfig = highImpactModule.getConfig();
+                } catch (e) {
+                    // High Impact JS compatibility layer not available
+                }
+
+                // Merge Advantage config with High Impact JS config
+                const mergedConfig = {
+                    ...Advantage.getInstance().config,
+                    ...highImpactConfig
+                };
+
                 // 1. First we call the format setup function with optional user defined format options
                 await formatConfig.setup(this, this.messageHandler.ad?.iframe, {
                     ...integration?.options,
@@ -355,7 +373,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 });
 
                 // 2. Then we call the integration setup function to apply site-specific adjustments
-                await integration?.setup(this, this.messageHandler.ad?.iframe);
+                await integration?.setup(
+                    this,
+                    this.messageHandler.ad?.iframe,
+                    mergedConfig
+                );
 
                 resolve();
             } catch (error) {
@@ -437,12 +459,27 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     /**
      * Resets the current ad format.
      */
-    reset() {
+    async reset() {
         if (!this.currentFormat) {
             return;
         }
 
         logger.debug("Resetting wrapper. Current format:", this.currentFormat);
+
+        // Get High Impact JS global config if compatibility is enabled
+        let highImpactConfig: any = undefined;
+        try {
+            const highImpactModule = await import("./high-impact-js/index");
+            highImpactConfig = highImpactModule.getConfig();
+        } catch (e) {
+            // High Impact JS compatibility layer not available
+        }
+
+        // Merge Advantage config with High Impact JS config
+        const mergedConfig = {
+            ...Advantage.getInstance().config,
+            ...highImpactConfig
+        };
 
         const formatConfig = Advantage.getInstance().formats.get(
             this.currentFormat
@@ -455,7 +492,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         );
         if (integration) {
             if (typeof integration.reset === "function") {
-                integration.reset(this, this.messageHandler?.ad?.iframe);
+                integration.reset(
+                    this,
+                    this.messageHandler?.ad?.iframe,
+                    mergedConfig
+                );
             } else if (typeof integration.onReset === "function") {
                 integration.onReset(this, this.messageHandler?.ad?.iframe);
             }
@@ -480,11 +521,27 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     /**
      * Closes the current ad format.
      */
-    close() {
+    async close() {
         if (!this.currentFormat) {
             logger.info("No format to close.");
             return;
         }
+
+        // Get High Impact JS global config if compatibility is enabled
+        let highImpactConfig: any = undefined;
+        try {
+            const highImpactModule = await import("./high-impact-js/index");
+            highImpactConfig = highImpactModule.getConfig();
+        } catch (e) {
+            // High Impact JS compatibility layer not available
+        }
+
+        // Merge Advantage config with High Impact JS config
+        const mergedConfig = {
+            ...Advantage.getInstance().config,
+            ...highImpactConfig
+        };
+
         const formatConfig = Advantage.getInstance().formats.get(
             this.currentFormat
         );
@@ -505,7 +562,11 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         );
         if (integration) {
             if (typeof integration.close === "function") {
-                integration.close(this, this.messageHandler?.ad?.iframe);
+                integration.close(
+                    this,
+                    this.messageHandler?.ad?.iframe,
+                    mergedConfig
+                );
             } else if (typeof integration.onClose === "function") {
                 integration.onClose(this, this.messageHandler?.ad?.iframe);
             }

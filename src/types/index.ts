@@ -33,6 +33,34 @@ export interface AdvantageConfig {
     enableHighImpactCompatibility?: boolean;
 }
 
+/**
+ * Merged configuration passed to format integration hooks.
+ * Combines Advantage framework config with High Impact JS global config.
+ *
+ * Advantage properties (framework-level):
+ * - formats: Available format definitions
+ * - formatIntegrations: Other integration configurations
+ * - messageValidator: Security validation function
+ * - enableHighImpactCompatibility: Compatibility mode flag
+ *
+ * High Impact JS properties (publisher-level):
+ * - plugins: Active plugins (e.g., ['gam', 'xandr'])
+ * - topBarHeight: Site header height in pixels
+ * - bottomBarHeight: Site footer height in pixels
+ * - zIndex: Custom z-index for ads
+ * - debug: Enable debug logging
+ * - ignoreSlotOn: Function to skip certain ads
+ */
+export interface MergedIntegrationConfig extends Partial<AdvantageConfig> {
+    // High Impact JS GlobalConfig properties
+    plugins?: string[];
+    topBarHeight?: number;
+    bottomBarHeight?: number;
+    zIndex?: number;
+    ignoreSlotOn?: (html: string) => boolean;
+    debug?: boolean;
+}
+
 export interface IAdvantageWrapper extends HTMLElement {
     container: HTMLElement;
     content: HTMLElement;
@@ -134,19 +162,23 @@ export interface AdvantageFormatIntegration {
     options?: AdvantageFormatOptions;
     setup: (
         wrapper: IAdvantageWrapper,
-        adIframe?: HTMLIFrameElement | HTMLElement
+        adIframe?: HTMLIFrameElement | HTMLElement,
+        config?: MergedIntegrationConfig
     ) => Promise<void>;
     teardown?: (
         wrapper: IAdvantageWrapper,
-        adIframe?: HTMLIFrameElement | HTMLElement
+        adIframe?: HTMLIFrameElement | HTMLElement,
+        config?: MergedIntegrationConfig
     ) => void;
     close?: (
         wrapper: IAdvantageWrapper,
-        adIframe?: HTMLIFrameElement | HTMLElement
+        adIframe?: HTMLIFrameElement | HTMLElement,
+        config?: MergedIntegrationConfig
     ) => void;
     reset?: (
         wrapper: IAdvantageWrapper,
-        adIframe?: HTMLIFrameElement | HTMLElement
+        adIframe?: HTMLIFrameElement | HTMLElement,
+        config?: MergedIntegrationConfig
     ) => void;
     /** @deprecated use close */
     onClose?: (
