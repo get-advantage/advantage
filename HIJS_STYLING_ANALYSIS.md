@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document analyzes how styling is implemented in the original High Impact JS (specifically the seoghoer.dk bundle) and compares it to the Advantage approach. This will help developers migrate site-specific configurations from High Impact JS to Advantage + High Impact JS compatibility layer.
+This document analyzes how styling is implemented in High Impact JS and compares it to the Advantage approach. This will help developers migrate site-specific configurations from High Impact JS to Advantage + High Impact JS compatibility layer.
 
 ---
 
@@ -190,7 +190,7 @@ highImpactJs.defineSlot({
 
 #### Custom Site Styling:
 
-**For seoghoer.dk bundle:** The entire library was compiled with site-specific configurations and styling baked in. Changes require:
+**Bundle:** The entire library was compiled with site-specific configurations and styling baked in. Changes require:
 
 1. Modify source code
 2. Rebuild bundle with Rollup
@@ -344,7 +344,7 @@ advantage.configure({
 
 ### Step 3: Handle Layout Offset Issues
 
-If you see ads not spanning full width (like we encountered on seoghoer.dk), you need the **wrapper-level styling fix**:
+If you see ads not spanning full width, you need the **wrapper-level styling fix**:
 
 ```typescript
 import { advantage, AdvantageFormatName } from "@get-advantage/advantage";
@@ -546,7 +546,7 @@ window.highImpactJs.cmd.push(() => {
 });
 ```
 
-### For Custom Bundles (Like seoghoer.dk)
+### For Custom Bundles
 
 If you have a custom bundle with site-specific modifications:
 
