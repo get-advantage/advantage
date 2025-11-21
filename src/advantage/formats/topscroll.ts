@@ -65,6 +65,15 @@ export const topscroll: AdvantageFormat = {
             if (config?.downArrow) {
                 const downArrow = document.createElement("div");
                 downArrow.id = "down-arrow";
+                downArrow.addEventListener("click", () => {
+                    logger.debug("Down arrow clicked");
+                    // Calculate the height of the ad to scroll past it
+                    const adHeight = wrapper.offsetHeight;
+                    window.scrollTo({
+                        top: adHeight,
+                        behavior: "smooth"
+                    });
+                });
                 uiContainer.appendChild(downArrow);
             }
 
@@ -96,6 +105,15 @@ export const topscroll: AdvantageFormat = {
         closeBtn.addEventListener("click", () => {
             logger.debug("Close button clicked");
             wrapper.close();
+        });
+
+        downArrow.addEventListener("click", () => {
+            logger.debug("Down arrow clicked");
+            const adHeight = wrapper.offsetHeight;
+            window.scrollTo({
+                top: adHeight,
+                behavior: "smooth"
+            });
         });
     },
     reset: (wrapper, ad?) => {
