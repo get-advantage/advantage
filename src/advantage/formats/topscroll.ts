@@ -11,6 +11,20 @@ import {
 } from "./format-helper";
 import logger from "../../utils/logging";
 
+/**
+ * Helper function to handle downArrow click event
+ * Scrolls the page smoothly to the position past the ad
+ */
+const handleDownArrowClick = (wrapper: HTMLElement) => {
+    logger.debug("Down arrow clicked");
+    // Calculate the height of the ad to scroll past it
+    const adHeight = wrapper.offsetHeight;
+    window.scrollTo({
+        top: adHeight,
+        behavior: "smooth"
+    });
+};
+
 export const topscroll: AdvantageFormat = {
     name: AdvantageFormatName.TopScroll,
     description:
@@ -65,15 +79,7 @@ export const topscroll: AdvantageFormat = {
             if (config?.downArrow) {
                 const downArrow = document.createElement("div");
                 downArrow.id = "down-arrow";
-                downArrow.addEventListener("click", () => {
-                    logger.debug("Down arrow clicked");
-                    // Calculate the height of the ad to scroll past it
-                    const adHeight = wrapper.offsetHeight;
-                    window.scrollTo({
-                        top: adHeight,
-                        behavior: "smooth"
-                    });
-                });
+                downArrow.addEventListener("click", () => handleDownArrowClick(wrapper));
                 uiContainer.appendChild(downArrow);
             }
 
@@ -107,14 +113,7 @@ export const topscroll: AdvantageFormat = {
             wrapper.close();
         });
 
-        downArrow.addEventListener("click", () => {
-            logger.debug("Down arrow clicked");
-            const adHeight = wrapper.offsetHeight;
-            window.scrollTo({
-                top: adHeight,
-                behavior: "smooth"
-            });
-        });
+        downArrow.addEventListener("click", () => handleDownArrowClick(wrapper));
     },
     reset: (wrapper, ad?) => {
         if (ad) {

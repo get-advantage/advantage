@@ -64,10 +64,7 @@ describe("template spec", () => {
             .find("#down-arrow")
             .click();
 
-        // Wait for smooth scroll to complete
-        cy.wait(500);
-
-        // Verify page has scrolled down
+        // Verify page has scrolled down (using Cypress's built-in retry logic)
         cy.window().its("scrollY").should("be.greaterThan", 0);
     });
 });
