@@ -40,7 +40,7 @@ export const topscroll: AdvantageFormat = {
         const config = { ...defaults, ...(options || {}) };
 
         return new Promise((resolve) => {
-            // Inser the CSS for the top scroll format
+            // Insert the CSS for the top scroll format
             wrapper.insertCSS(topscrollCSS);
             // Set the styles for the ad iframe
             if (ad) {
