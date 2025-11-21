@@ -40,4 +40,34 @@ describe("template spec", () => {
         // Check if advantage-wrapper is set to display: none
         cy.get("advantage-wrapper").should("have.css", "display", "none");
     });
+
+    it("should scroll the page when downArrow is clicked", () => {
+        cy.viewport(1000, 1200);
+        cy.visit("http://localhost:8000/tests/topscroll-test.html");
+
+        // Verify downArrow exists
+        cy.get("advantage-wrapper")
+            .shadow()
+            .find("advantage-ui-layer")
+            .shadow()
+            .find("#down-arrow")
+            .should("exist");
+
+        // Check initial scroll position
+        cy.window().its("scrollY").should("equal", 0);
+
+        // Click the downArrow
+        cy.get("advantage-wrapper")
+            .shadow()
+            .find("advantage-ui-layer")
+            .shadow()
+            .find("#down-arrow")
+            .click();
+
+        // Wait for smooth scroll to complete
+        cy.wait(500);
+
+        // Verify page has scrolled down
+        cy.window().its("scrollY").should("be.greaterThan", 0);
+    });
 });
