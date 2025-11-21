@@ -11,6 +11,21 @@ import {
 } from "./format-helper";
 import logger from "../../utils/logging";
 
+/**
+ * Handles the scroll behavior when the down arrow is clicked
+ * @param height - The configured height of the ad (in vh percentage)
+ */
+const handleDownArrowClick = (height?: number) => {
+    logger.debug("Down arrow clicked");
+    const scrollHeight = height && height <= 100 
+        ? window.innerHeight * (height / 100)
+        : window.innerHeight * 0.8;
+    window.scrollBy({
+        top: scrollHeight,
+        behavior: "smooth"
+    });
+};
+
 export const topscroll: AdvantageFormat = {
     name: AdvantageFormatName.TopScroll,
     description:
@@ -65,17 +80,7 @@ export const topscroll: AdvantageFormat = {
             if (config?.downArrow) {
                 const downArrow = document.createElement("div");
                 downArrow.id = "down-arrow";
-                downArrow.addEventListener("click", () => {
-                    logger.debug("Down arrow clicked");
-                    // Scroll the page down by the height of the ad
-                    const scrollHeight = config.height && config.height <= 100 
-                        ? window.innerHeight * (config.height / 100)
-                        : window.innerHeight * 0.8;
-                    window.scrollBy({
-                        top: scrollHeight,
-                        behavior: "smooth"
-                    });
-                });
+                downArrow.addEventListener("click", () => handleDownArrowClick(config.height));
                 uiContainer.appendChild(downArrow);
             }
 
@@ -109,14 +114,7 @@ export const topscroll: AdvantageFormat = {
             wrapper.close();
         });
 
-        downArrow.addEventListener("click", () => {
-            logger.debug("Down arrow clicked");
-            // Scroll the page down by 80vh (default height)
-            window.scrollBy({
-                top: window.innerHeight * 0.8,
-                behavior: "smooth"
-            });
-        });
+        downArrow.addEventListener("click", () => handleDownArrowClick(80));
     },
     reset: (wrapper, ad?) => {
         if (ad) {
