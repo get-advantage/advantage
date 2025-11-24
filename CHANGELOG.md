@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/get-advantage/advantage/compare/v0.9.1...v0.10.0) (2025-11-24)
+
+
+### Features
+
+* **topscroll:** add click handlers for downArrow scroll and close button in topscroll format ([#58](https://github.com/get-advantage/advantage/issues/58)) ([b0cfcaa](https://github.com/get-advantage/advantage/commit/b0cfcaa5b7b8505c6aed28a034e5bd81611f35a2))
+
 ## [0.9.1](https://github.com/get-advantage/advantage/compare/v0.9.0...v0.9.1) (2025-10-21)
 
 
