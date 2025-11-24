@@ -13,7 +13,7 @@
     background-position: 50% 52%;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 50%;
-    pointer-events: none;
+    cursor: pointer;
     opacity: 0.8;
 }
 #close {
@@ -46,7 +46,6 @@
     font-family: "Arial", sans-serif;
     font-size: 0.8rem;
     font-weight: 600;
-    pointer-events: none;
 }
 
 
