@@ -29,6 +29,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     #slotChangeRegistered = false;
     #trackedIframes = new WeakSet<HTMLIFrameElement>();
     #activeFormatIframe: HTMLIFrameElement | null = null;
+    #disconnectTimeout: ReturnType<typeof setTimeout> | null = null;
     // Whitelist set via attribute or API; when present it overrides exclude‑formats
     allowedFormats: string[] | null = null;
     // Public fields
@@ -542,14 +543,25 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
     /**
      * Lifecycle method called when the element is disconnected from the DOM.
+     * Uses a timeout to distinguish between temporary removal and actual cleanup.
      */
     disconnectedCallback() {
-        logger.debug("AdvantageWrapper disconnected from DOM. Resetting.");
-        this.reset();
+        // Use a timeout to distinguish between temporary removal and actual cleanup
+        this.#disconnectTimeout = setTimeout(() => {
+            logger.debug("AdvantageWrapper disconnected from DOM. Resetting.");
+            this.reset();
+        }, 100);
     }
 
     /**
      * Lifecycle method called when the element is connected to the DOM.
+     * Clears the disconnect timeout if the element reconnects quickly.
      */
-    connectedCallback() {}
+    connectedCallback() {
+        // Clear the timeout if reconnected quickly (element was temporarily removed)
+        if (this.#disconnectTimeout) {
+            clearTimeout(this.#disconnectTimeout);
+            this.#disconnectTimeout = null;
+        }
+    }
 }
