@@ -4,7 +4,7 @@
 
 #container {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   left: 0;
   top: 0;
   overflow-y: hidden;
@@ -29,7 +29,7 @@
 
 ::slotted([slot="advantage-ad-slot"]) {
   position: absolute;
-  height: calc(100svh - var(--adv-wp-header-height)) !important;
+  height: calc(100dvh - var(--adv-wp-header-height)) !important;
   top: var(--adv-wp-header-height);
   left: 0;
 }
