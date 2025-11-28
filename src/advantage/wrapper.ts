@@ -22,6 +22,9 @@ import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
  * @noInheritDoc
  */
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
+    // Constants
+    static readonly DISCONNECT_TIMEOUT_MS = 100;
+    
     // Private fields
     #styleSheet: CSSStyleSheet | HTMLStyleElement;
     #root: ShadowRoot;
@@ -29,6 +32,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     #slotChangeRegistered = false;
     #trackedIframes = new WeakSet<HTMLIFrameElement>();
     #activeFormatIframe: HTMLIFrameElement | null = null;
+    #disconnectTimeout: ReturnType<typeof setTimeout> | null = null;
     // Whitelist set via attribute or API; when present it overrides exclude‑formats
     allowedFormats: string[] | null = null;
     // Public fields
@@ -542,14 +546,27 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
     /**
      * Lifecycle method called when the element is disconnected from the DOM.
+     * Uses a timeout to distinguish between temporary removal and actual cleanup.
      */
     disconnectedCallback() {
-        logger.debug("AdvantageWrapper disconnected from DOM. Resetting.");
-        this.reset();
+        // Use a timeout to distinguish between temporary removal and actual cleanup
+        this.#disconnectTimeout = setTimeout(() => {
+            logger.debug("AdvantageWrapper disconnected from DOM. Resetting.");
+            this.reset();
+            this.#disconnectTimeout = null;
+        }, AdvantageWrapper.DISCONNECT_TIMEOUT_MS);
     }
 
     /**
      * Lifecycle method called when the element is connected to the DOM.
+     * Clears the disconnect timeout if the element reconnects quickly.
      */
-    connectedCallback() {}
+    connectedCallback() {
+        // Clear the timeout if reconnected quickly (element was temporarily removed)
+        if (this.#disconnectTimeout) {
+            logger.debug("AdvantageWrapper reconnected to DOM. Canceling reset.");
+            clearTimeout(this.#disconnectTimeout);
+            this.#disconnectTimeout = null;
+        }
+    }
 }
