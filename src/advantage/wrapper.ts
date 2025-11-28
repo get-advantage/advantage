@@ -32,6 +32,8 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     #slotChangeRegistered = false;
     #trackedIframes = new WeakSet<HTMLIFrameElement>();
     #activeFormatIframe: HTMLIFrameElement | null = null;
+    #mutationObserver: MutationObserver | null = null;
+    #slotChangeHandler: (() => void) | null = null;
     #disconnectTimeout: ReturnType<typeof setTimeout> | null = null;
     // Whitelist set via attribute or API; when present it overrides exclude‑formats
     allowedFormats: string[] | null = null;
@@ -100,14 +102,15 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         // Register the wrapper with the hub, so that it is aware of its existence
         Advantage.getInstance().registerWrapper(this);
 
-        this.#slotAdvantageContent.addEventListener("slotchange", () => {
+        this.#slotChangeHandler = () => {
             if (!this.#slotChangeRegistered) {
                 logger.info("The content slot has been changed");
                 this.#slotChangeRegistered = true;
                 return;
             }
             //logger.error("The advantage-content slot should not be changed");
-        });
+        };
+        this.#slotAdvantageContent.addEventListener("slotchange", this.#slotChangeHandler);
         this.#detectDOMChanges();
         this.messageHandler = new AdvantageAdSlotResponder({
             adSlotElement: this,
@@ -137,7 +140,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * Tracks iframes and resets the wrapper when an iframe that requested a format is removed.
      */
     #detectDOMChanges = () => {
-        const observer = new MutationObserver((mutations) => {
+        this.#mutationObserver = new MutationObserver((mutations) => {
             // Loop through all mutation records
             mutations.forEach((mutation) => {
                 // We only care about added or removed nodes
@@ -201,7 +204,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 }
             });
         });
-        observer.observe(this, {
+        this.#mutationObserver.observe(this, {
             childList: true,
             subtree: true
         });
@@ -549,6 +552,19 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * Uses a timeout to distinguish between temporary removal and actual cleanup.
      */
     disconnectedCallback() {
+        logger.debug("AdvantageWrapper disconnected from DOM. Cleaning up.");
+        
+        // Disconnect the mutation observer
+        this.#mutationObserver?.disconnect();
+        
+        // Remove event listener
+        if (this.#slotChangeHandler) {
+            this.#slotAdvantageContent.removeEventListener("slotchange", this.#slotChangeHandler);
+        }
+        
+        // Unregister from Advantage instance
+        Advantage.getInstance().unregisterWrapper(this);
+
         // Use a timeout to distinguish between temporary removal and actual cleanup
         this.#disconnectTimeout = setTimeout(() => {
             logger.debug("AdvantageWrapper disconnected from DOM. Resetting.");
