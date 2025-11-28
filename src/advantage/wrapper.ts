@@ -22,6 +22,9 @@ import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
  * @noInheritDoc
  */
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
+    // Constants
+    static readonly DISCONNECT_TIMEOUT_MS = 100;
+    
     // Private fields
     #styleSheet: CSSStyleSheet | HTMLStyleElement;
     #root: ShadowRoot;
@@ -29,6 +32,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     #slotChangeRegistered = false;
     #trackedIframes = new WeakSet<HTMLIFrameElement>();
     #activeFormatIframe: HTMLIFrameElement | null = null;
+    #mutationObserver: MutationObserver | null = null;
+    #slotChangeHandler: (() => void) | null = null;
+    #disconnectTimeout: ReturnType<typeof setTimeout> | null = null;
     // Whitelist set via attribute or API; when present it overrides exclude‑formats
     allowedFormats: string[] | null = null;
     // Public fields
@@ -96,14 +102,15 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         // Register the wrapper with the hub, so that it is aware of its existence
         Advantage.getInstance().registerWrapper(this);
 
-        this.#slotAdvantageContent.addEventListener("slotchange", () => {
+        this.#slotChangeHandler = () => {
             if (!this.#slotChangeRegistered) {
                 logger.info("The content slot has been changed");
                 this.#slotChangeRegistered = true;
                 return;
             }
             //logger.error("The advantage-content slot should not be changed");
-        });
+        };
+        this.#slotAdvantageContent.addEventListener("slotchange", this.#slotChangeHandler);
         this.#detectDOMChanges();
         this.messageHandler = new AdvantageAdSlotResponder({
             adSlotElement: this,
@@ -133,7 +140,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      * Tracks iframes and resets the wrapper when an iframe that requested a format is removed.
      */
     #detectDOMChanges = () => {
-        const observer = new MutationObserver((mutations) => {
+        this.#mutationObserver = new MutationObserver((mutations) => {
             // Loop through all mutation records
             mutations.forEach((mutation) => {
                 // We only care about added or removed nodes
@@ -197,7 +204,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 }
             });
         });
-        observer.observe(this, {
+        this.#mutationObserver.observe(this, {
             childList: true,
             subtree: true
         });
@@ -541,7 +548,41 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     }
 
     /**
-     * Lifecycle method called when the element is connected to the DOM.
+     * Lifecycle method called when the element is disconnected from the DOM.
+     * Uses a timeout to distinguish between temporary removal and actual cleanup.
      */
-    connectedCallback() {}
+    disconnectedCallback() {
+        logger.debug("AdvantageWrapper disconnected from DOM. Cleaning up.");
+        
+        // Disconnect the mutation observer
+        this.#mutationObserver?.disconnect();
+        
+        // Remove event listener
+        if (this.#slotChangeHandler) {
+            this.#slotAdvantageContent.removeEventListener("slotchange", this.#slotChangeHandler);
+        }
+        
+        // Unregister from Advantage instance
+        Advantage.getInstance().unregisterWrapper(this);
+
+        // Use a timeout to distinguish between temporary removal and actual cleanup
+        this.#disconnectTimeout = setTimeout(() => {
+            logger.debug("AdvantageWrapper disconnected from DOM. Resetting.");
+            this.reset();
+            this.#disconnectTimeout = null;
+        }, AdvantageWrapper.DISCONNECT_TIMEOUT_MS);
+    }
+
+    /**
+     * Lifecycle method called when the element is connected to the DOM.
+     * Clears the disconnect timeout if the element reconnects quickly.
+     */
+    connectedCallback() {
+        // Clear the timeout if reconnected quickly (element was temporarily removed)
+        if (this.#disconnectTimeout) {
+            logger.debug("AdvantageWrapper reconnected to DOM. Canceling reset.");
+            clearTimeout(this.#disconnectTimeout);
+            this.#disconnectTimeout = null;
+        }
+    }
 }

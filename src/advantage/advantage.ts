@@ -45,6 +45,15 @@ export class Advantage {
         logger.info("Wrapper registered", wrapper);
     }
 
+    // Public method to unregister a wrapper from the library.
+    public unregisterWrapper(wrapper: IAdvantageWrapper) {
+        const index = this.wrappers.indexOf(wrapper);
+        if (index > -1) {
+            this.wrappers.splice(index, 1);
+            logger.info("Wrapper unregistered", wrapper);
+        }
+    }
+
     // Public method to register a custom wrapper with the library.
     public registerCustomWrapper(wrapper: HTMLElement) {
         this.#customWrappers.push(wrapper);
