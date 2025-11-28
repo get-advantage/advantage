@@ -541,6 +541,14 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     }
 
     /**
+     * Lifecycle method called when the element is disconnected from the DOM.
+     */
+    disconnectedCallback() {
+        logger.debug("AdvantageWrapper disconnected from DOM. Resetting.");
+        this.reset();
+    }
+
+    /**
      * Lifecycle method called when the element is connected to the DOM.
      */
     connectedCallback() {}
