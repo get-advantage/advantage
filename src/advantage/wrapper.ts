@@ -553,6 +553,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         this.#disconnectTimeout = setTimeout(() => {
             logger.debug("AdvantageWrapper disconnected from DOM. Resetting.");
             this.reset();
+            this.#disconnectTimeout = null;
         }, AdvantageWrapper.DISCONNECT_TIMEOUT_MS);
     }
 
