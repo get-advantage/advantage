@@ -22,6 +22,9 @@ import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
  * @noInheritDoc
  */
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
+    // Constants
+    static readonly DISCONNECT_TIMEOUT_MS = 100;
+    
     // Private fields
     #styleSheet: CSSStyleSheet | HTMLStyleElement;
     #root: ShadowRoot;
@@ -550,7 +553,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         this.#disconnectTimeout = setTimeout(() => {
             logger.debug("AdvantageWrapper disconnected from DOM. Resetting.");
             this.reset();
-        }, 100);
+        }, AdvantageWrapper.DISCONNECT_TIMEOUT_MS);
     }
 
     /**
@@ -560,6 +563,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     connectedCallback() {
         // Clear the timeout if reconnected quickly (element was temporarily removed)
         if (this.#disconnectTimeout) {
+            logger.debug("AdvantageWrapper reconnected to DOM. Canceling reset.");
             clearTimeout(this.#disconnectTimeout);
             this.#disconnectTimeout = null;
         }
