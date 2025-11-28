@@ -18,9 +18,15 @@
 </head>
 
 <body>
-    <advantage-wrapper>
+    <advantage-wrapper id="allowed-formats-wrapper">
         <div slot="advantage-ad-slot">
-            <iframe src="./welcomepage/welcomepage.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
+            <iframe src="./topscroll/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
+                scrolling="no"></iframe>
+        </div>
+    </advantage-wrapper>
+    <advantage-wrapper allowed-formats="TOPSCROLL">
+        <div slot="advantage-ad-slot">
+            <iframe src="./topscroll/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
                 scrolling="no"></iframe>
         </div>
     </advantage-wrapper>
@@ -323,7 +329,7 @@
             </article>
         </section>
     </div>
-    <advantage-wrapper exclude-formats="TOPSCROLL,MIDSCROLL">
+    <advantage-wrapper allowed-formats="MIDSCROLL">
         <div slot="advantage-ad-slot">
             <iframe src="./topscroll/topscroll.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
                 scrolling="no"></iframe>
@@ -341,7 +347,7 @@
                 " scrolling="no"></iframe>
     </div>
     <div class="container mx-auto px-4 py-4">
-        <section class="grid grid-cols-1 lg:gap-6 lg:grid-cols-2 lg:grid-rows-3">
+        <section class="grid grid-cols-1 lg:gap-6 lg:grid-cols-2 lg:grid-rows-2">
             <article class="py-4">
                 <h1 class="sans-serif text-2xl font-bold mb-4">
                     Advantage Unveiled: Unlocking Potential
@@ -539,6 +545,37 @@
                     with purpose.
                 </p>
             </article>
+        </section>
+    </div>
+    <advantage-wrapper>
+        <div slot="advantage-ad-slot">
+            <iframe src="./double-midscroll/short.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
+                scrolling="no"></iframe>
+        </div>
+    </advantage-wrapper>
+    <div class="container mx-auto px-4 py-4">
+        <section class="grid grid-cols-1 lg:gap-6 lg:grid-cols-2 lg:grid-rows-1">
+            <article class="py-4">
+                <h2 class="sans-serif text-xl font-bold mb-4">
+                    Triple Midscroll Demo Section
+                </h2>
+                <p>
+                    This section demonstrates the triple midscroll format,
+                    which provides three full screens of scrolling space
+                    for enhanced engagement and visual impact.
+                </p>
+            </article>
+        </section>
+    </div>
+    <advantage-wrapper>
+        <div slot="advantage-ad-slot">
+            <iframe src="./triple-midscroll/short.html" title="advantage-ad" style="border: 0; width: 0; height: 0"
+                scrolling="no"></iframe>
+        </div>
+    </advantage-wrapper>
+    <div class="container mx-auto px-4 py-4">
+        <section class="grid grid-cols-1 lg:gap-6 lg:grid-cols-2 lg:grid-rows-1">
+
             <article class="py-4">
                 <h2 class="sans-serif text-xl font-bold mb-4">
                     Leveraging Your Advantage: A Guide to Growth
@@ -649,8 +686,7 @@
                 advantageWrapAdSlotElement("#ad-slot-to-be-wrapped", [
                     "TOPSCROLL"
                 ]);
-            }
-        );
+            });
     </script>
 </body>
 

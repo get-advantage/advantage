@@ -11,6 +11,23 @@ import {
 } from "./format-helper";
 import logger from "../../utils/logging";
 
+const DEFAULT_HEIGHT = 80;
+
+/**
+ * Handles the scroll behavior when the down arrow is clicked
+ * @param height - The configured height of the ad (in vh percentage)
+ */
+const handleDownArrowClick = (height?: number) => {
+    logger.debug("Down arrow clicked");
+    const scrollHeight = height && height <= 100 
+        ? window.innerHeight * (height / 100)
+        : window.innerHeight * (DEFAULT_HEIGHT / 100);
+    window.scrollBy({
+        top: scrollHeight,
+        behavior: "smooth"
+    });
+};
+
 export const topscroll: AdvantageFormat = {
     name: AdvantageFormatName.TopScroll,
     description:
@@ -20,7 +37,7 @@ export const topscroll: AdvantageFormat = {
             closeButton: true,
             closeButtonText: "Close ad",
             downArrow: true,
-            height: 80,
+            height: DEFAULT_HEIGHT,
             closeButtonAnimationDuration: 0.5
         };
         const config = { ...defaults, ...(options || {}) };
@@ -65,6 +82,7 @@ export const topscroll: AdvantageFormat = {
             if (config?.downArrow) {
                 const downArrow = document.createElement("div");
                 downArrow.id = "down-arrow";
+                downArrow.addEventListener("click", () => handleDownArrowClick(config.height));
                 uiContainer.appendChild(downArrow);
             }
 
@@ -97,6 +115,8 @@ export const topscroll: AdvantageFormat = {
             logger.debug("Close button clicked");
             wrapper.close();
         });
+
+        downArrow.addEventListener("click", () => handleDownArrowClick(DEFAULT_HEIGHT));
     },
     reset: (wrapper, ad?) => {
         if (ad) {

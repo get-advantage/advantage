@@ -12,6 +12,7 @@ export enum AdvantageFormatName {
     TopScroll = "TOPSCROLL",
     DoubleMidscroll = "DOUBLE_MIDSCROLL",
     Midscroll = "MIDSCROLL",
+    TripleMidscroll = "TRIPLE_MIDSCROLL",
     WelcomePage = "WELCOME_PAGE"
 }
 
@@ -34,10 +35,19 @@ export interface AdvantageConfig {
 export interface IAdvantageWrapper extends HTMLElement {
     container: HTMLElement;
     content: HTMLElement;
-    currentFormat: AdvantageFormatName | string | null;
+    currentFormat?: AdvantageFormatName | string;
     uiLayer: IAdvantageUILayer;
     contentNodes: Node[];
-    morphIntoFormat: (format: AdvantageFormatName | string) => Promise<void>;
+    allowedFormats: string[] | null;
+    morphIntoFormat: (
+        format: AdvantageFormatName | string,
+        message?: AdvantageMessage
+    ) => Promise<void>;
+    forceFormat: (
+        format: AdvantageFormatName | string,
+        iframe?: HTMLIFrameElement,
+        options?: any
+    ) => Promise<void>;
     applyStylesToAllChildElements: (styles: string) => void;
     insertCSS: (CSS: string) => void;
     resetCSS: () => void;
@@ -46,6 +56,8 @@ export interface IAdvantageWrapper extends HTMLElement {
     changeContent: (content: string | HTMLElement) => void;
     simulateFormat: (format: AdvantageFormatName | string) => Promise<void>;
     animateClose: () => void;
+    setAllowedFormats: (formats: string[]) => void;
+    clearAllowedFormats: () => void;
 }
 
 export interface IAdvantageUILayer extends HTMLElement {
@@ -75,6 +87,7 @@ export interface AdvantageFormatOptions {
     closeButtonAnimationDuration?: number;
     downArrow?: boolean;
     height?: number;
+    sessionID?: string;
     /**
      * The duration in seconds before the format closes automatically.
      * If set to 0, the format will not close automatically.
@@ -106,6 +119,13 @@ export interface AdvantageFormatOptions {
      * Can be used to customize the label of the continue to site
      * @defaul Continue to */
     continueToLabel?: string;
+    /**
+     * URL to the background ad. Only used in the Double Midscroll format.
+     * This is set from the foreground ad.
+     */
+    backgroundAdURL?: string;
+    allowedOrigins?: string[];
+    dangerouslyAllowAllOrigins?: boolean;
 }
 
 export interface AdvantageFormatIntegration {
@@ -144,4 +164,8 @@ export interface AdvantageMessage {
     type: ADVANTAGE_MESSAGE;
     action: AdvantageMessageAction;
     format?: AdvantageFormatName;
+    origins?: string[];
+    gqid?: string;
+    targetingMap?: { [key: string]: string[] };
+    backgroundAdURL?: string;
 }

@@ -2,12 +2,15 @@
  * Moves an element into a wrapper structure and creates a new slot in the wrapper structure.
  * The wrapper structure is inserted into the DOM before the element.
  * If the function is passed an array of formats that should not be allowed for this wrapper, it adds an attribute to the wrapper structure.
+ * If the function is passed an array of formats that should be allowed for this wrapper, it adds an attribute to the wrapper structure.
  * @param target - The target element or selector string.
  * @param excludedFormats - An optional array of excluded formats.
+ * @param allowedFormats - An optional array of allowed formats.
  */
 export function advantageWrapAdSlotElement(
     target: HTMLElement | string,
-    excludedFormats?: string[]
+    excludedFormats?: string[],
+    allowedFormats?: string[]
 ) {
     let element: HTMLElement | null;
 
@@ -31,6 +34,12 @@ export function advantageWrapAdSlotElement(
     if (excludedFormats && excludedFormats.length > 0) {
         const formats = excludedFormats.join(", ");
         advantageWrapper.setAttribute("exclude-formats", formats);
+    }
+
+    // Add allowed formats if provided
+    if (allowedFormats && allowedFormats.length > 0) {
+        const formats = allowedFormats.join(", ");
+        advantageWrapper.setAttribute("allowed-formats", formats);
     }
 
     const slotDiv = document.createElement("div");

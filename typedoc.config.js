@@ -1,5 +1,5 @@
 /** @type {import('typedoc').TypeDocOptions} */
-export default {
+const config = {
     plugin: ["typedoc-plugin-markdown", "typedoc-plugin-no-inherit"],
     entryPoints: [
         "./src/types/index.ts",
@@ -18,3 +18,5 @@ export default {
     githubPages: true,
     hideInPageTOC: true
 };
+export default config;
+export { config as 'module.exports' } // dummy CommonJS export

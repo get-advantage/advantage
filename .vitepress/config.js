@@ -145,6 +145,15 @@ export default defineConfig({
                     ]
                 },
                 {
+                    text: "Format Reference",
+                    items: [
+                        {
+                            text: `Double Midscroll`,
+                            link: "/docs/formats/double_midscroll.md"
+                        },
+                    ]
+                },
+                {
                     text: "Examples",
                     items: [
                         {
@@ -156,6 +165,10 @@ export default defineConfig({
                 {
                     text: "Resources",
                     items: [
+                        {
+                            text: "AI Tools ✨",
+                            link: "/docs/ai-tools.md"
+                        },
                         {
                             text: "Changelog",
                             link: "/docs/changelog.md"

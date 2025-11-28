@@ -38,7 +38,8 @@ export default {
             //     downArrow: false,
             //     closeButtonText: "Lukk"
             // },
-            setup: () => {
+            setup: (wrapper, ad) => {
+                console.log(wrapper, ad);
                 return new Promise<void>((resolve, reject) => {
                     const queryParams = new URLSearchParams(
                         window.location.search
@@ -59,6 +60,32 @@ export default {
             },
             reset: () => {
                 logger.debug("Resetting top scroll format");
+            }
+        },
+        {
+            format: AdvantageFormatName.DoubleMidscroll,
+            options: {
+                allowedOrigins: ["http://localhost:5173"]
+            },
+            setup: () => {},
+            close: () => {
+                logger.debug("Closing double midscroll format");
+            },
+            reset: () => {
+                logger.debug("Resetting double midscroll format");
+            }
+        },
+        {
+            format: AdvantageFormatName.TripleMidscroll,
+            options: {
+                allowedOrigins: ["http://localhost:5173"]
+            },
+            setup: () => {},
+            close: () => {
+                logger.debug("Closing triple midscroll format");
+            },
+            reset: () => {
+                logger.debug("Resetting triple midscroll format");
             }
         }
     ]

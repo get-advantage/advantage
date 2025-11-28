@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 cache
+.temp
+ref
 
 # Editor directories and files
 .vscode/*

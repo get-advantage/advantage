@@ -2,7 +2,12 @@ import {
     sendMessageAndOpenChannel,
     sendMessageAndAwaitResponse
 } from "../../utils/messaging";
-import { AdvantageMessage, AdvantageMessageAction } from "../../types";
+import {
+    AdvantageMessage,
+    AdvantageMessageAction,
+    AdvantageFormatName
+} from "../../types";
+export { AdvantageMessageAction, AdvantageFormatName };
 import logger from "../../utils/logging";
 
 /**
@@ -54,9 +59,20 @@ export class AdvantageCreativeMessenger {
     #messageChannel: MessageChannel | null = null;
     #sessionID: string;
     #validSession = false;
+    #broadcastChannel: BroadcastChannel | null = null;
 
     constructor() {
-        this.#sessionID = Math.random().toString(36).substring(2, 15);
+        // check if its a sessionId in the URL, if not create a new one
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get("sessionId");
+        if (sessionId) {
+            this.#sessionID = sessionId;
+            this.#validSession = true;
+        } else {
+            // Create a new session ID
+            // This is a random string that will be used to identify the session
+            this.#sessionID = Math.random().toString(36).substring(2, 15);
+        }
     }
 
     async startSession(): Promise<boolean> {
@@ -107,5 +123,65 @@ export class AdvantageCreativeMessenger {
                 callback(event.data as AdvantageMessage);
             }
         );
+    }
+
+    setupWaypoints(waypoints: HTMLElement[]): { disconnect: () => void } {
+        if (!this.#validSession) {
+            throw new Error("There is no valid session to send messages to.");
+        }
+
+        this.#broadcastChannel = new BroadcastChannel(this.#sessionID);
+
+        // Setup Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const waypointId = (entry.target as HTMLElement).dataset.id;
+                const isIntersecting = entry.isIntersecting;
+
+                // Broadcast waypoint status
+                this.#broadcastChannel!.postMessage({
+                    type: "waypoint",
+                    waypointId,
+                    isIntersecting
+                });
+            });
+        });
+
+        // Observe each waypoint
+        waypoints.forEach((waypoint) => observer.observe(waypoint));
+
+        return {
+            disconnect: () => {
+                observer.disconnect();
+                this.#broadcastChannel!.close();
+            }
+        };
+    }
+
+    listenToWaypoints(
+        onWaypointTrigger: (waypointId: string, isIntersecting: boolean) => void
+    ): { disconnect: () => void } {
+        if (!this.#validSession) {
+            throw new Error("No valid session available.");
+        }
+
+        // Create a new BroadcastChannel for this context
+        this.#broadcastChannel = new BroadcastChannel(this.#sessionID);
+
+        const listener = (event: MessageEvent) => {
+            const { waypointId, isIntersecting } = event.data;
+            if (waypointId !== undefined && isIntersecting !== undefined) {
+                onWaypointTrigger(waypointId, isIntersecting);
+            }
+        };
+
+        //this.#broadcastChannel.onmessage = listener;
+        this.#broadcastChannel.addEventListener("message", (event) => {
+            listener(event);
+        });
+
+        return {
+            disconnect: () => this.#broadcastChannel!.close()
+        };
     }
 }

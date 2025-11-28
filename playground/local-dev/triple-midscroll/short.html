@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triple Midscroll Test</title>
+  <style>
+    @font-face {
+      font-family: 'Manrope';
+      src: url('./Manrope-ExtraBold.ttf') format('truetype');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 40px;
+    }
+
+    .waypoints-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    .waypoint-item {
+      padding: 12px 24px;
+      margin: 8px 0;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .waypoint-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .waypoint-item.active {
+      background-color: #9f75ff;
+      color: #f3f1ff;
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 8px 20px rgba(159, 117, 255, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    .waypoint-item.active::before {
+      left: 100%;
+    }
+
+    .waypoint-item.inactive {
+      background-color: #e0e0e0;
+      color: #999;
+      transform: scale(0.98);
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 8px 20px rgba(159, 117, 255, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 8px 25px rgba(159, 117, 255, 0.6);
+      }
+
+      100% {
+        box-shadow: 0 8px 20px rgba(159, 117, 255, 0.4);
+      }
+    }
+
+    .info-text {
+      margin-top: 30px;
+      font-size: 18px;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+  <script type="module">
+    import { AdvantageCreativeMessenger } from "/src/advantage/messaging/creative-side";
+    import { AdvantageMessageAction, AdvantageFormatName } from "/src/types";
+    import logger from "/src/utils/logging";
+
+    // Enable debug mode dynamically
+    logger.enableDebugMode();
+
+    async function main() {
+      console.log("Triple Midscroll: Starting main function");
+      console.log("Available format names:", AdvantageFormatName);
+
+      function onWaypointTrigger(waypointId, isIntersecting) {
+        logger.debug(`Waypoint ${waypointId} is ${isIntersecting ? 'visible' : 'not visible'}`);
+
+        // Update the visual state of the waypoint item
+        const waypointElement = document.getElementById(`waypoint-${waypointId}`);
+        if (waypointElement) {
+          if (isIntersecting) {
+            waypointElement.classList.add('active');
+            waypointElement.classList.remove('inactive');
+          } else {
+            waypointElement.classList.remove('active');
+            waypointElement.classList.add('inactive');
+          }
+        }
+      }
+
+      const advantageMessenger = new AdvantageCreativeMessenger();
+      window.advantageMessenger = advantageMessenger;
+      console.log("Triple Midscroll: Starting session...");
+      const session = await advantageMessenger.startSession();
+      console.log("Triple Midscroll: Session result:", session);
+
+      if (session) {
+        console.log("Triple Midscroll: Requesting format TRIPLE_MIDSCROLL");
+        const response = await advantageMessenger.sendMessage({
+          action: AdvantageMessageAction.REQUEST_FORMAT,
+          format: AdvantageFormatName.TripleMidscroll,
+          backgroundAdURL: "http://localhost:5173/playground/local-dev/triple-midscroll/tall.html"
+        });
+        console.log("Triple Midscroll: Response from format request:", response);
+
+        if (response?.action === AdvantageMessageAction.FORMAT_CONFIRMED) {
+          logger.info("Triple Midscroll format is confirmed, starting ad");
+          document.body.style.opacity = "1";
+
+          advantageMessenger.listenToWaypoints(onWaypointTrigger);
+        } else if (response?.action === AdvantageMessageAction.FORMAT_REJECTED) {
+          console.error("Triple Midscroll: Format was REJECTED!", response);
+        } else {
+          console.error("Triple Midscroll: Unexpected response:", response);
+        }
+      } else {
+        console.error("Triple Midscroll: Failed to start session");
+      }
+    }
+    main();
+
+  </script>
+</head>
+
+<body style="opacity: 0; transition: opacity 1s ease-in;">
+  <div class="container">
+    <img src="./advantage-logo-white.svg" alt="Advantage Logo" class="logo">
+
+    <ul class="waypoints-list">
+      <li id="waypoint-start" class="waypoint-item inactive">Start Waypoint</li>
+      <li id="waypoint-first" class="waypoint-item inactive">First Waypoint</li>
+      <li id="waypoint-midpoint" class="waypoint-item inactive">Midpoint Waypoint</li>
+      <li id="waypoint-end" class="waypoint-item inactive">End Waypoint</li>
+    </ul>
+
+    <p class="info-text">Triple Midscroll - 3 screens of scrolling</p>
+  </div>
+
+</body>
+
+</html>

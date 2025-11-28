@@ -59,6 +59,31 @@ It is now time to wrap your ad slots in the Advantage Wrapper.
 </advantage-wrapper>
 ```
 
+You can control which ad formats are allowed for an `<advantage-wrapper>` by specifying them in the allowed-formats attribute. Provide a comma-separated list of format names; only these listed formats will be permitted for this specific wrapper instance.
+
+```html
+<advantage-wrapper allowed-formats="TOPSCROLL,WELCOMEPAGE">
+    <div slot="advantage-ad-slot">
+        <!-- YOUR AD SLOT HERE -->
+    </div>
+</advantage-wrapper>
+```
+
+You can also dynamically set or update the allowed ad formats for an `<advantage-wrapper>` instance using its setAllowedFormats() JavaScript method. This method is useful for changing format permissions after the page has loaded or in response to user interactions.
+
+Method: `element.setAllowedFormats(formatsArray)`
+
+-   `formatsArray`: An array of strings, where each string is a valid format identifier (e.g., `["MIDSCROLL", "WELCOME_PAGE"]`).
+-   Ensure the format identifiers used are valid. See a list of built-in formats [here](/docs/concepts/formats)
+
+```ts
+import { Advantage, IAdvantageWrapper } from "@get-advantage/advantage";
+const wrapper = document.querySelector(
+    "advantage-wrapper"
+) as IAdvantageWrapper;
+wrapper.setAllowedFormats(["MIDSCROLL", "WELCOME_PAGE"]);
+```
+
 You can also choose to use a helper method that does the wrapping for you:
 
 ```ts
@@ -93,6 +118,20 @@ Your ad slot is now Advantage enabled!
 <div class="tip custom-block" style="padding-top: 8px">
   ℹ️ Remember: It is the serving creative that advertise its intended format. In case you'r ad slot can serve both standard size ads and hight impact ads from the same ad slot. Nothing will happend if a none Advantage ad is served.     
 </div>
+
+#### Manual Format Control
+
+If you need to programmatically control which format to display without waiting for communication from the ad iframe, you can use the wrapper's `forceFormat` method. This is useful for testing, custom business logic, or integration scenarios.
+
+```ts
+// Get reference to the wrapper element
+const wrapper = document.querySelector("advantage-wrapper");
+
+// Force a specific format
+await wrapper.forceFormat("interstitial");
+```
+
+For detailed information about the `forceFormat` method, including all parameters and use cases, see the [Wrapper documentation](../concepts/wrapper.html#force-format).
 
 ### Step 5: Configuration
 

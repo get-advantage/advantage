@@ -1,7 +1,18 @@
 import { Advantage } from "./advantage";
-import { IAdvantageUILayer, IAdvantageWrapper } from "../types";
+import {
+    AdvantageFormatName,
+    IAdvantageUILayer,
+    IAdvantageWrapper,
+    AdvantageMessage,
+    AdvantageMessageAction
+} from "../types";
 
-import { logger, traverseNodes, supportsAdoptingStyleSheets } from "../utils";
+import {
+    logger,
+    traverseNodes,
+    supportsAdoptingStyleSheets,
+    ADVANTAGE
+} from "../utils";
 
 import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
 
@@ -16,11 +27,15 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     #root: ShadowRoot;
     #slotAdvantageContent: HTMLSlotElement;
     #slotChangeRegistered = false;
+    #trackedIframes = new WeakSet<HTMLIFrameElement>();
+    #activeFormatIframe: HTMLIFrameElement | null = null;
+    // Whitelist set via attribute or API; when present it overrides exclude‑formats
+    allowedFormats: string[] | null = null;
     // Public fields
     container: HTMLDivElement;
     content: HTMLDivElement;
     uiLayer: IAdvantageUILayer;
-    currentFormat: string | null = null;
+    currentFormat: AdvantageFormatName | string = "";
     messageHandler: AdvantageAdSlotResponder;
     simulating = false;
 
@@ -94,20 +109,93 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             adSlotElement: this,
             messageValidator: Advantage.getInstance().config?.messageValidator
         });
+
+        // Temporary log for testing the new iframe tracking version
+        logger.info(
+            "🔍 AdvantageWrapper initialized with ENHANCED iframe tracking (fix/detect-reset branch) 🔍"
+        );
+    }
+
+    /**
+     * Updates the current-format attribute to match the currentFormat property.
+     * Sets the attribute when currentFormat has a value, removes it when empty.
+     */
+    #updateCurrentFormatAttribute() {
+        if (this.currentFormat) {
+            this.setAttribute("current-format", this.currentFormat);
+        } else {
+            this.removeAttribute("current-format");
+        }
     }
 
     /**
      * Detects DOM changes and resets the wrapper if a new ad is loaded.
+     * Tracks iframes and resets the wrapper when an iframe that requested a format is removed.
      */
     #detectDOMChanges = () => {
-        const observer = new MutationObserver(() => {
-            if (this.currentFormat && this.simulating === false) {
-                logger.info(
-                    "DOM changes detected. This probably means that a new ad was loaded. Time to reset the wrapper."
-                );
+        const observer = new MutationObserver((mutations) => {
+            // Loop through all mutation records
+            mutations.forEach((mutation) => {
+                // We only care about added or removed nodes
+                if (mutation.type === "childList") {
+                    // Check for added nodes
+                    mutation.addedNodes.forEach((node) => {
+                        // Is this node an iframe?
+                        if ((node as Element).tagName === "IFRAME") {
+                            const iframe = node as HTMLIFrameElement;
+                            logger.debug("An <iframe> was added:", iframe);
 
-                this.reset();
-            }
+                            // Track this iframe
+                            this.#trackedIframes.add(iframe);
+
+                            // If we have an active format but the active iframe was replaced,
+                            // we need to reset
+                            if (
+                                this.currentFormat &&
+                                this.#activeFormatIframe &&
+                                this.#activeFormatIframe !== iframe &&
+                                !this.simulating
+                            ) {
+                                logger.info(
+                                    "A new <iframe> was added while a format is active. " +
+                                        "The previous iframe may have been replaced. Resetting wrapper."
+                                );
+                                this.reset();
+                            }
+                        }
+                    });
+
+                    // Check for removed nodes
+                    mutation.removedNodes.forEach((node) => {
+                        if ((node as Element).tagName === "IFRAME") {
+                            const iframe = node as HTMLIFrameElement;
+
+                            // Only reset if this was the iframe that requested a format
+                            if (this.#activeFormatIframe === iframe) {
+                                if (
+                                    this.currentFormat &&
+                                    this.simulating === false
+                                ) {
+                                    logger.debug(
+                                        "The active format <iframe> was removed. " +
+                                            "This probably means that a new ad was loaded. " +
+                                            "Resetting the wrapper."
+                                    );
+                                    this.reset();
+                                }
+                            } else if (this.#trackedIframes.has(iframe)) {
+                                logger.debug(
+                                    "A tracked <iframe> was removed, but it wasn't the active format iframe."
+                                );
+                            } else {
+                                logger.debug(
+                                    "An untracked <iframe> was removed."
+                                );
+                            }
+                        }
+                    });
+                }
+            });
         });
         observer.observe(this, {
             childList: true,
@@ -140,29 +228,77 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     };
 
     /**
+     * Restrict this wrapper to the given list of formats.
+     * Calling this method overrides any list previously set via attribute or API.
+     * @param formats Array of format names that are allowed for this wrapper.
+     */
+    setAllowedFormats(formats: string[]) {
+        this.allowedFormats = formats.map((f) => f.trim().toUpperCase());
+    }
+
+    /**
+     * Clears the programmatic whitelist so the wrapper falls back to attribute or default behaviour.
+     */
+    clearAllowedFormats() {
+        this.allowedFormats = null;
+    }
+
+    /**
      * Morphs the wrapper into a specific ad format.
+     * If `allowed-formats` is set (via attribute or API) it takes precedence over `exclude-formats`.
+     * Comparisons are case-insensitive.
      * @param format - The format to morph into.
+     * @param sessionID - The session ID for the ad.
+     * @param backgroundAdURL - The URL for the background ad.
      * @returns A promise that resolves when the morphing is complete.
      */
-    morphIntoFormat = async (format: string) => {
+    morphIntoFormat = async (
+        format: AdvantageFormatName | string,
+        message?: AdvantageMessage
+    ) => {
         logger.debug("MORPH INTO FORMAT");
         return new Promise<void>(async (resolve, reject) => {
-            const forbiddenFormats = this.getAttribute("exclude-formats")
+            const formatId = format.toUpperCase();
+            // 1. Check for an explicit allow‑list (attribute or programmatic).
+            const attrAllowed = this.getAttribute("allowed-formats")
                 ?.split(",")
-                .map((format) => format.trim());
-            if (forbiddenFormats && forbiddenFormats.includes(format)) {
+                .map((f) => f.trim().toUpperCase())
+                .filter(Boolean);
+            const allowedList = this.allowedFormats ?? attrAllowed;
+            if (allowedList && !allowedList.includes(formatId)) {
                 logger.info(
-                    `This wrapper does not support the format(s): \"${forbiddenFormats.join(
+                    `The format "${formatId}" is not in the allowed-formats list (${allowedList.join(
                         ", "
-                    )}\".`
+                    )}).`
                 );
                 reject(
-                    `The format ${format} is forbidden for this wrapper. 🛑`
+                    `The format ${formatId} is not allowed for this wrapper. 🛑`
+                );
+                return;
+            }
+
+            // 2. If no allow‑list, fall back to exclude‑list logic.
+            const forbiddenFormats = !allowedList
+                ? this.getAttribute("exclude-formats")
+                      ?.split(",")
+                      .map((f) => f.trim().toUpperCase())
+                : undefined;
+            if (forbiddenFormats && forbiddenFormats.includes(formatId)) {
+                logger.info(
+                    `This wrapper does not support the format(s): "${forbiddenFormats.join(
+                        ", "
+                    )}".`
+                );
+                reject(
+                    `The format ${formatId} is forbidden for this wrapper. 🛑`
                 );
                 return;
             }
             this.currentFormat = format;
-            let formatConfig = Advantage.getInstance().formats.get(format);
+            this.#updateCurrentFormatAttribute();
+            let formatConfig = Advantage.getInstance().formats.get(
+                format as string
+            );
 
             if (!formatConfig) {
                 formatConfig = Advantage.getInstance().defaultFormats.find(
@@ -172,22 +308,33 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                     reject(
                         `😱 The format ${format} is not supported. No configuration was found.`
                     );
-                    this.currentFormat = null;
+                    this.currentFormat = "";
+                    this.#updateCurrentFormatAttribute();
                     return;
                 }
             }
 
             const integration = Advantage.getInstance().formatIntegrations.get(
-                this.currentFormat
+                this.currentFormat as string
             );
 
             try {
+                // Track the iframe that is requesting this format
+                if (this.messageHandler.ad?.iframe) {
+                    this.#activeFormatIframe = this.messageHandler.ad
+                        .iframe as HTMLIFrameElement;
+                    logger.debug(
+                        `Set active format iframe for format: ${format}`,
+                        this.#activeFormatIframe
+                    );
+                }
+
                 // 1. First we call the format setup function with optinal user defined format options
-                await formatConfig.setup(
-                    this,
-                    this.messageHandler.ad?.iframe,
-                    integration?.options
-                );
+                await formatConfig.setup(this, this.messageHandler.ad?.iframe, {
+                    ...integration?.options,
+                    backgroundAdURL: message?.backgroundAdURL,
+                    sessionID: message?.sessionID
+                });
 
                 // 2. Then we call the integration setup function to apply site-specific adjustments
                 await integration?.setup(this, this.messageHandler.ad?.iframe);
@@ -198,6 +345,50 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 reject(error);
             }
         });
+    };
+
+    /**
+     * Forces a specific ad format without waiting for a message from the iframe.
+     * This allows publishers to directly control which format to display.
+     *
+     * @param format - The format to apply
+     * @param iframe - The iframe element to use for the ad (optional)
+     * @param options - Additional options to pass to the format's setup function
+     * @returns A promise that resolves when the format has been applied
+     */
+    forceFormat = async (
+        format: AdvantageFormatName | string,
+        iframe?: HTMLIFrameElement,
+        options?: any
+    ) => {
+        logger.debug("FORCE FORMAT", format);
+
+        // If iframe is provided, create an AdvantageAd object
+        if (iframe) {
+            // Create a dummy MessageChannel for type compatibility
+            const channel = new MessageChannel();
+
+            this.messageHandler.ad = {
+                iframe,
+                eventSource: iframe.contentWindow!,
+                port: channel.port1 // Using port1 from the MessageChannel instead of null
+            };
+        }
+
+        // Create a session ID if needed for the format
+        const sessionID = Math.random().toString(36).substring(2, 15);
+
+        // Construct a message object with the format and session ID
+        const message: AdvantageMessage = {
+            type: ADVANTAGE,
+            action: AdvantageMessageAction.REQUEST_FORMAT,
+            format: format,
+            sessionID: sessionID,
+            ...options
+        };
+
+        // Call morphIntoFormat with the constructed message
+        return this.morphIntoFormat(format, message);
     };
 
     /**
@@ -232,6 +423,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         if (!this.currentFormat) {
             return;
         }
+
+        logger.debug("Resetting wrapper. Current format:", this.currentFormat);
+
         const formatConfig = Advantage.getInstance().formats.get(
             this.currentFormat
         );
@@ -249,7 +443,12 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
         }
         this.uiLayer.changeContent("");
-        this.currentFormat = null;
+        this.currentFormat = "";
+        this.#updateCurrentFormatAttribute();
+
+        // Clear the active format iframe reference
+        this.#activeFormatIframe = null;
+        logger.debug("Wrapper reset complete. Active iframe cleared.");
     }
 
     animateClose() {
@@ -293,7 +492,12 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 integration.onClose(this, this.messageHandler?.ad?.iframe);
             }
         }
-        this.currentFormat = null;
+        this.currentFormat = "";
+        this.#updateCurrentFormatAttribute();
+
+        // Clear the active format iframe reference
+        this.#activeFormatIframe = null;
+        logger.debug("Format closed. Active iframe cleared.");
     }
 
     /**
