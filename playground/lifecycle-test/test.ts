@@ -21,7 +21,7 @@ const TestFormat = {
             '<div style="padding: 20px; background: #b2f5ea; text-align: center; font-weight: bold; color: #234e52;">Test Ad Content (Active)</div>'
         );
     },
-    reset: (wrapper: IAdvantageWrapper) => {
+    reset: (_wrapper: IAdvantageWrapper) => {
         log("🔴 TEST_FORMAT Reset: Removing 'test-active' class from body");
         document.body.classList.remove("test-active");
     }
