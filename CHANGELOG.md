@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/get-advantage/advantage/compare/v0.10.0...v0.10.1) (2025-12-11)
+
+
+### Bug Fixes
+
+* add disconnectedCallback to AdvantageWrapper to ensure cleanup ([#60](https://github.com/get-advantage/advantage/issues/60)) ([7a5e4f7](https://github.com/get-advantage/advantage/commit/7a5e4f7437f0eb53a157e12166dce15f14faef7d)), closes [#61](https://github.com/get-advantage/advantage/issues/61)
+* **welcomepage:** change from svh to dvh ([#44](https://github.com/get-advantage/advantage/issues/44)) ([626c6c5](https://github.com/get-advantage/advantage/commit/626c6c5391183724f7a6cf330fac8f33197af13f))
+
 # [0.10.0](https://github.com/get-advantage/advantage/compare/v0.9.1...v0.10.0) (2025-11-24)
 
 
