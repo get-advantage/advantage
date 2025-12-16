@@ -133,9 +133,10 @@ export const topscroll: AdvantageFormat = {
         wrapper.uiLayer.style.removeProperty("--before-content");
     },
     close: (wrapper) => {
-        wrapper.animateClose();
-        wrapper.style.removeProperty("--adv-topscroll-height");
-        wrapper.style.removeProperty("--adv-close-button-animation-duration");
-        wrapper.uiLayer.style.removeProperty("--before-content");
+        wrapper.animateClose(() => {
+            wrapper.style.removeProperty("--adv-topscroll-height");
+            wrapper.style.removeProperty("--adv-close-button-animation-duration");
+            wrapper.uiLayer.style.removeProperty("--before-content");
+        });
     }
 };
