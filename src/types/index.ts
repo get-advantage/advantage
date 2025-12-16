@@ -55,7 +55,7 @@ export interface IAdvantageWrapper extends HTMLElement {
     close: () => void;
     changeContent: (content: string | HTMLElement) => void;
     simulateFormat: (format: AdvantageFormatName | string) => Promise<void>;
-    animateClose: () => void;
+    animateClose: (callback?: () => void) => void;
     setAllowedFormats: (formats: string[]) => void;
     clearAllowedFormats: () => void;
 }

@@ -461,13 +461,19 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         logger.debug("Wrapper reset complete. Active iframe cleared.");
     }
 
-    animateClose() {
+    animateClose(callback?: () => void) {
         this.classList.add("animate");
         this.addEventListener(
             "transitionend",
             () => {
+                // If a new format has started (currentFormat is set), abort cleanup
+                if (this.currentFormat) {
+                    return;
+                }
                 this.style.display = "none";
-                this.resetCSS();
+                if (callback) {
+                    callback();
+                }
             },
             { once: true }
         );
