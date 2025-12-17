@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2](https://github.com/get-advantage/advantage/compare/v0.10.1...v0.10.2) (2025-12-17)
+
+
+### Bug Fixes
+
+* reset topscroll styles on close ([#63](https://github.com/get-advantage/advantage/issues/63)) ([b1fe55c](https://github.com/get-advantage/advantage/commit/b1fe55c97e6b07fdd13ec5e1e8b10d8d06b0bdc3))
+
 ## [0.10.1](https://github.com/get-advantage/advantage/compare/v0.10.0...v0.10.1) (2025-12-11)
 
 
