@@ -24,7 +24,7 @@ import { AdvantageAdSlotResponder } from "./messaging/publisher-side";
 export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     // Constants
     static readonly DISCONNECT_TIMEOUT_MS = 100;
-    
+
     // Private fields
     #styleSheet: CSSStyleSheet | HTMLStyleElement;
     #root: ShadowRoot;
@@ -110,7 +110,10 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
             //logger.error("The advantage-content slot should not be changed");
         };
-        this.#slotAdvantageContent.addEventListener("slotchange", this.#slotChangeHandler);
+        this.#slotAdvantageContent.addEventListener(
+            "slotchange",
+            this.#slotChangeHandler
+        );
         this.#detectDOMChanges();
         this.messageHandler = new AdvantageAdSlotResponder({
             adSlotElement: this,
@@ -458,11 +461,22 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         logger.debug("Wrapper reset complete. Active iframe cleared.");
     }
 
-    animateClose() {
+    animateClose(callback?: () => void) {
         this.classList.add("animate");
-        this.addEventListener("transitionend", () => {
-            this.style.display = "none";
-        });
+        this.addEventListener(
+            "transitionend",
+            () => {
+                // If a new format has started (currentFormat is set), abort cleanup
+                if (this.currentFormat) {
+                    return;
+                }
+                this.style.display = "none";
+                if (callback) {
+                    callback();
+                }
+            },
+            { once: true }
+        );
         this.style.height = "0px";
     }
 
@@ -553,15 +567,18 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
      */
     disconnectedCallback() {
         logger.debug("AdvantageWrapper disconnected from DOM. Cleaning up.");
-        
+
         // Disconnect the mutation observer
         this.#mutationObserver?.disconnect();
-        
+
         // Remove event listener
         if (this.#slotChangeHandler) {
-            this.#slotAdvantageContent.removeEventListener("slotchange", this.#slotChangeHandler);
+            this.#slotAdvantageContent.removeEventListener(
+                "slotchange",
+                this.#slotChangeHandler
+            );
         }
-        
+
         // Unregister from Advantage instance
         Advantage.getInstance().unregisterWrapper(this);
 
@@ -580,7 +597,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     connectedCallback() {
         // Clear the timeout if reconnected quickly (element was temporarily removed)
         if (this.#disconnectTimeout) {
-            logger.debug("AdvantageWrapper reconnected to DOM. Canceling reset.");
+            logger.debug(
+                "AdvantageWrapper reconnected to DOM. Canceling reset."
+            );
             clearTimeout(this.#disconnectTimeout);
             this.#disconnectTimeout = null;
         }

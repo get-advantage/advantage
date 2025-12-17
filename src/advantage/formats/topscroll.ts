@@ -19,9 +19,10 @@ const DEFAULT_HEIGHT = 80;
  */
 const handleDownArrowClick = (height?: number) => {
     logger.debug("Down arrow clicked");
-    const scrollHeight = height && height <= 100 
-        ? window.innerHeight * (height / 100)
-        : window.innerHeight * (DEFAULT_HEIGHT / 100);
+    const scrollHeight =
+        height && height <= 100
+            ? window.innerHeight * (height / 100)
+            : window.innerHeight * (DEFAULT_HEIGHT / 100);
     window.scrollBy({
         top: scrollHeight,
         behavior: "smooth"
@@ -82,7 +83,9 @@ export const topscroll: AdvantageFormat = {
             if (config?.downArrow) {
                 const downArrow = document.createElement("div");
                 downArrow.id = "down-arrow";
-                downArrow.addEventListener("click", () => handleDownArrowClick(config.height));
+                downArrow.addEventListener("click", () =>
+                    handleDownArrowClick(config.height)
+                );
                 uiContainer.appendChild(downArrow);
             }
 
@@ -116,15 +119,27 @@ export const topscroll: AdvantageFormat = {
             wrapper.close();
         });
 
-        downArrow.addEventListener("click", () => handleDownArrowClick(DEFAULT_HEIGHT));
+        downArrow.addEventListener("click", () =>
+            handleDownArrowClick(DEFAULT_HEIGHT)
+        );
     },
     reset: (wrapper, ad?) => {
         if (ad) {
             resetDimensionsUntilAdvantageAdSlot(ad);
         }
         wrapper.resetCSS();
+        wrapper.style.removeProperty("--adv-topscroll-height");
+        wrapper.style.removeProperty("--adv-close-button-animation-duration");
+        wrapper.uiLayer.style.removeProperty("--before-content");
     },
     close: (wrapper) => {
-        wrapper.animateClose();
+        wrapper.animateClose(() => {
+            wrapper.resetCSS();
+            wrapper.style.removeProperty("--adv-topscroll-height");
+            wrapper.style.removeProperty(
+                "--adv-close-button-animation-duration"
+            );
+            wrapper.uiLayer.style.removeProperty("--before-content");
+        });
     }
 };
