@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3-next.0](https://github.com/get-advantage/advantage/compare/v0.10.2...v0.10.3-next.0) (2025-12-17)
+
+
+### Bug Fixes
+
+* handle 0s transition duration in close animations and improve style cleanup ([75f1d15](https://github.com/get-advantage/advantage/commit/75f1d15dd7a2caddcb2555e020de3ce4f5401729))
+* remove unused import ([11d96f0](https://github.com/get-advantage/advantage/commit/11d96f032236bf0d22b0fe080ddaef1c653f1a3d))
+
 ## [0.10.2](https://github.com/get-advantage/advantage/compare/v0.10.1...v0.10.2) (2025-12-17)
 
 
