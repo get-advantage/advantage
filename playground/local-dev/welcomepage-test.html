@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WelcomePage Test (No Animation)</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            html {
+                overflow-x: hidden;
+            }
+        </style>
+        <script>
+            window.advantageCmdQueue = window.advantageCmdQueue || [];
+        </script>
+        <script type="module" src="./welcomepage-test.ts"></script>
+    </head>
+    <body>
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-2xl font-bold mb-4">WelcomePage Test</h1>
+            <p class="mb-4">
+                This page tests the WelcomePage format with
+                <code>closeButtonAnimationDuration: 0</code>.
+            </p>
+            <p class="mb-4">
+                Click the "To [Site Title]" button in the ad to close it. It
+                should close immediately without getting stuck.
+            </p>
+
+            <!-- The wrapper that will load the WelcomePage ad -->
+            <advantage-wrapper>
+                <div slot="advantage-ad-slot">
+                    <!-- Pointing to the existing welcomepage creative -->
+                    <iframe
+                        src="./welcomepage/welcomepage.html"
+                        title="advantage-ad"
+                        style="border: 0; width: 100vw; height: 100%"
+                        scrolling="no"
+                    ></iframe>
+                </div>
+            </advantage-wrapper>
+
+            <div class="mt-8">
+                <p>Content below the ad...</p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -30,9 +30,12 @@ export const welcomePage: AdvantageFormat = {
         return new Promise((resolve) => {
             // Inser the CSS for the top scroll format
             wrapper.insertCSS(varsCSS.concat(welcomepageCSS));
-            // Set the styles for the ad iframe
-            if (ad) {
-                setDimensionsUntilAdvantageAdSlot(ad);
+
+            if (config.closeButtonAnimationDuration !== undefined) {
+                wrapper.style.setProperty(
+                    "--adv-wp-transition-duration",
+                    `${config.closeButtonAnimationDuration}s`
+                );
             }
 
             // Change the content of the UI layer
@@ -123,8 +126,11 @@ export const welcomePage: AdvantageFormat = {
             resetDimensionsUntilAdvantageAdSlot(ad);
         }
         wrapper.resetCSS();
+        wrapper.style.removeProperty("--adv-wp-transition-duration");
     },
     close: (wrapper) => {
+        const container = wrapper.shadowRoot?.getElementById("container");
+
         function handleTransitionEnd() {
             wrapper.style.display = "none";
             // Remove the event listener after it has been executed
@@ -134,8 +140,25 @@ export const welcomePage: AdvantageFormat = {
             );
         }
 
-        const container = wrapper.shadowRoot?.getElementById("container");
-        container?.addEventListener("transitionend", handleTransitionEnd);
+        if (container) {
+            const computedStyle = window.getComputedStyle(container);
+            const transitionProperty = computedStyle.transitionProperty;
+            const transitionDuration = computedStyle.transitionDuration;
+
+            const hasTransition =
+                transitionProperty !== "none" &&
+                transitionDuration.split(",").some((d) => parseFloat(d) > 0);
+
+            if (!hasTransition) {
+                wrapper.style.display = "none";
+                wrapper.classList.remove("show");
+                wrapper.style.height = "0px";
+                return;
+            }
+
+            container.addEventListener("transitionend", handleTransitionEnd);
+        }
+
         wrapper.classList.remove("show");
         wrapper.style.height = "0px";
     }
