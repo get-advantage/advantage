@@ -7,7 +7,6 @@ import varsCSS from "./vars.css?inline";
 import welcomepageCSS from "./welcomepage.css?inline";
 import welcomepageUICSS from "./welcomepage-ui.css?inline";
 import {
-    setDimensionsUntilAdvantageAdSlot,
     resetDimensionsUntilAdvantageAdSlot
 } from "./format-helper";
 import logger from "../../utils/logging";
@@ -16,7 +15,7 @@ export const welcomePage: AdvantageFormat = {
     name: AdvantageFormatName.WelcomePage,
     description:
         "Positioned on top of the site content with a close button to continue to the site",
-    setup: (wrapper, ad, options) => {
+    setup: (wrapper, options) => {
         const defaults: AdvantageFormatOptions = {
             autoCloseDuration: 21,
             siteTitle: window.location.hostname,
