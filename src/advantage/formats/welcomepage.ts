@@ -15,7 +15,7 @@ export const welcomePage: AdvantageFormat = {
     name: AdvantageFormatName.WelcomePage,
     description:
         "Positioned on top of the site content with a close button to continue to the site",
-    setup: (wrapper, options) => {
+    setup: (wrapper, ad, options) => {
         const defaults: AdvantageFormatOptions = {
             autoCloseDuration: 21,
             siteTitle: window.location.hostname,
