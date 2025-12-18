@@ -38,6 +38,9 @@ export default {
             //     downArrow: false,
             //     closeButtonText: "Lukk"
             // },
+            options: {
+                closeButtonAnimationDuration: 2
+            },
             setup: (wrapper, ad) => {
                 console.log(wrapper, ad);
                 return new Promise<void>((resolve, reject) => {

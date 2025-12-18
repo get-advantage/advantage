@@ -463,6 +463,27 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
 
     animateClose(callback?: () => void) {
         this.classList.add("animate");
+
+        const computedStyle = window.getComputedStyle(this);
+        const transitionProperty = computedStyle.transitionProperty;
+        const transitionDuration = computedStyle.transitionDuration;
+
+        // Check if there are any active transitions
+        // We need to handle multiple values (e.g. "0.5s, 1s") and check if any are > 0
+        const hasTransition =
+            transitionProperty !== "none" &&
+            transitionDuration.split(",").some((d) => parseFloat(d) > 0);
+
+        if (!hasTransition) {
+            this.classList.remove("animate");
+            this.style.height = "0px";
+            this.style.display = "none";
+            if (callback) {
+                callback();
+            }
+            return;
+        }
+
         this.addEventListener(
             "transitionend",
             () => {
@@ -471,6 +492,7 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                     return;
                 }
                 this.style.display = "none";
+                this.classList.remove("animate");
                 if (callback) {
                     callback();
                 }
