@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3-next.1](https://github.com/get-advantage/advantage/compare/v0.10.3-next.0...v0.10.3-next.1) (2025-12-18)
+
+
+### Bug Fixes
+
+* **welcomepage:** revert missing ad parameter ([219e7ae](https://github.com/get-advantage/advantage/commit/219e7aefac00d41e538834d20aadccebe971b006))
+
 ## [0.10.3-next.0](https://github.com/get-advantage/advantage/compare/v0.10.2...v0.10.3-next.0) (2025-12-17)
 
 
