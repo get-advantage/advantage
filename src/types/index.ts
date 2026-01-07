@@ -11,6 +11,7 @@ export enum AdvantageMessageAction {
 export enum AdvantageFormatName {
     TopScroll = "TOPSCROLL",
     DoubleMidscroll = "DOUBLE_MIDSCROLL",
+    DoubleMidscrollSingleCreative = "DOUBLE_MIDSCROLL_SINGLE_CREATIVE",
     Midscroll = "MIDSCROLL",
     TripleMidscroll = "TRIPLE_MIDSCROLL",
     WelcomePage = "WELCOME_PAGE"
