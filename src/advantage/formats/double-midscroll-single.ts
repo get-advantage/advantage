@@ -6,6 +6,9 @@ import {
 } from "./format-helper";
 import logger from "../../utils/logging";
 
+// WeakMap to store cleanup functions for scroll containers
+const scrollCleanupMap = new WeakMap<Element, () => void>();
+
 /**
  * Single-creative DoubleMidscroll format
  * 
@@ -46,13 +49,13 @@ export const doubleMidscrollSingle: AdvantageFormat = {
         }
         wrapper.resetCSS();
         
-        // Clean up scroll listener
+        // Clean up scroll listener using WeakMap
         const scrollContainer = wrapper.shadowRoot?.querySelector('#ad-slot');
         if (scrollContainer) {
-            const cleanup = (scrollContainer as any).__scrollCleanup;
+            const cleanup = scrollCleanupMap.get(scrollContainer);
             if (cleanup) {
                 cleanup();
-                delete (scrollContainer as any).__scrollCleanup;
+                scrollCleanupMap.delete(scrollContainer);
             }
         }
     },
@@ -109,13 +112,13 @@ function setupScrollProgressTracking(wrapper: any, ad?: HTMLIFrameElement | HTML
     // Initial calculation
     updateScrollProgress();
     
-    // Store cleanup function
-    (scrollContainer as any).__scrollCleanup = () => {
+    // Store cleanup function in WeakMap to avoid polluting DOM
+    scrollCleanupMap.set(scrollContainer, () => {
         window.removeEventListener('scroll', handleScroll);
         if (rafId) {
             cancelAnimationFrame(rafId);
         }
-    };
+    });
 
     logger.debug("Scroll progress tracking initialized for DoubleMidscrollSingle");
 }
