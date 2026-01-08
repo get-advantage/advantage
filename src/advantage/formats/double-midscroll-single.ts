@@ -1,4 +1,4 @@
-import { AdvantageFormat, AdvantageFormatName } from "../../types";
+import { AdvantageFormat, AdvantageFormatName, AdvantageMessageAction } from "../../types";
 import styles from "./double-midscroll-single.css?inline";
 import {
     setDimensionsUntilAdvantageAdSlot,
@@ -131,7 +131,7 @@ function sendScrollProgress(wrapper: any, progress: number) {
     }
 
     wrapper.messageHandler.sendMessage({
-        action: 'SCROLL_PROGRESS',
+        action: AdvantageMessageAction.SCROLL_PROGRESS,
         progress: progress
     });
 }
