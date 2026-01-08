@@ -93,7 +93,7 @@ function setupScrollProgressTracking(wrapper: any, ad?: HTMLIFrameElement | HTML
         }
 
         // Send scroll progress to creative
-        sendScrollProgress(ad, progress);
+        sendScrollProgress(wrapper, progress);
     };
 
     // Use scroll event with requestAnimationFrame for smooth updates
@@ -121,24 +121,17 @@ function setupScrollProgressTracking(wrapper: any, ad?: HTMLIFrameElement | HTML
 }
 
 /**
- * Sends scroll progress to the creative iframe
+ * Sends scroll progress to the creative using the established MessagePort channel.
+ * This ensures the message reaches the creative even when nested in multiple iframes.
  */
-function sendScrollProgress(ad: HTMLIFrameElement | HTMLElement, progress: number) {
-    if (!ad || !(ad instanceof HTMLIFrameElement)) return;
-    
-    const contentWindow = ad.contentWindow;
-    if (!contentWindow) return;
-
-    try {
-        contentWindow.postMessage(
-            {
-                type: 'advantage',
-                action: 'SCROLL_PROGRESS',
-                progress: progress
-            },
-            '*'
-        );
-    } catch (error) {
-        logger.error('Failed to send scroll progress:', error);
+function sendScrollProgress(wrapper: any, progress: number) {
+    if (!wrapper.messageHandler) {
+        logger.debug('Cannot send scroll progress: messageHandler not available');
+        return;
     }
+
+    wrapper.messageHandler.sendMessage({
+        action: 'SCROLL_PROGRESS',
+        progress: progress
+    });
 }

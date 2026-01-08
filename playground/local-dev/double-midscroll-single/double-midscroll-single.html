@@ -104,21 +104,21 @@
     import { AdvantageCreativeMessenger } from "/src/advantage/messaging/creative-side";
     import { AdvantageMessageAction, AdvantageFormatName } from "/src/types";
 
-    // Setup scroll progress listener BEFORE initializing
-    window.addEventListener("message", (event) => {
-      if (event.data?.type === "advantage" && event.data?.action === "SCROLL_PROGRESS") {
-        const progress = event.data.progress;
-        if (typeof progress === "number") {
-          updateUI(progress);
-        }
-      }
-    });
-
     async function main() {
       const advantageMessenger = new AdvantageCreativeMessenger();
       const session = await advantageMessenger.startSession();
 
       if (session) {
+        // Setup scroll progress listener using the messenger's onMessage method
+        advantageMessenger.onMessage((message) => {
+          if (message.action === "SCROLL_PROGRESS") {
+            const progress = message.progress;
+            if (typeof progress === "number") {
+              updateUI(progress);
+            }
+          }
+        });
+
         const response = await advantageMessenger.sendMessage({
           action: AdvantageMessageAction.REQUEST_FORMAT,
           format: AdvantageFormatName.DoubleMidscrollSingleCreative
