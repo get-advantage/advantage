@@ -5,12 +5,14 @@ export enum AdvantageMessageAction {
     CONFIRM_SESSION = "CONFIRM_SESSION",
     REQUEST_FORMAT = "REQUEST_FORMAT",
     FORMAT_CONFIRMED = "FORMAT_CONFIRMED",
-    FORMAT_REJECTED = "FORMAT_REJECTED"
+    FORMAT_REJECTED = "FORMAT_REJECTED",
+    SCROLL_PROGRESS = "SCROLL_PROGRESS"
 }
 
 export enum AdvantageFormatName {
     TopScroll = "TOPSCROLL",
     DoubleMidscroll = "DOUBLE_MIDSCROLL",
+    DoubleMidscrollSingleCreative = "DOUBLE_MIDSCROLL_SINGLE_CREATIVE",
     Midscroll = "MIDSCROLL",
     TripleMidscroll = "TRIPLE_MIDSCROLL",
     WelcomePage = "WELCOME_PAGE"

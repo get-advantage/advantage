@@ -265,4 +265,40 @@ export class AdvantageAdSlotResponder {
             "morphIntoFormat" in element
         );
     }
+
+    /**
+     * Sends a message to the creative through the established MessagePort channel.
+     * This method ensures messages are delivered even when the creative is nested in multiple iframes.
+     * 
+     * @param message - The message to send to the creative
+     * @returns true if the message was sent successfully, false if no message channel is established
+     * 
+     * @public
+     * @example
+     * ```typescript
+     * // Send a scroll progress update to the creative
+     * responder.sendMessage({
+     *     type: 'advantage',
+     *     action: 'SCROLL_PROGRESS',
+     *     progress: 0.5
+     * });
+     * ```
+     */
+    sendMessage(message: Partial<AdvantageMessage>): boolean {
+        if (!this.#messagePort) {
+            logger.debug('Cannot send message: MessagePort not established');
+            return false;
+        }
+
+        try {
+            this.#messagePort.postMessage({
+                type: ADVANTAGE,
+                ...message
+            });
+            return true;
+        } catch (error) {
+            logger.error('Failed to send message via MessagePort:', error);
+            return false;
+        }
+    }
 }

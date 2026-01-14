@@ -1,0 +1,31 @@
+:host {
+    display: block;
+    position: relative;
+    width: 100vw;
+    height: 200vh;
+    overflow: visible;
+}
+
+#container {
+    position: relative;
+    width: 100vw;
+    height: 100%;
+}
+
+/* Ad slot with 2x viewport height for scroll area */
+#ad-slot {
+    display: block;
+    position: relative;
+    width: 100dvw;
+    height: calc(2 * 100dvh);
+}
+
+/* Creative iframe is sticky and fills viewport */
+::slotted([slot="advantage-ad-slot"]) {
+    position: sticky;
+    width: 100dvw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}

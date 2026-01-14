@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DoubleMidscrollSingle Example</title>
+  <style>
+    @font-face {
+      font-family: 'Manrope';
+      src: url('./Manrope-ExtraBold.ttf') format('truetype');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: 'Manrope', Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #4317a6;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease-out;
+    }
+
+    .logo {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 40px;
+    }
+
+    .progress-display {
+      font-size: 8rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      text-shadow: 0 8px 20px rgba(159, 117, 255, 0.3);
+    }
+
+    .progress-bar {
+      width: 80%;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: white;
+      width: 0%;
+      transition: width ease-out;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+
+    .info-text {
+      margin-top: 30px;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      transition: color 0.3s ease-out;
+    }
+
+    /* Animated background elements */
+    .bg-element {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease-out;
+    }
+
+    .bg-element-1 {
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      left: -150px;
+    }
+
+    .bg-element-2 {
+      width: 200px;
+      height: 200px;
+      bottom: -100px;
+      right: -100px;
+    }
+  </style>
+
+  <script type="module">
+    import { AdvantageCreativeMessenger } from "/src/advantage/messaging/creative-side";
+    import { AdvantageMessageAction, AdvantageFormatName } from "/src/types";
+
+    async function main() {
+      const advantageMessenger = new AdvantageCreativeMessenger();
+      const session = await advantageMessenger.startSession();
+
+      if (session) {
+        // Setup scroll progress listener using the messenger's onMessage method
+        advantageMessenger.onMessage((message) => {
+          if (message.action === "SCROLL_PROGRESS") {
+            const progress = message.progress;
+            if (typeof progress === "number") {
+              updateUI(progress);
+            }
+          }
+        });
+
+        const response = await advantageMessenger.sendMessage({
+          action: AdvantageMessageAction.REQUEST_FORMAT,
+          format: AdvantageFormatName.DoubleMidscrollSingleCreative
+        });
+        if (response?.action === AdvantageMessageAction.FORMAT_CONFIRMED) {
+          document.body.style.opacity = "1";
+        }
+      }
+    }
+
+    function updateUI(progress) {
+      // Update progress display
+      const progressDisplay = document.querySelector('.progress-display');
+      progressDisplay.textContent = `${Math.round(progress * 100)}%`;
+
+      // Update progress bar
+      const progressFill = document.querySelector('.progress-fill');
+      progressFill.style.width = `${progress * 100}%`;
+
+      // Animate bg elements based on scroll
+      const bgElement1 = document.querySelector('.bg-element-1');
+      const bgElement2 = document.querySelector('.bg-element-2');
+
+      // Update bg color at 50% scroll progress
+      const container = document.querySelector('.container');
+
+      if (progress >= 0.5) {
+        container.style.backgroundColor = "#6b04fd";
+      } else {
+        container.style.backgroundColor = "#4317a6";
+      }
+
+      bgElement1.style.transform = `translate(${progress * 1500}px, ${progress * 1500}px) scale(${progress * 1.5})`;
+      bgElement2.style.transform = `translate(${-progress * 1500}px, ${-progress * 1500}px) scale(${progress * 1.5})`;
+    }
+
+    main();
+  </script>
+</head>
+
+<body style="opacity: 0; transition: opacity 1s ease-in;">
+  <div class="container">
+    <img src="./advantage-logo-white.svg" alt="Advantage Logo" class="logo">
+    <div class="bg-element bg-element-1"></div>
+    <div class="bg-element bg-element-2"></div>
+
+    <div class="progress-display">0%</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+
+    <div class="info-text">
+      Scroll down to see the progress change!<br>
+      This is a single creative with 2x viewport height.
+    </div>
+  </div>
+</body>
+
+</html>
