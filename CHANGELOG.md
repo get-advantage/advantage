@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/get-advantage/advantage/compare/v0.10.2...v0.11.0) (2026-01-18)
+
+
+### Bug Fixes
+
+* add utils entry point to build configuration ([0254be8](https://github.com/get-advantage/advantage/commit/0254be8c9ebebdd096725aae12ed940ffb5ce62f))
+
+
+### Features
+
+* add double midscroll single creative format ([#65](https://github.com/get-advantage/advantage/issues/65)) ([d38c86d](https://github.com/get-advantage/advantage/commit/d38c86d13caea5b6334d4b573b8a5a3fbb0c3bce))
+
 ## [0.10.2](https://github.com/get-advantage/advantage/compare/v0.10.1...v0.10.2) (2025-12-17)
 
 
