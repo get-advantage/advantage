@@ -60,6 +60,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/erikarvidssonmadington"><img src="https://avatars.githubusercontent.com/u/73878569?v=4?s=100" width="100px;" alt="erikarvidssonmadington"/><br /><sub><b>erikarvidssonmadington</b></sub></a><br /><a href="#ideas-erikarvidssonmadington" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/linusforsell"><img src="https://avatars.githubusercontent.com/u/4910742?v=4?s=100" width="100px;" alt="Linus Forsell"/><br /><sub><b>Linus Forsell</b></sub></a><br /><a href="#doc-linusforsell" title="Documentation">📖</a> <a href="#ideas-linusforsell" title="Ideas, Planning, & Feedback">🤔</a> <a href="#code-linusforsell" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://nicolaykjaernet.com"><img src="https://avatars.githubusercontent.com/u/89392338?v=4?s=100" width="100px;" alt="Nicolay Kjærnet"/><br /><sub><b>Nicolay Kjærnet</b></sub></a><br /><a href="#code-NicolayKjarnet" title="Code">💻</a> <a href="#doc-NicolayKjarnet" title="Documentation">📖</a> <a href="#ideas-NicolayKjarnet" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
   </tbody>
 </table>
 
