@@ -37,7 +37,10 @@ const baseConfig: UserConfig = {
     build: {
         sourcemap: true,
         lib: {
-            entry: [resolve(__dirname, "src/advantage/index.ts")],
+            entry: [
+                resolve(__dirname, "src/advantage/index.ts"),
+                resolve(__dirname, "src/utils/index.ts")
+            ],
             formats: ["es", "cjs"]
         },
         copyPublicDir: false,
