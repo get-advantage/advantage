@@ -76,6 +76,17 @@
         "ideas",
         "code"
       ]
+    },
+    {
+      "login": "NicolayKjarnet",
+      "name": "Nicolay Kjærnet",
+      "avatar_url": "https://avatars.githubusercontent.com/u/89392338?v=4",
+      "profile": "http://nicolaykjaernet.com",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
     }
   ]
 }
