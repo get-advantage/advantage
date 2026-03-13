@@ -158,11 +158,168 @@ const convertTemplateConfigToFormatOptions = (
             break;
     }
 
+    // Apply z-index from template config or global config (matches original High Impact JS behavior)
+    const zIndex = templateConfig.zIndex || _globalConfig.zIndex;
+    if (zIndex !== undefined) {
+        options.zIndex = zIndex;
+    }
+
     logger.debug(
         `🔧 [CONVERSION DEBUG] Final format options for '${template}':`,
         options
     );
     return options;
+};
+
+/**
+ * Adds High Impact JS CSS classes to elements when an ad format is rendered
+ */
+const setDivClasses = (
+    elements: {
+        adWrapper?: HTMLElement;
+        adUnit?: HTMLElement;
+        adIframe?: HTMLElement;
+    },
+    templateName: string
+): void => {
+    if (elements.adWrapper) {
+        elements.adWrapper.classList.add(
+            `high-impact-ad-wrapper-${templateName}`
+        );
+    }
+    if (elements.adUnit) {
+        elements.adUnit.classList.add(`high-impact-ad-unit-${templateName}`);
+    }
+    if (elements.adIframe) {
+        elements.adIframe.classList.add(
+            `high-impact-ad-iframe-${templateName}`
+        );
+    }
+    document.body.classList.add("high-impact-ad-rendered");
+};
+
+/**
+ * Removes High Impact JS CSS classes from elements when cleaning up
+ */
+const removeDivClasses = (
+    elements: {
+        adWrapper?: HTMLElement;
+        adUnit?: HTMLElement;
+        adIframe?: HTMLElement;
+    },
+    templateName: string
+): void => {
+    if (elements.adWrapper) {
+        elements.adWrapper.classList.remove(
+            `high-impact-ad-wrapper-${templateName}`
+        );
+    }
+    if (elements.adUnit) {
+        elements.adUnit.classList.remove(`high-impact-ad-unit-${templateName}`);
+    }
+    if (elements.adIframe) {
+        elements.adIframe.classList.remove(
+            `high-impact-ad-iframe-${templateName}`
+        );
+    }
+};
+
+/**
+ * Sets up template-specific behavior (classes, observers) that the original
+ * High Impact JS templates apply in their onRender functions.
+ * Returns a cleanup function to be called on destroy.
+ */
+const setupTemplateSpecificBehavior = (
+    templateName: string,
+    adWrapper?: HTMLElement
+): (() => void) | null => {
+    if (templateName === "topscroll") {
+        document.body.classList.add("high-impact-topscroll-rendered");
+
+        let observer: IntersectionObserver | null = null;
+        if (adWrapper) {
+            observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.intersectionRatio === 0) {
+                            document.body.classList.add(
+                                "high-impact-topscroll-is-hidden"
+                            );
+                        } else {
+                            document.body.classList.remove(
+                                "high-impact-topscroll-is-hidden"
+                            );
+                        }
+                    });
+                },
+                {
+                    threshold: Array.from({ length: 101 }, (_, i) => i / 100)
+                }
+            );
+            observer.observe(adWrapper);
+        }
+
+        return () => {
+            document.body.classList.remove("high-impact-topscroll-rendered");
+            document.body.classList.remove("high-impact-topscroll-is-hidden");
+            if (observer) {
+                observer.disconnect();
+            }
+        };
+    }
+
+    return null;
+};
+
+/**
+ * Observes the advantage-wrapper element for close/reset events by watching
+ * the `current-format` attribute. When the attribute is removed (indicating
+ * the format was closed or reset), runs full cleanup of High Impact JS classes
+ * and template-specific behavior.
+ */
+const observeWrapperForClose = (
+    wrapperElement: HTMLElement,
+    config: SlotConfig,
+    elements: {
+        adWrapper?: HTMLElement;
+        adUnit?: HTMLElement;
+        adIframe?: HTMLElement;
+    },
+    appliedStyleProperties: string[]
+): (() => void) => {
+    const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+            if (
+                mutation.type === "attributes" &&
+                mutation.attributeName === "current-format" &&
+                !wrapperElement.hasAttribute("current-format")
+            ) {
+                logger.debug(
+                    `[High Impact Compatibility] Wrapper closed/reset for ${config.adUnitId}, cleaning up classes`
+                );
+                if (config.template) {
+                    removeDivClasses(elements, config.template);
+                    document.body.classList.remove("high-impact-ad-rendered");
+                }
+                if (config.rendered?.cleanupTemplateSpecific) {
+                    config.rendered.cleanupTemplateSpecific();
+                }
+                // Remove only the style properties that the compatibility layer added
+                for (const prop of appliedStyleProperties) {
+                    wrapperElement.style.removeProperty(prop);
+                }
+                config.rendered = false;
+                observer.disconnect();
+            }
+        }
+    });
+
+    observer.observe(wrapperElement, {
+        attributes: true,
+        attributeFilter: ["current-format"]
+    });
+
+    return () => observer.disconnect();
 };
 
 /**
@@ -186,6 +343,7 @@ const onAdSlotRendered = (options: {
         fromAdResponsiveSignal = false,
         adIframe,
         adWrapper,
+        adUnit,
         size,
         html
     } = options;
@@ -230,6 +388,10 @@ const onAdSlotRendered = (options: {
             logger.debug(
                 `[High Impact Compatibility] Already rendered ${elementId} - cleaning up`
             );
+            removeDivClasses({ adWrapper, adUnit, adIframe }, config.template!);
+            if (config.rendered.cleanupTemplateSpecific) {
+                config.rendered.cleanupTemplateSpecific();
+            }
             if (config.rendered.destroy) {
                 config.rendered.destroy();
             }
@@ -404,13 +566,50 @@ const onAdSlotRendered = (options: {
                                 `[High Impact Compatibility] Successfully applied ${advantageFormat} format`
                             );
 
+                            // Set High Impact JS CSS classes
+                            setDivClasses(
+                                { adWrapper, adUnit, adIframe },
+                                config.template!
+                            );
+
+                            // Apply z-index to the wrapper element
+                            const appliedStyleProperties: string[] = [];
+                            if (
+                                formatOptions.zIndex &&
+                                advantageWrapperElement
+                            ) {
+                                advantageWrapperElement.style.zIndex = String(
+                                    formatOptions.zIndex
+                                );
+                                appliedStyleProperties.push("z-index");
+                            }
+
+                            // Set up template-specific behavior (e.g. topscroll visibility classes)
+                            const cleanupTemplateSpecific =
+                                setupTemplateSpecificBehavior(
+                                    config.template!,
+                                    adWrapper
+                                );
+
                             // Mark as rendered
                             config.rendered = {
                                 wrapper,
+                                cleanupTemplateSpecific,
                                 destroy: () => {
+                                    cleanupTemplateSpecific?.();
                                     wrapper?.reset();
                                 }
                             };
+
+                            // Observe the wrapper for close/reset to clean up classes
+                            if (advantageWrapperElement) {
+                                observeWrapperForClose(
+                                    advantageWrapperElement,
+                                    config,
+                                    { adWrapper, adUnit, adIframe },
+                                    appliedStyleProperties
+                                );
+                            }
 
                             // Dispatch High Impact JS event for compatibility
                             window.dispatchEvent(
@@ -469,12 +668,56 @@ const onAdSlotRendered = (options: {
                         `[High Impact Compatibility] Successfully applied ${advantageFormat} format to existing wrapper`
                     );
 
+                    // Set High Impact JS CSS classes
+                    setDivClasses(
+                        { adWrapper, adUnit, adIframe },
+                        config.template!
+                    );
+
+                    // Apply z-index to the wrapper element
+                    const wrapperElForZIndex =
+                        config.wrapperElement || advantageWrapperElement;
+                    const appliedStyleProperties: string[] = [];
+                    if (formatOptions.zIndex) {
+                        if (wrapperElForZIndex) {
+                            wrapperElForZIndex.style.zIndex = String(
+                                formatOptions.zIndex
+                            );
+                            appliedStyleProperties.push("z-index");
+                        }
+                    }
+
+                    // Set up template-specific behavior (e.g. topscroll visibility classes)
+                    const cleanupTemplateSpecific =
+                        setupTemplateSpecificBehavior(
+                            config.template!,
+                            adWrapper
+                        );
+
                     config.rendered = {
                         wrapper,
+                        cleanupTemplateSpecific,
                         destroy: () => {
+                            cleanupTemplateSpecific?.();
                             wrapper?.reset();
                         }
                     };
+
+                    // Observe the wrapper for close/reset to clean up classes
+                    const wrapperEl =
+                        config.wrapperElement || advantageWrapperElement;
+                    if (wrapperEl) {
+                        observeWrapperForClose(
+                            wrapperEl,
+                            config,
+                            {
+                                adWrapper,
+                                adUnit,
+                                adIframe
+                            },
+                            appliedStyleProperties
+                        );
+                    }
 
                     // Dispatch event
                     window.dispatchEvent(

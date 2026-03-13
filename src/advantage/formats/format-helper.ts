@@ -4,8 +4,16 @@ export function setDimensionsUntilAdvantageAdSlot(
 ) {
     function setDimensionsTo100Percent(element: HTMLElement | null) {
         if (element) {
-            element.style.height = "100%";
-            element.style.width = "100%";
+            element.style.setProperty("height", "100%", "important");
+            element.style.setProperty("width", "100%", "important");
+            // Remove HTML width/height attributes (e.g. from GAM iframes)
+            // so they don't override CSS dimensions
+            if (element.hasAttribute("width")) {
+                element.removeAttribute("width");
+            }
+            if (element.hasAttribute("height")) {
+                element.removeAttribute("height");
+            }
         }
     }
 
@@ -31,8 +39,8 @@ export function resetDimensionsUntilAdvantageAdSlot(
 ) {
     function resetDimensions(element: HTMLElement | null) {
         if (element) {
-            element.style.height = "";
-            element.style.width = "";
+            element.style.removeProperty("height");
+            element.style.removeProperty("width");
         }
     }
 

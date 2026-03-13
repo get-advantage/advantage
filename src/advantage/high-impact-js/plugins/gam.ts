@@ -33,29 +33,19 @@ export class GAMPlugin implements CompatibilityPlugin {
         const adWrapper = document.getElementById(elementId);
 
         if (adWrapper) {
-            const adUnitSelectors = [
-                'div[id^="google_ads_iframe_"]',
-                'iframe[id^="google_ads_iframe_"]'
-            ];
+            // Find the ad unit container (div) and the actual iframe separately
+            let adUnit: HTMLElement | null = adWrapper.querySelector(
+                'div[id^="google_ads_iframe_"]'
+            );
+            let adIframe: HTMLElement | null =
+                adWrapper.querySelector('iframe[id^="google_ads_iframe_"]') ||
+                adWrapper.querySelector("iframe");
 
-            let adUnit: HTMLElement | null = null;
-            let adIframe: HTMLElement | null = null;
-
-            for (const selector of adUnitSelectors) {
-                const elements = adWrapper.querySelectorAll(selector);
-                if (elements.length > 0) {
-                    adUnit = elements[0] as HTMLElement;
-                    adIframe = (elements[1] as HTMLElement) || adUnit;
-                    break;
-                }
-            }
-
-            if (!adUnit || !adIframe) {
-                // Fallback: look for any iframe or div
-                adIframe =
-                    adWrapper.querySelector("iframe") ||
-                    adWrapper.querySelector("div");
+            if (!adUnit) {
                 adUnit = adIframe;
+            }
+            if (!adIframe) {
+                adIframe = adUnit;
             }
 
             const html = slot.getHtml ? slot.getHtml() : "";
