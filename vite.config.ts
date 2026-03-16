@@ -52,6 +52,7 @@ const baseConfig: UserConfig = {
 function createBuildConfig(env: ConfigEnv): UserConfig {
     const isProduction = env.command === "build" && env.mode === "production";
     const isBundle = env.command === "build" && env.mode.startsWith("bundle");
+    const isMatplatsenTest = env.mode === "bundle:matplatsen";
 
     let buildConfig = { ...baseConfig };
 
@@ -74,6 +75,10 @@ function createBuildConfig(env: ConfigEnv): UserConfig {
             entryFile = "src/advantage/messaging/creative-side.ts";
             fileNamePrefix = "creative-side";
             formats = ["es", "cjs", "iife"];
+        } else if (isMatplatsenTest) {
+            entryFile = "src/matplatsen-test-bundle.ts";
+            fileNamePrefix = "matplatsen-test";
+            formats = ["iife"];
         } else if (isHighImpactIntegration) {
             entryFile = "src/advantage-with-high-impact-integration.ts";
             fileNamePrefix = "advantage-with-high-impact-integration";

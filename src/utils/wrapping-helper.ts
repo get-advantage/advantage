@@ -21,9 +21,33 @@ export function advantageWrapAdSlotElement(
         element = target;
     }
 
-    // If the element is not found, exit the function
+    // If the element is not found, retry with a deferred approach
     if (!element) {
-        console.warn("Target element not found.");
+        // If target is a string selector, retry after DOM is ready and with a short delay
+        if (typeof target === "string") {
+            const retry = () => {
+                const found = document.querySelector(target) as HTMLElement;
+                if (found) {
+                    advantageWrapAdSlotElement(
+                        found,
+                        excludedFormats,
+                        allowedFormats
+                    );
+                } else {
+                    console.warn("Target element not found:", target);
+                }
+            };
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", retry, {
+                    once: true
+                });
+            } else {
+                // DOM is loaded but element may not be rendered yet (e.g. React/SPA)
+                setTimeout(retry, 100);
+            }
+        } else {
+            console.warn("Target element not found.");
+        }
         return;
     }
 

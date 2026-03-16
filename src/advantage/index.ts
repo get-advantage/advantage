@@ -129,21 +129,8 @@ if ((window as any).advantageWrapQueue) {
 // Replace the global function with the actual function
 (window as any).advantageWrapAdSlotElement = actualAdvantageWrapAdSlotElement;
 
-// Process the advantageCmdQueue
-if ((window as any).advantageCmdQueue) {
-    for (let callback of (window as any).advantageCmdQueue) {
-        try {
-            callback(actualAdvantageWrapAdSlotElement);
-        } catch (error) {
-            logger.error("Error executing callback:", error);
-        }
-    }
-} else {
-    (window as any).advantageCmdQueue = [];
-}
-
-(window as any).advantageCmdQueue.push = function (callback: any) {
-    Array.prototype.push.call(this, callback);
+// Helper to execute a queued callback safely
+const executeQueuedCallback = (callback: any) => {
     try {
         callback(actualAdvantageWrapAdSlotElement);
     } catch (error) {
@@ -151,13 +138,32 @@ if ((window as any).advantageCmdQueue) {
     }
 };
 
+// Process the advantageCmdQueue - defer if DOM is not ready
+const processQueue = () => {
+    if ((window as any).advantageCmdQueue) {
+        for (const callback of (window as any).advantageCmdQueue) {
+            executeQueuedCallback(callback);
+        }
+    } else {
+        (window as any).advantageCmdQueue = [];
+    }
+
+    // Override push to execute new commands immediately
+    (window as any).advantageCmdQueue.push = function (callback: any) {
+        Array.prototype.push.call(this, callback);
+        executeQueuedCallback(callback);
+    };
+};
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", processQueue, { once: true });
+} else {
+    processQueue();
+}
+
 // Run new commands immediately
 (window as any).advantageCmd = function (callback: any) {
-    try {
-        callback(actualAdvantageWrapAdSlotElement);
-    } catch (error) {
-        logger.error("Error executing callback:", error);
-    }
+    executeQueuedCallback(callback);
 };
 
 // Only define custom elements if they haven't been registered yet

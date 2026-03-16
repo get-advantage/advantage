@@ -54,6 +54,7 @@
         "bundle": "vite build --mode bundle",
         "bundle:creative": "vite build --mode bundle:creative",
         "bundle:highimpact": "vite build --mode bundle:highimpact",
+        "bundle:matplatsen": "vite build --mode bundle:matplatsen",
         "preview": "vite preview",
         "docs:dev": "vitepress dev",
         "docs:build": "typedoc && vitepress build",
