@@ -204,3 +204,16 @@ export interface AdvantageMessage {
     targetingMap?: { [key: string]: string[] };
     backgroundAdURL?: string;
 }
+
+// Lifecycle event types
+export interface AdvantageEventDetail {
+    format: AdvantageFormatName | string;
+    wrapper: IAdvantageWrapper;
+    iframe?: HTMLElement;
+}
+
+export interface AdvantageEventMap {
+    "advantage:format-start": CustomEvent<AdvantageEventDetail>;
+    "advantage:format-close": CustomEvent<AdvantageEventDetail>;
+    "advantage:format-reset": CustomEvent<AdvantageEventDetail>;
+}

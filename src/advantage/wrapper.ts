@@ -142,6 +142,23 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
     }
 
     /**
+     * Dispatches a lifecycle CustomEvent that bubbles and crosses Shadow DOM boundaries.
+     */
+    #dispatchLifecycleEvent(
+        eventName: string,
+        format: AdvantageFormatName | string,
+        iframe?: HTMLElement
+    ) {
+        this.dispatchEvent(
+            new CustomEvent(eventName, {
+                bubbles: true,
+                composed: true,
+                detail: { format, wrapper: this, iframe }
+            })
+        );
+    }
+
+    /**
      * Detects DOM changes and resets the wrapper if a new ad is loaded.
      * Tracks iframes and resets the wrapper when an iframe that requested a format is removed.
      */
@@ -352,9 +369,8 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 let highImpactConfig: any = undefined;
                 try {
                     // Dynamically import to avoid circular dependencies
-                    const highImpactModule = await import(
-                        "./high-impact-js/index"
-                    );
+                    const highImpactModule =
+                        await import("./high-impact-js/index");
                     highImpactConfig = highImpactModule.getConfig();
                 } catch (e) {
                     // High Impact JS compatibility layer not available
@@ -377,6 +393,12 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                     this,
                     this.messageHandler.ad?.iframe,
                     mergedConfig
+                );
+
+                this.#dispatchLifecycleEvent(
+                    "advantage:format-start",
+                    format,
+                    this.messageHandler.ad?.iframe as HTMLElement
                 );
 
                 resolve();
@@ -502,8 +524,16 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
             }
         }
         this.uiLayer.changeContent("");
+
+        const previousFormat = this.currentFormat;
         this.currentFormat = "";
         this.#updateCurrentFormatAttribute();
+
+        this.#dispatchLifecycleEvent(
+            "advantage:format-reset",
+            previousFormat,
+            this.messageHandler?.ad?.iframe as HTMLElement
+        );
 
         // Clear the active format iframe reference
         this.#activeFormatIframe = null;
@@ -582,8 +612,15 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 integration.onClose(this, this.messageHandler?.ad?.iframe);
             }
         }
+        const previousFormat = this.currentFormat;
         this.currentFormat = "";
         this.#updateCurrentFormatAttribute();
+
+        this.#dispatchLifecycleEvent(
+            "advantage:format-close",
+            previousFormat,
+            this.messageHandler?.ad?.iframe as HTMLElement
+        );
 
         // Clear the active format iframe reference
         this.#activeFormatIframe = null;
