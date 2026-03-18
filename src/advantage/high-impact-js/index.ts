@@ -272,6 +272,48 @@ const setupTemplateSpecificBehavior = (
 };
 
 /**
+ * Calculates and applies negative margins to the advantage-wrapper element
+ * so it breaks out of its content container to span the full viewport width.
+ * This replicates the margin correction that live HI-JS applies to midscroll ads.
+ *
+ * The margin properties are tracked in appliedStyleProperties for automatic
+ * cleanup by observeWrapperForClose.
+ */
+const applyMidscrollMargins = (
+    wrapperElement: HTMLElement,
+    appliedStyleProperties: string[]
+): void => {
+    const rect = wrapperElement.getBoundingClientRect();
+    const computedStyle = window.getComputedStyle(wrapperElement);
+    const currentMarginLeft = parseInt(computedStyle.marginLeft, 10) || 0;
+    const currentMarginRight = parseInt(computedStyle.marginRight, 10) || 0;
+
+    // The horizontal offset is the element's distance from the viewport edge,
+    // excluding any margin already applied
+    const offsetLeft = rect.left - currentMarginLeft;
+    const offsetRight =
+        document.documentElement.clientWidth - rect.right - currentMarginRight;
+
+    if (offsetLeft > 0 || offsetRight > 0) {
+        wrapperElement.style.setProperty(
+            "margin-left",
+            `-${offsetLeft}px`,
+            "important"
+        );
+        wrapperElement.style.setProperty(
+            "margin-right",
+            `-${offsetRight}px`,
+            "important"
+        );
+        appliedStyleProperties.push("margin-left", "margin-right");
+
+        logger.debug(
+            `[High Impact Compatibility] Applied midscroll margins: left=-${offsetLeft}px, right=-${offsetRight}px`
+        );
+    }
+};
+
+/**
  * Observes the advantage-wrapper element for close/reset events by watching
  * the `current-format` attribute. When the attribute is removed (indicating
  * the format was closed or reset), runs full cleanup of High Impact JS classes
@@ -584,6 +626,17 @@ const onAdSlotRendered = (options: {
                                 appliedStyleProperties.push("z-index");
                             }
 
+                            // Apply midscroll margin correction
+                            if (
+                                config.template === "midscroll" &&
+                                advantageWrapperElement
+                            ) {
+                                applyMidscrollMargins(
+                                    advantageWrapperElement,
+                                    appliedStyleProperties
+                                );
+                            }
+
                             // Set up template-specific behavior (e.g. topscroll visibility classes)
                             const cleanupTemplateSpecific =
                                 setupTemplateSpecificBehavior(
@@ -685,6 +738,19 @@ const onAdSlotRendered = (options: {
                             );
                             appliedStyleProperties.push("z-index");
                         }
+                    }
+
+                    // Apply midscroll margin correction
+                    const wrapperElForMargins =
+                        config.wrapperElement || advantageWrapperElement;
+                    if (
+                        config.template === "midscroll" &&
+                        wrapperElForMargins
+                    ) {
+                        applyMidscrollMargins(
+                            wrapperElForMargins,
+                            appliedStyleProperties
+                        );
                     }
 
                     // Set up template-specific behavior (e.g. topscroll visibility classes)

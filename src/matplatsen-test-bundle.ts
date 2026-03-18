@@ -70,7 +70,7 @@ advantage.configure({
                 closeButtonAnimationDuration: 0.5
             },
             setup: (
-                wrapper: IAdvantageWrapper,
+                _wrapper: IAdvantageWrapper,
                 iframe?: HTMLElement
             ) =>
                 new Promise<void>((resolve) => {
@@ -79,13 +79,13 @@ advantage.configure({
                     );
                     resolve();
                 }),
-            reset(wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
+            reset(_wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
                 StyleManager.getInstance(
                     iframe?.id ?? AdvantageFormatName.TopScroll
                 ).restoreStyles();
             },
             close: (
-                wrapper: IAdvantageWrapper,
+                _wrapper: IAdvantageWrapper,
                 iframe?: HTMLElement
             ) => {
                 StyleManager.getInstance(
@@ -117,12 +117,12 @@ advantage.configure({
                     }
                     resolve();
                 }),
-            reset(wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
+            reset(_wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
                 StyleManager.getInstance(
                     iframe?.id ?? AdvantageFormatName.Midscroll
                 ).restoreStyles();
             },
-            close(wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
+            close(_wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
                 StyleManager.getInstance(
                     iframe?.id ?? AdvantageFormatName.Midscroll
                 ).restoreStyles();
@@ -159,12 +159,12 @@ advantage.configure({
                     });
                     resolve();
                 }),
-            reset(wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
+            reset(_wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
                 StyleManager.getInstance(
                     iframe?.id ?? AdvantageFormatName.WelcomePage
                 ).restoreStyles();
             },
-            close(wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
+            close(_wrapper: IAdvantageWrapper, iframe?: HTMLElement) {
                 StyleManager.getInstance(
                     iframe?.id ?? AdvantageFormatName.WelcomePage
                 ).restoreStyles();
