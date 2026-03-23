@@ -81,21 +81,11 @@ export class GAMPlugin implements CompatibilityPlugin {
      * Using the original High Impact JS validation approach
      */
     getSlotFromSource(source: Window): any {
-        logger.debug(
-            "🔍 [GAM PLUGIN DEBUG] getSlotFromSource called with source:",
-            source
-        );
-
         const googleIframes = document.querySelectorAll(
             'iframe[id*="google_ads_iframe"]'
         );
-        logger.debug(
-            `📋 [GAM PLUGIN DEBUG] Found ${googleIframes.length} Google iframes:`,
-            Array.from(googleIframes).map((f) => f.id)
-        );
 
         if (!googleIframes.length) {
-            logger.debug("❌ [GAM PLUGIN DEBUG] No Google iframes found");
             return null;
         }
 
@@ -105,24 +95,13 @@ export class GAMPlugin implements CompatibilityPlugin {
             frameWindow: Window
         ): boolean => {
             if (frameWindow === childWindow) {
-                logger.debug("✅ [GAM PLUGIN DEBUG] Found direct window match");
                 return true;
             } else if (childWindow === window.top) {
-                logger.debug(
-                    "❌ [GAM PLUGIN DEBUG] Reached top window, no match"
-                );
                 return false;
             }
             try {
-                logger.debug(
-                    "🔄 [GAM PLUGIN DEBUG] Traversing to parent window..."
-                );
                 return isAncestor(childWindow.parent, frameWindow);
             } catch (e) {
-                logger.debug(
-                    "❌ [GAM PLUGIN DEBUG] Cross-origin access denied:",
-                    e
-                );
                 return false;
             }
         };
@@ -134,76 +113,39 @@ export class GAMPlugin implements CompatibilityPlugin {
                     const frameWindow = (frame as HTMLIFrameElement)
                         .contentWindow;
                     if (!frameWindow) {
-                        logger.debug(
-                            `❌ [GAM PLUGIN DEBUG] No contentWindow for iframe ${frame.id}`
-                        );
                         return false;
                     }
-
-                    const matches = isAncestor(source, frameWindow);
-                    logger.debug(
-                        `🔍 [GAM PLUGIN DEBUG] Iframe ${frame.id} ancestry check: ${matches}`
-                    );
-                    return matches;
+                    return isAncestor(source, frameWindow);
                 } catch (e) {
-                    logger.debug(
-                        `❌ [GAM PLUGIN DEBUG] Error checking iframe ${frame.id}:`,
-                        e
-                    );
                     return false;
                 }
             }
         );
 
         if (!iframeThatMatchesSource) {
-            logger.debug(
-                "❌ [GAM PLUGIN DEBUG] No iframe matched source via ancestry check"
-            );
-
-            // Fallback: In test environments or when cross-origin restrictions prevent ancestry checking,
-            // try to match using iframe name or timing (similar to original High Impact JS fallback approaches)
-            logger.debug(
-                "🔄 [GAM PLUGIN DEBUG] Trying fallback matching approaches..."
-            );
-
-            // Try to find iframe by matching source name if available
+            // Fallback: try to match using iframe name
             try {
                 const sourceName = (source as any).name;
                 if (sourceName) {
-                    logger.debug(
-                        `🔍 [GAM PLUGIN DEBUG] Source has name: ${sourceName}`
-                    );
                     const namedIframe = document.getElementById(sourceName);
                     if (
                         namedIframe &&
                         Array.from(googleIframes).includes(namedIframe)
                     ) {
-                        logger.debug(
-                            `✅ [GAM PLUGIN DEBUG] Found iframe by source name: ${sourceName}`
-                        );
                         const slotId = namedIframe.id.replace(
                             "google_ads_iframe_",
                             ""
-                        );
-                        logger.debug(
-                            `🔧 [GAM PLUGIN DEBUG] Using named iframe, slot ID: ${slotId}`
                         );
                         return this.getSlotByIdOrFallback(namedIframe, slotId);
                     }
                 }
             } catch (e) {
-                logger.debug(
-                    "❌ [GAM PLUGIN DEBUG] Could not get source name:",
-                    e
-                );
+                // Could not get source name
             }
 
-            // Final fallback: Use the most recently added iframe (simple timing-based approach)
+            // Final fallback: Use the most recently added iframe
             if (googleIframes.length > 0) {
                 const lastIframe = googleIframes[googleIframes.length - 1];
-                logger.debug(
-                    `🎯 [GAM PLUGIN DEBUG] Using last iframe as fallback: ${lastIframe.id}`
-                );
                 const slotId = lastIframe.id.replace("google_ads_iframe_", "");
                 return this.getSlotByIdOrFallback(lastIframe, slotId);
             }
@@ -212,15 +154,13 @@ export class GAMPlugin implements CompatibilityPlugin {
         }
 
         logger.debug(
-            `✅ [GAM PLUGIN DEBUG] Found matching iframe: ${iframeThatMatchesSource.id}`
+            `[GAM Plugin] Found matching iframe: ${iframeThatMatchesSource.id}`
         );
 
-        // Extract slot ID using original High Impact JS approach
         const slotId = iframeThatMatchesSource.id.replace(
             "google_ads_iframe_",
             ""
         );
-        logger.debug(`🔧 [GAM PLUGIN DEBUG] Extracted slot ID: ${slotId}`);
 
         return this.getSlotByIdOrFallback(iframeThatMatchesSource, slotId);
     }
@@ -229,10 +169,8 @@ export class GAMPlugin implements CompatibilityPlugin {
      * Helper method to get slot by ID or create fallback
      */
     private getSlotByIdOrFallback(iframe: Element, slotId: string): any {
-        // Try to get slot from GAM API (original approach)
         try {
             if (!window.googletag?.pubads) {
-                logger.debug("❌ [GAM PLUGIN DEBUG] GAM pubads not available");
                 return this.createFallbackSlotFromIframe(iframe);
             }
 
@@ -240,19 +178,11 @@ export class GAMPlugin implements CompatibilityPlugin {
             const slot = slotIdMap?.[slotId];
 
             if (!slot) {
-                logger.debug(
-                    `❌ [GAM PLUGIN DEBUG] No slot found in GAM for slot ID: ${slotId}`
-                );
                 return this.createFallbackSlotFromIframe(iframe);
             }
 
-            logger.debug(`✅ [GAM PLUGIN DEBUG] Found GAM slot, parsing...`);
             return this.parseSlot(slot);
         } catch (e) {
-            logger.debug(
-                "❌ [GAM PLUGIN DEBUG] Error accessing GAM slot map:",
-                e
-            );
             return this.createFallbackSlotFromIframe(iframe);
         }
     }
@@ -366,57 +296,22 @@ export class GAMPlugin implements CompatibilityPlugin {
      */
     private createFallbackSlotFromIframe(iframe: Element): any {
         const iframeId = iframe.id;
-        logger.debug(
-            `🔧 [GAM PLUGIN DEBUG] createFallbackSlotFromIframe called with iframe ID: ${iframeId}`
-        );
-
         let elementId = "";
 
-        // Try to determine the ad unit ID from the iframe ID
-        if (iframeId.includes("midscroll_original")) {
-            elementId = "/123456/midscroll-original-msg-ad";
-            logger.debug(
-                `🎯 [GAM PLUGIN DEBUG] Matched midscroll_original pattern, elementId: ${elementId}`
-            );
-        } else if (iframeId.includes("topscroll")) {
-            elementId = "/123456/topscroll-ad";
-            logger.debug(
-                `🎯 [GAM PLUGIN DEBUG] Matched topscroll pattern, elementId: ${elementId}`
-            );
-        } else if (iframeId.includes("midscroll")) {
-            elementId = "/123456/midscroll-ad";
-            logger.debug(
-                `🎯 [GAM PLUGIN DEBUG] Matched midscroll pattern, elementId: ${elementId}`
-            );
+        // Try to find the container by looking at the iframe's parent
+        const container = iframe.parentElement;
+        if (container && container.id) {
+            elementId = container.id;
         } else {
-            // Generic fallback - try to find the container by looking for nearby elements
-            const container = iframe.parentElement;
-            if (container && container.id) {
-                elementId = container.id;
-                logger.debug(
-                    `🎯 [GAM PLUGIN DEBUG] Using parent container ID as elementId: ${elementId}`
-                );
-            } else {
-                logger.debug(
-                    `❌ [GAM PLUGIN DEBUG] Could not determine element ID for iframe ${iframeId}`
-                );
-                logger.debug(
-                    `[GAM Plugin] Could not determine element ID for iframe ${iframeId}`
-                );
-                return null;
-            }
+            logger.debug(
+                `[GAM Plugin] Could not determine element ID for iframe ${iframeId}`
+            );
+            return null;
         }
 
         const adWrapper = document.getElementById(elementId);
-        logger.debug(
-            `🔍 [GAM PLUGIN DEBUG] Looking for ad wrapper with ID: ${elementId}`,
-            !!adWrapper
-        );
 
         if (!adWrapper) {
-            logger.debug(
-                `❌ [GAM PLUGIN DEBUG] Could not find ad wrapper for ${elementId}`
-            );
             logger.debug(
                 `[GAM Plugin] Could not find ad wrapper for ${elementId}`
             );

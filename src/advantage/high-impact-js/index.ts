@@ -107,10 +107,6 @@ const convertTemplateConfigToFormatOptions = (
     templateConfig: TemplateConfig,
     _globalConfig: GlobalConfig
 ) => {
-    logger.debug(
-        `🔧 [CONVERSION DEBUG] Converting template config for '${template}':`,
-        templateConfig
-    );
     const options: any = {};
 
     switch (template) {
@@ -122,23 +118,9 @@ const convertTemplateConfigToFormatOptions = (
                 options.closeButtonText = templateConfig.title;
             }
             if (templateConfig.peekAmount) {
-                logger.debug(
-                    `🔧 [CONVERSION DEBUG] Processing peekAmount: "${templateConfig.peekAmount}"`
-                );
                 const match = templateConfig.peekAmount.match(/(\d+)(vh|%)/);
-                logger.debug(
-                    `🔧 [CONVERSION DEBUG] Regex match result:`,
-                    match
-                );
                 if (match) {
                     options.height = parseInt(match[1]);
-                    logger.debug(
-                        `🔧 [CONVERSION DEBUG] Set height to: ${options.height}`
-                    );
-                } else {
-                    logger.debug(
-                        `🔧 [CONVERSION DEBUG] No regex match for peekAmount`
-                    );
                 }
             }
             options.downArrow = true;
@@ -164,10 +146,6 @@ const convertTemplateConfigToFormatOptions = (
         options.zIndex = zIndex;
     }
 
-    logger.debug(
-        `🔧 [CONVERSION DEBUG] Final format options for '${template}':`,
-        options
-    );
     return options;
 };
 
@@ -378,7 +356,6 @@ const onAdSlotRendered = (options: {
     html?: string;
     adMessageData?: any;
 }) => {
-    const slotRenderStartTime = performance.now();
     const {
         elementId,
         plugin,
@@ -389,35 +366,18 @@ const onAdSlotRendered = (options: {
         size,
         html
     } = options;
-    logger.debug(
-        `⚡ [TIMING] onAdSlotRendered called for ${elementId} at ${slotRenderStartTime.toFixed(
-            2
-        )}ms`
-    );
 
     logger.debug(
         `[High Impact Compatibility] Ad slot rendered: ${elementId} via ${plugin}`
     );
 
-    logger.debug(
-        `📢 [AD SLOT DEBUG] Ad slot rendered: ${elementId} via ${plugin}, fromAdResponsiveSignal: ${fromAdResponsiveSignal}`
-    );
-
     const config = getSlotConfig(elementId);
     if (!config) {
-        logger.debug(`❌ [AD SLOT DEBUG] No config found for ${elementId}`);
         logger.debug(
             `[High Impact Compatibility] No config found for ${elementId}`
         );
         return;
     }
-
-    logger.debug(`✅ [AD SLOT DEBUG] Found config for ${elementId}:`, {
-        template: config.template,
-        waitForAdSignal: config.waitForAdSignal,
-        rendered: !!config.rendered,
-        preWrapped: config.preWrapped
-    });
 
     // Check if already rendered
     if (config.rendered) {
@@ -462,17 +422,10 @@ const onAdSlotRendered = (options: {
     // Check if we should wait for ad signal
     if (config.waitForAdSignal && !fromAdResponsiveSignal) {
         logger.debug(
-            `⏸️ [AD SLOT DEBUG] Waiting for ad signal for ${elementId} (waitForAdSignal: ${config.waitForAdSignal}, fromAdResponsiveSignal: ${fromAdResponsiveSignal})`
-        );
-        logger.debug(
             `[High Impact Compatibility] Waiting for ad signal for ${elementId}`
         );
         return;
     }
-
-    logger.debug(
-        `🚀 [AD SLOT DEBUG] Proceeding with format transformation for ${elementId} (waitForAdSignal: ${config.waitForAdSignal}, fromAdResponsiveSignal: ${fromAdResponsiveSignal})`
-    );
 
     // Check if we should ignore this slot
     if (html && shouldIgnore(html)) {
@@ -512,14 +465,6 @@ const onAdSlotRendered = (options: {
         `[High Impact Compatibility] Converting ${config.template} to ${advantageFormat} (size: ${size})`
     );
 
-    logger.debug(
-        `🎯 DEBUG: Starting format conversion for ${config.template} → ${advantageFormat}`
-    );
-    logger.debug(`🎯 DEBUG: adWrapper:`, adWrapper);
-    logger.debug(`🎯 DEBUG: adIframe:`, adIframe);
-    logger.debug(`🎯 DEBUG: config.preWrapped:`, config.preWrapped);
-    logger.debug(`🎯 DEBUG: config.wrapperElement:`, config.wrapperElement);
-
     try {
         // Check if this ad unit was pre-wrapped
         let wrapper: any = null;
@@ -531,23 +476,14 @@ const onAdSlotRendered = (options: {
             wrapper = (advantageWrapperElement as any).advantageWrapper;
 
             logger.debug(
-                `🎯 DEBUG: Using pre-wrapped element, wrapper found:`,
-                !!wrapper
-            );
-            logger.debug(
                 `[High Impact Compatibility] Using pre-wrapped element for ${elementId}`
             );
         } else {
             // Check if there's already a wrapper in the DOM
             wrapper = (adWrapper as any).advantageWrapper;
-            logger.debug(
-                `🎯 DEBUG: Looking for wrapper on adWrapper, found:`,
-                !!wrapper
-            );
         }
 
         if (!wrapper) {
-            logger.debug(`🎯 DEBUG: No wrapper found, creating new one`);
             if (!advantageWrapperElement) {
                 // Create new wrapper - this is the fallback for non-pre-wrapped elements
                 advantageWrapperElement =
@@ -555,7 +491,6 @@ const onAdSlotRendered = (options: {
                 const slotDiv = document.createElement("div");
                 slotDiv.setAttribute("slot", "advantage-ad-slot");
 
-                logger.debug(`🎯 DEBUG: Moving iframe into new wrapper`);
                 // Move the ad iframe into the advantage wrapper
                 if (adIframe) {
                     slotDiv.appendChild(adIframe);
@@ -569,41 +504,16 @@ const onAdSlotRendered = (options: {
                         adWrapper
                     );
                 }
-                logger.debug(
-                    `🎯 DEBUG: Replaced adWrapper with advantage-wrapper in DOM`
-                );
             }
 
             // Wait for the custom element to be defined and upgraded
-            logger.debug(
-                `⏳ [WRAPPER DEBUG] Waiting for advantage-wrapper custom element definition for ${config.template}...`
-            );
-            logger.debug(
-                `🎯 DEBUG: Waiting for advantage-wrapper custom element definition`
-            );
             customElements.whenDefined("advantage-wrapper").then(() => {
-                logger.debug(
-                    `✅ [WRAPPER DEBUG] advantage-wrapper custom element defined for ${config.template}`
-                );
                 wrapper = (advantageWrapperElement as any).advantageWrapper;
-                logger.debug(
-                    `🎯 DEBUG: Custom element defined, wrapper instance:`,
-                    !!wrapper
-                );
                 if (wrapper) {
-                    logger.debug(
-                        `🎯 DEBUG: Calling wrapper.forceFormat(${advantageFormat}) with iframe`
-                    );
                     // Force the format transformation
                     wrapper
                         .forceFormat(advantageFormat, adIframe, formatOptions)
                         .then(() => {
-                            logger.debug(
-                                `✅ [FORMAT SUCCESS] Successfully applied ${advantageFormat} format to ${config.template} slot!`
-                            );
-                            logger.debug(
-                                `🎯 DEBUG: Successfully applied ${advantageFormat} format!`
-                            );
                             logger.debug(
                                 `[High Impact Compatibility] Successfully applied ${advantageFormat} format`
                             );
@@ -685,38 +595,21 @@ const onAdSlotRendered = (options: {
                             );
                         })
                         .catch((error: any) => {
-                            console.error(
-                                `❌ [FORMAT ERROR] Failed to apply ${advantageFormat} format to ${config.template}:`,
-                                error
-                            );
-                            logger.debug(
-                                `🎯 DEBUG: ERROR applying format:`,
-                                error
-                            );
                             logger.error(
                                 `[High Impact Compatibility] Failed to apply format: ${error}`
                             );
                         });
                 } else {
                     logger.debug(
-                        `🎯 DEBUG: No wrapper instance found after custom element definition!`
+                        `[High Impact Compatibility] No wrapper instance found after custom element definition`
                     );
                 }
             });
         } else {
-            logger.debug(
-                `🎯 DEBUG: Wrapper already exists, calling forceFormat directly`
-            );
             // Wrapper already exists, just force the format
             wrapper
                 .forceFormat(advantageFormat, adIframe, formatOptions)
                 .then(() => {
-                    logger.debug(
-                        `✅ [FORMAT SUCCESS] Successfully applied ${advantageFormat} format to existing ${config.template} wrapper!`
-                    );
-                    logger.debug(
-                        `🎯 DEBUG: Successfully applied ${advantageFormat} format to existing wrapper!`
-                    );
                     logger.debug(
                         `[High Impact Compatibility] Successfully applied ${advantageFormat} format to existing wrapper`
                     );
@@ -819,33 +712,11 @@ const onAdSlotRendered = (options: {
  * This ensures Advantage creatives can communicate immediately when they load
  */
 const preWrapAdUnit = (slotConfig: SlotConfig): void => {
-    logger.debug(
-        `🔧 [Pre-wrapping] Starting pre-wrap for ad unit: ${slotConfig.adUnitId}`
-    );
-
-    // Add to window for debugging
-    (window as any).preWrapDebug = (window as any).preWrapDebug || [];
-    (window as any).preWrapDebug.push(
-        `Pre-wrap called for ${slotConfig.adUnitId}`
-    );
-
     // Try immediate wrapping first
     if (attemptPreWrap(slotConfig)) {
-        logger.debug(
-            `✅ [Pre-wrapping] Immediate pre-wrap successful for ${slotConfig.adUnitId}`
-        );
-        (window as any).preWrapDebug.push(
-            `Pre-wrap successful for ${slotConfig.adUnitId}`
-        );
         return;
     }
 
-    logger.debug(
-        `⏳ [Pre-wrapping] Immediate pre-wrap failed, setting up deferred wrapping for ${slotConfig.adUnitId}`
-    );
-    (window as any).preWrapDebug.push(
-        `Pre-wrap failed, trying deferred for ${slotConfig.adUnitId}`
-    );
     // If DOM element not found, set up observers and retries
     setupDeferredWrapping(slotConfig);
 };
@@ -854,27 +725,16 @@ const preWrapAdUnit = (slotConfig: SlotConfig): void => {
  * Attempts to pre-wrap an ad unit immediately
  */
 const attemptPreWrap = (slotConfig: SlotConfig): boolean => {
-    logger.debug(
-        `🔍 [Pre-wrapping] Looking for ad unit element: ${slotConfig.adUnitId}`
-    );
     const adUnitElement = findAdUnitElement(slotConfig.adUnitId);
 
     if (!adUnitElement) {
-        logger.debug(
-            `❌ [Pre-wrapping] Ad unit element not found: ${slotConfig.adUnitId}`
-        );
         return false;
     }
-
-    logger.debug(`✅ [Pre-wrapping] Found ad unit element:`, adUnitElement);
 
     // Check if already wrapped - important to prevent double-wrapping
     // when both Advantage and High Impact JS compatibility layer are present
     const existingWrapper = adUnitElement.closest("advantage-wrapper");
     if (existingWrapper) {
-        logger.debug(
-            `ℹ️ [Pre-wrapping] Ad unit ${slotConfig.adUnitId} already wrapped (existing Advantage installation detected)`
-        );
         logger.debug(
             `[High Impact Compatibility] Ad unit ${slotConfig.adUnitId} already wrapped`
         );
@@ -901,9 +761,6 @@ const attemptPreWrap = (slotConfig: SlotConfig): boolean => {
     }
 
     try {
-        logger.debug(
-            `🔧 [Pre-wrapping] Creating AdvantageWrapper for ${slotConfig.adUnitId}`
-        );
         // Create advantage wrapper
         const advantageWrapperElement =
             document.createElement("advantage-wrapper");
@@ -913,9 +770,6 @@ const attemptPreWrap = (slotConfig: SlotConfig): boolean => {
             "allowed-formats",
             advantageFormat
         );
-        logger.debug(
-            `📋 [Pre-wrapping] Set allowed-formats to: ${advantageFormat}`
-        );
 
         // Create slot div
         const slotDiv = document.createElement("div");
@@ -924,20 +778,9 @@ const attemptPreWrap = (slotConfig: SlotConfig): boolean => {
         // Move the ad unit into the wrapper
         const parent = adUnitElement.parentNode;
         if (parent) {
-            logger.debug(
-                `🔄 [Pre-wrapping] Moving ad unit into wrapper structure`
-            );
             parent.insertBefore(advantageWrapperElement, adUnitElement);
             slotDiv.appendChild(adUnitElement);
             advantageWrapperElement.appendChild(slotDiv);
-
-            logger.debug(
-                `✅ [Pre-wrapping] Successfully pre-wrapped ${slotConfig.adUnitId}!`
-            );
-            logger.debug(
-                `🔍 [Pre-wrapping] Wrapper HTML:`,
-                advantageWrapperElement.outerHTML
-            );
 
             logger.debug(
                 `[High Impact Compatibility] Pre-wrapped ad unit ${slotConfig.adUnitId} with AdvantageWrapper for template ${slotConfig.template}`
@@ -948,13 +791,11 @@ const attemptPreWrap = (slotConfig: SlotConfig): boolean => {
             slotConfig.wrapperElement = advantageWrapperElement;
             return true;
         } else {
-            console.error(`❌ [Pre-wrapping] Ad unit has no parent node!`);
+            logger.error(
+                `[High Impact Compatibility] Ad unit ${slotConfig.adUnitId} has no parent node`
+            );
         }
     } catch (error) {
-        console.error(
-            `❌ [Pre-wrapping] Failed to pre-wrap ad unit ${slotConfig.adUnitId}:`,
-            error
-        );
         logger.error(
             `[High Impact Compatibility] Failed to pre-wrap ad unit ${slotConfig.adUnitId}:`,
             error
@@ -1054,10 +895,6 @@ const findAdUnitElement = (adUnitId: string): HTMLElement | null => {
  * Defines a new ad slot with the specified configuration
  */
 export const defineSlot = (slotConfig: SlotConfig): void => {
-    logger.debug(
-        `🎯 [DEFINE SLOT DEBUG] defineSlot called for ${slotConfig.adUnitId}`
-    );
-
     const globalConfig = getConfig();
 
     // Handle Xandr integration by mapping targetId to adUnitId
@@ -1068,16 +905,9 @@ export const defineSlot = (slotConfig: SlotConfig): void => {
     const key = `${slotConfig.adUnitId}`;
     state.slots[key] = slotConfig;
 
-    logger.debug(
-        `✅ [DEFINE SLOT DEBUG] Slot stored in state: ${key}`,
-        slotConfig
-    );
-
     // Pre-wrap the ad unit with AdvantageWrapper to ensure Advantage creatives
     // can communicate immediately when they load
     preWrapAdUnit(slotConfig);
-
-    logger.debug(`📦 [DEFINE SLOT DEBUG] preWrapAdUnit completed for ${key}`);
 
     logger.debug(
         `[High Impact Compatibility] Slot defined: ${key}`,
@@ -1114,18 +944,7 @@ export const setTopBarVisibility = (isVisible: boolean): void => {
  */
 export const getSlotConfig = (elementId: string): SlotConfig | undefined => {
     const key = `${elementId}`;
-    logger.debug(`[High Impact Compatibility] Looking for config: ${key}`);
-
-    if (state.slots[key]) {
-        const config = state.slots[key];
-        logger.debug(
-            `[High Impact Compatibility] Found config: ${key}`,
-            config
-        );
-        return config;
-    }
-
-    return undefined;
+    return state.slots[key] ?? undefined;
 };
 
 /**
@@ -1136,19 +955,11 @@ export const setTemplateConfig = (
     config: TemplateConfig
 ): void => {
     logger.debug(
-        `⚙️ [TEMPLATE CONFIG DEBUG] setTemplateConfig called for '${template}'`,
-        config
-    );
-
-    state.templateConfig[template] = config;
-    logger.debug(
         `[High Impact Compatibility] Template config set for ${template}`,
         config
     );
 
-    logger.debug(
-        `🔄 [TEMPLATE CONFIG DEBUG] About to call applyTemplateConfigToExistingSlots...`
-    );
+    state.templateConfig[template] = config;
 
     // Apply template config retroactively to existing slots
     applyTemplateConfigToExistingSlots(template, config);
@@ -1162,49 +973,22 @@ const applyTemplateConfigToExistingSlots = (
     templateConfig: TemplateConfig
 ): void => {
     logger.debug(
-        `🔄 [RETROACTIVE DEBUG] Starting retroactive application for template '${template}' with config:`,
-        templateConfig
-    );
-
-    // Debug: Show all slots in state
-    logger.debug(
-        `📊 [RETROACTIVE DEBUG] Total slots in state:`,
-        Object.keys(state.slots).length
-    );
-    logger.debug(`📋 [RETROACTIVE DEBUG] All slots:`, state.slots);
-
-    logger.debug(
         `[High Impact Compatibility] Applying template config retroactively to existing ${template} slots`
     );
 
     // Find all slots that use this template
     Object.values(state.slots).forEach((slotConfig) => {
-        logger.debug(
-            `🔍 [RETROACTIVE DEBUG] Checking slot ${
-                slotConfig.adUnitId
-            }: template=${slotConfig.template}, preWrapped=${
-                slotConfig.preWrapped
-            }, hasWrapper=${!!slotConfig.wrapperElement}`
-        );
-
         if (
             slotConfig.template === template &&
             slotConfig.preWrapped &&
             slotConfig.wrapperElement
         ) {
             logger.debug(
-                `✅ [RETROACTIVE DEBUG] Found matching pre-wrapped slot: ${slotConfig.adUnitId}`
-            );
-            logger.debug(
                 `[High Impact Compatibility] Updating pre-wrapped slot ${slotConfig.adUnitId} with new ${template} config`
             );
 
             const wrapper = (slotConfig.wrapperElement as any).advantageWrapper;
             if (wrapper) {
-                logger.debug(
-                    `🎯 [RETROACTIVE DEBUG] Found wrapper for ${slotConfig.adUnitId}, applying format...`
-                );
-
                 // Convert template config to format options
                 const advantageFormat = TEMPLATE_TO_FORMAT_MAP[template];
                 if (advantageFormat) {
@@ -1215,24 +999,10 @@ const applyTemplateConfigToExistingSlots = (
                         globalConfig
                     );
 
-                    logger.debug(
-                        `⚙️ [RETROACTIVE DEBUG] Converted template config to format options for ${slotConfig.adUnitId}:`,
-                        formatOptions
-                    );
-
-                    // Apply the format options to the existing wrapper
-                    logger.debug(
-                        `[High Impact Compatibility] Applying format options to ${slotConfig.adUnitId}:`,
-                        formatOptions
-                    );
-
                     // Re-apply the format with new options
                     const adIframe =
                         slotConfig.wrapperElement.querySelector("iframe");
                     if (adIframe) {
-                        logger.debug(
-                            `🎯 [RETROACTIVE DEBUG] Found iframe for ${slotConfig.adUnitId}, calling forceFormat with iframe...`
-                        );
                         wrapper
                             .forceFormat(
                                 advantageFormat,
@@ -1241,23 +1011,16 @@ const applyTemplateConfigToExistingSlots = (
                             )
                             .then(() => {
                                 logger.debug(
-                                    `✅ [RETROACTIVE DEBUG] forceFormat succeeded for ${slotConfig.adUnitId} with iframe`
+                                    `[High Impact Compatibility] Retroactive format applied to ${slotConfig.adUnitId}`
                                 );
                             })
                             .catch((error: any) => {
-                                console.error(
-                                    `❌ [RETROACTIVE DEBUG] forceFormat failed for ${slotConfig.adUnitId}:`,
-                                    error
-                                );
                                 logger.error(
                                     `[High Impact Compatibility] Failed to apply retroactive format options to ${slotConfig.adUnitId}:`,
                                     error
                                 );
                             });
                     } else {
-                        logger.debug(
-                            `⚠️ [RETROACTIVE DEBUG] No iframe found for ${slotConfig.adUnitId}, calling forceFormat without iframe...`
-                        );
                         // No iframe yet, but wrapper exists - apply format without iframe
                         wrapper
                             .forceFormat(
@@ -1267,14 +1030,10 @@ const applyTemplateConfigToExistingSlots = (
                             )
                             .then(() => {
                                 logger.debug(
-                                    `✅ [RETROACTIVE DEBUG] forceFormat succeeded for ${slotConfig.adUnitId} without iframe`
+                                    `[High Impact Compatibility] Retroactive format applied to ${slotConfig.adUnitId} (no iframe)`
                                 );
                             })
                             .catch((error: any) => {
-                                console.error(
-                                    `❌ [RETROACTIVE DEBUG] forceFormat failed for ${slotConfig.adUnitId}:`,
-                                    error
-                                );
                                 logger.error(
                                     `[High Impact Compatibility] Failed to apply retroactive format options to ${slotConfig.adUnitId}:`,
                                     error
@@ -1317,27 +1076,15 @@ const setupPlugins = async (
 ): Promise<Record<string, CompatibilityPlugin>> => {
     // Prevent multiple simultaneous plugin setups
     if (state.pluginSetupInProgress) {
-        logger.debug(
-            `⏸️ [SETUP PLUGINS DEBUG] Plugin setup already in progress, skipping duplicate call`
-        );
         return state.plugins;
     }
 
     // If plugins are already ready, return them immediately
     if (state.pluginsReady) {
-        logger.debug(
-            `✅ [SETUP PLUGINS DEBUG] Plugins already ready, returning existing plugins`
-        );
         return state.plugins;
     }
 
     state.pluginSetupInProgress = true;
-    const setupStartTime = performance.now();
-    logger.debug(
-        `🔌 [SETUP PLUGINS DEBUG] Setting up plugins:`,
-        plugins,
-        `at ${setupStartTime.toFixed(2)}ms`
-    );
     const imported: Record<string, CompatibilityPlugin> = {};
 
     for (const pluginName of plugins) {
@@ -1359,16 +1106,10 @@ const setupPlugins = async (
             }
 
             imported[pluginName] = plugin;
-            logger.debug(
-                `✅ [SETUP PLUGINS DEBUG] Successfully created ${pluginName} plugin`
-            );
 
             // Initialize the plugin
             if (plugin.init) {
                 plugin.init();
-                logger.debug(
-                    `🚀 [SETUP PLUGINS DEBUG] Initialized ${pluginName} plugin`
-                );
             }
 
             // Set up ad slot rendered handler
@@ -1390,27 +1131,15 @@ const setupPlugins = async (
         }
     }
 
-    logger.debug(
-        `🏁 [SETUP PLUGINS DEBUG] Plugin setup complete. Loaded plugins:`,
-        Object.keys(imported)
-    );
-
     // Assign plugins to state BEFORE processing queued messages
     state.plugins = imported;
-    logger.debug(
-        `🔗 [SETUP PLUGINS DEBUG] Plugins assigned to state:`,
-        Object.keys(state.plugins)
-    );
 
     // Mark plugins as ready and process any queued messages
     state.pluginsReady = true;
     state.pluginSetupInProgress = false; // Reset the flag
-    const setupEndTime = performance.now();
-    const setupDuration = setupEndTime - setupStartTime;
     logger.debug(
-        `🎉 [SETUP PLUGINS DEBUG] Plugins are now ready! Setup took ${setupDuration.toFixed(
-            2
-        )}ms`
+        `[High Impact Compatibility] Plugins ready:`,
+        Object.keys(imported)
     );
     processQueuedMessages();
 
@@ -1425,68 +1154,15 @@ const processHighImpactMessage = (options: {
     adMessageData?: any;
     iframeName?: string;
 }) => {
-    logger.debug(
-        "[High Impact Compatibility] Got ad responsive signal",
-        options
-    );
-
     const { adMessageData } = options;
 
-    logger.debug(
-        "🔍 [AD RESPONSIVE DEBUG] Checking plugins:",
-        Object.keys(state.plugins)
-    );
-
-    // Debug: log all defined slots
-    logger.debug(
-        "📋 [AD RESPONSIVE DEBUG] All defined slots:",
-        Object.keys(state.slots)
-    );
-
-    let slotFound = false;
-
-    for (const [pluginName, plugin] of Object.entries(state.plugins)) {
-        logger.debug(`🔌 [AD RESPONSIVE DEBUG] Checking plugin: ${pluginName}`);
-
+    for (const [, plugin] of Object.entries(state.plugins)) {
         let slot;
         if (plugin.getSlotFromSource && options?.source) {
-            logger.debug(
-                `🔍 [AD RESPONSIVE DEBUG] Getting slot from source for ${pluginName}...`
-            );
             slot = plugin.getSlotFromSource(options.source);
-            if (slot) {
-                logger.debug(
-                    `✅ [AD RESPONSIVE DEBUG] Got slot from source:`,
-                    slot
-                );
-
-                // Debug: Check if we have a matching slot config
-                const slotConfig = getSlotConfig(slot.elementId);
-                logger.debug(
-                    `🔍 [AD RESPONSIVE DEBUG] Slot config for ${slot.elementId}:`,
-                    slotConfig
-                );
-
-                logger.debug(
-                    "[High Impact Compatibility] Got slot from source"
-                );
-                slotFound = true;
-            } else {
-                logger.debug(
-                    `❌ [AD RESPONSIVE DEBUG] No slot found for source in ${pluginName}`
-                );
-            }
-        } else {
-            logger.debug(
-                `⚠️ [AD RESPONSIVE DEBUG] Plugin ${pluginName} has no getSlotFromSource method or no source provided`
-            );
         }
 
         if (slot) {
-            logger.debug(
-                `🚀 [AD RESPONSIVE DEBUG] Calling onAdSlotRendered for slot:`,
-                slot
-            );
             onAdSlotRendered({
                 ...slot,
                 fromAdResponsiveSignal: true,
@@ -1497,12 +1173,6 @@ const processHighImpactMessage = (options: {
 
     // Original High Impact JS approach: if no plugin found a slot, we're done
     // The plugins handle all the validation and iframe matching
-
-    if (!slotFound) {
-        logger.debug("❌ [AD RESPONSIVE DEBUG] No slot found via any method");
-    }
-
-    logger.debug("🏁 [AD RESPONSIVE DEBUG] Message processing completed");
 };
 
 /**
@@ -1510,26 +1180,12 @@ const processHighImpactMessage = (options: {
  */
 const processQueuedMessages = () => {
     if (state.messageQueue.length > 0) {
-        logger.debug(
-            `📨 [QUEUE DEBUG] Processing ${state.messageQueue.length} queued messages...`
-        );
-
         const queuedMessages = [...state.messageQueue];
         state.messageQueue = []; // Clear the queue
 
-        queuedMessages.forEach((message, index) => {
-            logger.debug(
-                `🔄 [QUEUE DEBUG] Processing queued message ${index + 1}:`,
-                message
-            );
+        queuedMessages.forEach((message) => {
             processHighImpactMessage(message);
         });
-
-        logger.debug(
-            `✅ [QUEUE DEBUG] Finished processing all queued messages`
-        );
-    } else {
-        logger.debug(`📭 [QUEUE DEBUG] No messages in queue to process`);
     }
 };
 
@@ -1541,35 +1197,13 @@ const onAdResponsiveSignal = (options: {
     adMessageData?: any;
     iframeName?: string;
 }) => {
-    const startTime = performance.now();
-    logger.debug(
-        "🎯 [AD RESPONSIVE DEBUG] onAdResponsiveSignal called with:",
-        options,
-        `at ${startTime.toFixed(2)}ms`
-    );
-
     // Ultra-fast path: If plugins are ready, process immediately
     if (state.pluginsReady) {
-        const processStartTime = performance.now();
-        logger.debug(
-            `🚀 [ULTRA-FAST] Processing message immediately (plugins ready) at ${processStartTime.toFixed(
-                2
-            )}ms`
-        );
         processHighImpactMessage(options);
-        const processEndTime = performance.now();
-        logger.debug(
-            `🚀 [ULTRA-FAST] Message processing completed in ${(
-                processEndTime - processStartTime
-            ).toFixed(2)}ms`
-        );
         return;
     }
 
     // Fallback: If plugins aren't ready yet, queue this message
-    logger.debug(
-        "⏳ [AD RESPONSIVE DEBUG] Plugins not ready yet, queueing message..."
-    );
     state.messageQueue.push(options);
 };
 
@@ -1577,10 +1211,6 @@ const onAdResponsiveSignal = (options: {
  * Sets up post message listeners for ad responsive signals
  */
 const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
-    logger.debug(
-        "🎧 [MESSAGE DEBUG] Setting up High Impact JS message listener"
-    );
-
     window.addEventListener("message", (event) => {
         // Silently check message formats without logging every message
         let isValidMessage = false;
@@ -1590,7 +1220,6 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
         if (event.data && event.data.type === "high-impact-ad-responsive") {
             // New format
             isValidMessage = true;
-            logger.debug("✅ [MESSAGE DEBUG] Recognized as NEW format message");
         } else if (typeof event.data === "string") {
             // Original High Impact JS format (JSON string)
             try {
@@ -1601,13 +1230,6 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
                 ) {
                     isValidMessage = true;
                     messageData = data;
-                    logger.debug(
-                        "✅ [MESSAGE DEBUG] Recognized as ORIGINAL format message (JSON string)"
-                    );
-                    logger.debug(
-                        "[High Impact Compatibility] Received original High Impact JS message:",
-                        data
-                    );
                 }
             } catch (e) {
                 // Not a valid JSON string, silently ignore
@@ -1620,20 +1242,10 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
         ) {
             // Original High Impact JS format (object)
             isValidMessage = true;
-            logger.debug(
-                "✅ [MESSAGE DEBUG] Recognized as ORIGINAL format message (object)"
-            );
-            logger.debug(
-                "[High Impact Compatibility] Received original High Impact JS message:",
-                event.data
-            );
         }
 
         // Only process and log valid messages
         if (isValidMessage) {
-            logger.debug(
-                "🎯 [MESSAGE DEBUG] Processing valid High Impact JS message..."
-            );
             let iframeName;
             try {
                 iframeName = (event.source as any)?.name;
@@ -1647,8 +1259,6 @@ const listenToHighImpactPostMessages = (handler: (options: any) => void) => {
         }
         // Silently ignore invalid messages - no logging for non-High Impact JS messages
     });
-
-    logger.debug("✅ [MESSAGE DEBUG] Message listener setup complete");
 };
 
 /**
@@ -1703,9 +1313,7 @@ export const initializeHighImpactJs = async (): Promise<void> => {
     if (state.config.plugins && !state.pluginsReady) {
         await setupPlugins(state.config.plugins);
     } else if (state.pluginsReady) {
-        logger.debug(
-            "⚡ [SPEED OPTIMIZATION] Plugins already pre-initialized, skipping setup"
-        );
+        // Plugins already pre-initialized, skip
     }
 
     logger.debug("[High Impact Compatibility] Initialization complete");
@@ -1713,24 +1321,18 @@ export const initializeHighImpactJs = async (): Promise<void> => {
 
 // Set up message listener immediately when module loads (not waiting for full init)
 if (typeof window !== "undefined") {
-    logger.debug(
-        "🚀 [EARLY INIT] Setting up High Impact JS message listener immediately on module load"
-    );
     listenToHighImpactPostMessages(onAdResponsiveSignal);
 
     // Pre-initialize plugins with default configuration for speed (GAM only for now)
-    logger.debug(
-        "⚡ [SPEED OPTIMIZATION] Pre-initializing GAM plugin for fast message processing"
-    );
     setupPlugins(["gam"])
         .then(() => {
             logger.debug(
-                "🚀 [SPEED OPTIMIZATION] Plugin pre-initialization complete! Ready for messages."
+                "[High Impact Compatibility] Plugin pre-initialization complete"
             );
         })
         .catch((error) => {
             console.warn(
-                "⚠️ [SPEED OPTIMIZATION] Plugin pre-initialization failed:",
+                "[High Impact Compatibility] Plugin pre-initialization failed:",
                 error
             );
         });

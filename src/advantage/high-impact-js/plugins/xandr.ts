@@ -96,20 +96,10 @@ export class XandrPlugin implements CompatibilityPlugin {
      * Using the original High Impact JS validation approach for Xandr
      */
     getSlotFromSource(source: Window): any {
-        logger.debug(
-            "🔍 [XANDR PLUGIN DEBUG] getSlotFromSource called with source:",
-            source
-        );
-
         // Original High Impact JS used 'iframe[id*="utif"]' for Xandr
         const xandrIframes = document.querySelectorAll('iframe[id*="utif"]');
-        logger.debug(
-            `📋 [XANDR PLUGIN DEBUG] Found ${xandrIframes.length} Xandr iframes:`,
-            Array.from(xandrIframes).map((f) => f.id)
-        );
 
         if (!xandrIframes.length) {
-            logger.debug("❌ [XANDR PLUGIN DEBUG] No Xandr iframes found");
             return null;
         }
 
@@ -119,26 +109,13 @@ export class XandrPlugin implements CompatibilityPlugin {
             frameWindow: Window
         ): boolean => {
             if (frameWindow === childWindow) {
-                logger.debug(
-                    "✅ [XANDR PLUGIN DEBUG] Found direct window match"
-                );
                 return true;
             } else if (childWindow === window.top) {
-                logger.debug(
-                    "❌ [XANDR PLUGIN DEBUG] Reached top window, no match"
-                );
                 return false;
             }
             try {
-                logger.debug(
-                    "🔄 [XANDR PLUGIN DEBUG] Traversing to parent window..."
-                );
                 return isAncestor(childWindow.parent, frameWindow);
             } catch (e) {
-                logger.debug(
-                    "❌ [XANDR PLUGIN DEBUG] Cross-origin access denied:",
-                    e
-                );
                 return false;
             }
         };
@@ -148,74 +125,37 @@ export class XandrPlugin implements CompatibilityPlugin {
             try {
                 const frameWindow = (frame as HTMLIFrameElement).contentWindow;
                 if (!frameWindow) {
-                    logger.debug(
-                        `❌ [XANDR PLUGIN DEBUG] No contentWindow for iframe ${frame.id}`
-                    );
                     return false;
                 }
-
-                const matches = isAncestor(source, frameWindow);
-                logger.debug(
-                    `🔍 [XANDR PLUGIN DEBUG] Iframe ${frame.id} ancestry check: ${matches}`
-                );
-                return matches;
+                return isAncestor(source, frameWindow);
             } catch (e) {
-                logger.debug(
-                    `❌ [XANDR PLUGIN DEBUG] Error checking iframe ${frame.id}:`,
-                    e
-                );
                 return false;
             }
         });
 
         if (!matchingIframe) {
-            logger.debug(
-                "❌ [XANDR PLUGIN DEBUG] No iframe matched source via ancestry check"
-            );
-
-            // Fallback: In test environments or when cross-origin restrictions prevent ancestry checking,
-            // try to match using iframe name or timing (similar to original High Impact JS fallback approaches)
-            logger.debug(
-                "🔄 [XANDR PLUGIN DEBUG] Trying fallback matching approaches..."
-            );
-
-            // Try to find iframe by matching source name if available
+            // Fallback: try to match using iframe name
             try {
                 const sourceName = (source as any).name;
                 if (sourceName) {
-                    logger.debug(
-                        `🔍 [XANDR PLUGIN DEBUG] Source has name: ${sourceName}`
-                    );
                     const namedIframe = document.getElementById(sourceName);
                     if (
                         namedIframe &&
                         Array.from(xandrIframes).includes(namedIframe)
                     ) {
-                        logger.debug(
-                            `✅ [XANDR PLUGIN DEBUG] Found iframe by source name: ${sourceName}`
-                        );
                         const tagId = namedIframe.id
                             .replace("utif_", "")
                             .split("_")[0];
-                        logger.debug(
-                            `🔧 [XANDR PLUGIN DEBUG] Using named iframe, tag ID: ${tagId}`
-                        );
                         return this.getTagByIdOrFallback(namedIframe, tagId);
                     }
                 }
             } catch (e) {
-                logger.debug(
-                    "❌ [XANDR PLUGIN DEBUG] Could not get source name:",
-                    e
-                );
+                // Could not get source name
             }
 
-            // Final fallback: Use the most recently added iframe (simple timing-based approach)
+            // Final fallback: Use the most recently added iframe
             if (xandrIframes.length > 0) {
                 const lastIframe = xandrIframes[xandrIframes.length - 1];
-                logger.debug(
-                    `🎯 [XANDR PLUGIN DEBUG] Using last iframe as fallback: ${lastIframe.id}`
-                );
                 const tagId = lastIframe.id.replace("utif_", "").split("_")[0];
                 return this.getTagByIdOrFallback(lastIframe, tagId);
             }
@@ -224,12 +164,10 @@ export class XandrPlugin implements CompatibilityPlugin {
         }
 
         logger.debug(
-            `✅ [XANDR PLUGIN DEBUG] Found matching iframe: ${matchingIframe.id}`
+            `[Xandr Plugin] Found matching iframe: ${matchingIframe.id}`
         );
 
-        // Extract tag ID using original High Impact JS approach: 'utif_' prefix removal
         const tagId = matchingIframe.id.replace("utif_", "").split("_")[0];
-        logger.debug(`🔧 [XANDR PLUGIN DEBUG] Extracted tag ID: ${tagId}`);
 
         return this.getTagByIdOrFallback(matchingIframe, tagId);
     }
@@ -238,31 +176,19 @@ export class XandrPlugin implements CompatibilityPlugin {
      * Helper method to get tag by ID or create fallback
      */
     private getTagByIdOrFallback(iframe: Element, tagId: string): any {
-        // Try to get tag from Xandr API (original approach)
         try {
             if (!window.apntag?.getTag) {
-                logger.debug(
-                    "❌ [XANDR PLUGIN DEBUG] Xandr apntag.getTag not available"
-                );
                 return this.createFallbackSlotFromIframe(iframe);
             }
 
             const tag = window.apntag.getTag(tagId);
 
             if (!tag) {
-                logger.debug(
-                    `❌ [XANDR PLUGIN DEBUG] No tag found in Xandr for tag ID: ${tagId}`
-                );
                 return this.createFallbackSlotFromIframe(iframe);
             }
 
-            logger.debug(`✅ [XANDR PLUGIN DEBUG] Found Xandr tag, parsing...`);
             return this.parseTag(tag);
         } catch (e) {
-            logger.debug(
-                "❌ [XANDR PLUGIN DEBUG] Error accessing Xandr tag:",
-                e
-            );
             return this.createFallbackSlotFromIframe(iframe);
         }
     }
@@ -290,7 +216,7 @@ export class XandrPlugin implements CompatibilityPlugin {
                 slot.height || slot.initialHeight
             ];
 
-            logger.debug(`✅ [XANDR PLUGIN DEBUG] Parsed tag ${elementId}:`, {
+            logger.debug(`[Xandr Plugin] Parsed tag ${elementId}:`, {
                 adWrapper: !!adWrapper,
                 adUnit: !!adUnit,
                 adIframe: !!adIframe,
@@ -310,7 +236,7 @@ export class XandrPlugin implements CompatibilityPlugin {
         }
 
         logger.debug(
-            `❌ [XANDR PLUGIN DEBUG] Could not find ad wrapper for ${elementId}`
+            `[Xandr Plugin] Could not find ad wrapper for tag ${elementId}`
         );
         return null;
     }
@@ -319,24 +245,13 @@ export class XandrPlugin implements CompatibilityPlugin {
      * Creates a fallback slot object from an iframe element when Xandr tag lookup fails
      */
     private createFallbackSlotFromIframe(iframe: Element): any {
-        const iframeId = iframe.id;
-        logger.debug(
-            `🔧 [XANDR PLUGIN DEBUG] createFallbackSlotFromIframe called with iframe ID: ${iframeId}`
-        );
-
         // Try to find the container element
         const container = iframe.parentElement;
         if (!container || !container.id) {
-            logger.debug(
-                `❌ [XANDR PLUGIN DEBUG] Could not find container for iframe ${iframeId}`
-            );
             return null;
         }
 
         const elementId = container.id;
-        logger.debug(
-            `🎯 [XANDR PLUGIN DEBUG] Using container ID as elementId: ${elementId}`
-        );
 
         // Determine size based on iframe dimensions or defaults
         let size = [300, 250]; // Default size
