@@ -483,9 +483,71 @@ const onAdSlotRendered = (options: {
             wrapper = (adWrapper as any).advantageWrapper;
         }
 
+        const onFormatApplied = (
+            activeWrapper: any,
+            wrapperEl: HTMLElement | null
+        ) => {
+            logger.debug(
+                `[High Impact Compatibility] Successfully applied ${advantageFormat} format`
+            );
+
+            setDivClasses({ adWrapper, adUnit, adIframe }, config.template!);
+
+            const appliedStyleProperties: string[] = [];
+            if (formatOptions.zIndex && wrapperEl) {
+                wrapperEl.style.zIndex = String(formatOptions.zIndex);
+                appliedStyleProperties.push("z-index");
+            }
+
+            if (config.template === "midscroll" && wrapperEl) {
+                applyMidscrollMargins(wrapperEl, appliedStyleProperties);
+            }
+
+            const cleanupTemplateSpecific = setupTemplateSpecificBehavior(
+                config.template!,
+                adWrapper
+            );
+
+            config.rendered = {
+                wrapper: activeWrapper,
+                cleanupTemplateSpecific,
+                destroy: () => {
+                    cleanupTemplateSpecific?.();
+                    activeWrapper?.reset();
+                }
+            };
+
+            if (wrapperEl) {
+                observeWrapperForClose(
+                    wrapperEl,
+                    config,
+                    { adWrapper, adUnit, adIframe },
+                    appliedStyleProperties
+                );
+            }
+
+            window.dispatchEvent(
+                new CustomEvent("high-impact-ad-rendered", {
+                    detail: {
+                        size: {
+                            width: adIframe?.clientWidth || size?.[0] || 0,
+                            height: adIframe?.clientHeight || size?.[1] || 0
+                        },
+                        template: config.template,
+                        advantageFormat
+                    }
+                })
+            );
+        };
+
+        const onFormatError = (error: any) => {
+            logger.error(
+                `[High Impact Compatibility] Failed to apply format: ${error}`
+            );
+        };
+
         if (!wrapper) {
             if (!advantageWrapperElement) {
-                // Create new wrapper - this is the fallback for non-pre-wrapped elements
                 advantageWrapperElement =
                     document.createElement("advantage-wrapper");
                 const slotDiv = document.createElement("div");
@@ -510,95 +572,12 @@ const onAdSlotRendered = (options: {
             customElements.whenDefined("advantage-wrapper").then(() => {
                 wrapper = (advantageWrapperElement as any).advantageWrapper;
                 if (wrapper) {
-                    // Force the format transformation
                     wrapper
                         .forceFormat(advantageFormat, adIframe, formatOptions)
-                        .then(() => {
-                            logger.debug(
-                                `[High Impact Compatibility] Successfully applied ${advantageFormat} format`
-                            );
-
-                            // Set High Impact JS CSS classes
-                            setDivClasses(
-                                { adWrapper, adUnit, adIframe },
-                                config.template!
-                            );
-
-                            // Apply z-index to the wrapper element
-                            const appliedStyleProperties: string[] = [];
-                            if (
-                                formatOptions.zIndex &&
-                                advantageWrapperElement
-                            ) {
-                                advantageWrapperElement.style.zIndex = String(
-                                    formatOptions.zIndex
-                                );
-                                appliedStyleProperties.push("z-index");
-                            }
-
-                            // Apply midscroll margin correction
-                            if (
-                                config.template === "midscroll" &&
-                                advantageWrapperElement
-                            ) {
-                                applyMidscrollMargins(
-                                    advantageWrapperElement,
-                                    appliedStyleProperties
-                                );
-                            }
-
-                            // Set up template-specific behavior (e.g. topscroll visibility classes)
-                            const cleanupTemplateSpecific =
-                                setupTemplateSpecificBehavior(
-                                    config.template!,
-                                    adWrapper
-                                );
-
-                            // Mark as rendered
-                            config.rendered = {
-                                wrapper,
-                                cleanupTemplateSpecific,
-                                destroy: () => {
-                                    cleanupTemplateSpecific?.();
-                                    wrapper?.reset();
-                                }
-                            };
-
-                            // Observe the wrapper for close/reset to clean up classes
-                            if (advantageWrapperElement) {
-                                observeWrapperForClose(
-                                    advantageWrapperElement,
-                                    config,
-                                    { adWrapper, adUnit, adIframe },
-                                    appliedStyleProperties
-                                );
-                            }
-
-                            // Dispatch High Impact JS event for compatibility
-                            window.dispatchEvent(
-                                new CustomEvent("high-impact-ad-rendered", {
-                                    detail: {
-                                        size: {
-                                            width:
-                                                adIframe?.clientWidth ||
-                                                size?.[0] ||
-                                                0,
-                                            height:
-                                                adIframe?.clientHeight ||
-                                                size?.[1] ||
-                                                0
-                                        },
-                                        template: config.template,
-                                        advantageFormat
-                                    }
-                                })
-                            );
-                        })
-                        .catch((error: any) => {
-                            logger.error(
-                                `[High Impact Compatibility] Failed to apply format: ${error}`
-                            );
-                        });
+                        .then(() =>
+                            onFormatApplied(wrapper, advantageWrapperElement)
+                        )
+                        .catch(onFormatError);
                 } else {
                     logger.debug(
                         `[High Impact Compatibility] No wrapper instance found after custom element definition`
@@ -606,99 +585,11 @@ const onAdSlotRendered = (options: {
                 }
             });
         } else {
-            // Wrapper already exists, just force the format
+            const wrapperEl = config.wrapperElement || advantageWrapperElement;
             wrapper
                 .forceFormat(advantageFormat, adIframe, formatOptions)
-                .then(() => {
-                    logger.debug(
-                        `[High Impact Compatibility] Successfully applied ${advantageFormat} format to existing wrapper`
-                    );
-
-                    // Set High Impact JS CSS classes
-                    setDivClasses(
-                        { adWrapper, adUnit, adIframe },
-                        config.template!
-                    );
-
-                    // Apply z-index to the wrapper element
-                    const wrapperElForZIndex =
-                        config.wrapperElement || advantageWrapperElement;
-                    const appliedStyleProperties: string[] = [];
-                    if (formatOptions.zIndex) {
-                        if (wrapperElForZIndex) {
-                            wrapperElForZIndex.style.zIndex = String(
-                                formatOptions.zIndex
-                            );
-                            appliedStyleProperties.push("z-index");
-                        }
-                    }
-
-                    // Apply midscroll margin correction
-                    const wrapperElForMargins =
-                        config.wrapperElement || advantageWrapperElement;
-                    if (
-                        config.template === "midscroll" &&
-                        wrapperElForMargins
-                    ) {
-                        applyMidscrollMargins(
-                            wrapperElForMargins,
-                            appliedStyleProperties
-                        );
-                    }
-
-                    // Set up template-specific behavior (e.g. topscroll visibility classes)
-                    const cleanupTemplateSpecific =
-                        setupTemplateSpecificBehavior(
-                            config.template!,
-                            adWrapper
-                        );
-
-                    config.rendered = {
-                        wrapper,
-                        cleanupTemplateSpecific,
-                        destroy: () => {
-                            cleanupTemplateSpecific?.();
-                            wrapper?.reset();
-                        }
-                    };
-
-                    // Observe the wrapper for close/reset to clean up classes
-                    const wrapperEl =
-                        config.wrapperElement || advantageWrapperElement;
-                    if (wrapperEl) {
-                        observeWrapperForClose(
-                            wrapperEl,
-                            config,
-                            {
-                                adWrapper,
-                                adUnit,
-                                adIframe
-                            },
-                            appliedStyleProperties
-                        );
-                    }
-
-                    // Dispatch event
-                    window.dispatchEvent(
-                        new CustomEvent("high-impact-ad-rendered", {
-                            detail: {
-                                size: {
-                                    width:
-                                        adIframe?.clientWidth || size?.[0] || 0,
-                                    height:
-                                        adIframe?.clientHeight || size?.[1] || 0
-                                },
-                                template: config.template,
-                                advantageFormat
-                            }
-                        })
-                    );
-                })
-                .catch((error: any) => {
-                    logger.error(
-                        `[High Impact Compatibility] Failed to apply format: ${error}`
-                    );
-                });
+                .then(() => onFormatApplied(wrapper, wrapperEl))
+                .catch(onFormatError);
         }
     } catch (error) {
         logger.error(

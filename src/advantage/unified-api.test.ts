@@ -5,7 +5,6 @@
 
 import {
     // Native Advantage API
-    AdvantageCreativeMessenger,
     AdvantageMessageAction,
     AdvantageFormatName,
     // High Impact JS compatible API
@@ -17,6 +16,8 @@ import {
     cmd,
     resetState
 } from "./index";
+
+import { AdvantageCreativeMessenger } from "./messaging/creative-side";
 
 describe("Unified API - Both APIs Available", () => {
     beforeEach(() => {
