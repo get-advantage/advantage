@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/get-advantage/advantage/compare/v0.11.0...v0.11.1) (2026-03-26)
+
+
+### Bug Fixes
+
+* **welcomepage:** add back 0s transition handle ([3a0bdf2](https://github.com/get-advantage/advantage/commit/3a0bdf21d2fd9ca517ad9d7b5d109aee08a882b8))
+
 # [0.11.0](https://github.com/get-advantage/advantage/compare/v0.10.2...v0.11.0) (2026-01-18)
 
 
