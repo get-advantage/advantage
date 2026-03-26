@@ -63,6 +63,25 @@ export default {
             }
         },
         {
+            format: AdvantageFormatName.WelcomePage,
+            // uncomment to show/hide UI elements
+            options: {
+              closeButtonAnimationDuration: 0,
+            },
+            setup: (wrapper, ad) => {
+                console.log(wrapper, ad);
+                return new Promise<void>((resolve) => {
+                    resolve();
+                });
+            },
+            close: () => {
+                logger.debug("Closing welcome page format");
+            },
+            reset: () => {
+                logger.debug("Resetting welcome page format");
+            }
+        },
+        {
             format: AdvantageFormatName.DoubleMidscroll,
             options: {
                 allowedOrigins: ["http://localhost:5173"]
