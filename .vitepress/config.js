@@ -14,31 +14,87 @@ export default defineConfig({
     cleanUrls: true,
     transformPageData(pageData) {
         const canonicalUrl = `${hostname}/${pageData.relativePath}`
-            .replace(/index\.(md|html)$/, '')
-            .replace(/\.(md|html)$/, '')
+            .replace(/index\.(md|html)$/, "")
+            .replace(/\.(md|html)$/, "");
 
-        pageData.frontmatter.head ??= []
+        pageData.frontmatter.head ??= [];
         pageData.frontmatter.head.push([
-            'link',
-            { rel: 'canonical', href: canonicalUrl }
-        ])
+            "link",
+            { rel: "canonical", href: canonicalUrl }
+        ]);
     },
     head: [
-        ['script', { src: 'https://cdn.tailwindcss.com' }],
-        ['link', { href: 'https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap', rel: 'stylesheet' }],
-        ['link', { rel: "apple-touch-icon", sizes: "180x180", href: "/favicons/apple-touch-icon.png" }],
-        ['link', { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicons/favicon-32x32.png" }],
-        ['link', { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicons/favicon-16x16.png" }],
-        ['link', { rel: "manifest", href: "/favicons/site.webmanifest" }],
-        ['link', { rel: "mask-icon", href: "/favicons/safari-pinned-tab.svg", color: "#6b04fd" }],
-        ['link', { rel: "shortcut icon", href: "/favicons/favicon.ico" }],
-        ['meta', { name: "msapplication-TileColor", content: "#6b04fd" }],
-        ['meta', { name: "msapplication-config", content: "/favicons/browserconfig.xml" }],
-        ['meta', { name: "theme-color", content: "#18181b", media: "(prefers-color-scheme: dark)" }],
-        ['meta', { name: "theme-color", content: "#FFFFFF", media: "(prefers-color-scheme: light)" }],
+        ["script", { src: "https://cdn.tailwindcss.com" }],
+        [
+            "link",
+            {
+                href: "https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap",
+                rel: "stylesheet"
+            }
+        ],
+        [
+            "link",
+            {
+                rel: "apple-touch-icon",
+                sizes: "180x180",
+                href: "/favicons/apple-touch-icon.png"
+            }
+        ],
+        [
+            "link",
+            {
+                rel: "icon",
+                type: "image/png",
+                sizes: "32x32",
+                href: "/favicons/favicon-32x32.png"
+            }
+        ],
+        [
+            "link",
+            {
+                rel: "icon",
+                type: "image/png",
+                sizes: "16x16",
+                href: "/favicons/favicon-16x16.png"
+            }
+        ],
+        ["link", { rel: "manifest", href: "/favicons/site.webmanifest" }],
+        [
+            "link",
+            {
+                rel: "mask-icon",
+                href: "/favicons/safari-pinned-tab.svg",
+                color: "#6b04fd"
+            }
+        ],
+        ["link", { rel: "shortcut icon", href: "/favicons/favicon.ico" }],
+        ["meta", { name: "msapplication-TileColor", content: "#6b04fd" }],
+        [
+            "meta",
+            {
+                name: "msapplication-config",
+                content: "/favicons/browserconfig.xml"
+            }
+        ],
+        [
+            "meta",
+            {
+                name: "theme-color",
+                content: "#18181b",
+                media: "(prefers-color-scheme: dark)"
+            }
+        ],
+        [
+            "meta",
+            {
+                name: "theme-color",
+                content: "#FFFFFF",
+                media: "(prefers-color-scheme: light)"
+            }
+        ]
     ],
     sitemap: {
-        hostname,
+        hostname
     },
     markdown: {
         theme: {
@@ -49,8 +105,8 @@ export default defineConfig({
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         logo: {
-            light: "/logo/advantage-logo.svg",
-            dark: "/logo/advantage-logo-light.svg"
+            light: "/logo/hi-logo.svg",
+            dark: "/logo/hi-logo-white.svg"
         },
         siteTitle: false,
         nav: [
@@ -81,9 +137,12 @@ export default defineConfig({
                 {
                     text: "About",
                     items: [
-                        { text: "What is Advantage?", link: "/about/index.md" },
                         {
-                            text: "Why Advantage?",
+                            text: "What is High Impact JS?",
+                            link: "/about/index.md"
+                        },
+                        {
+                            text: "Why High Impact JS?",
                             link: "/about/why.md"
                         },
                         {
@@ -150,7 +209,7 @@ export default defineConfig({
                         {
                             text: `Double Midscroll`,
                             link: "/docs/formats/double_midscroll.md"
-                        },
+                        }
                     ]
                 },
                 {
@@ -159,7 +218,7 @@ export default defineConfig({
                         {
                             text: `Hello World`,
                             link: "/docs/examples/hello-world.md"
-                        },
+                        }
                     ]
                 },
                 {
@@ -176,7 +235,28 @@ export default defineConfig({
                         {
                             text: "Releases",
                             link: "https://github.com/get-advantage/advantage/releases"
+                        }
+                    ]
+                },
+                {
+                    text: "Migration",
+                    items: [
+                        {
+                            text: "The Merge",
+                            link: "/docs/migration/index.md"
                         },
+                        {
+                            text: "From Advantage",
+                            link: "/docs/migration/from-advantage.md"
+                        },
+                        {
+                            text: "From High Impact JS",
+                            link: "/docs/migration/from-high-impact-js.md"
+                        },
+                        {
+                            text: "Slot API Reference",
+                            link: "/docs/migration/api.md"
+                        }
                     ]
                 }
             ]

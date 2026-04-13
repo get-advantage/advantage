@@ -1,6 +1,6 @@
 ---
-title: Advantage - Building User-First Ad Formats.
-description: AdVantage is a set of mix and matchable highly performant web components that are easily customizable to meet your site functionality needs.
+title: High Impact JS - Building User-First Ad Formats.
+description: High Impact JS is a set of mix and matchable highly performant web components that are easily customizable to meet your site functionality needs.
 aside: false
 sidebar: false
 layout: page

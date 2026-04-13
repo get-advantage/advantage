@@ -6,230 +6,303 @@ pageClass: docs
 
 # Publisher tutorial
 
-This part of the tutorial is aimed at website owners and publishers who want to implement Advantage on their site(s).
+This part of the tutorial is aimed at website owners and publishers who want to implement High Impact JS on their site(s).
 
-### Step 1: Install Advantage
+### Step 1: Install High Impact JS
 
-To install Advantage, run the following command in your terminal:
+To install High Impact JS, run the following command in your terminal:
 
 ::: code-group
 
 ```sh [npm]
-$ npm i @get-advantage/advantage
+$ npm i @ghigh-impact-js
 ```
 
 ```sh [pnpm]
-$ pnpm add @get-advantage/advantage
+$ pnpm add @high-impact-js
 ```
 
 ```sh [yarn]
-$ yarn add @get-advantage/advantage
+$ yarn add @high-impact-js
 ```
 
 ```sh [bun]
-$ bun i @get-advantage/advantage
+$ bun i @high-impact-js
 ```
 
 :::
 
-### Step 2: Import Advantage
+### Step 2: Load the library
 
-Import Advantage and get a reference to it's singleton
+Add the library to your page. You can use a `<script>` tag or import it as an ES module.
 
-```ts [index.ts]
-import { Advantage } from "@get-advantage/advantage";
+::: code-group
 
-// Get a reference to the Advantage singleton
-const advantage = Advantage.getInstance();
+```html [Script tag]
+<script>
+    window.highImpactJs = window.highImpactJs || { cmd: [] };
+</script>
+<script src="https://cdn.example.com/high-impact-js/latest/high-impact-js.umd.js"></script>
 ```
 
-### Step 3: Decide if to use the Advantage Wrapper
+```ts [ES module]
+import { Advantage } from "@high-impact-js";
+```
 
-Using the Advantage Wrapper is highly recommended as it makes implementing Advantage high-impact formats on your website quick and easy. But if you already have custom implementations of the formats that you want, you can choose not to use the wrapper. If so, you can jump ahead to [step 6](./publisher.html#without-wrapper). If you decide to use the Advantage wrapper, continue to the next step:
+:::
 
-### Step 4: Wrap your ad slots/placements
+The command queue (`window.highImpactJs.cmd`) lets you call API functions before the library has finished loading. Commands are executed automatically once the library is ready.
 
-It is now time to wrap your ad slots in the Advantage Wrapper.
+### Step 3: Define your ad slots
+
+Use `defineSlot` to register each ad placement that should support high-impact formats. The library will automatically find the matching DOM element, wrap it, detect when an ad renders, and activate the format.
 
 ```html
-<advantage-wrapper>
-    <div slot="advantage-ad-slot">
-        <!-- YOUR AD SLOT HERE -->
-    </div>
-</advantage-wrapper>
+<script>
+    window.highImpactJs = window.highImpactJs || { cmd: [] };
+    window.highImpactJs.cmd.push(function () {
+        highImpactJs.defineSlot({
+            adUnitId: "/1234/topscroll-ad",
+            template: "topscroll",
+            sizes: [
+                [970, 250],
+                [1920, 1080]
+            ]
+        });
+    });
+</script>
 ```
 
-You can control which ad formats are allowed for an `<advantage-wrapper>` by specifying them in the allowed-formats attribute. Provide a comma-separated list of format names; only these listed formats will be permitted for this specific wrapper instance.
+#### SlotConfig properties
 
-```html
-<advantage-wrapper allowed-formats="TOPSCROLL,WELCOMEPAGE">
-    <div slot="advantage-ad-slot">
-        <!-- YOUR AD SLOT HERE -->
-    </div>
-</advantage-wrapper>
-```
-
-You can also dynamically set or update the allowed ad formats for an `<advantage-wrapper>` instance using its setAllowedFormats() JavaScript method. This method is useful for changing format permissions after the page has loaded or in response to user interactions.
-
-Method: `element.setAllowedFormats(formatsArray)`
-
--   `formatsArray`: An array of strings, where each string is a valid format identifier (e.g., `["MIDSCROLL", "WELCOME_PAGE"]`).
--   Ensure the format identifiers used are valid. See a list of built-in formats [here](/docs/concepts/formats)
-
-```ts
-import { Advantage, IAdvantageWrapper } from "@get-advantage/advantage";
-const wrapper = document.querySelector(
-    "advantage-wrapper"
-) as IAdvantageWrapper;
-wrapper.setAllowedFormats(["MIDSCROLL", "WELCOME_PAGE"]);
-```
-
-You can also choose to use a helper method that does the wrapping for you:
-
-```ts
-import { advantageWrapAdSlotElement } from "@get-advantage/advantage/utils";
-
-/* advantageWrapAdSlotElement is a function that wraps an ad slot element with an
-Advantage-wrapper. It takes either a selector string or an HTMLElement as an argument.
-You can also pass an optional second argument to specify the formats to exclude for the wrapped ad slot.*/
-advantageWrapAdSlotElement("#ad-slot-to-be-wrapped", ["TOPSCROLL"]);
-```
-
-The above code will take an ad slot like this...
-
-```html
-<div id="ad-slot-to-be-wrapped"><!-- banners will be loaded here --></div>
-```
-
-... and wrap it like this:
-
-```html
-<advantage-wrapper>
-    <div slot="advantage-ad-slot">
-        <div id="ad-slot-to-be-wrapped">
-            <!-- banners will be loaded here -->
-        </div>
-    </div>
-</advantage-wrapper>
-```
-
-Your ad slot is now Advantage enabled!
+| Property          | Type         | Required | Description                                                                                                            |
+| :---------------- | :----------- | :------- | :--------------------------------------------------------------------------------------------------------------------- |
+| `adUnitId`        | `string`     | **Yes**  | The ad unit ID (e.g., a GAM slot element ID).                                                                          |
+| `template`        | `string`     | No       | `"topscroll"`, `"midscroll"`, or `"double-fullscreen"`.                                                                |
+| `targetId`        | `string`     | No       | Xandr target ID. Use instead of `adUnitId` for Xandr.                                                                  |
+| `sizes`           | `number[][]` | No       | Accepted creative sizes, e.g. `[[970, 250]]`. Format only activates when the rendered ad matches.                      |
+| `waitForAdSignal` | `boolean`    | No       | Wait for the creative to send a post-message signal before activating. Required for one-tag banners. Default: `false`. |
 
 <div class="tip custom-block" style="padding-top: 8px">
-  ℹ️ Remember: It is the serving creative that advertise its intended format. In case you'r ad slot can serve both standard size ads and hight impact ads from the same ad slot. Nothing will happend if a none Advantage ad is served.     
+  ℹ️ If your ad slot can serve both standard size ads and high-impact ads, nothing will happen when a non-high-impact ad is served. The slot behaves like a normal ad placement until a matching creative is detected.
 </div>
 
-#### Manual Format Control
+### Step 4: Integrate formats with your site
 
-If you need to programmatically control which format to display without waiting for communication from the ad iframe, you can use the wrapper's `forceFormat` method. This is useful for testing, custom business logic, or integration scenarios.
+High-impact formats take over parts of the page layout (e.g., a topscroll pushes content down, a midscroll goes full-width). Almost every website needs some adjustments to make this work smoothly — hiding a sticky header, resetting padding, expanding a container to full viewport width, etc.
 
-```ts
-// Get reference to the wrapper element
-const wrapper = document.querySelector("advantage-wrapper");
-
-// Force a specific format
-await wrapper.forceFormat("interstitial");
-```
-
-For detailed information about the `forceFormat` method, including all parameters and use cases, see the [Wrapper documentation](../concepts/wrapper.html#force-format).
-
-### Step 5: Configuration
-
-Advantage comes pre-built with a number of high-impact formats (detailed list and definitions coming soon) and they are included in the `<advantage-wrapper>`. These formats are pre-configured with the necessary styling out-of-the-box. Integration with your site might still be necessary for optimal performance. You can customize the integration through settings passed to Advantage. Pass your custom integrations in the `formatIntegrations` array. When the `<advantage-wrapper>` is about to transform into a format, it will run the provided `setup` function, so that you can make the necessary adjustments.
+You configure this with `formatIntegrations`. For each format you provide a `setup` function (called when the format activates) and optional `close` / `reset` functions (called when the user dismisses the ad or when the format is reset).
 
 ```ts
+import {
+    Advantage,
+    AdvantageFormatName,
+    IAdvantageWrapper
+} from "@high-impact-js";
+
 const advantage = Advantage.getInstance();
 
 advantage.configure({
     formatIntegrations: [
         {
             format: AdvantageFormatName.TopScroll,
-            /**
-             * This function will be run before a transformation into a high-impact format, allowing you to make adjustments that might be necessary
-             * */
-            setup: (
-                wrapper: IAdvantageWrapper,
-                adIframe: HTMLIFrameElement
-            ) => {
-                return new Promise<void>((resolve, reject) => {
-                    /* Setup your site to accomodate the topscroll format here.
-                    Perhaps you might need to hide a sticky header menu or similar. */
-
-                    // call resolve when done
-                    resolve();
-                });
-            }
-        }
-    ]
-});
-```
-
-#### Remote or local configuration
-
-If you don't want to bundle your configuration it is possible to make Advantage fetch it from a remote URL. To do so, simply supply the configure function with a `configUrlResolver`:
-
-```ts [remote config]
-advantage.configure({
-    // If you want to, you can load the configuration from a remote file.
-    // To do so, configure Advantage with a configUrlResolver, like this:
-    configUrlResolver: () => {
-        /* You could use the hostname or any other logic to determine the config file, or simply return a static URL.
-        This is just an example of how you could dynamically load a config file based on the current hostname */
-        return `https://example.com/configs/${window.location.hostname}.js`;
-    }
-});
-```
-
-The remote configuration file should be a javascript file that exports the configuration like so:
-
-```ts
-export default { ...configuration };
-```
-
-#### Custom formats
-
-It is possible to create your own custom ad formats. These should be included into your configuration:
-
-```ts
-advantage.configure({
-    formats: [
-        {
-            name: "MyCustomFormat",
-            description: "A custom format",
+            options: {
+                closeButtonText: "Ad",
+                closeButtonAnimationDuration: 0
+            },
             setup: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
                 return new Promise<void>((resolve) => {
-                    // Style the wrapper and make other adjustments here
+                    // Push the page content down to make room for the topscroll
+                    const main = document.querySelector("main") as HTMLElement;
+                    (main.parentElement as HTMLElement).style.paddingTop =
+                        "80svh";
+                    wrapper.style.top = "0";
+                    wrapper.style.position = "absolute";
                     resolve();
                 });
+            },
+            close: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
+                // Undo the layout changes when the ad is closed
+                const main = document.querySelector("main") as HTMLElement;
+                (main.parentElement as HTMLElement).style.paddingTop = "";
+                wrapper.style.top = "";
+            },
+            reset: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
+                // Same cleanup when the format is reset
+                const main = document.querySelector("main") as HTMLElement;
+                (main.parentElement as HTMLElement).style.paddingTop = "";
+                wrapper.style.top = "";
+            }
+        },
+        {
+            format: AdvantageFormatName.Midscroll,
+            setup: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
+                return new Promise<void>((resolve) => {
+                    // Remove margins so the ad stretches to full viewport width
+                    const container = ad?.parentElement
+                        ?.parentElement as HTMLElement;
+                    if (container) {
+                        container.style.margin = "0";
+                        container.style.borderWidth = "0";
+                    }
+
+                    // Compensate if the wrapper isn't flush with the left edge
+                    const rect = wrapper.getBoundingClientRect();
+                    if (rect.left > 0) {
+                        wrapper.style.marginLeft = `-${rect.left}px`;
+                    }
+
+                    resolve();
+                });
+            },
+            reset: (wrapper: IAdvantageWrapper, ad?: HTMLElement) => {
+                // Restore original styles
+                const container = ad?.parentElement
+                    ?.parentElement as HTMLElement;
+                if (container) {
+                    container.style.margin = "";
+                    container.style.borderWidth = "";
+                }
+                wrapper.style.marginLeft = "";
             }
         }
     ]
+});
+```
+
+#### FormatIntegration properties
+
+| Property  | Type                                                              | Required | Description                                                                                               |
+| :-------- | :---------------------------------------------------------------- | :------- | :-------------------------------------------------------------------------------------------------------- |
+| `format`  | `AdvantageFormatName \| string`                                   | **Yes**  | Which format this integration applies to.                                                                 |
+| `options` | `object`                                                          | No       | Format-specific options (e.g., `closeButtonText`, `autoCloseDuration`, `logo`). Varies by format.         |
+| `setup`   | `(wrapper: IAdvantageWrapper, ad?: HTMLElement) => Promise<void>` | **Yes**  | Called when the format is about to activate. Make your layout adjustments here, then call `resolve()`.    |
+| `close`   | `(wrapper: IAdvantageWrapper, ad?: HTMLElement) => void`          | No       | Called when the user dismisses the ad (e.g., clicks the close button). Undo your layout changes here.     |
+| `reset`   | `(wrapper: IAdvantageWrapper, ad?: HTMLElement) => void`          | No       | Called when the format is reset (e.g., a new ad loads into the same slot). Undo your layout changes here. |
+
+<div class="tip custom-block" style="padding-top: 8px">
+
+**Tip:** If your `close` and `reset` handlers do the same thing, extract the cleanup into a shared function to avoid duplication.
+
+</div>
+
+### Step 5: Configure templates
+
+Use `setTemplateConfig` to control the display options for a template. This is applied to all slots using that template, including slots defined before the call.
+
+```js
+highImpactJs.setTemplateConfig("topscroll", {
+    showCloseButton: true,
+    title: "Close ad",
+    peekAmount: "80vh"
+});
+```
+
+#### TemplateConfig properties
+
+| Property          | Type      | Templates            | Description                                                                     |
+| :---------------- | :-------- | :------------------- | :------------------------------------------------------------------------------ |
+| `showCloseButton` | `boolean` | topscroll            | Show a close button. Default: `true`.                                           |
+| `title`           | `string`  | topscroll            | Text shown next to the close button (e.g., "Close ad" or "Scroll to continue"). |
+| `peekAmount`      | `string`  | topscroll, midscroll | How much of the viewport the format occupies, e.g. `"80vh"` or `"70%"`.         |
+| `fadeOnScroll`    | `boolean` | topscroll            | Whether the ad fades as the user scrolls past it.                               |
+| `zIndex`          | `number`  | all                  | CSS z-index applied to the wrapper element.                                     |
+
+### Step 6: Set global configuration
+
+Use `setConfig` to set library-wide settings such as which ad server plugins to use.
+
+```js
+highImpactJs.setConfig({
+    plugins: ["gam"],
+    zIndex: 9999
+});
+```
+
+#### GlobalConfig properties
+
+| Property          | Type                        | Description                                                                                                                                            |
+| :---------------- | :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins`         | `string[]`                  | Ad server plugins to use: `"gam"` (Google Ad Manager) and/or `"xandr"`. Default: `["gam", "xandr"]`.                                                   |
+| `zIndex`          | `number`                    | Default z-index for all format wrappers. Can be overridden per template.                                                                               |
+| `topBarHeight`    | `number`                    | Height in pixels of any fixed top navigation bar on the page.                                                                                          |
+| `bottomBarHeight` | `number`                    | Height in pixels of any fixed bottom navigation bar.                                                                                                   |
+| `ignoreSlotOn`    | `(html: string) => boolean` | A callback that receives the ad's HTML content. Return `true` to prevent the format from activating (e.g., to filter out blank or fallback creatives). |
+
+### Step 7: Lifecycle Events
+
+The library dispatches lifecycle events that bubble up through the DOM. Use them to react to format changes on your page (e.g., pause a video player, adjust analytics, hide sticky elements).
+
+| Event                    | When                                    | `event.detail`                |
+| :----------------------- | :-------------------------------------- | :---------------------------- |
+| `advantage:format-start` | Format has been activated               | `{ format, wrapper, iframe }` |
+| `advantage:format-close` | User closed the format (e.g., × button) | `{ format, wrapper, iframe }` |
+| `advantage:format-reset` | Format was reset (e.g., new ad loaded)  | `{ format, wrapper, iframe }` |
+
+```js
+document.addEventListener("advantage:format-start", (e) => {
+    console.log("Format activated:", e.detail.format);
+    // e.g. hide a sticky header
+});
+
+document.addEventListener("advantage:format-close", (e) => {
+    console.log("Format closed:", e.detail.format);
+    // e.g. restore the sticky header
 });
 ```
 
 ### Success!
 
-Congratulations! Your website is now Advantage enabled!
+Congratulations! Your website is now set up for high-impact ad formats!
 
-### Step 6: Without the wrapper {#without-wrapper}
+---
 
-If you don't need the Advantage Wrapper but still want your website to be able to accept Advantage ads, you can use the [`AdvantageAdSlotResponder`](/api/classes/advantage_messaging_publisher_side.AdvantageAdSlotResponder.html) class.
+## Full Example
 
-Create a new instance of the class for each ad slot/placement that you want Advantage-enabled:
+A complete publisher-side setup:
 
-```ts
-import { AdvantageAdSlotResponder } from "@get-advantage/advantage";
-
-new AdvantageAdSlotResponder({
-    adSlotElement: document.querySelector("#advantage-enabled-ad-slot")!,
-    formatRequestHandler: (format, elem) => {
-        return new Promise((resolve) => {
-            // handle the format request here, e.g. by transforming the parent element into the requested format
-            // resolve the promise if the format transformation was succesful or reject it if it failed
-            resolve();
+```html
+<script>
+    window.highImpactJs = window.highImpactJs || { cmd: [] };
+    window.highImpactJs.cmd.push(function () {
+        // Global settings
+        highImpactJs.setConfig({
+            plugins: ["gam"]
         });
-    }
-});
+
+        // Template settings
+        highImpactJs.setTemplateConfig("topscroll", {
+            showCloseButton: true,
+            title: "Close ad",
+            peekAmount: "80vh"
+        });
+
+        // Define slots
+        highImpactJs.defineSlot({
+            adUnitId: "/1234/topscroll-ad",
+            template: "topscroll",
+            sizes: [
+                [970, 250],
+                [1920, 1080]
+            ],
+            waitForAdSignal: true
+        });
+
+        highImpactJs.defineSlot({
+            adUnitId: "/1234/midscroll-ad",
+            template: "midscroll"
+        });
+    });
+</script>
+<script src="https://cdn.example.com/high-impact-js/latest/high-impact-js.umd.js"></script>
 ```
 
-The `formatRequestHandler` will be called as soon as an Advantage ad is loaded into the ad slot and requests a format. It is now up to you to transform the ad slot into the requested format and then call `resolve()`.
+The library will:
+
+1. Find the DOM elements matching each ad unit ID
+2. Wrap them with `<advantage-wrapper>` elements configured for the right format
+3. Listen for the GAM `slotRenderEnded` event
+4. Wait for the creative's post-message signal (when `waitForAdSignal: true`)
+5. Activate the format once all conditions are met
+
+For the full Slot API reference (all properties, getter functions, post-message signals, etc.), see the [Slot API Reference](../migration/api).

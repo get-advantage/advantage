@@ -27,3 +27,8 @@ const allowedFormatsWrapper = document.querySelector(
 ) as IAdvantageWrapper;
 allowedFormatsWrapper.setAllowedFormats(["WELCOME_PAGE"]);
 console.log("Allowed formats: ", allowedFormatsWrapper.allowedFormats);
+
+document.addEventListener("advantage:format-start", (e) => {
+    const { format, wrapper, iframe } = (e as CustomEvent).detail;
+    console.log(`Format started: ${format}`, { wrapper, iframe });
+});

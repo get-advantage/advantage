@@ -4,6 +4,8 @@ In the wake of the post-third-party-script era, publishers faced a critical need
 
 Aimed at standardizing the buying process across direct and programmatic channels, there was a clear need for full industry collaboration. **Advantage was gifted to the industry by Madington in April 2024** and perfected by community collaboration ever since.
 
+In parallel, [SeenThis](https://seenthis.co), developed their own solution solving for the same problem. In April 2026, the two projects were merged into one: **High Impact JS**.
+
 # Community
 
 As an open-source project, we invite contributions from the industry. Contributions can be made at different levels:
@@ -15,6 +17,7 @@ As an open-source project, we invite contributions from the industry. Contributi
 **Maintainers** are trusted individuals who maintain the project, review contributions, and ensure they follow the code of conduct. Maintainers have commit access to the repository and play a crucial role in the project's health and growth.
 
 **What Maintainers Do:**
+
 - Review and merge pull requests
 - Triage and respond to issues
 - Guide technical direction
@@ -23,12 +26,14 @@ As an open-source project, we invite contributions from the industry. Contributi
 - Ensure adherence to the Code of Conduct
 
 **Types of Maintainers:**
+
 - **Core Maintainers**: Full oversight and decision-making authority
 - **Area Maintainers**: Focus on specific areas like formats, documentation, testing, or design
 
 **How to Become a Maintainer:**
 
 To become a maintainer, you should:
+
 1. Make consistent, quality contributions over 3+ months
 2. Demonstrate community leadership and good judgment
 3. Be nominated by an existing maintainer or self-nominate
@@ -40,6 +45,7 @@ See our [Governance Documentation](https://github.com/get-advantage/advantage/bl
 **Contributors** actively participate in the project through feedback, development time, or documentation. Every contribution, no matter how small, helps make Advantage better.
 
 **Ways to Contribute:**
+
 - Code improvements and bug fixes
 - Documentation and examples
 - Testing and bug reports
@@ -53,6 +59,7 @@ Read more in our [Contributing Guide](https://github.com/get-advantage/advantage
 **Supporting Members** are organizations or individuals who support the initiative through implementation, endorsement, or advocacy.
 
 **You can be a Supporting Member by:**
+
 - Implementing the Advantage technology on your platform
 - Using the Advantage standard for buying/selling high-impact ads
 - Endorsing our efforts to standardize the industry
@@ -65,12 +72,14 @@ Supporting membership is **free** and demonstrates your commitment to standardiz
 Advantage is built by and for the entire digital advertising ecosystem. We especially welcome contributions from:
 
 ### 📰 Publishers
+
 - Implement and improve Advantage on your properties
 - Share integration challenges and real-world solutions
 - Provide feedback on performance and user experience
 - Document implementation patterns and best practices
 
 ### 🎯 Agencies & Advertisers
+
 - Share campaign requirements and use cases
 - Provide feedback on format capabilities and limitations
 - Identify gaps in current standards
@@ -78,12 +87,14 @@ Advantage is built by and for the entire digital advertising ecosystem. We espec
 - Contribute creative best practices
 
 ### 💻 Developers
+
 - Contribute code, bug fixes, and improvements
 - Write documentation, tutorials, and examples
 - Build integrations and tools
 - Review pull requests and help other developers
 
 ### 🎓 Industry Experts
+
 - Help define standards and specifications
 - Share domain expertise and best practices
 - Guide architectural and strategic decisions
@@ -95,6 +106,7 @@ Advantage is built by and for the entire digital advertising ecosystem. We espec
 ### 💬 Join the Conversation
 
 **[GitHub Discussions](https://github.com/get-advantage/advantage/discussions)** - Help shape the future of high-impact advertising:
+
 - 💡 **Ideas**: Propose new features and improvements
 - 🗳️ **Polls**: Vote on proposals and provide input
 - 🙏 **Q&A**: Ask questions and share knowledge
@@ -104,6 +116,7 @@ Advantage is built by and for the entire digital advertising ecosystem. We espec
 ### 📊 Follow the Roadmap
 
 Check out our **[GitHub Projects](https://github.com/orgs/get-advantage/projects)** to see:
+
 - **Planned**: What's coming next
 - **In Progress**: What we're currently working on
 - **Shipped**: Recently completed features and fixes

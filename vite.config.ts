@@ -64,13 +64,20 @@ function createBuildConfig(env: ConfigEnv): UserConfig {
 
     if (isBundle) {
         const isCreative = env.mode.includes(":creative");
-        const entryFile = isCreative
-            ? "src/advantage/messaging/creative-side.ts"
-            : "src/advantage/index.ts";
-        const fileNamePrefix = isCreative ? "creative-side" : "advantage";
-        const formats: LibraryFormats[] = isCreative
-            ? ["es", "cjs", "iife"]
-            : ["es", "cjs", "umd"];
+
+        let entryFile: string;
+        let fileNamePrefix: string;
+        let formats: LibraryFormats[];
+
+        if (isCreative) {
+            entryFile = "src/advantage/messaging/creative-side.ts";
+            fileNamePrefix = "creative-side";
+            formats = ["es", "cjs", "iife"];
+        } else {
+            entryFile = "src/advantage/index.ts";
+            fileNamePrefix = "advantage";
+            formats = ["es", "cjs", "umd"];
+        }
 
         buildConfig.plugins = undefined; // plugins are not needed for bundle builds
         buildConfig.build = {

@@ -1,48 +1,62 @@
 # How does it work?
 
-Advantage is composed of three main ingredients:
+High Impact JS lets you turn any ad slot on your page into a high-impact ad placement. You tell the library which slots to watch, and it handles the rest — detecting when an ad renders, communicating with the creative, and transforming the slot into the right format.
 
--   [Advantage messaging protocol](./how.html#protocol)
--   [The Advantage Wrapper](./how.html#wrapper)
--   [standard definitions of high-impact formats](./how.html#standards)
+## 1. You define your slots {#define}
 
-## Advantage Messaging Protocol {#protocol}
-### Introduction
-The Advantage Messaging Protocol streamlines the communication between ad creatives and websites, ensuring ads are displayed correctly regardless of buying channel (Direct or programmatic) or safe frames. The messaging protocol allows the publisher website to either confirm or reject reuqested formats from the advertisement code - when the reuqest is confirmed by the website the ad container will adjust to the requested format. This interaction occurs seamlessly via the secure messaging protocol ensuring that advertisements can elevate their presence without compromising the integrity or security of the webpage.
+Call `defineSlot()` for each ad placement that should support high-impact formats. You specify the ad unit ID, the template (e.g., topscroll, midscroll), and optionally which creative sizes to accept.
 
-### Here’s how it works:
+```js
+highImpactJs.defineSlot({
+    adUnitId: "/1234/topscroll-ad",
+    template: "topscroll",
+    sizes: [
+        [970, 250],
+        [1920, 1080]
+    ]
+});
+```
 
-1. **Initialization**: Upon being loaded into a webpage, an ad creative identifies itself as complying with the **Advantage format standard** using the Advantage messaging protocol.
-2. **Communication**: The website receives this notification and checks its configuration to determine if the requested format is supported.
-3. **Adaptation**: If the website supports the format and confirms the request, it adjusts the ad slot or placement to accommodate the creative, ensuring the ad displays as intended.
-4. **Success**: The ad is seamlessly integrated into the webpage, optimized to capture viewer attention and drive engagement.
+## 2. The library wraps the slot {#wrapper}
 
-### Implementation 
-The Advantage protocol is designed with simplicity in mind, featuring an easy-to-use API that facilitates quick adoption by creatives and website owners. If your website is already equipped with high-impact ad formats, the Advantage messaging protocol can be used as stand alone to standardise the communication between the advertisement and website. 
+When you define a slot, the library finds the matching DOM element and wraps it in an `<advantage-wrapper>` — a self-contained web component that encapsulates the high-impact format. The wrapper uses Shadow DOM to keep ad styles isolated from your page.
 
-## The Advantage Wrapper {#wrapper}
+```
+Before:   <div id="gpt-ad-topscroll">...</div>
 
-Simplify High-Impact Ad Integration with the Advantage Wrapper, serving as a custom HTML element that drastically simplifies the deployment of high-impact ad formats. Leveraging the robust Advantage messaging protocol, the Wrapper comes equipped with a versatile array of pre-defined high impact ad formats, designed to integrate seamlessly into any website.
+After:    <advantage-wrapper>
+              <div id="gpt-ad-topscroll">...</div>
+          </advantage-wrapper>
+```
 
-### Key Features & Benefits:
+This happens automatically. You don't need to add any HTML.
 
-- **Ease of Use:** Implementing state-of-the-art ad formats becomes as simple as enclosing your ad slots with the Advantage Wrapper. This straightforward approach eliminates the complexity traditionally associated with high-impact ad deployment.
--   **Customization & Flexibility:** Tailored to meet the unique needs of your website, the Wrapper allows for extensive customization. You’re in control and only a few configuration steps away from activating the full potential of each ad format.
--   **Efficiency & Effectiveness:** By doing the heavy lifting—ensuring ads display correctly and resonate with viewers—the Advantage Wrapper not only enhances user engagement but also optimizes the advertising space on your website.
+## 3. An ad renders in the slot {#detection}
 
-### Getting Started:
+The library integrates with your ad server (GAM, Xandr, or both) and listens for ad render events. When an ad appears in a defined slot, the library checks whether it matches the slot's configuration (template, sizes, etc.).
 
-Wrap your ad slots with the Advantage Wrapper (div) and apply the necessary configurations to align with your website’s requirements depending on high impact format. This streamlined process simplifies the implementation of new high impact formats onto your website while the confifuration steps gives you full control of how the creative and website code harmonize.  
+The creative sends a post-message signal to announce itself. The library picks this up and matches it to the right slot.
 
-## Standard definitions of high-impact formats {#standards}
+## 4. The format activates {#activation}
 
-Our mission is to establish a comprehensive resource that not only delineates but also sets the industry standard for high-impact ad formats. By defining clear, universally applicable standards as a community, we aim to streamline and elevate the online advertising experience for publishers, advertisers, and users alike.
+Once a matching ad is detected, the wrapper transforms into the configured format — topscroll, midscroll, double-fullscreen, etc. The format is pre-built into the library with the right styling and behavior.
 
-### Key Highlights:
+If you've configured [format integrations](/docs/tutorial/publisher#step-4-integrate-formats-with-your-site), your `setup` function runs first so you can adjust your page layout (e.g., push content down for a topscroll, go full-width for a midscroll). When the ad is closed or reset, your `close` / `reset` functions clean things up.
 
--   **Unified Standards:** We're dedicated to developing and promoting standardized high-impact ad formats that ensure consistency, quality, and performance across the digital landscape.
--   **Integration with Advantage Wrapper:** These standardized formats are seamlessly integrated and pre-configured within the Advantage Wrapper. This integration facilitates effortless adoption and implementation, ensuring that ads delivered via the Advantage platform meet our rigorous standards for impact and effectiveness.
+## 5. Lifecycle events fire {#events}
 
-Our standardized ad formats, embedded within the Advantage Wrapper, serve as a cornerstone for creating engaging, memorable, and effective advertising experiences. By adopting these standards, publishers and advertisers can leverage the power of high-impact ads with confidence, knowing they adhere to best practices that enhance visibility, engagement, and user satisfaction.
+The library dispatches events at each stage so you can react in your own code:
 
-Explore our standards and join us in shaping the future of digital advertising, where quality, consistency, and user experience prevail.
+- `advantage:format-start` — format activated
+- `advantage:format-close` — user closed the ad
+- `advantage:format-reset` — format reset (e.g., new ad loaded)
+
+These bubble through the DOM, so you can listen on `document` or any ancestor element.
+
+## Summary
+
+```
+defineSlot()  →  auto-wrap  →  ad renders  →  format activates  →  events fire
+```
+
+The publisher defines **what** should be a high-impact slot. The library handles **how** — wrapping, detection, format rendering, and cleanup. The creative only needs to either use the [Advantage messaging protocol](/docs/tutorial/creative) or send a simple [post-message signal](/docs/tutorial/creative#post-message) to trigger the format.
