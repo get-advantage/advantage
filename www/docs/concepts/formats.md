@@ -22,6 +22,7 @@ These are the current built-in format identifiers:
 export enum AdvantageFormatName {
     TopScroll = "TOPSCROLL",
     DoubleMidscroll = "DOUBLE_MIDSCROLL",
+    DoubleMidscrollSingleCreative = "DOUBLE_MIDSCROLL_SINGLE_CREATIVE",
     Midscroll = "MIDSCROLL",
     WelcomePage = "WELCOME_PAGE"
 }
@@ -50,3 +51,9 @@ Midscroll format is defined by its appearance (taking 100% width and height of t
 The Double Midscroll is a responsive, high-impact format that provides a natural presentation of your message through an intuitive and user-friendly scrolling experience. This format becomes visible when the user scrolls past the content and remains visible until the scrolling distance reaches twice the height of the window.
 
 <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Width 100%</span> <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Height: 200%</span> <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Parallax Scrolling</span>
+
+## Double Midscroll Single Creative
+
+A simplified version of the Double Midscroll that requires only one creative file instead of two. Provides continuous scroll progress events (0-1) instead of discrete waypoints, allowing a single creative to implement its own scroll-based animations. Ideal for tag-based creative delivery.
+
+<span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Width 100%</span> <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Height: 200%</span> <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Parallax Scrolling</span> <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-700/10">Scroll Progress Events</span>

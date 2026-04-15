@@ -151,6 +151,10 @@ export default defineConfig({
                             text: `Double Midscroll`,
                             link: "/docs/formats/double_midscroll.md"
                         },
+                        {
+                            text: `Double Midscroll Single Creative`,
+                            link: "/docs/formats/double_midscroll_single_creative.md"
+                        },
                     ]
                 },
                 {
