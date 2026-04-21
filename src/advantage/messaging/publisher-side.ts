@@ -109,6 +109,21 @@ export class AdvantageAdSlotResponder {
         // The message is a request to start a session
         if (message.action === AdvantageMessageAction.START_SESSION) {
             logger.debug("start session!", event);
+
+            // A new session starting means a new ad has loaded. If the wrapper still
+            // has an active format from a previous session, reset it now so stale
+            // styles and state are cleared before the new ad can request a format.
+            if (this.#isWrapper) {
+                const wrapper = this.#element as IAdvantageWrapper;
+                if (wrapper.currentFormat) {
+                    logger.info(
+                        `New START_SESSION received while format "${wrapper.currentFormat}" is active. ` +
+                            "Resetting the wrapper."
+                    );
+                    wrapper.reset();
+                }
+            }
+
             this.#messagePort = event.ports[0];
             this.#messagePort.postMessage({
                 type: ADVANTAGE,
