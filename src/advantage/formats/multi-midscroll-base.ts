@@ -90,6 +90,10 @@ export function createMultiMidscroll(
         reset: (wrapper, ad?) => {
             resetDimensionsUntilAdvantageAdSlot(ad, false);
             wrapper.resetCSS();
+            wrapper.shadowRoot
+                ?.getElementById("ad-slot")
+                ?.querySelector("#advantage-ad-background")
+                ?.remove();
         },
         close: () => {}
     };
