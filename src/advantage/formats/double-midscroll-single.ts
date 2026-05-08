@@ -32,9 +32,6 @@ export const doubleMidscrollSingle: AdvantageFormat = {
             wrapper.insertCSS(styles);
             if (ad) {
                 setDimensionsUntilAdvantageAdSlot(ad, false);
-                // Override publisher max-width constraints (e.g. tv2.no's max-width: 1920px)
-                // so the creative fills the full viewport width
-                ad.style.maxWidth = "none";
             }
 
             const uiContainer = document.createElement("div");
@@ -51,7 +48,6 @@ export const doubleMidscrollSingle: AdvantageFormat = {
     reset: (wrapper, ad?) => {
         if (ad) {
             resetDimensionsUntilAdvantageAdSlot(ad, false);
-            ad.style.maxWidth = "";
         }
         wrapper.resetCSS();
         
