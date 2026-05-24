@@ -6,7 +6,9 @@ pageClass: docs
 
 # Wrapper
 
-The Wrapper is a web component that acts as a container or placeholder for ad placements on a webpage. It's designed to securely and efficiently load the designated [format](formats.md) into the page's content, ensuring that ads are displayed in the intended manner without disrupting the user experience or site layout.
+The **Wrapper** is a custom HTML tag (`<advantage-wrapper>`) that acts as a container for your ad slots. Think of it as a "smart box" for your ads. When a normal ad is served, the box does nothing. But when a high-impact Advantage ad is served, the box tells the website how to change its layout to accommodate the ad.
+
+It's designed to securely and efficiently load the designated [format](formats.md) into the page's content, ensuring that ads are displayed in the intended manner without disrupting the user experience or site layout.
 
 <div class="tip custom-block" style="padding-top: 8px">
   ℹ️ Using the Advantage Wrapper is highly recommended as it makes implementing Advantage high-impact formats on your website quick and easy. But if you already have custom implementations of the formats that you want, you can choose not to use the wrapper.
