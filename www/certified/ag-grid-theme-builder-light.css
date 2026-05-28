@@ -9,9 +9,9 @@
 
 :is(.dark .ag-root-wrapper, .dark .ag-measurement-container, .dark .ag-apply-theme-variables, .dark .ag-popup) {
 	--ag-background-color: var(--ag-inherited-background-color, #0E0E10);
-	--ag-foreground-color: var(--ag-inherited-foreground-color, #F3F1FF);
+	--ag-foreground-color: var(--ag-inherited-foreground-color, #E8F7FF);
 	--ag-text-color: var(--ag-inherited-text-color, var(--ag-foreground-color));
-	--ag-accent-color: var(--ag-inherited-accent-color, #9F75FF);
+	--ag-accent-color: var(--ag-inherited-accent-color, #56A6FF);
 	--ag-invalid-color: var(--ag-inherited-invalid-color, #e02525);
 	--ag-border-color: var(--ag-inherited-border-color, #F4F2FF21);
 	--ag-wrapper-border: var(--ag-inherited-wrapper-border, solid 1px var(--ag-border-color));

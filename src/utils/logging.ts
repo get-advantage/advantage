@@ -3,7 +3,7 @@ type LogLevel = "log" | "info" | "error";
 class Logger {
     private debugMode: boolean;
     private style: string =
-        "color: #f3f1ff; font-weight: bold; background-color: #6b04fd; padding: 2px; border-radius: 2px;";
+        "color: #E8F7FF; font-weight: bold; background-color: #0048FB; padding: 2px; border-radius: 2px;";
 
     constructor() {
         this.debugMode =

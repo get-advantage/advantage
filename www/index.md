@@ -47,7 +47,7 @@ layout: page
   }
 
   .homepage .heading-gradient {
-    background: linear-gradient(120deg, #9F75FF, #6b04fd, #2C0076);
+    background: linear-gradient(120deg, #56A6FF, #0048FB, #2C0076);
     color: white;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -86,7 +86,7 @@ layout: page
   }
 
   .homepage .hero-action.secondary {
-    background: var(--vp-c-brand);
+    background: #0048FB;
     color: white;
     transition: all 0.2s ease;
   }
@@ -94,10 +94,10 @@ layout: page
   .homepage .hero-action.secondary:focus,
   .dark .homepage .hero-action.secondary:hover,
   .dark .homepage .hero-action.secondary:focus  {
-    background: var(--vp-hover);
+     background: #103F9F; 
   }
   .dark .homepage .hero-action.secondary {
-    background: var(--vp-c-brand-dark);
+    /* background: var(--vp-c-brand-dark); */
   }
 
   .homepage .try-link-container {
@@ -191,7 +191,7 @@ layout: page
   .homepage .start-link {
     border-radius: 40px;
     padding: 4px;
-    background: linear-gradient(120deg, #6b04fd, #6b04fd, #4B05AD);
+    background: linear-gradient(120deg, #0048FB, #0048FB, #4B05AD);
     background-size: 100% 100%;
     background-repeat: repeat-y;
     display: inline-flex;
