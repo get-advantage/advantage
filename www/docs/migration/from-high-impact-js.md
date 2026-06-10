@@ -72,8 +72,6 @@ Your existing `defineSlot`, `setTemplateConfig`, and `setConfig` calls work with
         highImpactJs.setConfig({ plugins: ["gam"] });
 
         highImpactJs.setTemplateConfig("topscroll", {
-            showCloseButton: true,
-            title: "Close ad",
             peekAmount: "80vh"
         });
 
@@ -209,18 +207,11 @@ The library handles the rest — it detects your ad server, listens for ad rende
 
 ### Will SeenThis one-tag banners still work?
 
-Yes. The post-message protocol is fully supported. As long as `waitForAdSignal: true` is set on the slot, the library waits for the creative's signal before activating.
+Yes. The post-message protocol is fully supported.
 
 ### My site uses custom CSS for the topscroll close button. Will it still work?
 
-The close button is now rendered inside Shadow DOM, so external CSS cannot target it directly. Use `setTemplateConfig` to configure it:
-
-```js
-highImpactJs.setTemplateConfig("topscroll", {
-    showCloseButton: true,
-    title: "Close ad" // Text shown next to the × button
-});
-```
+It is recommended to move the layout elements and styling to the new format integration, `formatIntegrations`. However, if you wish to continue with the same styling as before, extract the HTML and styling and apply it on `advantage:format-start` instead.
 
 ### I use Xandr instead of GAM. Does that work?
 

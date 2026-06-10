@@ -32,7 +32,11 @@ If you need to call API functions before the library has loaded, use the command
     window.highImpactJs.cmd.push(function () {
         window.highImpactJs.defineSlot({
             adUnitId: "/1234/topscroll-ad",
-            template: "topscroll"
+            template: "topscroll",
+            sizes: [
+                [970, 250],
+                [1920, 1080]
+            ]
         });
     });
 </script>
@@ -91,8 +95,6 @@ Configures display options for a specific template. Applied to all slots using t
 
 ```js
 highImpactJs.setTemplateConfig("topscroll", {
-    showCloseButton: true,
-    title: "Scroll to continue",
     peekAmount: "80vh"
 });
 ```
@@ -101,8 +103,6 @@ highImpactJs.setTemplateConfig("topscroll", {
 
 | Property          | Type      | Templates            | Description                                                                     |
 | :---------------- | :-------- | :------------------- | :------------------------------------------------------------------------------ |
-| `showCloseButton` | `boolean` | topscroll            | Show a close button. Default: `true`.                                           |
-| `title`           | `string`  | topscroll            | Text shown next to the close button (e.g., "Close ad" or "Scroll to continue"). |
 | `peekAmount`      | `string`  | topscroll, midscroll | How much of the viewport the format occupies, e.g. `"80vh"` or `"70%"`.         |
 | `fadeOnScroll`    | `boolean` | topscroll            | Whether the ad fades as the user scrolls past it.                               |
 | `zIndex`          | `number`  | all                  | CSS z-index applied to the wrapper element.                                     |
@@ -191,8 +191,6 @@ A complete publisher-side setup using the Slot API with GAM:
 
         // Template settings
         highImpactJs.setTemplateConfig("topscroll", {
-            showCloseButton: true,
-            title: "Close ad",
             peekAmount: "80vh"
         });
 

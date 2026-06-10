@@ -61,9 +61,9 @@ npm install high-impact-js
 + import { AdvantageCreativeMessenger } from "high-impact-js/creative";
 ```
 
-### 3. (Optional) Add one-tag banner support
+### 3. Add one-tag banner support
 
-If you want one-tag creatives to work on your site, add `defineSlot` calls for the relevant ad slots:
+Add `defineSlot` calls for the relevant ad slots:
 
 ```js
 import { defineSlot } from "high-impact-js";
@@ -71,7 +71,7 @@ import { defineSlot } from "high-impact-js";
 defineSlot({
     adUnitId: "/your-network/topscroll-ad",
     template: "topscroll",
-    sizes: [[970, 250]],
+    sizes: [[1920, 1080]],
     waitForAdSignal: true
 });
 ```

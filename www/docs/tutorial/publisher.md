@@ -81,7 +81,7 @@ Use `defineSlot` to register each ad placement that should support high-impact f
 | `template`        | `string`     | No       | `"topscroll"`, `"midscroll"`, or `"double-fullscreen"`.                                                                |
 | `targetId`        | `string`     | No       | Xandr target ID. Use instead of `adUnitId` for Xandr.                                                                  |
 | `sizes`           | `number[][]` | No       | Accepted creative sizes, e.g. `[[970, 250]]`. Format only activates when the rendered ad matches.                      |
-| `waitForAdSignal` | `boolean`    | No       | Wait for the creative to send a post-message signal before activating. Required for one-tag banners. Default: `false`. |
+| `waitForAdSignal` | `boolean`    | No       | Wait for the creative to send a post-message signal before activating. Default: `false`. |
 
 <div class="tip custom-block" style="padding-top: 8px">
   ℹ️ If your ad slot can serve both standard size ads and high-impact ads, nothing will happen when a non-high-impact ad is served. The slot behaves like a normal ad placement until a matching creative is detected.
@@ -186,50 +186,7 @@ advantage.configure({
 
 </div>
 
-### Step 5: Configure templates
-
-Use `setTemplateConfig` to control the display options for a template. This is applied to all slots using that template, including slots defined before the call.
-
-```js
-highImpactJs.setTemplateConfig("topscroll", {
-    showCloseButton: true,
-    title: "Close ad",
-    peekAmount: "80vh"
-});
-```
-
-#### TemplateConfig properties
-
-| Property          | Type      | Templates            | Description                                                                     |
-| :---------------- | :-------- | :------------------- | :------------------------------------------------------------------------------ |
-| `showCloseButton` | `boolean` | topscroll            | Show a close button. Default: `true`.                                           |
-| `title`           | `string`  | topscroll            | Text shown next to the close button (e.g., "Close ad" or "Scroll to continue"). |
-| `peekAmount`      | `string`  | topscroll, midscroll | How much of the viewport the format occupies, e.g. `"80vh"` or `"70%"`.         |
-| `fadeOnScroll`    | `boolean` | topscroll            | Whether the ad fades as the user scrolls past it.                               |
-| `zIndex`          | `number`  | all                  | CSS z-index applied to the wrapper element.                                     |
-
-### Step 6: Set global configuration
-
-Use `setConfig` to set library-wide settings such as which ad server plugins to use.
-
-```js
-highImpactJs.setConfig({
-    plugins: ["gam"],
-    zIndex: 9999
-});
-```
-
-#### GlobalConfig properties
-
-| Property          | Type                        | Description                                                                                                                                            |
-| :---------------- | :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins`         | `string[]`                  | Ad server plugins to use: `"gam"` (Google Ad Manager) and/or `"xandr"`. Default: `["gam", "xandr"]`.                                                   |
-| `zIndex`          | `number`                    | Default z-index for all format wrappers. Can be overridden per template.                                                                               |
-| `topBarHeight`    | `number`                    | Height in pixels of any fixed top navigation bar on the page.                                                                                          |
-| `bottomBarHeight` | `number`                    | Height in pixels of any fixed bottom navigation bar.                                                                                                   |
-| `ignoreSlotOn`    | `(html: string) => boolean` | A callback that receives the ad's HTML content. Return `true` to prevent the format from activating (e.g., to filter out blank or fallback creatives). |
-
-### Step 7: Lifecycle Events
+### Step 5: Lifecycle Events
 
 The library dispatches lifecycle events that bubble up through the DOM. Use them to react to format changes on your page (e.g., pause a video player, adjust analytics, hide sticky elements).
 
@@ -272,8 +229,6 @@ A complete publisher-side setup:
 
         // Template settings
         highImpactJs.setTemplateConfig("topscroll", {
-            showCloseButton: true,
-            title: "Close ad",
             peekAmount: "80vh"
         });
 
@@ -290,7 +245,10 @@ A complete publisher-side setup:
 
         highImpactJs.defineSlot({
             adUnitId: "/1234/midscroll-ad",
-            template: "midscroll"
+            template: "midscroll",
+            sizes: [
+                [1080, 1920]
+            ],
         });
     });
 </script>

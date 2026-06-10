@@ -27,7 +27,7 @@ The merged library keeps the name **High Impact JS** and combines the best of bo
 | From Advantage                                           | From High Impact JS                       |
 | :------------------------------------------------------- | :---------------------------------------- |
 | Web Component architecture (`<advantage-wrapper>`)       | Declarative slot-based API (`defineSlot`) |
-| Secure messaging protocol (MessageChannel)               | GAM & Xandr plugin integrations           |
+| Secure messaging protocol (MessageChannel)               | Ad server plugin integrations           |
 | Format system (Topscroll, Midscroll, Welcome Page, etc.) | Template configuration system             |
 | UI Layer customization                                   | One-tag banner compatibility              |
 | Shadow DOM isolation                                     | Post-message signal handling              |

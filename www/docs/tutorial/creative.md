@@ -130,7 +130,7 @@ listener.disconnect();
 
 If your creative doesn't need two-way communication — it just needs to announce "I'm here, activate the format" — you can skip the Advantage library entirely and send a single `postMessage` from the creative.
 
-This is the approach used by one-tag banner solutions, where a banner is built to be responsive and works in multiple high impact formats. It requires the publisher to set `waitForAdSignal: true` on the slot.
+This is the approach used by one-tag banner solutions, where a banner is built to be responsive and works in multiple high impact formats.
 
 ### Minimal creative
 

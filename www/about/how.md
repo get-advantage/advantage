@@ -33,7 +33,7 @@ This happens automatically. You don't need to add any HTML.
 
 ## 3. An ad renders in the slot {#detection}
 
-The library integrates with your ad server (GAM, Xandr, or both) and listens for ad render events. When an ad appears in a defined slot, the library checks whether it matches the slot's configuration (template, sizes, etc.).
+The library integrates with your ad server and listens for ad render events. When an ad appears in a defined slot, the library checks whether it matches the slot's configuration (template, sizes, etc.).
 
 The creative sends a post-message signal to announce itself. The library picks this up and matches it to the right slot.
 

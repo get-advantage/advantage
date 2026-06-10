@@ -19,7 +19,7 @@ High Impact JS is the result of merging two open-source projects — **Advantage
 | From Advantage                               | From High Impact JS                          |
 | :------------------------------------------- | :------------------------------------------- |
 | Web Component engine (`<advantage-wrapper>`) | Declarative Slot API (`defineSlot`)          |
-| Secure MessageChannel messaging              | GAM & Xandr plugin integrations              |
+| Secure MessageChannel messaging              | Ad server plugin integrations              |
 | Format system (Topscroll, Midscroll, etc.)   | Template configuration system                |
 | Shadow DOM isolation & UI Layer              | One-tag banner / post-message signal support |
 
