@@ -1,50 +1,102 @@
-<br>
+> [!NOTE]
+> **Advantage + High Impact JS → High Impact JS**
+>
+> Advantage and High Impact JS have merged into a single, unified library: High Impact JS.
+> 
+> Learn more at [highimpactjs.org](https://get-highimpactjs.org/docs/migration/).
 
-<p align="center" style="margin-bottom: 15px;">
-    <picture>
-      <img src="./www/public/logo/advantage-logo.svg" height="80">
+<p align="center">
+  <picture>
+    <img src="./www/public/logo/hi-logo.svg" height="80">
   </picture>
 </p>
 
+<h3 align="center">The open JavaScript library for high-performing ad formats</h3>
+
 <p align="center">
-  <a href="https://github.com/get-advantage/advantage/actions/workflows/www.yml">
-    <img src="https://github.com/get-advantage/advantage/actions/workflows/www.yml/badge.svg" alt="ci" />
-  </a>
-  <a href="https://join.slack.com/t/get-advantage/shared_invite/zt-2gy6c4z4m-4~pIuwRfe8eqPM5H7iV9MQ">
-    <img src="https://img.shields.io/badge/chat-slack-blue?style=flat&logo=slack" alt="Slack chat">
-  </a>
-</p>
-<p align="center">
-    <a href="https://stackblitz.com/github/get-advantage/advantage/tree/main?file=playground%2Fgpt%2Findex.html" target="blank">View Demo</a>
-    ·
-    <a href="https://github.com/get-advantage/advantage/issues/new/choose">Report Bug</a>
-    ·
-    <a href="https://github.com/get-advantage/advantage/issues/new/choose">Request Feature</a>
+  <a href="https://www.npmjs.com/package/@get-advantage/advantage"><img src="https://img.shields.io/npm/v/@get-advantage/advantage?label=npm" alt="npm version"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license"></a>
+  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg" alt="contributions welcome"></a>
 </p>
 
-`Advantage` revolutionizes the way site owners integrate with high impact formats by providing a flexible, customizable unified API. Unlike traditional integrations that offer a one-size-fits-all solution, AdVantage empowers you to tailor the interaction between you site and high impact formats, ensuring a perfect fit for your specific needs.
+---
 
-## ✨ Features
+**highimpact.js** is the open-source JavaScript library that connects publishers and advertisers through a unified, standards-based API for high-impact ad formats — enabling attention-driven advertising without the fragmentation, vendor lock-in, or security trade-offs that come with traditional integrations.
 
--   📐 Unified Standards
--   🔒 Secure By Default
--   🛠 Flexible customization
--   👌 Ease of Use
--   ⚡️ Efficiency & Effectiveness
+---
 
-Read the [documentation](https://get-advantage.org) for more details!
+## What it does
 
-## 🤝 Contributing to `Advantage`
+highimpact.js sits between your site and the ad formats running on it. It provides a single, consistent interface for integrating high-impact formats — regardless of which ad tech platform delivers them.
 
-Any kind of positive contribution is welcome! Please help us to grow by contributing to the project.
+- **Unified API** — one integration covers all high-impact formats and platforms
+- **Secure by default** — sandboxed communication between page and ad creative
+- **Publisher control** — configure behavior, constraints, and fallbacks on your own terms
+- **Ad server agnostic** — works alongside GAM, Prebid, and any standards-based setup
+- **Typed & tree-shakeable** — full TypeScript support, ESM and CJS builds included
 
-> Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details on our [`CODE OF CONDUCT`](CODE_OF_CONDUCT.md), and the process for submitting pull requests to us.
+## Why
+
+High-impact advertising works. Attention-driven formats consistently outperform standard display on every metric that matters — viewability, recall, engagement. But implementing them has historically meant accepting a mess: one-off vendor scripts, opaque iframe communication, inconsistent behavior across formats, and security risks from unconstrained creative code.
+
+highimpact.js was built to fix that. It formalizes the contract between publisher and ad creative so that high-impact formats can be delivered safely, predictably, and at scale — without surrendering control of your site to the ad server.
+
+## Quick Start
+
+> [!NOTE] 
+> **Package names during rename transition**
+>
+> The library is being renamed from **Advantage** to **highimpact.js**. Dual-published packages are available during the transition. 
+> 
+> Internal code, class names, and element names (e.g. `Advantage`, `<advantage-wrapper>`) still reflect the old name and will be updated in a future release.
+
+### Install
+
+```bash
+# new name
+npm install @high-impact-js/highimpact.js
+
+# or legacy name (identical package)
+npm install @get-advantage/advantage
+```
+
+### Add to your page
+
+```js
+import { Advantage } from "@high-impact-js/highimpact.js";
+
+const advantage = new Advantage();
+await advantage.setup();
+```
+
+### Mark your ad slots
+
+Wrap any ad slot you want highimpact.js to manage with the `<advantage-wrapper>` element:
+
+```html
+<advantage-wrapper>
+  <!-- your ad slot here -->
+  <div id="ad-unit-top"></div>
+</advantage-wrapper>
+```
+
+That's it. highimpact.js handles format negotiation, creative communication, and lifecycle management from there.
+
+Read the full [documentation](https://get-advantage.org) for configuration options, format guides, and advanced usage.
+
+---
+
+## Contributing
+
+Any kind of positive contribution is welcome. Please help us grow by contributing to the project.
+
+> Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details on our [`CODE OF CONDUCT`](CODE-OF-CONDUCT.md), and the process for submitting pull requests.
 
 Interested in becoming a maintainer? Check out our [Governance](GOVERNANCE.md) and [Maintainers](MAINTAINERS.md) documentation.
 
-🆕 New to Open Source? 💡 Follow this [guide](https://opensource.guide/how-to-contribute/) to jumpstart your Open Source journey 🚀.
+New to Open Source? Follow this [guide](https://opensource.guide/how-to-contribute/) to get started.
 
-## Contributors ✨
+## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
@@ -72,3 +124,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## License
+
+MIT — see [LICENSE](LICENSE) for details.

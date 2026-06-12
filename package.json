@@ -1,14 +1,15 @@
 {
-    "name": "@get-advantage/advantage",
+    "name": "@high-impact-js/highimpact.js",
     "private": false,
+    "description": "The open-source JavaScript library that connects publishers and advertisers through a unified, standards-based API for high-impact ad formats",
     "version": "0.11.1",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/get-advantage/advantage.git"
+        "url": "git+https://github.com/high-impact-js/highimpact.js.git"
     },
-    "homepage": "https://get-advantage.org",
-    "author": "get-advantage.org",
+    "homepage": "https://get-highimpactjs.org",
+    "author": "get-highimpactjs.org",
     "type": "module",
     "files": [
         "dist"
