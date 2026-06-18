@@ -25,19 +25,19 @@ Install the package with your package manager of choice:
 ::: code-group
 
 ```sh [npm]
-$ npm i @high-impact-js/highimpact.js
+$ npm i highimpact.js
 ```
 
 ```sh [pnpm]
-$ pnpm add @high-impact-js/highimpact.js
+$ pnpm add highimpact.js
 ```
 
 ```sh [yarn]
-$ yarn add @high-impact-js/highimpact.js
+$ yarn add highimpact.js
 ```
 
 ```sh [bun]
-$ bun i @high-impact-js/highimpact.js
+$ bun i highimpact.js
 ```
 
 :::
@@ -45,14 +45,14 @@ $ bun i @high-impact-js/highimpact.js
 Then import it where you need it:
 
 ```ts
-import { Advantage } from "@high-impact-js/highimpact.js";
+import { Advantage } from "highimpact.js";
 ```
 
 With the npm package you call the API directly on the imported `Advantage` instance — you don't need the `window.highImpactJs` command queue described below.
 
 ### Option B — Self-hosted from your own domain {#install-self-hosted}
 
-If you'd rather not depend on a third-party CDN, serve the bundle from your own domain. Grab `dist/bundles/advantage.umd.cjs` from the [npm package](https://www.npmjs.com/package/@high-impact-js/highimpact.js) (or build it from source), upload it to your server, and load it with a `<script>` tag:
+If you'd rather not depend on a third-party CDN, serve the bundle from your own domain. Grab `dist/bundles/advantage.umd.cjs` from the [npm package](https://www.npmjs.com/package/highimpact.js) (or build it from source), upload it to your server, and load it with a `<script>` tag:
 
 ```html
 <script src="https://www.your-domain.com/scripts/advantage.umd.cjs"></script>
@@ -63,12 +63,12 @@ If you'd rather not depend on a third-party CDN, serve the bundle from your own 
 The quickest, no-build option — perfect for AdOps and low-code integrations. Add this `<script>` tag to your page:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@high-impact-js/highimpact.js/dist/bundles/advantage.umd.cjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/highimpact.js/dist/bundles/advantage.umd.cjs"></script>
 ```
 
 <div class="tip custom-block" style="padding-top: 8px">
 
-**Tip:** Pin a specific version for production so a new release can't change behaviour unexpectedly, e.g. `@high-impact-js/highimpact.js@0.11.1`.
+**Tip:** Pin a specific version for production so a new release can't change behaviour unexpectedly, e.g. `highimpact.js@0.11.1`.
 
 </div>
 
@@ -132,7 +132,7 @@ import {
     Advantage,
     AdvantageFormatName,
     IAdvantageWrapper
-} from "@high-impact-js/highimpact.js";
+} from "highimpact.js";
 
 const advantage = Advantage.getInstance();
 
@@ -284,7 +284,7 @@ A complete publisher-side setup:
         });
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@high-impact-js/highimpact.js/dist/bundles/advantage.umd.cjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/highimpact.js/dist/bundles/advantage.umd.cjs"></script>
 ```
 
 The library will:

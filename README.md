@@ -55,7 +55,7 @@ highimpact.js was built to fix that. It formalizes the contract between publishe
 
 ```bash
 # new name
-npm install @high-impact-js/highimpact.js
+npm install highimpact.js
 
 # or legacy name (identical package)
 npm install @get-advantage/advantage
@@ -64,7 +64,7 @@ npm install @get-advantage/advantage
 ### Add to your page
 
 ```js
-import { Advantage } from "@high-impact-js/highimpact.js";
+import { Advantage } from "highimpact.js";
 
 const advantage = new Advantage();
 await advantage.setup();

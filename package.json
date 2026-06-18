@@ -1,5 +1,5 @@
 {
-    "name": "@high-impact-js/highimpact.js",
+    "name": "highimpact.js",
     "private": false,
     "description": "The open-source JavaScript library that connects publishers and advertisers through a unified, standards-based API for high-impact ad formats",
     "version": "0.11.1",
