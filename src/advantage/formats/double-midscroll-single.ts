@@ -30,7 +30,9 @@ export const doubleMidscrollSingle: AdvantageFormat = {
     setup: (wrapper, ad) => {
         return new Promise((resolve) => {
             wrapper.insertCSS(styles);
-            if (ad) setDimensionsUntilAdvantageAdSlot(ad, false);
+            if (ad) {
+                setDimensionsUntilAdvantageAdSlot(ad, false);
+            }
 
             const uiContainer = document.createElement("div");
             uiContainer.id = "ui-container";
