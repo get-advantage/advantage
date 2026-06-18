@@ -6,9 +6,13 @@ pageClass: docs
 
 # Creative
 
-The interaction between a creative (the advertisement content itself) and an [Format](formats.md) on publisher sites, is a nuanced process that enables dynamic, efficient, and standardize process.
+The **Creative** is the advertisement content itself (usually an HTML/JS file). For a creative to become "High Impact," it needs to communicate with the website it is being displayed on.
 
-AdVantage utilize a messaging protocol for managing ad interactions in a secure container. AdVantage and the creative communicate by excanging asynchronous signals that maintain a custom messaging protocol. In the most simplistic overview of how it works, the steps are as follows:
+Advantage uses a **Messaging Protocol** to bridge the gap between the ad (inside an iframe) and the website. This allows the ad to safely request more space, handle scroll events, or trigger full-screen effects.
+
+### How Communication Works
+
+The Advantage and the creative communicate by exchanging asynchronous signals. In the most simplistic overview:
 
 1. <code>[pre-AdVantage]</code> an ad is matched and delivered to a webpages placement.
 2. Once in a state to receive information, the creative informs AdVantage that it is ready to receive initialization information.

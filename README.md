@@ -3,7 +3,7 @@
 >
 > Advantage and High Impact JS have merged into a single, unified library: High Impact JS.
 > 
-> Learn more at [highimpactjs.org](https://get-highimpactjs.org/docs/migration/).
+> Learn more at [highimpact.org](https://gethighimpact.org/docs/migration/).
 
 <p align="center">
   <picture>
@@ -17,6 +17,7 @@
   <a href="https://www.npmjs.com/package/@get-advantage/advantage"><img src="https://img.shields.io/npm/v/@get-advantage/advantage?label=npm" alt="npm version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license"></a>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg" alt="contributions welcome"></a>
+  <a href="https://www.jsdelivr.com/package/npm/@get-advantage/advantage"><img src="https://data.jsdelivr.com/v1/package/npm/@get-advantage/advantage/badge" alt="jsDelivr hits"></a>
 </p>
 
 ---

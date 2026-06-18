@@ -1,6 +1,6 @@
 # What is High Impact JS?
 
-In April 2026, **Advantage** — an open-source initiative by [Madington](https://madington.com) — and **High Impact JS** — a library by [SeenThis](https://seenthis.co) — merged into a single project under the name **High Impact JS**. The merged library combines Advantage's web component engine and secure messaging protocol with High Impact JS's declarative Slot API and ad server integrations, creating one unified open-source standard for high-impact advertising on the web.
+In April 2026, **Advantage** — an open-source initiative by [Madington](https://madington.com?utm_source=highimpactjs) — and **High Impact JS** — a library by [SeenThis](https://seenthis.co?utm_source=highimpactjs) — merged into a single project under the name **High Impact JS**. The merged library combines Advantage's web component engine and secure messaging protocol with High Impact JS's declarative Slot API and ad server integrations, creating one unified open-source standard for high-impact advertising on the web.
 
 ---
 

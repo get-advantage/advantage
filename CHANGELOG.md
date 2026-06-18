@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.2](https://github.com/get-advantage/advantage/compare/v0.11.1...v0.11.2) (2026-04-21)
+
+
+### Bug Fixes
+
+* remove advantage-ad-background on reset in multi-midscroll formats ([#71](https://github.com/get-advantage/advantage/issues/71)) ([c29bd83](https://github.com/get-advantage/advantage/commit/c29bd837a9c87bd5f1dbc1a081ecb3638dd51663))
+
 ## [0.11.1](https://github.com/get-advantage/advantage/compare/v0.11.0...v0.11.1) (2026-03-26)
 
 

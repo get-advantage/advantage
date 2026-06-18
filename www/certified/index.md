@@ -92,7 +92,7 @@ function reszieColumns() {
 }
 </script>
 
-# Certified AdVantage Implementations
+# Certified Implementations
 
 Welcome to our showcase of certified webpages that have successfully integrated AdVantage, demonstrating the best practices in digital advertising. These websites have seamlessly adopted our platform's core components, ensuring a superior ad experience that aligns with their unique brand aesthetics.
 
@@ -121,7 +121,7 @@ Each of these sites has been thoroughly vetted to ensure they meet our stringent
 
 Interested in getting your site certified? Join our community of forward-thinking publishers and advertisers who are leading the way in digital advertising. Implement AdVantage on your site and submit a Github issue ticket with your integration for certification.
 
-<button class="primary font-bold py-2 px-4 rounded inline-flex items-center text-xs" onclick="window.open('https://github.com/get-advantage/advantage/issues', '_blank')">Apply for Certification</button>
+<button class="primary font-bold py-2 px-4 rounded inline-flex items-center text-xs" onclick="window.open('https://github.com/high-impact-js/highimpact.js/issues', '_blank')">Apply for Certification</button>
 
 ## Why Certification Matters
 

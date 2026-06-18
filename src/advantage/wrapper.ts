@@ -324,6 +324,17 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
                 );
                 return;
             }
+            // If a format is already active, reset it before applying the new one.
+            // This handles the case where a placement is refreshed and a new ad requests
+            // a different format before the previous session has been torn down.
+            if (this.currentFormat) {
+                logger.info(
+                    `A new format "${format}" was requested while "${this.currentFormat}" is still active. ` +
+                        "Resetting the current format first."
+                );
+                this.reset();
+            }
+
             this.currentFormat = format;
             this.#updateCurrentFormatAttribute();
             let formatConfig = Advantage.getInstance().formats.get(
@@ -528,6 +539,9 @@ export class AdvantageWrapper extends HTMLElement implements IAdvantageWrapper {
         const previousFormat = this.currentFormat;
         this.currentFormat = "";
         this.#updateCurrentFormatAttribute();
+
+        // Always clear injected styles, even if the format's reset forgot to
+        this.resetCSS();
 
         this.#dispatchLifecycleEvent(
             "advantage:format-reset",

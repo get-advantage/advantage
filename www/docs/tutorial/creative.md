@@ -6,39 +6,61 @@ pageClass: docs
 
 # Creative tutorial
 
-This part of the tutorial is aimed at creatives who makes high-impact ads. There are two approaches: the **Advantage protocol** (MessageChannel-based, full two-way communication) and the simpler **post-message signal** (one-shot announcement, no library needed inside the creative).
+This part of the tutorial is aimed at creatives and developers who build high-impact ads.
 
-## Option A: Advantage Protocol
+## Quick Start (CDN) {#quick-start-cdn}
 
-The Advantage protocol gives you a two-way communication channel with the publisher page, including session management, format confirmation/rejection, and waypoint tracking.
+The fastest way to build an Advantage-compatible ad is to use the CDN-hosted library. This works in any HTML environment.
 
-### Step 1: Install Advantage
+### 1. Include the Library
 
-To install Advantage, run the following command in your terminal:
+Add this to your ad's HTML:
 
-::: code-group
-
-```sh [npm]
-$ npm i @get-advantage/advantage
+```html
+<script src="https://cdn.jsdelivr.net/npm/@get-advantage/advantage/dist/bundles/creative-side.iife.js"></script>
 ```
 
-```sh [pnpm]
-$ pnpm add @get-advantage/advantage
+### 2. Request a Format
+
+Use the following script to communicate with the publisher's website and request a high-impact format (like `topscroll`).
+
+```html
+<script>
+    const { AdvantageCreativeMessenger, AdvantageMessageAction, AdvantageFormatName } = window.advantage;
+
+    async function startAd() {
+        const messenger = new AdvantageCreativeMessenger();
+        const session = await messenger.startSession();
+
+        if (session) {
+            // Request the format your ad was built for
+            const response = await messenger.sendMessage({
+                action: AdvantageMessageAction.REQUEST_FORMAT,
+                format: AdvantageFormatName.TopScroll
+            });
+
+            if (response?.action === AdvantageMessageAction.FORMAT_CONFIRMED) {
+                // Success! The site has adjusted its layout for your ad.
+                console.log("Advantage format confirmed. Starting ad animation...");
+            }
+        }
+    }
+
+    startAd();
+</script>
 ```
 
-```sh [yarn]
-$ yarn add @get-advantage/advantage
+## Professional Workflow (NPM)
+
+For advanced creative builds using modern bundling tools (Webpack, Vite, etc.).
+
+### 1. Install
+
+```sh
+npm i @get-advantage/advantage
 ```
 
-```sh [bun]
-$ bun i @get-advantage/advantage
-```
-
-:::
-
-### Step 2: Import the messenger
-
-Import the `AdvantageCreativeMessenger` class into your creative's code.
+### 2. Implementation
 
 ```ts
 import {
@@ -46,36 +68,27 @@ import {
     AdvantageMessageAction,
     AdvantageFormatName
 } from "@get-advantage/advantage/creative";
-```
 
-### Step 3: Start a session
+async function init() {
+    const messenger = new AdvantageCreativeMessenger();
+    const session = await messenger.startSession();
 
-Create a new instance of the AdvantageCreativeMessenger class and start a session. When a session is established, send a message to request the format the the creative banner was built for:
-
-```ts [TypeScript]
-async function main() {
-    const advantageMessenger = new AdvantageCreativeMessenger();
-    const session = await advantageMessenger.startSession();
     if (session) {
-        const response = await advantageMessenger.sendMessage({
+        const response = await messenger.sendMessage({
             action: AdvantageMessageAction.REQUEST_FORMAT,
             format: AdvantageFormatName.TopScroll
         });
+
         if (response?.action === AdvantageMessageAction.FORMAT_CONFIRMED) {
-            // Yay! Format is confirmed by Advantage on the website
-            // Start the ad here
+            // Initialize your high-impact creative logic here
         }
-        if (response?.action === AdvantageMessageAction.FORMAT_REJECTED) {
-            // Oh no, the format was rejected. Time to for a backup plan
-        }
-    } else {
-        // For some reason, a session was not created. Perhaps the site isn't yet Advantage enabled?
     }
 }
-main();
+
+init();
 ```
 
-### Step 4: Listen for messages (optional)
+### Listen for messages (optional)
 
 After a session is established, you can listen for incoming messages from the publisher side. This is useful for reacting to format lifecycle changes or custom events.
 
@@ -85,7 +98,7 @@ advantageMessenger.onMessage((message) => {
 });
 ```
 
-### Step 5: Waypoints (optional)
+### Waypoints (optional)
 
 Waypoints let a creative track element visibility across iframe boundaries. This is useful for triggering animations or analytics when specific parts of the ad scroll into view.
 
@@ -124,9 +137,8 @@ const listener = advantageMessenger.listenToWaypoints(
 listener.disconnect();
 ```
 
----
 
-## Option B: Post-Message Signal (simple one-tag) {#post-message}
+## Post-Message Signal (simple one-tag) {#post-message}
 
 If your creative doesn't need two-way communication — it just needs to announce "I'm here, activate the format" — you can skip the Advantage library entirely and send a single `postMessage` from the creative.
 
@@ -188,110 +200,14 @@ window.top.postMessage(
 window.top.postMessage({ type: "high-impact-ad-responsive" }, "*");
 ```
 
----
 
-## Play CDN
+## Why is this necessary?
 
-Use the CDN to try the Advantage creative library right in the browser without any build step.
+Standard ad banners are often stuck inside fixed-size `iframes`. To create "High Impact" experiences like parallax scrolling or full-screen takeovers, the ad needs a secure way to tell the parent website: *"I'm not a regular banner, please give me more space!"*
 
-::: warning
-The CDN is designed for development purposes only, and is not intended for production.
-Talk to your tech vendor to load the script from a 3rd party certified CDN used for ad delivery.
-:::
+Advantage provides this secure communication bridge.
 
-::: code-group
+## Next Steps
 
-```html{6,10-43} [JS]
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="https://cdn.jsdelivr.net/npm/@get-advantage/advantage/dist/bundles/creative-side.iife.js"></script>
-    </head>
-    <body>
-        <h1>Hello world!</h1>
-        <script>
-            const {
-                AdvantageCreativeMessenger,
-                AdvantageMessageAction,
-                AdvantageFormatName
-            } = window.advantage;
-            const advantageMessenger = new AdvantageCreativeMessenger();
-            advantageMessenger.startSession().then((session) => {
-                if (session) {
-                    advantageMessenger
-                        .sendMessage({
-                            action: AdvantageMessageAction.REQUEST_FORMAT,
-                            format: AdvantageFormatName.TopScroll
-                        })
-                        .then((response) => {
-                            if (
-                                response?.action ===
-                                AdvantageMessageAction.FORMAT_CONFIRMED
-                            ) {
-                                // Yay! Format is confirmed by Advantage on the website
-                                // Start the ad here
-                            }
-                            if (
-                                response?.action ===
-                                AdvantageMessageAction.FORMAT_REJECTED
-                            ) {
-                                // Oh no, the format was rejected. Time to for a backup plan
-                            }
-                        });
-                } else {
-                    // For some reason, a session was not created. Perhaps the site isn't yet Advantage enabled?
-                }
-            });
-        </script>
-    </body>
-</html>
-```
-
-```html{10-14} [ESM]
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </head>
-    <body>
-        <h1>Hello world!</h1>
-        <script type="module">
-            import {
-                AdvantageCreativeMessenger,
-                AdvantageMessageAction,
-                AdvantageFormatName
-            } from "https://cdn.jsdelivr.net/npm/@get-advantage/advantage/dist/bundles/creative-side.js";
-            const advantageMessenger = new AdvantageCreativeMessenger();
-            const session = await advantageMessenger.startSession();
-            if (session) {
-                const response = await advantageMessenger.sendMessage({
-                    action: AdvantageMessageAction.REQUEST_FORMAT,
-                    format: AdvantageFormatName.TopScroll
-                });
-                if (
-                    response.action === AdvantageMessageAction.FORMAT_CONFIRMED
-                ) {
-                    // Yay! Format is confirmed by Advantage on the website
-                    // Start the ad here
-                }
-                if (
-                    response?.action === AdvantageMessageAction.FORMAT_REJECTED
-                ) {
-                    // Oh no, the format was rejected. Time to for a backup plan
-                }
-            } else {
-                // For some reason, a session was not created. Perhaps the site isn't yet Advantage enabled?
-            }
-        </script>
-    </body>
-</html>
-```
-
-:::
-
-::: tip
-There are many more pre baked bundles available in the CDN. Check out the [CDN documentation](https://cdn.jsdelivr.net/npm/@get-advantage/advantage/dist/bundles/) for more information.
-:::
+-   View the [Messaging Protocol](../concepts/creative.md) for more advanced actions.
+-   Check out the [Hello World Example](../examples/hello-world.md).

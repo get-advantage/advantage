@@ -131,6 +131,3 @@ Maintainers meet on the **first Wednesday of each month** to discuss project dir
 
 Whether you want to become a maintainer, contribute code, or support the initiative, we'd love to have you involved!
 
-### Contact:
-
-[community@get-advanatge.org](mailto:community@get-advantage.org)

@@ -8,52 +8,86 @@ pageClass: docs
 
 This part of the tutorial is aimed at website owners and publishers who want to implement High Impact JS on their site(s).
 
-### Step 1: Install High Impact JS
+## Step 1: Add High Impact JS to your site {#installation}
 
-To install High Impact JS, run the following command in your terminal:
+There are three ways to consume the library. They all expose the same API — pick the one that fits how your site is built.
+
+| Method | Best for | Build step |
+| :----- | :------- | :--------- |
+| [npm package](#install-npm) | Sites with a bundler (Vite, webpack, Rollup) or a framework (React, Vue, etc.) | Yes |
+| [Self-hosted from your own domain](#install-self-hosted) | AdOps/publishers who want full control and no third-party request | No |
+| [jsDelivr CDN](#install-cdn) | The fastest, lowest-code way to get started | No |
+
+### Option A — npm package {#install-npm}
+
+Install the package with your package manager of choice:
 
 ::: code-group
 
 ```sh [npm]
-$ npm i @ghigh-impact-js
+$ npm i @high-impact-js/highimpact.js
 ```
 
 ```sh [pnpm]
-$ pnpm add @high-impact-js
+$ pnpm add @high-impact-js/highimpact.js
 ```
 
 ```sh [yarn]
-$ yarn add @high-impact-js
+$ yarn add @high-impact-js/highimpact.js
 ```
 
 ```sh [bun]
-$ bun i @high-impact-js
+$ bun i @high-impact-js/highimpact.js
 ```
 
 :::
 
-### Step 2: Load the library
+Then import it where you need it:
 
-Add the library to your page. You can use a `<script>` tag or import it as an ES module.
+```ts
+import { Advantage } from "@high-impact-js/highimpact.js";
+```
 
-::: code-group
+With the npm package you call the API directly on the imported `Advantage` instance — you don't need the `window.highImpactJs` command queue described below.
 
-```html [Script tag]
+### Option B — Self-hosted from your own domain {#install-self-hosted}
+
+If you'd rather not depend on a third-party CDN, serve the bundle from your own domain. Grab `dist/bundles/advantage.umd.cjs` from the [npm package](https://www.npmjs.com/package/@high-impact-js/highimpact.js) (or build it from source), upload it to your server, and load it with a `<script>` tag:
+
+```html
+<script src="https://www.your-domain.com/scripts/advantage.umd.cjs"></script>
+```
+
+### Option C — jsDelivr CDN {#install-cdn}
+
+The quickest, no-build option — perfect for AdOps and low-code integrations. Add this `<script>` tag to your page:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@high-impact-js/highimpact.js/dist/bundles/advantage.umd.cjs"></script>
+```
+
+<div class="tip custom-block" style="padding-top: 8px">
+
+**Tip:** Pin a specific version for production so a new release can't change behaviour unexpectedly, e.g. `@high-impact-js/highimpact.js@0.11.1`.
+
+</div>
+
+### Using the command queue (script-tag methods)
+
+When you load the library with a `<script>` tag (Option B or C), use the global command queue to call the API. The command queue (`window.highImpactJs.cmd`) lets you queue API calls before the library has finished loading; queued commands run automatically once it's ready.
+
+```html
 <script>
     window.highImpactJs = window.highImpactJs || { cmd: [] };
+    window.highImpactJs.cmd.push(function () {
+        // High Impact JS is ready — call the API here
+    });
 </script>
-<script src="https://cdn.example.com/high-impact-js/latest/high-impact-js.umd.js"></script>
 ```
 
-```ts [ES module]
-import { Advantage } from "@high-impact-js";
-```
+Define this `window.highImpactJs` object before your `<script src=...>` tag so commands queued early aren't lost.
 
-:::
-
-The command queue (`window.highImpactJs.cmd`) lets you call API functions before the library has finished loading. Commands are executed automatically once the library is ready.
-
-### Step 3: Define your ad slots
+## Step 2: Define your ad slots
 
 Use `defineSlot` to register each ad placement that should support high-impact formats. The library will automatically find the matching DOM element, wrap it, detect when an ad renders, and activate the format.
 
@@ -73,7 +107,7 @@ Use `defineSlot` to register each ad placement that should support high-impact f
 </script>
 ```
 
-#### SlotConfig properties
+### SlotConfig properties
 
 | Property          | Type         | Required | Description                                                                                                            |
 | :---------------- | :----------- | :------- | :--------------------------------------------------------------------------------------------------------------------- |
@@ -87,7 +121,7 @@ Use `defineSlot` to register each ad placement that should support high-impact f
   ℹ️ If your ad slot can serve both standard size ads and high-impact ads, nothing will happen when a non-high-impact ad is served. The slot behaves like a normal ad placement until a matching creative is detected.
 </div>
 
-### Step 4: Integrate formats with your site
+## Step 3: Integrate formats with your site
 
 High-impact formats take over parts of the page layout (e.g., a topscroll pushes content down, a midscroll goes full-width). Almost every website needs some adjustments to make this work smoothly — hiding a sticky header, resetting padding, expanding a container to full viewport width, etc.
 
@@ -98,7 +132,7 @@ import {
     Advantage,
     AdvantageFormatName,
     IAdvantageWrapper
-} from "@high-impact-js";
+} from "@high-impact-js/highimpact.js";
 
 const advantage = Advantage.getInstance();
 
@@ -170,7 +204,7 @@ advantage.configure({
 });
 ```
 
-#### FormatIntegration properties
+### FormatIntegration properties
 
 | Property  | Type                                                              | Required | Description                                                                                               |
 | :-------- | :---------------------------------------------------------------- | :------- | :-------------------------------------------------------------------------------------------------------- |
@@ -186,7 +220,7 @@ advantage.configure({
 
 </div>
 
-### Step 5: Lifecycle Events
+## Step 4: Lifecycle Events
 
 The library dispatches lifecycle events that bubble up through the DOM. Use them to react to format changes on your page (e.g., pause a video player, adjust analytics, hide sticky elements).
 
@@ -208,11 +242,9 @@ document.addEventListener("advantage:format-close", (e) => {
 });
 ```
 
-### Success!
+## Success!
 
 Congratulations! Your website is now set up for high-impact ad formats!
-
----
 
 ## Full Example
 
@@ -252,7 +284,7 @@ A complete publisher-side setup:
         });
     });
 </script>
-<script src="https://cdn.example.com/high-impact-js/latest/high-impact-js.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@high-impact-js/highimpact.js/dist/bundles/advantage.umd.cjs"></script>
 ```
 
 The library will:

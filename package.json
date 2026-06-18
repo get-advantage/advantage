@@ -8,11 +8,12 @@
         "type": "git",
         "url": "git+https://github.com/high-impact-js/highimpact.js.git"
     },
-    "homepage": "https://get-highimpactjs.org",
-    "author": "get-highimpactjs.org",
+    "homepage": "https://gethighimpact.org",
+    "author": "gethighimpact.org",
     "type": "module",
     "files": [
-        "dist"
+        "dist",
+        "www"
     ],
     "main": "./dist/advantage/index.cjs.js",
     "module": "./dist/advantage/index.js",
