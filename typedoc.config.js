@@ -10,7 +10,8 @@ const config = {
         "./src/advantage/advantage.ts",
         "./src/advantage/wrapper.ts",
         "./src/advantage/wrapping-helper.ts",
-        "./src/advantage/ui-layer.ts"
+        "./src/advantage/ui-layer.ts",
+        "./src/advantage/high-impact-js/index.ts",
     ],
     out: "www/api",
     readme: "none",

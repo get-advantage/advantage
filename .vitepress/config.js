@@ -1,15 +1,15 @@
 import { defineConfig } from "vitepress";
 
-const hostname = "https://www.get-advantage.org";
+const hostname = "https://high-impact-js.github.io/highimpact.js";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
     srcDir: "www",
     ignoreDeadLinks: true,
-    title: "Advantage",
+    title: "High Impact JS",
     description: "High Impact Advertising - Reimagined",
     lastUpdated: true,
-    base: "/",
+    base: "/highimpact.js/",
     publicDir: "public",
     cleanUrls: true,
     transformPageData(pageData) {
@@ -37,11 +37,11 @@ export default defineConfig({
             {
                 rel: "apple-touch-icon",
                 sizes: "180x180",
-                href: "/favicons/apple-touch-icon.png"
+                href: "/highimpact.js/favicons/apple-touch-icon.png"
             }
         ],
-        ["link", { rel: "icon", type: "image/svg+xml", href: "/favicons/hi-favicon.svg" }],
-        ["link", { rel: "manifest", href: "/favicons/site.webmanifest" }],
+        ["link", { rel: "icon", type: "image/svg+xml", href: "/highimpact.js/favicons/hi-favicon.svg" }],
+        ["link", { rel: "manifest", href: "/highimpact.js/favicons/site.webmanifest" }],
         [
             "meta",
             {
@@ -85,7 +85,7 @@ export default defineConfig({
         socialLinks: [
             {
                 icon: "github",
-                link: "https://github.com/get-advantage/advantage"
+                link: "https://github.com/high-impact-js/highimpact.js"
             },
             {
                 icon: "slack",
@@ -94,7 +94,7 @@ export default defineConfig({
         ],
         editLink: {
             pattern:
-                "https://github.com/get-advantage/advantage/edit/main/www/:path",
+                "https://github.com/high-impact-js/highimpact.js/edit/main/www/:path",
             text: "Edit this page on GitHub"
         },
         outline: [2, 3],
@@ -204,7 +204,7 @@ export default defineConfig({
                         },
                         {
                             text: "Releases",
-                            link: "https://github.com/get-advantage/advantage/releases"
+                            link: "https://github.com/high-impact-js/highimpact.js/releases"
                         }
                     ]
                 },
