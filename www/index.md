@@ -262,6 +262,10 @@ layout: page
 <div class="homepage">
   <div class="container">
     <div class="hero">
+      <div class="custom-block warning" style="max-width: 760px; margin: 0 auto 32px; text-align: left;">
+        <p class="custom-block-title">Advantage has moved to High Impact JS</p>
+        <p>Main development now happens in <a href="https://github.com/high-impact-js/highimpact.js">highimpact.js</a>. During this transition period, Advantage will receive bug fixes only. See the <a href="https://gethighimpact.org/docs/migration/">migration guide</a> to move to High Impact JS.</p>
+      </div>
       <h1 class="hero-heading">
         <span>High Impact Infrastructure</span>
         <span class="heading-gradient">Open-sourced</span>
@@ -274,8 +278,8 @@ layout: page
           <span style="padding-right: 8px">Get started</span>
           <img src="/icons/chevron-right.svg" width="20" height="20" />
         </a>
-        <a href="https://github.com/get-advantage/advantage" class="hero-action primary">
-          <span style="padding-right: 8px">View on Github</span>
+        <a href="https://github.com/high-impact-js/highimpact.js" class="hero-action primary">
+          <span style="padding-right: 8px">View High Impact JS on GitHub</span>
         </a>
       </div>
     </div>

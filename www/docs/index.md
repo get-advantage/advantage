@@ -6,9 +6,8 @@ pageClass: docs
 
 # Get Started with Advantage
 
-<div class="tip custom-block" style="padding-top: 8px">
-  ℹ️ Advantage is still in <code>BETA</code>. Big changes might happen in the near future
-</div>
+> [!IMPORTANT]
+> **Advantage has moved to [High Impact JS](https://github.com/high-impact-js/highimpact.js).** Main development now happens there. During this transition period, Advantage will receive bug fixes only. Please see the [migration guide](https://gethighimpact.org/docs/migration/) to move to High Impact JS.
 
 Welcome to the Advantage documentation! Advantage revolutionizes high-impact display advertising by providing a unified, secure, and standardized platform for both publishers and advertisers. Whether you're looking to implement high-impact formats on your website or create engaging advertisements, this documentation will guide you through every step.
 
@@ -106,14 +105,14 @@ Enhance your development workflow:
 
 ### 🤝 Community & Support
 
--   **[GitHub Issues](https://github.com/get-advantage/advantage/issues)** - Report bugs and request features
+-   **[GitHub Issues](https://github.com/get-advantage/advantage/issues)** - Report Advantage bugs during the transition period
 -   **[Slack Community](https://join.slack.com/t/get-advantage/shared_invite/zt-2gy6c4z4m-4~pIuwRfe8eqPM5H7iV9MQ)** - Connect with other developers and get help
 -   **[Contributing Guide](../about/contributions.md)** - Learn how to contribute to the project
 
 ### 🔧 Development Resources
 
 -   **[API Documentation](../api/)** - Complete TypeScript API reference
--   **[GitHub Repository](https://github.com/get-advantage/advantage)** - Source code and examples
+-   **[High Impact JS repository](https://github.com/high-impact-js/highimpact.js)** - Active source code and examples
 -   **[Changelog](./changelog.md)** - Track updates and new features
 
 ## Next Steps

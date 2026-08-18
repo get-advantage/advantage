@@ -1,4 +1,9 @@
-<br>
+> [!IMPORTANT]
+> **Advantage has moved to High Impact JS**
+>
+> Main development now happens in [highimpact.js](https://github.com/high-impact-js/highimpact.js). This repository is in a transition period and will receive bug fixes only.
+>
+> See the [migration guide](https://gethighimpact.org/docs/migration/) to move to High Impact JS.
 
 <p align="center" style="margin-bottom: 15px;">
     <picture>
