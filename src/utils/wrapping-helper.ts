@@ -27,6 +27,14 @@ export function advantageWrapAdSlotElement(
         return;
     }
 
+    const slotParent = element.parentElement;
+    if (
+        slotParent?.getAttribute("slot") === "advantage-ad-slot" &&
+        slotParent.parentElement?.tagName === "ADVANTAGE-WRAPPER"
+    ) {
+        return;
+    }
+
     // Create the wrapper structure
     const advantageWrapper = document.createElement("advantage-wrapper");
 
